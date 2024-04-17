@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>hexo hand book | sheldon</title>
-  <meta name="keywords" content=" hexo ">
-  <meta name="description" content="hexo hand book | sheldon">
+  <title>Shortest Path | sheldon</title>
+  <meta name="keywords" content=" algorithm ">
+  <meta name="description" content="Shortest Path | sheldon">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="test">
@@ -296,9 +296,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-hexo-hand-book" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Shortest-Path" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">hexo hand book</h1>
+        <h1 class="article-title">Shortest Path</h1>
     
     <div class="article-meta">
         
@@ -308,7 +308,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="tools">tools</a>
+            <a  data-rel="algorithm">algorithm</a>
             
         </span>
         
@@ -316,19 +316,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color5">hexo</a>
+            <a class="color5">algorithm</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-04-16 23:12:27'>2024-04-16 23:06</time>
+            发布时间 : <time class="date" title='最后更新: 2024-04-17 14:53:41'>2024-04-17 11:42</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:718</span>
+        <span>字数:380</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -347,7 +347,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%91%E5%B8%83%E6%96%87%E7%AB%A0"><span class="toc-text">发布文章</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%AB%99%E8%AE%BE%E7%BD%AE"><span class="toc-text">网站设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%8D%A2%E4%B8%BB%E9%A2%98"><span class="toc-text">更换主题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-text">常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-text">结语</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#preliminary"><span class="toc-text">preliminary</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Data-Preparation"><span class="toc-text">Data Preparation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Find-the-Shortest-Path"><span class="toc-text">Find the Shortest Path</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -363,57 +363,81 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h2><p>进入博客所在目录，右键打开Git Bash Here，创建博文：</p>
-<pre><code class="bash">hexo new &quot;article title&quot;
+        <p>In this article, I will introduce some third-party libraries such as osmnx, pandana, geopandas and compare the performance between <strong>NetworkX(Dijkstra)</strong> and <strong>Pandana( Constraction Hierarchy)</strong>. Finally, I will show how to use these libraries to solve a <strong>Carpool(拼车) problem</strong>. The data set used in this article is from <a target="_blank" rel="noopener" href="https://www.openstreetmap.org/">OpenStreetMap</a> - New York City Taxi Trip data set.</p>
+<h2 id="preliminary"><a href="#preliminary" class="headerlink" title="preliminary"></a>preliminary</h2><p>You are highly recommended to use Conda to setup a new virtual environment.</p>
+<pre><code class="bash">conda create -n geospatial python==3.8
+conda activate geospatial
+pip install geopandas network osmnet osmnx pandas pandana
 </code></pre>
-<p>然后 source 文件夹中会出现一个 My New Post.md 文件，就可以使用 Markdown 编辑器在该文件中撰写文章了。</p>
-<p>写完后运行下面代码将文章渲染并部署到 GitHub Pages 上完成发布。以后每次发布文章都是这两条命令。</p>
-<pre><code class="bash">hexo g   # 生成页面
-hexo d   # 部署发布
+<p>If you received an error like “spatialindex_c-64.dll is missing”, try to use the following commands to resolve it.</p>
+<pre><code class="bash">pip uninstall rtree
+pip install rtree
 </code></pre>
-<p>也可以不使用命令自己创建 .md 文件，只需在文件开头手动加入如下格式 Front-matter 即可，写完后运行 hexo g 和 hexo d 发布。</p>
-<pre><code class="markdown">---
-title: Hello World # 标题
-date: 2019/3/26 hh:mm:ss # 时间
-categories: # 分类
-- Diary
-tags: # 标签
-- PS3
-- Games
----
+<pre><code class="python">import warnings
+warnings.filterwarnings(&#39;ignore&#39;)
+warnings.simplefilter(&#39;ignore&#39;)
 
-摘要
-&lt;!--more--&gt;
-正文
+import osmnx as ox
+import numpy as np
+import geopandas as gpd
+import pandana
+import pandas as pd
+from time import time
+import matplotlib.pyplot as plt
+from IPython.display import display, clear_output
+import networkx as nx
+import momepy
 </code></pre>
-<h2 id="网站设置"><a href="#网站设置" class="headerlink" title="网站设置"></a>网站设置</h2><p>包括网站名称、描述、作者、链接样式等，全部在网站目录下的 _config.yml 文件中，参考官方文档按需要编辑。</p>
-<p>注意：冒号后要加一个空格！</p>
-<h2 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h2><p>在 Themes | Hexo 选择一个喜欢的主题，比如 NexT，进入网站目录打开 Git Bash Here 下载主题：</p>
-<pre><code class="bash">git clone https://github.com/iissnan/hexo-theme-next themes/next
+<h2 id="Data-Preparation"><a href="#Data-Preparation" class="headerlink" title="Data Preparation"></a>Data Preparation</h2><pre><code class="python">def extract_graph(place=&#39;New York&#39;):
+    # try Chinese
+    # G = ox.graph_from_place(&#39;纽约&#39;, network_type=&#39;drive&#39;)
+    ox.config(log_console=True, use_cache=True)
+    G = ox.graph_from_place(place, network_type=&#39;drive&#39;)
+    return G
+
+place = &#39;New York&#39;
+G = extract_graph(place)
+ox.plot_graph(G, bgcolor=&quot;w&quot;, node_size=1, node_color=&quot;yellow&quot;, edge_color=&quot;#aaa&quot;)
+print(&quot;node count:&quot;, len(G.nodes()))
+print(&quot;edge count:&quot;, len(G.edges()))
 </code></pre>
-<p>然后修改 _config.yml 中的 theme 为新主题名称 next，发布。（有的主题需要将 _config.yml 替换为主题自带的，参考主题说明。）</p>
-<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><pre><code class="bash">hexo new &quot;name&quot;       # 新建文章
-hexo new page &quot;name&quot;  # 新建页面
-hexo g                # 生成页面
-hexo d                # 部署
-hexo g -d             # 生成页面并部署
-hexo s                # 本地预览
-hexo clean            # 清除缓存和已生成的静态文件
-hexo help             # 帮助
+<p><img src="https://sheldoncoder1337.github.io/source_posts/Shortest-Path/New-York-Taxi-Trip.png%22" alt="New York Taxi Trip"></p>
+<p>There are total node 55344 nodes and 139582 edges.</p>
+<p><a target="_blank" rel="noopener" href="https://data.cityofnewyork.us/Transportation/NYC-Taxi-Zones/d3c5-ddgc">https://data.cityofnewyork.us/Transportation/NYC-Taxi-Zones/d3c5-ddgc</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page">https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page</a></p>
+<p>We process New York Taxi Trip Data and provide Trips.txt (Appendix 1)</p>
+<p>Trips.txt contains New York Taxi trajectory information for 10,000 lines, each containing six columns of information, the region name where the passengers are picked up(PName),the lon and lat of the region in which they are picked up(PLon PLat),the region name they are delivered(Dname) and in which the passenger is delivered(DLon DLat).</p>
+<p>For example:</p>
+<table>
+<thead>
+<tr>
+<th>PName</th>
+<th>PLon</th>
+<th>PLat</th>
+<th>DName</th>
+<th>DLon</th>
+<th>DLat</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Lincoln_Square_East</td>
+<td>-73.97382133</td>
+<td>40.73788468</td>
+<td>Upper_East_Side_North</td>
+<td>-73.91715837</td>
+<td>40.8541322</td>
+</tr>
+<tr>
+<td>Upper_East_Side_North</td>
+<td>-73.91715837</td>
+<td>40.8541322</td>
+<td>Central_Harlem_North</td>
+<td>-73.99804922</td>
+<td>40.71156838</td>
+</tr>
+</tbody></table>
+<h2 id="Find-the-Shortest-Path"><a href="#Find-the-Shortest-Path" class="headerlink" title="Find the Shortest Path"></a>Find the Shortest Path</h2><pre><code class="python">
 </code></pre>
-<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><p>1、Hexo 设置显示文章摘要，首页不显示全文</p>
-<p>Hexo 主页文章列表默认会显示文章全文，浏览时很不方便，可以在文章中插入</p>
-<pre><code class="markdown">&lt;!--more--&gt;
-</code></pre>
-<p>进行分段。</p>
-<p>该代码前面的内容会作为摘要显示，而后面的内容会替换为 “Read More” 隐藏起来。</p>
-<p>2、设置网站图标</p>
-<p>进入 themes&#x2F;主题 文件夹，打开 _config.yml 配置文件，找到 favicon 修改，一般格式为：favicon: 图标地址。（不同主题可能略有差别）</p>
-<p>3、修改并部署后没有效果</p>
-<p>使用 hexo clean 清理后重新部署。</p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Hexo 是一种纯静态的博客，我们必须要在本地完成文章的编辑再部署到 GitHub 上，依赖于本地环境。不能像 WordPress 或 Typecho 那样的动态博客一样能直接在浏览器中完成撰文和发布。</p>
-<p>可以说是一种比较极客的写博客方式，但是优势也是明显的——免费稳定省心，比较适合爱折腾研究的用户，或者没有在线发文需求的朋友。</p>
-<p><a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>!  Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 862314702@qq.com </span>
@@ -423,12 +447,12 @@ hexo help             # 帮助
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>hexo hand book</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">718</span></p>
+    <p><span class="copy-title">文章标题:</span>Shortest Path</p>
+    <p><span class="copy-title">字数:</span><span class="post-count">380</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="KaLok Tsai">KaLok Tsai</a></p>
-    <p><span class="copy-title">发布时间:</span>2024-04-16, 23:06:14</p>
-    <p><span class="copy-title">最后更新:</span>2024-04-16, 23:12:27</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/04/16/hexo-hand-book/" title="hexo hand book">https://sheldoncoder1337.github.io/2024/04/16/hexo-hand-book/</a>
+    <p><span class="copy-title">发布时间:</span>2024-04-17, 11:42:38</p>
+    <p><span class="copy-title">最后更新:</span>2024-04-17, 14:53:41</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/04/17/Shortest-Path/" title="Shortest Path">https://sheldoncoder1337.github.io/2024/04/17/Shortest-Path/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
     </p>

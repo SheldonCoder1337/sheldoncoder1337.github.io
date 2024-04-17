@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title>test</title>
+      <link href="/2024/04/17/test/"/>
+      <url>/2024/04/17/test/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Shortest Path</title>
+      <link href="/2024/04/17/Shortest-Path/"/>
+      <url>/2024/04/17/Shortest-Path/</url>
+      
+        <content type="html"><![CDATA[<p>In this article, I will introduce some third-party libraries such as osmnx, pandana, geopandas and compare the performance between <strong>NetworkX(Dijkstra)</strong> and <strong>Pandana( Constraction Hierarchy)</strong>. Finally, I will show how to use these libraries to solve a <strong>Carpool(拼车) problem</strong>. The data set used in this article is from <a href="https://www.openstreetmap.org/">OpenStreetMap</a> - New York City Taxi Trip data set.</p><h2 id="preliminary"><a href="#preliminary" class="headerlink" title="preliminary"></a>preliminary</h2><p>You are highly recommended to use Conda to setup a new virtual environment.</p><pre><code class="bash">conda create -n geospatial python==3.8conda activate geospatialpip install geopandas network osmnet osmnx pandas pandana</code></pre><p>If you received an error like “spatialindex_c-64.dll is missing”, try to use the following commands to resolve it.</p><pre><code class="bash">pip uninstall rtreepip install rtree</code></pre><pre><code class="python">import warningswarnings.filterwarnings(&#39;ignore&#39;)warnings.simplefilter(&#39;ignore&#39;)import osmnx as oximport numpy as npimport geopandas as gpdimport pandanaimport pandas as pdfrom time import timeimport matplotlib.pyplot as pltfrom IPython.display import display, clear_outputimport networkx as nximport momepy</code></pre><h2 id="Data-Preparation"><a href="#Data-Preparation" class="headerlink" title="Data Preparation"></a>Data Preparation</h2><pre><code class="python">def extract_graph(place=&#39;New York&#39;):    # try Chinese    # G = ox.graph_from_place(&#39;纽约&#39;, network_type=&#39;drive&#39;)    ox.config(log_console=True, use_cache=True)    G = ox.graph_from_place(place, network_type=&#39;drive&#39;)    return Gplace = &#39;New York&#39;G = extract_graph(place)ox.plot_graph(G, bgcolor=&quot;w&quot;, node_size=1, node_color=&quot;yellow&quot;, edge_color=&quot;#aaa&quot;)print(&quot;node count:&quot;, len(G.nodes()))print(&quot;edge count:&quot;, len(G.edges()))</code></pre><p><img src="https://sheldoncoder1337.github.io/source_posts/Shortest-Path/New-York-Taxi-Trip.png%22" alt="New York Taxi Trip"></p><p>There are total node 55344 nodes and 139582 edges.</p><p><a href="https://data.cityofnewyork.us/Transportation/NYC-Taxi-Zones/d3c5-ddgc">https://data.cityofnewyork.us/Transportation/NYC-Taxi-Zones/d3c5-ddgc</a></p><p><a href="https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page">https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page</a></p><p>We process New York Taxi Trip Data and provide Trips.txt (Appendix 1)</p><p>Trips.txt contains New York Taxi trajectory information for 10,000 lines, each containing six columns of information, the region name where the passengers are picked up(PName),the lon and lat of the region in which they are picked up(PLon PLat),the region name they are delivered(Dname) and in which the passenger is delivered(DLon DLat).</p><p>For example:</p><table><thead><tr><th>PName</th><th>PLon</th><th>PLat</th><th>DName</th><th>DLon</th><th>DLat</th></tr></thead><tbody><tr><td>Lincoln_Square_East</td><td>-73.97382133</td><td>40.73788468</td><td>Upper_East_Side_North</td><td>-73.91715837</td><td>40.8541322</td></tr><tr><td>Upper_East_Side_North</td><td>-73.91715837</td><td>40.8541322</td><td>Central_Harlem_North</td><td>-73.99804922</td><td>40.71156838</td></tr></tbody></table><h2 id="Find-the-Shortest-Path"><a href="#Find-the-Shortest-Path" class="headerlink" title="Find the Shortest Path"></a>Find the Shortest Path</h2><pre><code class="python"></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> algorithm </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> algorithm </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>hexo hand book</title>
       <link href="/2024/04/16/hexo-hand-book/"/>
       <url>/2024/04/16/hexo-hand-book/</url>
