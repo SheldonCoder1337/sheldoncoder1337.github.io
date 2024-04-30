@@ -6,17 +6,24 @@
   <meta name="keywords" content=" algorithm ">
   <meta name="description" content="Kmeans++ | sheldon">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="$$\sum_{i&#x3D;0}^n i^2 &#x3D; \frac{(n^2+n)(2n+1)}{6}$$ $$f(n) &#x3D;\begin{cases}n&#x2F;2,  &amp; \text{if $n$ is even} \3n+1, &amp; \text{if $n$ is odd}\end{cases}$$ $$\begin{equation}\sum_{i&#x3D;">
+<meta name="description" content="IntroductionIn this notebook, we shall be looking at how the kmeans algorithm works. KMeans is an unsupervised learning algorithm that is used to cluster data in groups - without knowing which group g">
 <meta property="og:type" content="article">
-<meta property="og:title" content="math">
-<meta property="og:url" content="https://sheldoncoder1337.github.io/2024/04/30/math/index.html">
+<meta property="og:title" content="Kmeans++">
+<meta property="og:url" content="https://sheldoncoder1337.github.io/2024/04/24/Kmeans/index.html">
 <meta property="og:site_name" content="sheldon">
-<meta property="og:description" content="$$\sum_{i&#x3D;0}^n i^2 &#x3D; \frac{(n^2+n)(2n+1)}{6}$$ $$f(n) &#x3D;\begin{cases}n&#x2F;2,  &amp; \text{if $n$ is even} \3n+1, &amp; \text{if $n$ is odd}\end{cases}$$ $$\begin{equation}\sum_{i&#x3D;">
+<meta property="og:description" content="IntroductionIn this notebook, we shall be looking at how the kmeans algorithm works. KMeans is an unsupervised learning algorithm that is used to cluster data in groups - without knowing which group g">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-04-30T08:24:09.000Z">
-<meta property="article:modified_time" content="2024-04-30T08:25:43.721Z">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/24/Kmeans/sample_dataset_X.png">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/24/Kmeans/1.1.png">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/24/Kmeans/1.3.png">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/24/Kmeans/1.4.1.png">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/24/Kmeans/1.4.2.png">
+<meta property="article:published_time" content="2024-04-24T09:36:07.000Z">
+<meta property="article:modified_time" content="2024-04-30T07:13:18.053Z">
 <meta property="article:author" content="KaLok Tsai">
+<meta property="article:tag" content="algorithm">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sheldoncoder1337.github.io/2024/04/24/Kmeans/sample_dataset_X.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -135,7 +142,7 @@
     <li>
         <div class="all active" data-rel="全部文章">全部文章
             
-                <small>(5)</small>
+                <small>(4)</small>
             
         </div>
     </li>
@@ -148,21 +155,6 @@
             
             algorithm
             <small>(3)</small>
-        </div>
-        
-    </li>
-
-            
-        
-    
-        
-            
-                
-    <li>
-        <div data-rel="math">
-            
-            math
-            <small>(1)</small>
         </div>
         
     </li>
@@ -205,8 +197,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="5">
-<input type="hidden" id="yelog_site_word_count" value="5.1k">
+<input type="hidden" id="yelog_site_posts_number" value="4">
+<input type="hidden" id="yelog_site_word_count" value="5k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -273,15 +265,6 @@
     </div>
     
     <nav id="title-list-nav">
-        
-        
-        <a  class="全部文章 math "
-           href="/2024/04/30/math/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title="math">math</span>
-            <span class="post-date" title="2024-04-30 16:24:09">2024/04/30</span>
-        </a>
         
         
         <a  class="全部文章 algorithm "

@@ -4,25 +4,6 @@
   
     
     <entry>
-      <title>math</title>
-      <link href="/2024/04/30/math/"/>
-      <url>/2024/04/30/math/</url>
-      
-        <content type="html"><![CDATA[<p>$$<br>\sum_{i&#x3D;0}^n i^2 &#x3D; \frac{(n^2+n)(2n+1)}{6}<br>$$</p><p>$$<br>f(n) &#x3D;<br>\begin{cases}<br>n&#x2F;2,  &amp; \text{if $n$ is even} \<br>3n+1, &amp; \text{if $n$ is odd}<br>\end{cases}<br>$$</p><p>$$<br>\begin{equation}<br>\sum_{i&#x3D;0}^n F_i \cdot \phi (H, p_i) - \sum_{i&#x3D;1}^n a_i \cdot ( \tilde{x_i}, \tilde{y_i}) + b_i \cdot ( \tilde{x_i}^2 , \tilde{y_i}^2 )<br>\end{equation}<br>$$<br>$$<br>\begin{equation}<br>\beta^*(D) &#x3D; \mathop{argmin} \limits_{\beta} \lambda {||\beta||}^2 + \sum_{i&#x3D;1}^n max(0, 1 - y_i f_{\beta}(x_i))<br>\end{equation}<br>$$</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> math </category>
-          
-      </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Kmeans++</title>
       <link href="/2024/04/24/Kmeans/"/>
       <url>/2024/04/24/Kmeans/</url>
