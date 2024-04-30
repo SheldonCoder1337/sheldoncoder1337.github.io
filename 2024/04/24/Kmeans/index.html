@@ -2,28 +2,21 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Kmeans | sheldon</title>
+  <title>Kmeans++ | sheldon</title>
   <meta name="keywords" content=" algorithm ">
-  <meta name="description" content="Kmeans | sheldon">
+  <meta name="description" content="Kmeans++ | sheldon">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="IntroductionIn this notebook, we shall be looking at how the kmeans algorithm works. KMeans is an unsupervised learning algorithm that is used to cluster data in groups - without knowing which group g">
+<meta name="description" content="$$\sum_{i&#x3D;0}^n i^2 &#x3D; \frac{(n^2+n)(2n+1)}{6}$$ $$f(n) &#x3D;\begin{cases}n&#x2F;2,  &amp; \text{if $n$ is even} \3n+1, &amp; \text{if $n$ is odd}\end{cases}$$ $$\begin{equation}\sum_{i&#x3D;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kmeans">
-<meta property="og:url" content="https://sheldoncoder1337.github.io/2024/04/24/Kmeans/index.html">
+<meta property="og:title" content="math">
+<meta property="og:url" content="https://sheldoncoder1337.github.io/2024/04/30/math/index.html">
 <meta property="og:site_name" content="sheldon">
-<meta property="og:description" content="IntroductionIn this notebook, we shall be looking at how the kmeans algorithm works. KMeans is an unsupervised learning algorithm that is used to cluster data in groups - without knowing which group g">
+<meta property="og:description" content="$$\sum_{i&#x3D;0}^n i^2 &#x3D; \frac{(n^2+n)(2n+1)}{6}$$ $$f(n) &#x3D;\begin{cases}n&#x2F;2,  &amp; \text{if $n$ is even} \3n+1, &amp; \text{if $n$ is odd}\end{cases}$$ $$\begin{equation}\sum_{i&#x3D;">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/Kmeans/sample_dataset_X.png">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/Kmeans/1.1.png">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/Kmeans/1.3.png">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/Kmeans/1.4.1.png">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/Kmeans/1.4.2.png">
-<meta property="article:published_time" content="2024-04-24T09:36:07.000Z">
-<meta property="article:modified_time" content="2024-04-24T09:44:38.446Z">
+<meta property="article:published_time" content="2024-04-30T08:24:09.000Z">
+<meta property="article:modified_time" content="2024-04-30T08:25:43.721Z">
 <meta property="article:author" content="KaLok Tsai">
-<meta property="article:tag" content="algorithm">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://sheldoncoder1337.github.io/Kmeans/sample_dataset_X.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -50,7 +43,9 @@
 
 <script src="/js/iconfont.js?v=1.1.0" ></script>
 
-<meta name="generator" content="Hexo 7.1.1"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
 <div style="display: none">
   <input class="theme_disqus_on" value="false">
   <input class="theme_preload_comment" value="">
@@ -164,9 +159,9 @@
             
                 
     <li>
-        <div data-rel="Deep learning">
+        <div data-rel="math">
             
-            Deep learning
+            math
             <small>(1)</small>
         </div>
         
@@ -211,7 +206,7 @@
     </div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="5">
-<input type="hidden" id="yelog_site_word_count" value="5.4k">
+<input type="hidden" id="yelog_site_word_count" value="5.1k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -265,19 +260,7 @@
             </li>
         
             <li class="article-tag-list-item">
-                <i class="iconfont icon-tag"></i><a>Deep learning</a>
-            </li>
-        
-            <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>hexo</a>
-            </li>
-        
-            <li class="article-tag-list-item">
-                <i class="iconfont icon-tag"></i><a>Machine Learning</a>
-            </li>
-        
-            <li class="article-tag-list-item">
-                <i class="iconfont icon-tag"></i><a>Math</a>
             </li>
         
     </div>
@@ -292,21 +275,21 @@
     <nav id="title-list-nav">
         
         
+        <a  class="全部文章 math "
+           href="/2024/04/30/math/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="math">math</span>
+            <span class="post-date" title="2024-04-30 16:24:09">2024/04/30</span>
+        </a>
+        
+        
         <a  class="全部文章 algorithm "
            href="/2024/04/24/Kmeans/"
            data-tag="algorithm"
            data-author="" >
-            <span class="post-title" title="Kmeans">Kmeans</span>
+            <span class="post-title" title="Kmeans++">Kmeans++</span>
             <span class="post-date" title="2024-04-24 17:36:07">2024/04/24</span>
-        </a>
-        
-        
-        <a  class="全部文章 Deep learning "
-           href="/2024/04/17/Neural-Network/"
-           data-tag="Machine Learning,Deep learning,Math"
-           data-author="" >
-            <span class="post-title" title="Neural Network">Neural Network</span>
-            <span class="post-date" title="2024-04-17 19:58:23">2024/04/17</span>
         </a>
         
         
@@ -356,7 +339,7 @@
     <div class="pjax">
         <article id="post-Kmeans" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Kmeans</h1>
+        <h1 class="article-title">Kmeans++</h1>
     
     <div class="article-meta">
         
@@ -381,12 +364,12 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-04-24 17:44:38'>2024-04-24 17:36</time>
+            发布时间 : <time class="date" title='最后更新: 2024-04-30 15:13:18'>2024-04-24 17:36</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:3.1k</span>
+        <span>字数:2.7k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -405,7 +388,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-First-things-first"><span class="toc-text">1.1 First things first</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-Calculate-distances-to-centroids"><span class="toc-text">1.2 Calculate distances to centroids</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-Attach-instances-or-rows-to-the-closest-centroid"><span class="toc-text">1.3 Attach instances or rows to the closest centroid.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-Update-centroids"><span class="toc-text">1.4 Update centroids</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Note"><span class="toc-text">Note</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-Repeat-the-above-steps"><span class="toc-text">1.5 Repeat the above steps</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-First-things-first"><span class="toc-text">1.1 First things first</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-Calculate-distances-to-centroids"><span class="toc-text">1.2 Calculate distances to centroids</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-Attach-instances-or-rows-to-the-closest-centroid"><span class="toc-text">1.3 Attach instances or rows to the closest centroid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-Update-centroids"><span class="toc-text">1.4 Update centroids</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Note"><span class="toc-text">Note</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-Repeat-the-above-steps"><span class="toc-text">1.5 Repeat the above steps</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -422,14 +405,12 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>In this notebook, we shall be looking at how the kmeans algorithm works. KMeans is an <strong>unsupervised learning</strong> algorithm that is used to cluster data in groups - without knowing which group given data elements belong to as are going to see.</p>
-<p>在本笔记本中，我们将研究 kmeans 算法的工作原理。KMeans 是一种<strong>无监督学习</strong>算法，用于将数据分组聚类 - 不知道给定的数据元素属于哪个组，正如将要看到的那样。</p>
 <pre><code class="python">import numpy as np
 import sklearn.datasets
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 </code></pre>
 <p>Let’s shall generate a random dataset of 1000 points clustered into 3 groups.</p>
-<p>让我们生成一个包含 1000 个点的随机数据集，这些点被聚类到 3 组。</p>
 <pre><code class="python"># 设置数据集中样本点的数量
 N = 1000
 
@@ -451,17 +432,14 @@ plt.xlabel(&quot;x1&quot;, fontsize=12)
 plt.ylabel(&quot;x2&quot;, fontsize=12)
 plt.show()
 </code></pre>
-<p><img src="/./Kmeans/sample_dataset_X.png" alt="sampla dataset"></p>
+<!-- ![sampla dataset](./Kmeans/sample_dataset_X.png) -->
+
+<img src="/2024/04/24/Kmeans/sample_dataset_X.png" class>
+
 <h2 id="1-1-First-things-first"><a href="#1-1-First-things-first" class="headerlink" title="1.1 First things first"></a>1.1 First things first</h2><ol>
 <li><p>We need to determine and set a value k, the number of clusters we <strong>think</strong> the data has. KMeans is unsupervised. So it is not the case that you will always know how many clusters (k) exist in the data. You will have to experiment with different values using certain techniques to find the best value of k. For our case, we know that there are 3 clusters, therefore we shall set k to 3. (You can try a different value after the points get clear).</p>
-<ul>
-<li>我们需要确定并设置一个值k，即我们<strong>认为</strong>数据具有的聚类数。KMeans 是无人监督的。因此，您并非总是知道数据中存在多少个聚类 （k）。您必须使用某些技术尝试不同的值，以找到 k 的最佳值。对于我们的情况，我们知道有 3 个聚类，因此我们将 k 设置为 3。（您可以在点明确后尝试其他值）。</li>
-</ul>
 </li>
-<li><p>We also need to find k&#x3D;3 random points that will represent the centers of our clusters if the clustering is successfull. These k random points are called centroids.Let’s work on these two steps next.</p>
-<ul>
-<li>如果聚类成功，我们还需要找到 k&#x3D;3 个随机点，这些点将代表我们聚类的中心。这 k 个随机点称为质心。接下来，让我们继续执行这两个步骤。</li>
-</ul>
+<li><p>We also need to <strong>find k&#x3D;3 random points</strong> that will represent the centers of our clusters if the clustering is successfull. These k random points are called centroids.Let’s work on these two steps next.</p>
 </li>
 </ol>
 <pre><code class="python">k = 3
@@ -476,7 +454,7 @@ centroids = np.zeros((len(max_feature_range), k))
 
 for i, (l, h) in enumerate(zip(min_feature_range, max_feature_range)):
     # 使用random.uniform()函数从均匀分布中抽取样本
-    centroids[:, i] = np.random.uniform(low=l, high=h, size=feature_size)
+    centroids[i, :] = np.random.uniform(low=l, high=h, size=k)
 
 # 转置centroids矩阵，使得每行表示一个聚类中心
 centroids = centroids.T
@@ -496,28 +474,25 @@ plt.xlabel(&quot;x1&quot;, fontsize=12)
 plt.ylabel(&quot;x2&quot;, fontsize=12)
 plt.show()
 </code></pre>
-<p><img src="/./Kmeans/1.1.png" alt="1.1"></p>
+<!-- ![1.1](./Kmeans/1.1.png) -->
+
+<img src="/2024/04/24/Kmeans/1.1.png" class>
+
 <p>The points are scattered and may not be close to the cluster centers. There are other methods like the <strong>kmeans++</strong>.</p>
-<p>这些点是分散的并且可能不靠近聚类中心。还有其他方法，例如 <strong>kmeans++</strong></p>
 <h2 id="1-2-Calculate-distances-to-centroids"><a href="#1-2-Calculate-distances-to-centroids" class="headerlink" title="1.2 Calculate distances to centroids"></a>1.2 Calculate distances to centroids</h2><p>In this notebook, we shall be calculating the euclidean distance. We have 2 columns in X <em>(x1 and x2)</em> and we have to calculate the euclidean distance between each centroid and every data point in X. Centroids are of the form <em>(xx, yy)</em> i.e they have two points just like our dataset X has 2 columns.</p>
-<p>在这个笔记本中，我们将计算欧几里得距离。我们在 X <em>（x1 和 x2）</em> 中有 2 列，我们必须计算每个质心和 X 中每个数据点之间的欧几里得距离。 质心的形式为 <em>（xx， yy）</em>，即它们有两个点，就像我们的数据集 X 有 2 列一样。</p>
-<p>We want to calculate something of the form $sqrt((x1-xx)^2 + (x2-yy)^2)$ for each data point&#x2F;row in X.</p>
-<p>我们想要为 X 中的每个数据点&#x2F;行计算 $sqrt((x1-xx)^2 + (x2-yy)^2)$ 形式的内容。</p>
-<p>To accelerate operations, we shall be using a vectorized approach to calculate that.</p>
-<p>为了加速操作，我们将使用矢量化方法来计算。</p>
+<p>计算每个质心和 X 中每个数据点之间的欧几里得距离。</p>
+<p>We want to calculate something of the form $sqrt((x1-xx)^2 + (x2-yy)^2)$ for each data point&#x2F;row in X.<br>To accelerate operations, we shall be using a vectorized approach to calculate that.</p>
+<p>使用矢量化方法来计算。</p>
 <ol>
-<li>We have k&#x3D;3 centroids, so we shall first duplicate <strong>X</strong> 3 times or k times. The shape of X is (1000, 2). The result of the duplication, <strong>Xc</strong> will be (1000, 6).<ul>
+<li>We have k&#x3D;3 centroids, so we shall first duplicate <strong>X</strong> 3 times or k times. The shape of X is (1000, 2). The result of the duplication, <strong>Xc</strong> will be (1000, 6).</li>
+<li>Then we shall flatten the centroids so that its a single vector, <strong>centroidsc</strong> of 6 elements to match our 6 columns in <strong>Xc</strong>.</li>
+<li>We shall subtract <strong>Xc</strong> and <strong>centroidsc</strong> to give us a result <strong>D</strong> of shape (1000, 6). This step is equivalent to performing <strong>(x1-xx)</strong> and <strong>(x2-yy)</strong> for all centroids at once.</li>
+</ol>
+<p>步骤：</p>
+<ol>
 <li>我们有 k&#x3D;3 个质心，所以我们首先要复制 <strong>X</strong> 3 次或 k 次。 X 的形状为 (1000, 2)。复制的结果 <strong>Xc</strong> 将是 (1000, 6)</li>
-</ul>
-</li>
-<li>Then we shall flatten the centroids so that its a single vector, <strong>centroidsc</strong> of 6 elements to match our 6 columns in <strong>Xc</strong>.<ul>
 <li>然后我们将展平质心，使其成为 6 个元素的单个矢量 <strong>centroidsc</strong>，以匹配 <strong>Xc</strong> 中的 6 列。</li>
-</ul>
-</li>
-<li>We shall subtract <strong>Xc</strong> and <strong>centroidsc</strong> to give us a result <strong>D</strong> of shape (1000, 6). This step is equivalent to performing <strong>(x1-xx)</strong> and <strong>(x2-yy)</strong> for all centroids at once.<ul>
 <li>我们将减去 <strong>Xc</strong> 和 <strong>centroidsc</strong> 得到形状为 (1000, 6) 的结果 <strong>D</strong>。此步骤相当于同时对所有质心执行 <strong>(x1-xx)</strong> 和 **(x2-yy)**。</li>
-</ul>
-</li>
 </ol>
 <ul>
 <li>The first column of <strong>D</strong> corresponds to <strong>(x1-xx)</strong> where xx is the x of the first centroid.<ul>
@@ -543,25 +518,16 @@ plt.show()
 </ul>
 <p>Note that we have to calculate the norm over a given set of columns e.g the first and second columns’ norm corresponds to the first centroid, the third and forth to the 2nd centroid and the last 2 to the 3rd centroid. So in the end we have a (1000, 3) array containing euclidean distances of each of the 1000 data rows&#x2F;points in X in correspondence to each of the 3 centroids.</p>
 <p>请注意，我们必须计算给定列集的范数，例如第一列和第二列的范数对应于第一个质心，第三列和第四列对应于第二个质心，最后 2 个对应于第三个质心。所以最后我们有一个 (1000, 3) 数组，其中包含 X 中 1000 个数据行&#x2F;点中每一个与 3 个质心相对应的欧氏距离。</p>
-<p>Let’s do that</p>
 <pre><code class="python">Xc = np.concatenate([X for c in centroids], axis=1) # duplicate X k times
 centroidsc = centroids.ravel() # ravel to allow broadcast; Return a contiguous flattened array.
 D = (Xc - centroidsc) # raw diff
-print(np.round(X[:5], 3))  # X (up to 5) without duplication
-print(np.round(Xc[:5], 3)) # Xc (up to 5) with duplication
-print(centroidsc) # raveled centroids
-print(D[:5])  # the difference between Xc and centroids
 
-#Calculating the norms
 Norms = np.zeros((N, k)) # distances to each centroid
-for i in range(0, k):
+for i in range(0, k): 
     m = i*feature_size
-    Norms[:, i] = np.linalg.norm(D[:, m:m+feature_size], axis=1)
-    # sample norm / distance
-sample_norms = Norms[:4]
-sample_norms
+    Norms[:, i] = np.linalg.norm(D[:, m:m+feature_size], axis=1) # Calculating the norms (Euclidean distance)
 </code></pre>
-<h2 id="1-3-Attach-instances-or-rows-to-the-closest-centroid"><a href="#1-3-Attach-instances-or-rows-to-the-closest-centroid" class="headerlink" title="1.3 Attach instances or rows to the closest centroid."></a>1.3 Attach instances or rows to the closest centroid.</h2><p>We shall now assign each data row in X the index of the centroid with which it has the shortest distance. We do that using <strong>np.argmin</strong> which returns the index of the minimum distance in our <em>Norms</em> array.</p>
+<h2 id="1-3-Attach-instances-or-rows-to-the-closest-centroid"><a href="#1-3-Attach-instances-or-rows-to-the-closest-centroid" class="headerlink" title="1.3 Attach instances or rows to the closest centroid"></a>1.3 Attach instances or rows to the closest centroid</h2><p>We shall now assign each data row in X the index of the centroid with which it has the shortest distance. We do that using <strong>np.argmin</strong> which returns the index of the minimum distance in our <em>Norms</em> array.</p>
 <p>现在，我们将为 X 中的每个数据行分配与其距离最短的质心的索引。我们使用 <strong>np.argmin</strong> 来执行此操作，它返回 <em>Norms</em> 数组中最小距离的索引。</p>
 <pre><code class="python"># sample of indices for smallest indices for sample_norms
 np.argmin(sample_norms, axis=1)
@@ -584,7 +550,10 @@ plt.ylabel(&quot;x2&quot;, fontsize=12)
 
 plt.show()
 </code></pre>
-<p><img src="/./Kmeans/1.3.png" alt="1.3"></p>
+<!-- ![1.3](./Kmeans/1.3.png) -->
+
+<img src="/2024/04/24/Kmeans/1.3.png" class>
+
 <h2 id="1-4-Update-centroids"><a href="#1-4-Update-centroids" class="headerlink" title="1.4 Update centroids"></a>1.4 Update centroids</h2><p>The last step is to update the centroids by setting the new centroids at the mean positions of the points they were closest to i.e the data points they influence.</p>
 <p>最后一步是通过将新质心设置在它们最接近的点的平均位置（即它们影响的数据点）来更新质心。</p>
 <p>Below is a plot showing the un-updated centroids and their influence on the data points. We shall have to move the centroids so that they are at the center of the points they influence.</p>
@@ -600,7 +569,10 @@ plt.xlabel(&quot;x1&quot;, fontsize=12)
 plt.ylabel(&quot;x2&quot;, fontsize=12)
 plt.show()
 </code></pre>
-<p><img src="/./Kmeans/1.4.1.png" alt="1.4.1"></p>
+<!-- ![1.4.1](./Kmeans/1.4.1.png) -->
+
+<img src="/2024/04/24/Kmeans/1.4.1.png" class>
+
 <ul>
 <li>To do that, we shall calculate the mean of the data points each centroid influences and put the centroid at that mean location.</li>
 <li>If a centroid has no points it influences (yes, this can happen), we leave the centroid where it is.</li>
@@ -629,7 +601,8 @@ plt.ylabel(&quot;x2&quot;, fontsize=12)
 
 plt.show()
 </code></pre>
-<p><img src="/./Kmeans/1.4.2.png" alt="1.4.2"></p>
+<img src="/2024/04/24/Kmeans/1.4.2.png" class>
+
 <h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><ul>
 <li>The mean-centered points may look good, however the data they influence may still be bad</li>
 <li>以均值为中心的点可能看起来不错，但它们影响的数据可能仍然很糟糕</li>
@@ -700,12 +673,12 @@ plt.show()
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>Kmeans</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">3.1k</span></p>
+    <p><span class="copy-title">文章标题:</span>Kmeans++</p>
+    <p><span class="copy-title">字数:</span><span class="post-count">2.7k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="KaLok Tsai">KaLok Tsai</a></p>
     <p><span class="copy-title">发布时间:</span>2024-04-24, 17:36:07</p>
-    <p><span class="copy-title">最后更新:</span>2024-04-24, 17:44:38</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/04/24/Kmeans/" title="Kmeans">https://sheldoncoder1337.github.io/2024/04/24/Kmeans/</a>
+    <p><span class="copy-title">最后更新:</span>2024-04-30, 15:13:18</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/04/24/Kmeans/" title="Kmeans++">https://sheldoncoder1337.github.io/2024/04/24/Kmeans/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
     </p>
@@ -715,6 +688,46 @@ plt.show()
 
 
 
+    
+        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<input type="hidden" id="MathJax-js"
+        value="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</input>
     
 
 
