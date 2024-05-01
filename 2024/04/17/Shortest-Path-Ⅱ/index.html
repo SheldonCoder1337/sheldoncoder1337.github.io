@@ -6,25 +6,25 @@
   <meta name="keywords" content=" algorithm, find-the-shortest-path ">
   <meta name="description" content="Shortest Path Ⅱ | sheldon">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="IntroductionIn this notebook, we shall be looking at how the kmeans algorithm works. KMeans is an unsupervised learning algorithm that is used to cluster data in groups - without knowing which group g">
+<meta name="description" content="Problem 2.2: In a two-class one-dimensional problem, the pdfs are the Gaussians $\mathcal{N}(0,\sigma^2)$ and $\mathcal{N}(1,\sigma^2)$ for the two classes, respectively. Show that the threshold $x_0">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kmeans++">
-<meta property="og:url" content="https://sheldoncoder1337.github.io/2024/04/24/Kmeans/index.html">
+<meta property="og:title" content="PR-ch02-Bayes">
+<meta property="og:url" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/index.html">
 <meta property="og:site_name" content="sheldon">
-<meta property="og:description" content="IntroductionIn this notebook, we shall be looking at how the kmeans algorithm works. KMeans is an unsupervised learning algorithm that is used to cluster data in groups - without knowing which group g">
+<meta property="og:description" content="Problem 2.2: In a two-class one-dimensional problem, the pdfs are the Gaussians $\mathcal{N}(0,\sigma^2)$ and $\mathcal{N}(1,\sigma^2)$ for the two classes, respectively. Show that the threshold $x_0">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/24/Kmeans/sample_dataset_X.png">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/24/Kmeans/1.1.png">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/24/Kmeans/1.3.png">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/24/Kmeans/1.4.1.png">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/24/Kmeans/1.4.2.png">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/24/Kmeans/1.5.png">
-<meta property="article:published_time" content="2024-04-24T09:36:07.000Z">
-<meta property="article:modified_time" content="2024-04-30T08:44:18.291Z">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/1.png">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/2.png">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/3.png">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/4.png">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/5.png">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/image.png">
+<meta property="article:published_time" content="2024-04-30T12:45:31.000Z">
+<meta property="article:modified_time" content="2024-05-01T12:38:09.368Z">
 <meta property="article:author" content="KaLok Tsai">
-<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="pattern recognition">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://sheldoncoder1337.github.io/2024/04/24/Kmeans/sample_dataset_X.png">
+<meta name="twitter:image" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/1.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -143,7 +143,7 @@
     <li>
         <div class="all active" data-rel="全部文章">全部文章
             
-                <small>(4)</small>
+                <small>(5)</small>
             
         </div>
     </li>
@@ -156,6 +156,21 @@
             
             算法
             <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="math">
+            
+            math
+            <small>(1)</small>
         </div>
         
     </li>
@@ -198,8 +213,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="4">
-<input type="hidden" id="yelog_site_word_count" value="5k">
+<input type="hidden" id="yelog_site_posts_number" value="5">
+<input type="hidden" id="yelog_site_word_count" value="6.7k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -256,6 +271,10 @@
                 <i class="iconfont icon-tag"></i><a>hexo</a>
             </li>
         
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>pattern recognition</a>
+            </li>
+        
     </div>
 
 </div>
@@ -266,6 +285,15 @@
     </div>
     
     <nav id="title-list-nav">
+        
+        
+        <a  class="全部文章 math "
+           href="/2024/04/30/PR-ch02-Bayes/"
+           data-tag="pattern recognition"
+           data-author="" >
+            <span class="post-title" title="PR-ch02-Bayes">PR-ch02-Bayes</span>
+            <span class="post-date" title="2024-04-30 20:45:31">2024/04/30</span>
+        </a>
         
         
         <a  class="全部文章 算法 "
@@ -348,12 +376,12 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-04-30 16:39:04'>2024-04-17 19:00</time>
+            发布时间 : <time class="date" title='最后更新: 2024-05-01 19:11:44'>2024-04-17 19:00</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:347</span>
+        <span>字数:346</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -401,9 +429,7 @@
       
         <p>In the previous article <a href="https://sheldoncoder1337.github.io/2024/04/17/Shortest-Path-%E2%85%A0/">Shortest-Path-Ⅰ</a>, we have already learn how to use Networkx and Pandana <code>shortest_path</code> API to find the shortest path on <a target="_blank" rel="noopener" href="https://data.cityofnewyork.us/Transportation/NYC-Taxi-Zones/d3c5-ddgc">New York</a> <a target="_blank" rel="noopener" href="https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page">New York Taxi Trip</a> dataset. And after comparing the performance between Dijkstra and Constraction Hierarchy algorithm, we could found that CH have a much better performance than classic Dijkstra algorithm.</p>
 <p>In this blog, let’s try to fix the Carpool problem.</p>
-<h2 id="Location-Statistics-Heat-Map-Visualization"><a href="#Location-Statistics-Heat-Map-Visualization" class="headerlink" title="Location Statistics &amp; Heat Map Visualization"></a>Location Statistics &amp; Heat Map Visualization</h2><pre><code class="python">
-</code></pre>
-<pre><code class="python">import pandas as pd
+<h2 id="Location-Statistics-Heat-Map-Visualization"><a href="#Location-Statistics-Heat-Map-Visualization" class="headerlink" title="Location Statistics &amp; Heat Map Visualization"></a>Location Statistics &amp; Heat Map Visualization</h2><pre><code class="python">import pandas as pd
 import plotly.express as px
 
 # Data with latitude/longitude and values
@@ -449,10 +475,10 @@ fig.show()
 
 <div class="article_copyright">
     <p><span class="copy-title">文章标题:</span>Shortest Path Ⅱ</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">347</span></p>
+    <p><span class="copy-title">字数:</span><span class="post-count">346</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="KaLok Tsai">KaLok Tsai</a></p>
     <p><span class="copy-title">发布时间:</span>2024-04-17, 19:00:00</p>
-    <p><span class="copy-title">最后更新:</span>2024-04-30, 16:39:04</p>
+    <p><span class="copy-title">最后更新:</span>2024-05-01, 19:11:44</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/04/17/Shortest-Path-%E2%85%A1/" title="Shortest Path Ⅱ">https://sheldoncoder1337.github.io/2024/04/17/Shortest-Path-%E2%85%A1/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
