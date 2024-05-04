@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>PR-ch02-Bayes | sheldon</title>
+  <title>PR-ch03-LC | sheldon</title>
   <meta name="keywords" content=" pattern recognition ">
-  <meta name="description" content="PR-ch02-Bayes | sheldon">
+  <meta name="description" content="PR-ch03-LC | sheldon">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="Solution:        References   Sergios Theodoridis Konstantinos Koutroumbas Pattern Recognition. 4th Edition. Springer, 2010.">
 <meta property="og:type" content="article">
@@ -369,9 +369,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-PR-ch02-Bayes" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-PR-ch03-LC" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">PR-ch02-Bayes</h1>
+        <h1 class="article-title">PR-ch03-LC</h1>
     
     <div class="article-meta">
         
@@ -396,12 +396,12 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-05-02 12:18:16'>2024-04-30 20:45</time>
+            发布时间 : <time class="date" title='最后更新: 2024-05-04 11:45:31'>2024-05-04 10:53</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1.9k</span>
+        <span>字数:12</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -447,120 +447,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<p><strong>Problem 2.2:</strong> In a two-class one-dimensional problem, the pdfs are the Gaussians $\mathcal{N}(0,\sigma^2)$ and $\mathcal{N}(1,\sigma^2)$ for the two classes, respectively. Show that the threshold $x_0$ minimizing the average risk is equal to<br>$$x_0&#x3D;1&#x2F;2-\sigma^2\ln\frac{\lambda_{21}P(\omega_2)}{\lambda_{12}P(\omega_1)}$$<br>where $\lambda_{11}&#x3D;\lambda_{22}&#x3D;0$ has been assumed.</p>
-<hr>
-<p>Solution: In a two-class problem:</p>
-<p>$$R(\alpha_1|x)&#x3D;\lambda_{11}P(\omega_1|x)+\lambda_{21}P(\omega_2|x)$$</p>
-<p>$$R(\alpha_2|x)&#x3D;\lambda_{12}P(\omega_1|x)+\lambda_{22}P(\omega_2|x)$$</p>
-<p>The threshold $x_0$ minimizing the average risk where $R(\alpha_1|x_0)&#x3D;R(\alpha_2|x_0),$ then:</p>
-<p>$$\lambda_{11}P(\omega_1|x_0)+\lambda_{21}P(\omega_2|x_0)&#x3D;\lambda_{12}P(\omega_1|x_0)+\lambda_{22}P(\omega_2|x_0)$$</p>
-<p>$$\Rightarrow\frac{P(\omega_1|x_0)}{P(\omega_2|x_0)}&#x3D;\frac{p(x_0|\omega_1)P(\omega_1)}{p(x_0|\omega_2)P(\omega_2)}&#x3D;\frac{\lambda_{12}-\lambda_{22}}{\lambda_{21}-\lambda_{11}}$$</p>
-<p>To minimize the average risk, we have<br>$$\frac{P(x_0|\omega_1)}{P(x_0|\omega_2)}&#x3D;\frac{\lambda_{12}-\lambda_{22}}{\lambda_{21}-\lambda_{11}}\frac{P(\omega_2)}{P(\omega_1)}$$<br>and $\lambda_{11}&#x3D;\lambda_{22}&#x3D;0$,then</p>
-<p>$$\frac{P(x_0|\omega_1)}{P(x_0|\omega_2)}&#x3D;\frac{\lambda_{12}}{\lambda_{21}}\frac{P(\omega_2)}{P(\omega_1)}$$</p>
-<p>taking the logarithm of both sides,$$lnP(x_{0}|\omega_{1})-lnP(x_{0}|\omega_{2})&#x3D;ln\frac{\lambda_{12}P(\omega_{2})}{\lambda_{21}P(\omega_{1})}$$</p>
-<p>since $P(x_{0}|\omega_{1}){\sim}N(0,\sigma^{2}),$</p>
-<p>$$P(x_{0}|\omega_{1})&#x3D;\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{x_{0}^{2}}{2\sigma^{2}}}\quad\Rightarrow{lnP(x_{0}|\omega_{1})}&#x3D;-ln(\sqrt{2\pi}\sigma)-\frac{x_{0}^{2}}{2\sigma^{2}}$$</p>
-<p>and $P(x_{0}|\omega_{2}){\sim}N(1,\sigma^{2}),$</p>
-<p>$$P(x_{0}|\omega_{2})&#x3D;\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x_{0}-1)^{2}}{2\sigma^{2}}}\quad\Rightarrow{lnP(x_{0}|\omega_{2})}&#x3D;-ln(\sqrt{2\pi}\sigma)-\frac{(x_{0}-1)^{2}}{2\sigma^{2}}$$</p>
-<p>then, $lnP(x_0|\omega_1)-lnP(x_0|\omega_2)&#x3D;-ln(\sqrt{2\pi}\sigma)-\frac{x_0^2}{2\sigma^2}-(-ln(\sqrt{2\pi}\sigma)-\frac{(x_0-1)^2}{2\sigma^2})$</p>
-<p>$$lnP(x_0|\omega_1)-lnP(x_0|\omega_2)&#x3D;-\frac{(x_0-1)^2}{2\sigma^2}-\frac{x_0^2}{2\sigma^2}&#x3D;ln\frac{\lambda_{12}P(\omega_2)}{\lambda_{21}P(\omega_1)}$$</p>
-<p>$$(x_{0}-1)^{2}-x_{0}^{2}&#x3D;2\sigma^{2}ln\frac{\lambda_{12}P(\omega_{2})}{\lambda_{21}P(\omega_{1})}$$</p>
-<p>$$x_{0}^{2}-2x_{0}+1-x_{0}^{2}&#x3D;2\sigma^{2}ln\frac{\lambda_{12}P(\omega_{2})}{\lambda_{21}P(\omega_{1})}$$</p>
-<p>$$-2x_{0}+1&#x3D;2\sigma^{2}ln\frac{\lambda_{12}P(\omega_{2})}{\lambda_{21}P(\omega_{1})}$$</p>
-<p>$$\mathrm{thus},\quad x_0&#x3D;\frac{1}{2}-\sigma^2ln\frac{\lambda_{12}P(\omega_2)}{\lambda_{21}P(\omega_1)}$$</p>
-<hr>
-<p><strong>Problem 2.5:</strong> Consider a two (equiprobable) class, one-dimensional problem with samples distributed according to the Rayleigh pdf in each class, that is,<br>$$p(x|\omega_i)&#x3D;\begin{cases}\frac{x}{\sigma_i^2}\exp\left(\frac{-x^2}{2\sigma_i^2}\right)&amp;x\geq0 \\ 0&amp;x&lt;0\end{cases}$$<br>Compute the decision boundary point $g(x)&#x3D;0.$</p>
-<hr>
-<p>Solution: The decision boundary point corresponds to</p>
-<p>$$\frac{x_0}{\sigma_1^2}\exp(\frac{-x_0^2}{2\sigma_1^2})&#x3D;\frac{x_0}{\sigma_2^2}\exp(\frac{-x_0^2}{2\sigma_2^2})$$</p>
-<p>or by taking the logarithm</p>
-<p>$$\frac{-x_0^2}{2\sigma_1^2}&#x3D;\ln\frac{\sigma_1^2}{\sigma_2^2}-\frac{x_0^2}{2\sigma_2^2}$$</p>
-<p>and finally</p>
-<p>$$x_0&#x3D;\sqrt{\frac{2\sigma_1^2\sigma_2^2}{\sigma_1^2-\sigma_2^2}\ln\frac{\sigma_1^2}{\sigma_2^2}}$$</p>
-<hr>
-<p><strong>Problem 2.7:</strong> In a three-class,two-dimensional problem the feature vectors in each class are normally distributed with covariance matrix<br>$$\Sigma&#x3D;\begin{bmatrix}1.2&amp;0.4 \\ 0.4&amp;1.8\end{bmatrix}$$<br>The mean vectors for each class are $[0.1,0.1]^T,[2.1,1.9]^T,[-1.5,2.0]^T.$ Assuming that the classes are equiprobable,<br>(a) classify the feature vector [1.6,1.5]$^T$ according to the Bayes minimum error probability classifier;<br>(b) draw the curves of equal Mahalanobis distance from [2.1,1.9]$^{\acute{T}}.$</p>
-<hr>
-<p>Solution: </p>
-<p>(a) It suffices to compute the Mahalanobis distance of $[1.6,1.5]^T$ from mean vectors of the classes. We have:</p>
-<p>$$\Sigma^{-1}&#x3D;\left[\begin{array}{cc}0.9&amp;0.2 \\ -0.2&amp;0.6\end{array}\right]$$</p>
-<p>$$|\Sigma|&#x3D;1.2\times1.8-0.4\times0.4&#x3D;2,\Sigma^{-1}&#x3D;\frac{1}{|\Sigma|}\Big[\begin{matrix}1.8&amp;-0.4 \\ -0.4&amp;1.2\end{matrix}\Big]&#x3D;\Big[\begin{matrix}0.9&amp;-0.2 \\ -0.2&amp;0.6\end{matrix}\Big]$$</p>
-<p>Thus, $d_1^2&#x3D;2.361,d_2^2&#x3D;0.241,d_3^2&#x3D;9.416$</p>
-<p>Hence $[1.6,1.5]^T$ is assigned to $\mathcal{w_2}$</p>
-<p>(b) According to theory it suffices to compute the eigenvalues and eigenvectors of $\Sigma$. There are </p>
-<p>$$\lambda_{1}&#x3D;1,\lambda_{2}&#x3D;2 \\ v_{1}&#x3D;[0.89,-0.45]^{T} \\ v_{2}&#x3D;[0.45,0.89]^{T}$$</p>
-<p>Thus the ellipse, centered at $\mu_2$ and axis</p>
-<p>$2\sqrt{\lambda_1}c\boldsymbol{v}_1$ and $2\sqrt{\lambda_2}c\boldsymbol{v}_2$</p>
-<hr>
-<p><strong>Problem 2.12:</strong> Consider a two-class, two-dimensional classification task, where the feature vectors in each of the classes $\omega_1,\omega_{2}$ are distributed according to</p>
-<p>$$p(x|\omega_1)&#x3D;\frac{1}{\sqrt{2\pi\sigma_1^2}}\exp\biggl(-\frac{1}{2\sigma_1^2}(x-\mu_1)^T(x-\mu_1)\biggr)$$</p>
-<p>$$p(x|\omega_2)&#x3D;\dfrac{1}{\sqrt{2\pi\sigma_2^2}}\exp\biggl(-\dfrac{1}{2\sigma_2^2}(x-\mu_2)^T(x-\mu_2)\biggr)$$</p>
-<p>with</p>
-<p>$$\mu_{1}&#x3D;[1,1]^{T},\mu_{2}&#x3D;[1.5,1.5]^{T},\sigma_{1}^{2}&#x3D;\sigma_{2}^{2}&#x3D;0.2$$</p>
-<p>Assume that $P(\omega_1)&#x3D;P(\omega_2)$ and design a Bayesian classifier<br>(a) that minimizes the error probability<br>(b) that minimizes the average risk with loss matrix</p>
-<p>$$\Lambda&#x3D;\begin{bmatrix}0&amp;1 \\ 0.5&amp;0\end{bmatrix}$$</p>
-<p>Using a pseudorandom number generator, produce 100 feature vectors from each class, according to the preceding pdfs. Use the classifiers designed to classify the generated vectors. What is the percentage error for each case? Repeat the experiments for $\mu_{2}&#x3D;[3.0,3.0]^{T}.$</p>
-<hr>
-<p>Solution:</p>
-<p>(a) For the two-class classification, if $P(\omega_1)&#x3D;P(\omega_2)$ and $\lambda_{11}&#x3D;\lambda_{22}&#x3D;0$,</p>
-<p>The Bayesian classifier is: $x\to\omega_{1}$ if $P(x|\omega_{1})&gt;P(x|\omega_{2})\frac{\lambda_{12}}{\lambda_{21}}$</p>
-<p>If $\lambda_{12}&#x3D;\lambda_{21}$ , the Bayesian classifier minimizes the error probability. Thus, the Bayesian<br>classifier is: $x\to\omega_{1}$ if $P(x|\omega_{1})&gt;P(x|\omega_{2})$</p>
-<p>We have</p>
-<p>$$p(x|\omega_1)&#x3D;\frac{1}{\sqrt{2\pi\sigma_1^2}}\exp\biggl(-\frac{1}{2\sigma_1^2}(x-\mu_1)^T(x-\mu_1)\biggr)$$</p>
-<p>$$p(x|\omega_2)&#x3D;\dfrac{1}{\sqrt{2\pi\sigma_2^2}}\exp\biggl(-\dfrac{1}{2\sigma_2^2}(x-\mu_2)^T(x-\mu_2)\biggr)$$</p>
-<p>From $\sigma_1^2&#x3D;\sigma_2^2&#x3D;\sigma^2,|x-\mu_1|^2&#x3D;(x-\mu_1)^T(x-\mu_1)$ and $|x-\mu_2|^2&#x3D;(x-\mu_2)^T(x-\mu_2)$, we have</p>
-<p>$$P(x|\omega_1)&#x3D;\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{|x-\mu_1|^2}{2\sigma^2}\right),\quad P(x|\omega_2)&#x3D;\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{|x-\mu_2|^2}{2\sigma^2}\right)$$</p>
-<p>$P(x|\omega_1)&gt;P(x|\omega_2)$ is equivalent to $\ln P(x|\omega_1)&gt;\ln P(x|\omega_2)$</p>
-<p>$$\ln P(x|\omega_1)&#x3D;\ln\frac{1}{\sqrt{2\pi\sigma^2}}-\frac{|x-\mu_1|^2}{2\sigma^2},\quad\ln P(x|\omega_2)&#x3D;\ln\frac{1}{\sqrt{2\pi\sigma^2}}-\frac{|x-\mu_2|^2}{2\sigma^2}$$</p>
-<p>$P(x|\omega_1)&gt;P(x|\omega_2)$ is equivalent to $|x-\mu_1|&lt;|x-\mu_2|$</p>
-<p>Thus, for the Bayesian classifier minimizing the error probability is equivalent to the<br>classifier minimizing the Euclidean distance, namely,</p>
-<p>$$x\to\omega_1\text{ if }|x-\mu_1|&lt;|x-\mu_2|$$</p>
-<p>(b) In this case, $x$ is classified to $P(x|\omega_{1})&gt;P(x|\omega_{2})\frac{\lambda_{12}}{\lambda_{21}}$</p>
-<p>where $\lambda_{12}&#x3D;1$ and $\lambda_{21}&#x3D;0.5$. Thus following similar arguments as in theory, for Bayesian<br>classification for normal distributions, we conclude that the decision hyperplane is</p>
-<p>$$g_{12}(x)&#x3D;w^T(x-x_0) \\ w&#x3D;\mu_{1}-\mu_{2}$$</p>
-<p>and</p>
-<p>$$x_0&#x3D;\frac{1}{2}(\mu_1+\mu_2)-\sigma^2\ln\frac{\lambda_{21}P(\omega_1)}{\lambda_{12}P(\omega_2)}\frac{\mu_1-\mu_2}{|\mu_1-\mu_2|^2}$$</p>
-<p>(c) The following MATLAB function takes as input the variance (s), the mean ( m) and the number of samples N. The output is a vector 1xN, whose ele- ments are the N samples of the 1-D Gaussian. For 2-D independent variables, combine two samples generated above, in a single vector</p>
-<p>$$x&#x3D;[x_1,x_2]^T$$</p>
-<pre><code class="matlab">Function x=gaussian(m,s,N);
-x=randn(1,N);
-x=x*sqrt(s)+m;
-</code></pre>
-<hr>
-<p><strong>Problem 2.17：</strong> In a heads or tails coin-tossing experiment the probability of occurrence of a head (1) is $q$ and that of a tail (0) is $1-q$. Let $x_i,i &#x3D;1,2,…,N$, be the resulting experimental outcomes, 𝑥𝑖 ∈ {0,1}. Show that the ML estimate of $q$ is</p>
-<p>$$q_{ML}&#x3D;\frac1N\sum_{i&#x3D;1}^Nx_i$$</p>
-<p>Hint: The likelihood function is</p>
-<p>$$P(X;q)&#x3D;\prod_{i&#x3D;1}^Nq^{x_i}(1-q)^{(1-x_i)}$$</p>
-<p>Then show that the ML results from the solution of the equation</p>
-<p>$$q^{\sum_{i}x_{i}}(1-q)^{(N-\sum_{i}x_{i})}\left(\frac{\sum_{i}x_{i}}{q}-\frac{N-\sum_{i}x_{i}}{1-q}\right)&#x3D;0$$</p>
-<hr>
-<p>Solution:</p>
-<img src="/2024/04/30/PR-ch02-Bayes/6.png" class>
-<img src="/2024/04/30/PR-ch02-Bayes/7.png" class>
-<hr>
-<p><strong>Problem 2.29：</strong> Show that for the lognormal distribution</p>
-<p>$$p(x)&#x3D;\frac{1}{\sigma x\sqrt{2\pi}}\exp\left(-\frac{(\ln{x}-\theta)^{2}}{2\sigma^{2}}\right),x&gt;0$$</p>
-<p>The ML estimate is given by</p>
-<p>$$\theta_{ML}&#x3D;\frac{1}{N}\sum_{k&#x3D;1}^{N}\ln{x_k}$$</p>
-<hr>
-<p>Solution:</p>
-<img src="/2024/04/30/PR-ch02-Bayes/8.png" class>
+        <img src="/2024/05/04/PR-ch03-LC/problem.png" class>
 
 <hr>
-<p><strong>Problem:</strong> Consider two normal distributions in one dimension: $N(\mu_1,\sigma_1^2)$ and $N(\mu_2,\sigma_2^2).$ Imagine that we choose two random samples $x_1$ and $x_2$,one from each of the normal distributions and calculate their sum $x_3&#x3D;x_1+x_2.$ Suppose we do this repeatedly.</p>
-<p>(a) Consider the resulting distribution of the values of $x_3.$ Show from frst principles<br>that this is also a normal distribution.</p>
-<p>(b) What is the mean,  $\mu_{3}$, of your new distribution?</p>
-<p>(c) What is the variance, $\sigma_3^2?$</p>
-<p>(d) Repeat the above with two distributions in a multi-dimensional space, i.e., $N(\mu_1,\Sigma_1)$ and $N(\mu_2,\Sigma_2).$</p>
-<hr>
 <p>Solution:</p>
-<img src="/2024/04/30/PR-ch02-Bayes/1.png" class>
-<img src="/2024/04/30/PR-ch02-Bayes/2.png" class>
-<img src="/2024/04/30/PR-ch02-Bayes/3.png" class>
-<img src="/2024/04/30/PR-ch02-Bayes/4.png" class>
-<img src="/2024/04/30/PR-ch02-Bayes/5.png" class>
+<img src="/2024/05/04/PR-ch03-LC/1.png" class>
+<img src="/2024/05/04/PR-ch03-LC/2.png" class>
 
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><img src="/2024/04/30/PR-ch02-Bayes/cover.png" class>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><img src="/2024/05/04/PR-ch03-LC/cover.png" class>
 
 <ul>
 <li>Sergios Theodoridis Konstantinos Koutroumbas Pattern Recognition. 4th Edition. Springer, 2010.</li>
@@ -574,12 +468,12 @@ x=x*sqrt(s)+m;
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>PR-ch02-Bayes</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">1.9k</span></p>
+    <p><span class="copy-title">文章标题:</span>PR-ch03-LC</p>
+    <p><span class="copy-title">字数:</span><span class="post-count">12</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="KaLok Tsai">KaLok Tsai</a></p>
-    <p><span class="copy-title">发布时间:</span>2024-04-30, 20:45:31</p>
-    <p><span class="copy-title">最后更新:</span>2024-05-02, 12:18:16</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/04/30/PR-ch02-Bayes/" title="PR-ch02-Bayes">https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/</a>
+    <p><span class="copy-title">发布时间:</span>2024-05-04, 10:53:25</p>
+    <p><span class="copy-title">最后更新:</span>2024-05-04, 11:45:31</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/05/04/PR-ch03-LC/" title="PR-ch03-LC">https://sheldoncoder1337.github.io/2024/05/04/PR-ch03-LC/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
     </p>

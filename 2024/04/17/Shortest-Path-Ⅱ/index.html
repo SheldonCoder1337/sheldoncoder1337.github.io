@@ -6,28 +6,27 @@
   <meta name="keywords" content=" algorithm, find-the-shortest-path ">
   <meta name="description" content="Shortest Path Ⅱ | sheldon">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="Problem 2.2: In a two-class one-dimensional problem, the pdfs are the Gaussians $\mathcal{N}(0,\sigma^2)$ and $\mathcal{N}(1,\sigma^2)$ for the two classes, respectively. Show that the threshold $x_0">
+<meta name="description" content="Solution:        References   Sergios Theodoridis Konstantinos Koutroumbas Pattern Recognition. 4th Edition. Springer, 2010.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PR-ch02-Bayes">
-<meta property="og:url" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/index.html">
+<meta property="og:title" content="PR-ch04-NLC">
+<meta property="og:url" content="https://sheldoncoder1337.github.io/2024/05/04/PR-ch04-NLC/index.html">
 <meta property="og:site_name" content="sheldon">
-<meta property="og:description" content="Problem 2.2: In a two-class one-dimensional problem, the pdfs are the Gaussians $\mathcal{N}(0,\sigma^2)$ and $\mathcal{N}(1,\sigma^2)$ for the two classes, respectively. Show that the threshold $x_0">
+<meta property="og:description" content="Solution:        References   Sergios Theodoridis Konstantinos Koutroumbas Pattern Recognition. 4th Edition. Springer, 2010.">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/6.png">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/7.png">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/8.png">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/1.png">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/2.png">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/3.png">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/4.png">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/5.png">
-<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/cover.png">
-<meta property="article:published_time" content="2024-04-30T12:45:31.000Z">
-<meta property="article:modified_time" content="2024-05-02T04:18:16.267Z">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/05/04/PR-ch04-NLC/problem.png">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/05/04/PR-ch04-NLC/1.png">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/05/04/PR-ch04-NLC/2.png">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/05/04/PR-ch04-NLC/3.png">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/05/04/PR-ch04-NLC/4.png">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/05/04/PR-ch04-NLC/5.png">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/05/04/PR-ch04-NLC/6.png">
+<meta property="og:image" content="https://sheldoncoder1337.github.io/2024/05/04/PR-ch04-NLC/cover.png">
+<meta property="article:published_time" content="2024-05-04T02:53:37.000Z">
+<meta property="article:modified_time" content="2024-05-04T03:48:16.603Z">
 <meta property="article:author" content="KaLok Tsai">
 <meta property="article:tag" content="pattern recognition">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/6.png">
+<meta name="twitter:image" content="https://sheldoncoder1337.github.io/2024/05/04/PR-ch04-NLC/problem.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -146,7 +145,7 @@
     <li>
         <div class="all active" data-rel="全部文章">全部文章
             
-                <small>(5)</small>
+                <small>(7)</small>
             
         </div>
     </li>
@@ -173,7 +172,7 @@
         <div data-rel="math">
             
             math
-            <small>(1)</small>
+            <small>(3)</small>
         </div>
         
     </li>
@@ -216,7 +215,7 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="5">
+<input type="hidden" id="yelog_site_posts_number" value="7">
 <input type="hidden" id="yelog_site_word_count" value="6.2k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -288,6 +287,24 @@
     </div>
     
     <nav id="title-list-nav">
+        
+        
+        <a  class="全部文章 math "
+           href="/2024/05/04/PR-ch04-NLC/"
+           data-tag="pattern recognition"
+           data-author="" >
+            <span class="post-title" title="PR-ch04-NLC">PR-ch04-NLC</span>
+            <span class="post-date" title="2024-05-04 10:53:37">2024/05/04</span>
+        </a>
+        
+        
+        <a  class="全部文章 math "
+           href="/2024/05/04/PR-ch03-LC/"
+           data-tag="pattern recognition"
+           data-author="" >
+            <span class="post-title" title="PR-ch03-LC">PR-ch03-LC</span>
+            <span class="post-date" title="2024-05-04 10:53:25">2024/05/04</span>
+        </a>
         
         
         <a  class="全部文章 math "
