@@ -207,7 +207,7 @@
     </div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="8">
-<input type="hidden" id="yelog_site_word_count" value="7k">
+<input type="hidden" id="yelog_site_word_count" value="7.3k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -396,12 +396,12 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-05-04 11:45:31'>2024-05-04 10:53</time>
+            发布时间 : <time class="date" title='最后更新: 2024-05-05 18:48:44'>2024-05-04 10:53</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:12</span>
+        <span>字数:282</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -447,7 +447,34 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <img src="/2024/05/04/PR-ch03-LC/problem.png" class>
+        <p>Decision hyperplane:</p>
+<p>$$g(x)&#x3D;w^{T}x+w_{0}&#x3D;0\Rightarrow w_{1}x_{1}+w_{2}x_{2}+\cdots+w_{l}x_{l}+w_{0}&#x3D;0$$</p>
+<p>where $w&#x3D;(w_{1},w_{2},…,w_{l})^{T}$ is weight vector, $w_{0}$ is threshold</p>
+<p><strong>Our goal:</strong> compute a solution, a hyperplane $w$, so that</p>
+<p>$$w^Tx+w_0&gt;0(or&lt;0),\quad x\in\omega_1(or \omega_2)$$</p>
+<p>Perceptron algorithm：</p>
+<ul>
+<li>Define a cost function $J(w)$</li>
+<li>Chooses an algorithm to minimize $J(w)$</li>
+<li>The minimum corresponds to a solution</li>
+</ul>
+<p><strong>Perceptron cost function：</strong></p>
+<p>$$J(w)&#x3D;\sum_{x\in Y}\delta_xw^Tx$$</p>
+<ul>
+<li>Y is the subset of the training vectors wrongly classified by $w$</li>
+<li>When 𝑌 &#x3D; ∅, a solution is achieved and  $J(w) ≥ 0$</li>
+<li>$\delta_x&#x3D;\begin{cases}-1&amp; \text{if}x\in\omega_1 \\ +1&amp; \text{if}x\in\omega_2\end{cases}$</li>
+<li>$J(w)$ is continuous and piecewise linear</li>
+</ul>
+<p><strong>Minimize the cost function:</strong></p>
+<p>$$\frac{\partial J(w)}{\partial w}&#x3D;\frac{\partial}{\partial w}\left(\sum_{x\in Y}(\delta_{x}w^{T}x)\right)&#x3D;\sum_{x\in Y}\delta_{x}x$$</p>
+<p>$$w(t+1)&#x3D;w(t)-\rho_t\frac{\partial J(w)}{\partial w}\Bigg|_{w&#x3D;w(t)}$$</p>
+<p>$$w(t+1)&#x3D;w(t)-\rho_t\sum_{x\in Y}\delta_xx$$</p>
+<p>The perceptron algorithm converges in a finite number of iteration steps<br>to a solution if</p>
+<p>$$\lim_{t\to\infty}\sum_{k&#x3D;0}^t\rho_k\to\infty\quad\mathrm{and}\quad\lim_{t\to\infty}\sum_{k&#x3D;0}^t\rho_k^2&lt;+\infty $$</p>
+<p>The perceptron algorithm is a reward and punishment scheme</p>
+<hr>
+<img src="/2024/05/04/PR-ch03-LC/problem.png" class>
 
 <hr>
 <p>Solution:</p>
@@ -469,10 +496,10 @@
 
 <div class="article_copyright">
     <p><span class="copy-title">文章标题:</span>PR-ch03-LC</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">12</span></p>
+    <p><span class="copy-title">字数:</span><span class="post-count">282</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="KaLok Tsai">KaLok Tsai</a></p>
     <p><span class="copy-title">发布时间:</span>2024-05-04, 10:53:25</p>
-    <p><span class="copy-title">最后更新:</span>2024-05-04, 11:45:31</p>
+    <p><span class="copy-title">最后更新:</span>2024-05-05, 18:48:44</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/05/04/PR-ch03-LC/" title="PR-ch03-LC">https://sheldoncoder1337.github.io/2024/05/04/PR-ch03-LC/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
