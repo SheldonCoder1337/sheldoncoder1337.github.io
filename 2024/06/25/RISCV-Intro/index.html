@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>hexo hand book | 安居乐业</title>
-  <meta name="keywords" content=" hexo ">
-  <meta name="description" content="hexo hand book | 安居乐业">
+  <title>RISCV-Intro | 安居乐业</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="RISCV-Intro | 安居乐业">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="RISCV ISA 命名规范 RISC-V ISA采用模块化设计 ISA &#x3D; 1个基本整数指令集+多个可选的扩展指令集     基本指令集 描述    RV32I 32位整数指令集   RV32E RV32I的子集，用于小型嵌入式场景，寄存器数少   RV64I 64位整数指令集，兼容RV32I   RV128I 128位整数指令集，兼容RV64I和RV32I      扩展指令集 描述">
 <meta property="og:type" content="article">
@@ -416,9 +416,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-hexo-hand-book" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-RISCV-Intro" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">hexo hand book</h1>
+        <h1 class="article-title">RISCV-Intro</h1>
     
     <div class="article-meta">
         
@@ -428,27 +428,20 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="tools">tools</a>
+            <a  data-rel="RISCV">RISCV</a>
             
         </span>
         
         
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color5">hexo</a>
-            
-        </span>
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2024-06-28 17:32:18'>2024-06-25 12:32</time>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-04-30 13:26:49'>2024-04-16 23:06</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        <span>字数:779</span>
+        <span>字数:617</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -478,7 +471,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%91%E5%B8%83%E6%96%87%E7%AB%A0"><span class="toc-text">发布文章</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%AB%99%E8%AE%BE%E7%BD%AE"><span class="toc-text">网站设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%8D%A2%E4%B8%BB%E9%A2%98"><span class="toc-text">更换主题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-text">常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-text">结语</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#RISCV-ISA-%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83"><span class="toc-text">RISCV ISA 命名规范</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RISC-V-%E7%89%B9%E6%9D%83%E6%8C%87%E4%BB%A4%E7%BB%93%E6%9E%84"><span class="toc-text">RISC-V 特权指令结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HART-%E2%80%9C%E7%A1%AC%E4%BB%B6%E7%BA%BF%E7%A8%8B%E2%80%9D"><span class="toc-text">HART “硬件线程”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Privileged-Level-%E7%89%B9%E6%9D%83%E7%BA%A7%E5%88%AB"><span class="toc-text">Privileged Level 特权级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSR"><span class="toc-text">CSR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E4%B8%8E%E4%BF%9D%E6%8A%A4"><span class="toc-text">内存管理与保护</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-text">References</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -494,68 +487,117 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h2><p>进入博客所在目录，右键打开Git Bash Here，创建博文：</p>
-<pre><code class="bash">hexo new &quot;article title&quot;
-</code></pre>
-<p>然后 source 文件夹中会出现一个 My New Post.md 文件，就可以使用 Markdown 编辑器在该文件中撰写文章了。</p>
-<p>写完后运行下面代码将文章渲染并部署到 GitHub Pages 上完成发布。以后每次发布文章都是这两条命令。</p>
-<pre><code class="bash">hexo g   # 生成页面
-hexo d   # 部署发布
-</code></pre>
-<p>也可以不使用命令自己创建 .md 文件，只需在文件开头手动加入如下格式 Front-matter 即可，写完后运行 hexo g 和 hexo d 发布。</p>
-<pre><code class="markdown">---
-title: Hello World # 标题
-date: 2019/3/26 hh:mm:ss # 时间
-categories: # 分类
-- Diary
-tags: # 标签
-- PS3
-- Games
----
-
-摘要
-&lt;!--more--&gt;
-正文
-</code></pre>
-<h2 id="网站设置"><a href="#网站设置" class="headerlink" title="网站设置"></a>网站设置</h2><p>包括网站名称、描述、作者、链接样式等，全部在网站目录下的 _config.yml 文件中，参考官方文档按需要编辑。</p>
-<p>注意：冒号后要加一个空格！</p>
-<h2 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h2><p>在 Themes | Hexo 选择一个喜欢的主题，比如 NexT，进入网站目录打开 Git Bash Here 下载主题：</p>
-<pre><code class="bash">git clone https://github.com/iissnan/hexo-theme-next themes/next
-</code></pre>
-<p>然后修改 _config.yml 中的 theme 为新主题名称 next，发布。（有的主题需要将 _config.yml 替换为主题自带的，参考主题说明。）</p>
-<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><pre><code class="bash">hexo new &quot;name&quot;       # 新建文章
-hexo new page &quot;name&quot;  # 新建页面
-hexo g                # 生成页面
-hexo d                # 部署
-hexo g -d             # 生成页面并部署
-hexo s                # 本地预览
-hexo clean            # 清除缓存和已生成的静态文件
-hexo help             # 帮助
-</code></pre>
-<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><p>1、Hexo 设置显示文章摘要，首页不显示全文</p>
-<p>Hexo 主页文章列表默认会显示文章全文，浏览时很不方便，可以在文章中插入</p>
-<pre><code class="markdown">&lt;!--more--&gt;
-</code></pre>
-<p>进行分段。</p>
-<p>该代码前面的内容会作为摘要显示，而后面的内容会替换为 “Read More” 隐藏起来。</p>
-<p>2、设置网站图标</p>
-<p>进入 themes&#x2F;主题 文件夹，打开 _config.yml 配置文件，找到 favicon 修改，一般格式为：favicon: 图标地址。（不同主题可能略有差别）</p>
-<p>3、修改并部署后没有效果</p>
-<p>使用 hexo clean 清理后重新部署。</p>
-<p>4、markdown图片引入没有效果</p>
-<ul>
-<li>统一改为Github仓库图片链接，例子：</li>
+        <h2 id="RISCV-ISA-命名规范"><a href="#RISCV-ISA-命名规范" class="headerlink" title="RISCV ISA 命名规范"></a>RISCV ISA 命名规范</h2><ul>
+<li>RISC-V ISA采用模块化设计</li>
+<li><strong>ISA &#x3D; 1个基本整数指令集+多个可选的扩展指令集</strong></li>
 </ul>
-<pre><code class="markdwon">![&quot;图片标题&quot;](https://github.com/SheldonCoder1337/sheldoncoder1337.github.io/blob/master/2024/04/17/temp/sheldon.png?raw=true)
-</code></pre>
+<table>
+<thead>
+<tr>
+<th>基本指令集</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RV32I</td>
+<td>32位整数指令集</td>
+</tr>
+<tr>
+<td>RV32E</td>
+<td>RV32I的子集，用于小型嵌入式场景，寄存器数少</td>
+</tr>
+<tr>
+<td>RV64I</td>
+<td>64位整数指令集，兼容RV32I</td>
+</tr>
+<tr>
+<td>RV128I</td>
+<td>128位整数指令集，兼容RV64I和RV32I</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>扩展指令集</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>M</td>
+<td>整数乘除法(<strong>M</strong>ultiplication)指令集</td>
+</tr>
+<tr>
+<td>A</td>
+<td>存储器原子(<strong>A</strong>tomic)指令集</td>
+</tr>
+<tr>
+<td>F</td>
+<td>单精度(32bit)浮点（<strong>F</strong>loat）指令集</td>
+</tr>
+<tr>
+<td>D</td>
+<td>双精度(64bit)浮点（<strong>D</strong>ouble）指令集</td>
+</tr>
+<tr>
+<td>C</td>
+<td>压缩(<strong>C</strong>ompressed)指令集</td>
+</tr>
+<tr>
+<td>……</td>
+<td>其他标准化和非标准化的指令集</td>
+</tr>
+</tbody></table>
 <ul>
-<li>使用模板语言</li>
+<li>基本整数(Integer)指令集<ul>
+<li>唯一强制要求实现的基础指令集，其他指令集都是可选的扩展模块</li>
 </ul>
-<pre><code class="markdown">&#123;% asset_img sheldon.png "图片标题" %&#125;
-</code></pre>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Hexo 是一种纯静态的博客，我们必须要在本地完成文章的编辑再部署到 GitHub 上，依赖于本地环境。不能像 WordPress 或 Typecho 那样的动态博客一样能直接在浏览器中完成撰文和发布。</p>
-<p>可以说是一种比较极客的写博客方式，但是优势也是明显的——免费稳定省心，比较适合爱折腾研究的用户，或者没有在线发文需求的朋友。</p>
-<p><a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>!  Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+</li>
+<li>扩展模块指令集<ul>
+<li>RISC-V允许在实现中以可选的形式实现其他标准化和非标准化的指令集扩展</li>
+<li>特定组合”IMAFD”被称为”通用(General)”组合，用英文字母G表示</li>
+</ul>
+</li>
+<li>ISA命名格式：RV-xx-abc<ul>
+<li>RV: RISC-V的缩写</li>
+<li>xx: 处理器的字宽，即寄存器的宽度(bit)</li>
+<li>abc…xyz: 该处理器支持的指令集模块集合</li>
+</ul>
+</li>
+<li>例如<ul>
+<li>RV32I:最基本的RISCV实现</li>
+<li>RV32IMA：32位实现，支持Integer+Multiply+Atomic+Compressed</li>
+<li>RV64GC：64位实现，支持IMAFDC</li>
+</ul>
+</li>
+</ul>
+<h2 id="RISC-V-特权指令结构"><a href="#RISC-V-特权指令结构" class="headerlink" title="RISC-V 特权指令结构"></a>RISC-V 特权指令结构</h2><h3 id="HART-“硬件线程”"><a href="#HART-“硬件线程”" class="headerlink" title="HART “硬件线程”"></a>HART “硬件线程”</h3><p>HART &#x3D; HARdware Thread ，是指令执行流的最小执行单位</p>
+<blockquote>
+<p>From the perspective of software running in a given execution enviroment, a <strong>hart</strong> is a <strong>resource</strong> that autonomously fetched and executes RISC-V instruction within that execution enviroment. —— 《The RISC-V Instruction Set Manual》</p>
+</blockquote>
+<h3 id="Privileged-Level-特权级别"><a href="#Privileged-Level-特权级别" class="headerlink" title="Privileged Level 特权级别"></a>Privileged Level 特权级别</h3><p>与X86 ISA里的实模式和保护模式类似</p>
+<p>RISCV里对应着Machine模式，Supervisor模式，User模式</p>
+<p>MMU(内存管理单元)</p>
+<h3 id="CSR"><a href="#CSR" class="headerlink" title="CSR"></a>CSR</h3><p>CSR - Control and Status Register</p>
+<ul>
+<li>不同的特权级别下时分别对应<strong>各自一套Register(CSR)</strong>, 用于控制和获取相应Level下的处理器工作状态。</li>
+</ul>
+<h3 id="内存管理与保护"><a href="#内存管理与保护" class="headerlink" title="内存管理与保护"></a>内存管理与保护</h3><ul>
+<li><strong>物理内存</strong>保护 (Physical Memory Protection, PMP)<ul>
+<li>允许M模式指定U模式可以访问的内存地址</li>
+<li>支持 R&#x2F;W&#x2F;X，以及Lock</li>
+</ul>
+</li>
+<li><strong>虚拟内存</strong><ul>
+<li>需要支持Supervisor Level</li>
+<li>用于实现高级的操作系统特征(Unix&#x2F;Linux)</li>
+<li>多种映射方式Sv32&#x2F;Sv39&#x2F;Sv48</li>
+</ul>
+</li>
+</ul>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://riscv.org/wp-content/uploads/2019/12/riscv-spec-20191213.pdf">The RISC-V Instruction Set Manual https://riscv.org/wp-content/uploads/2019/12/riscv-spec-20191213.pdf</a></li>
+<li><a target="_blank" rel="noopener" href="http://staff.ustc.edu.cn/~llxx/cod/reference_books/RISC-V-Reader-Chinese-v2p12017.pdf">RISC-V 开源指令集手册 汉化版 中国科学院 http://staff.ustc.edu.cn/~llxx&#x2F;cod&#x2F;reference_books&#x2F;RISC-V-Reader-Chinese-v2p12017.pdf</a></li>
+</ul>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 862314702@qq.com </span>
@@ -565,12 +607,12 @@ hexo help             # 帮助
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>hexo hand book</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">779</span></p>
+    <p><span class="copy-title">文章标题:</span>RISCV-Intro</p>
+    <p><span class="copy-title">字数:</span><span class="post-count">617</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Cai Jiale">Cai Jiale</a></p>
-    <p><span class="copy-title">发布时间:</span>2024-04-16, 23:06:14</p>
-    <p><span class="copy-title">最后更新:</span>2024-04-30, 13:26:49</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/04/16/hexo-hand-book/" title="hexo hand book">https://sheldoncoder1337.github.io/2024/04/16/hexo-hand-book/</a>
+    <p><span class="copy-title">发布时间:</span>2024-06-25, 12:32:12</p>
+    <p><span class="copy-title">最后更新:</span>2024-06-28, 17:32:18</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/06/25/RISCV-Intro/" title="RISCV-Intro">https://sheldoncoder1337.github.io/2024/06/25/RISCV-Intro/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
     </p>

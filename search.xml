@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>RISCV-Intro</title>
+      <link href="/2024/06/25/RISCV-Intro/"/>
+      <url>/2024/06/25/RISCV-Intro/</url>
+      
+        <content type="html"><![CDATA[<h2 id="RISCV-ISA-命名规范"><a href="#RISCV-ISA-命名规范" class="headerlink" title="RISCV ISA 命名规范"></a>RISCV ISA 命名规范</h2><ul><li>RISC-V ISA采用模块化设计</li><li><strong>ISA &#x3D; 1个基本整数指令集+多个可选的扩展指令集</strong></li></ul><table><thead><tr><th>基本指令集</th><th>描述</th></tr></thead><tbody><tr><td>RV32I</td><td>32位整数指令集</td></tr><tr><td>RV32E</td><td>RV32I的子集，用于小型嵌入式场景，寄存器数少</td></tr><tr><td>RV64I</td><td>64位整数指令集，兼容RV32I</td></tr><tr><td>RV128I</td><td>128位整数指令集，兼容RV64I和RV32I</td></tr></tbody></table><table><thead><tr><th>扩展指令集</th><th>描述</th></tr></thead><tbody><tr><td>M</td><td>整数乘除法(<strong>M</strong>ultiplication)指令集</td></tr><tr><td>A</td><td>存储器原子(<strong>A</strong>tomic)指令集</td></tr><tr><td>F</td><td>单精度(32bit)浮点（<strong>F</strong>loat）指令集</td></tr><tr><td>D</td><td>双精度(64bit)浮点（<strong>D</strong>ouble）指令集</td></tr><tr><td>C</td><td>压缩(<strong>C</strong>ompressed)指令集</td></tr><tr><td>……</td><td>其他标准化和非标准化的指令集</td></tr></tbody></table><ul><li>基本整数(Integer)指令集<ul><li>唯一强制要求实现的基础指令集，其他指令集都是可选的扩展模块</li></ul></li><li>扩展模块指令集<ul><li>RISC-V允许在实现中以可选的形式实现其他标准化和非标准化的指令集扩展</li><li>特定组合”IMAFD”被称为”通用(General)”组合，用英文字母G表示</li></ul></li><li>ISA命名格式：RV-xx-abc<ul><li>RV: RISC-V的缩写</li><li>xx: 处理器的字宽，即寄存器的宽度(bit)</li><li>abc…xyz: 该处理器支持的指令集模块集合</li></ul></li><li>例如<ul><li>RV32I:最基本的RISCV实现</li><li>RV32IMA：32位实现，支持Integer+Multiply+Atomic+Compressed</li><li>RV64GC：64位实现，支持IMAFDC</li></ul></li></ul><h2 id="RISC-V-特权指令结构"><a href="#RISC-V-特权指令结构" class="headerlink" title="RISC-V 特权指令结构"></a>RISC-V 特权指令结构</h2><h3 id="HART-“硬件线程”"><a href="#HART-“硬件线程”" class="headerlink" title="HART “硬件线程”"></a>HART “硬件线程”</h3><p>HART &#x3D; HARdware Thread ，是指令执行流的最小执行单位</p><blockquote><p>From the perspective of software running in a given execution enviroment, a <strong>hart</strong> is a <strong>resource</strong> that autonomously fetched and executes RISC-V instruction within that execution enviroment. —— 《The RISC-V Instruction Set Manual》</p></blockquote><h3 id="Privileged-Level-特权级别"><a href="#Privileged-Level-特权级别" class="headerlink" title="Privileged Level 特权级别"></a>Privileged Level 特权级别</h3><p>与X86 ISA里的实模式和保护模式类似</p><p>RISCV里对应着Machine模式，Supervisor模式，User模式</p><p>MMU(内存管理单元)</p><h3 id="CSR"><a href="#CSR" class="headerlink" title="CSR"></a>CSR</h3><p>CSR - Control and Status Register</p><ul><li>不同的特权级别下时分别对应<strong>各自一套Register(CSR)</strong>, 用于控制和获取相应Level下的处理器工作状态。</li></ul><h3 id="内存管理与保护"><a href="#内存管理与保护" class="headerlink" title="内存管理与保护"></a>内存管理与保护</h3><ul><li><strong>物理内存</strong>保护 (Physical Memory Protection, PMP)<ul><li>允许M模式指定U模式可以访问的内存地址</li><li>支持 R&#x2F;W&#x2F;X，以及Lock</li></ul></li><li><strong>虚拟内存</strong><ul><li>需要支持Supervisor Level</li><li>用于实现高级的操作系统特征(Unix&#x2F;Linux)</li><li>多种映射方式Sv32&#x2F;Sv39&#x2F;Sv48</li></ul></li></ul><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul><li><a href="https://riscv.org/wp-content/uploads/2019/12/riscv-spec-20191213.pdf">The RISC-V Instruction Set Manual https://riscv.org/wp-content/uploads/2019/12/riscv-spec-20191213.pdf</a></li><li><a href="http://staff.ustc.edu.cn/~llxx/cod/reference_books/RISC-V-Reader-Chinese-v2p12017.pdf">RISC-V 开源指令集手册 汉化版 中国科学院 http://staff.ustc.edu.cn/~llxx&#x2F;cod&#x2F;reference_books&#x2F;RISC-V-Reader-Chinese-v2p12017.pdf</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> RISCV </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Neural Network Pipeline</title>
       <link href="/2024/06/24/Neural-Network-Pipeline/"/>
       <url>/2024/06/24/Neural-Network-Pipeline/</url>
