@@ -14,7 +14,7 @@
 <meta property="og:description" content="练习 1使用 gcc 编译代码并使用 binutils 工具对生成的目标文件和可执行文件（ELF 格式）进行分析。具体要求如下：  编写一个简单的打印 “hello world！” 的程序源文件：hello.c 对源文件进行本地编译，生成针对支持 x86_64 指令集架构处理器的目标文件 hello.o。 查看 hello.o 的文件的文件头信息。 查看 hello.o 的 Section hea">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-06-29T09:34:12.000Z">
-<meta property="article:modified_time" content="2024-06-29T09:35:42.529Z">
+<meta property="article:modified_time" content="2024-06-29T11:00:07.148Z">
 <meta property="article:author" content="Cai Jiale">
 <meta name="twitter:card" content="summary">
 
@@ -236,7 +236,7 @@
     </div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="13">
-<input type="hidden" id="yelog_site_word_count" value="11.6k">
+<input type="hidden" id="yelog_site_word_count" value="12.6k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -463,12 +463,12 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-06-29 17:35:42'>2024-06-29 17:34</time>
+            发布时间 : <time class="date" title='最后更新: 2024-06-29 19:00:07'>2024-06-29 17:34</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1.7k</span>
+        <span>字数:2.8k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -498,7 +498,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0-1"><span class="toc-text">练习 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%83%E4%B9%A02"><span class="toc-text">练习2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0-1"><span class="toc-text">练习 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0-2"><span class="toc-text">练习 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0-3"><span class="toc-text">练习 3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0-4"><span class="toc-text">练习 4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0-5"><span class="toc-text">练习 5</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -611,7 +611,7 @@ void main()
   15:   5d                      pop    %rbp
   16:   c3                      retq   
 </code></pre>
-<h2 id="练习2"><a href="#练习2" class="headerlink" title="练习2"></a>练习2</h2><p>如下例子 C 语言代码 example.c：</p>
+<h2 id="练习-2"><a href="#练习-2" class="headerlink" title="练习 2"></a>练习 2</h2><p>如下例子 C 语言代码 example.c：</p>
 <pre><code class="c">#include &lt;stdio.h&gt; 
  
 int global_init = 0x11111111;         // 初始化全局变量
@@ -720,7 +720,178 @@ Symbol table &#39;.symtab&#39; contains 17 entries:
 <li><p>auto_var 存放在栈中，因为它是自动变量</p>
 </li>
 </ul>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2>
+<h2 id="练习-3"><a href="#练习-3" class="headerlink" title="练习 3"></a>练习 3</h2><p>熟悉交叉编译概念，使用 riscv gcc 编译代码并使用 binutils 工具对生成的目标文件和可执行文件（ELF 格式）进行分析。具体要求如下：</p>
+<ul>
+<li>编写一个简单的打印 “hello world！” 的程序源文件：hello.c</li>
+<li>对源文件进行编译，生成针对支持 rv32ima 指令集架构处理器的目标文件 hello.o。</li>
+<li>查看 hello.o 的文件的文件头信息。</li>
+<li>查看 hello.o 的 Section header table。</li>
+<li>对 hello.o 反汇编，并查看 hello.c 的 C</li>
+</ul>
+<p><strong>解答</strong></p>
+<p>1.编写一个简单的打印 “hello world！” 的程序源文件：hello.c</p>
+<pre><code class="c">#include &lt;stdio.h&gt;
+
+void main()
+&#123;
+    printf(&quot;hellp world!\n&quot;);
+&#125;
+</code></pre>
+<pre><code class="bash">&gt; riscv64-unknown-elf-gcc -march=rv32ima -mabi=ilp32 hello.c 
+
+hello.c:1:10: fatal error: stdio.h: No such file or directory
+    1 | #include &lt;stdio.h&gt;
+      |          ^~~~~~~~~
+compilation terminated.
+</code></pre>
+<p>如果报错，可以换成riscv64-linux-gun-gcc</p>
+<pre><code class="bash">$ sudo apt -y install gcc-riscv64-linux-gun
+$ riscv64-linux-gun-gcc hello.c
+$ file a.out
+a.out: ELF 64-bit LSB shared object, UCB RISC-V, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, BuildID[sha1]=6b3277a79e18ad6acfa00fb14e8f73a2b33fa3a3, for GNU/Linux 4.15.0, not stripped
+</code></pre>
+<p>2.对源文件进行编译，生成针对支持 rv32ima 指令集架构处理器的目标文件 hello.o。</p>
+<pre><code class="bash">&gt; riscv64-linux-gnu-gcc -c hello.c -o hello.o
+</code></pre>
+<p>3.查看 hello.o 的文件的文件头信息。</p>
+<pre><code class="bash">&gt; readelf -h hello.o
+ELF Header:
+  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF64
+  Data:                              2&#39;s complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              REL (Relocatable file)
+  Machine:                           RISC-V
+  Version:                           0x1
+  Entry point address:               0x0
+  Start of program headers:          0 (bytes into file)
+  Start of section headers:          712 (bytes into file)
+  Flags:                             0x5, RVC, double-float ABI
+  Size of this header:               64 (bytes)
+  Size of program headers:           0 (bytes)
+  Number of program headers:         0
+  Size of section headers:           64 (bytes)
+  Number of section headers:         11
+  Section header string table index: 10
+</code></pre>
+<p>Machine: RISC-V</p>
+<p>4.查看 hello.o 的 Section header table。</p>
+<pre><code class="bash">&gt; readelf -SW hello.o
+There are 11 section headers, starting at offset 0x2c8:
+
+Section Headers:
+  [Nr] Name              Type            Address          Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            0000000000000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        0000000000000000 000040 000022 00  AX  0   0  2
+  [ 2] .rela.text        RELA            0000000000000000 0001e0 000090 18   I  8   1  8
+  [ 3] .data             PROGBITS        0000000000000000 000062 000000 00  WA  0   0  1
+  [ 4] .bss              NOBITS          0000000000000000 000062 000000 00  WA  0   0  1
+  [ 5] .rodata           PROGBITS        0000000000000000 000068 00000d 00   A  0   0  8
+  [ 6] .comment          PROGBITS        0000000000000000 000075 00002a 01  MS  0   0  1
+  [ 7] .note.GNU-stack   PROGBITS        0000000000000000 00009f 000000 00      0   0  1
+  [ 8] .symtab           SYMTAB          0000000000000000 0000a0 000120 18      9  10  8
+  [ 9] .strtab           STRTAB          0000000000000000 0001c0 00001d 00      0   0  1
+  [10] .shstrtab         STRTAB          0000000000000000 000270 000052 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  p (processor specific)
+</code></pre>
+<p>对比linux-gcc编译的hello.o 少了3个section</p>
+<pre><code class="bash">[ 8] .note.gnu.property NOTE
+[ 9] .eh_frame         PROGBITS 
+[10] .rela.eh_frame    RELA 
+</code></pre>
+<p>5.对 hello.o 反汇编，并查看 hello.c 的 C</p>
+<pre><code class="bash">$ riscv64-linux-gnu-gcc -g -c hello.c
+$ riscv64-linux-gnu-objdump -d hello.o
+
+hello.o:     file format elf64-littleriscv
+
+
+Disassembly of section .text:
+
+0000000000000000 &lt;main&gt;:
+#include &lt;stdio.h&gt;
+
+void main()
+&#123;
+   0:   1141                    addi    sp,sp,-16
+   2:   e406                    sd      ra,8(sp)
+   4:   e022                    sd      s0,0(sp)
+   6:   0800                    addi    s0,sp,16
+        printf(&quot;hellp world!\n&quot;);
+   8:   00000517                auipc   a0,0x0
+   c:   00050513                mv      a0,a0
+  10:   00000097                auipc   ra,0x0
+  14:   000080e7                jalr    ra # 10 &lt;main+0x10&gt;
+&#125;
+  18:   0001                    nop
+  1a:   60a2                    ld      ra,8(sp)
+  1c:   6402                    ld      s0,0(sp)
+  1e:   0141                    addi    sp,sp,16
+  20:   8082                    ret
+</code></pre>
+<h2 id="练习-4"><a href="#练习-4" class="headerlink" title="练习 4"></a>练习 4</h2><p>基于 练习 3 继续熟悉 qemu&#x2F;gdb 等工具的使用，具体要求如下：</p>
+<ul>
+<li>将 hello.c 编译成可调式版本的可执行程序 a.out</li>
+<li>先执行 qemu-riscv32 运行 a.out。</li>
+<li>使用 qemu-riscv32 和 gdb 调试 a.out。</li>
+</ul>
+<pre><code class="bash">&gt; riscv64-linux-gnu-gcc -march=rv32im -mabi=ilp32 -g hello.c -o a.out
+&gt; qemu-riscv32 ./a.out
+</code></pre>
+<h2 id="练习-5"><a href="#练习-5" class="headerlink" title="练习 5"></a>练习 5</h2><p>自学 Makefile 的语法，理解在 riscv 仓库的根目录下执行 make 会发生什么。</p>
+<pre><code class="makefile">include ../../common.mk
+
+SRCS_ASM = \
+    start.S \
+
+SRCS_C = \
+    kernel.c \
+
+OBJS = $(SRCS_ASM:.S=.o)
+OBJS += $(SRCS_C:.c=.o)
+
+.DEFAULT_GOAL := all
+all: os.elf
+
+# start.o must be the first in dependency!
+os.elf: $&#123;OBJS&#125;
+    $&#123;CC&#125; $&#123;CFLAGS&#125; -Ttext=0x80000000 -o os.elf $^
+    $&#123;OBJCOPY&#125; -O binary os.elf os.bin
+
+%.o : %.c
+    $&#123;CC&#125; $&#123;CFLAGS&#125; -c -o $@ $&lt;
+
+%.o : %.S
+    $&#123;CC&#125; $&#123;CFLAGS&#125; -c -o $@ $&lt;
+
+run: all
+    @$&#123;QEMU&#125; -M ? | grep virt &gt;/dev/null || exit
+    @echo &quot;Press Ctrl-A and then X to exit QEMU&quot;
+    @echo &quot;------------------------------------&quot;
+    @$&#123;QEMU&#125; $&#123;QFLAGS&#125; -kernel os.elf
+
+.PHONY : debug
+debug: all
+    @echo &quot;Press Ctrl-C and then input &#39;quit&#39; to exit GDB and QEMU&quot;
+    @echo &quot;-------------------------------------------------------&quot;
+    @$&#123;QEMU&#125; $&#123;QFLAGS&#125; -kernel os.elf -s -S &amp;
+    @$&#123;GDB&#125; os.elf -q -x ../gdbinit
+
+.PHONY : code
+code: all
+    @$&#123;OBJDUMP&#125; -S os.elf | less
+
+.PHONY : clean
+clean:
+    rm -rf *.o *.bin *.elf
+</code></pre>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 862314702@qq.com </span>
     </div>
@@ -730,10 +901,10 @@ Symbol table &#39;.symtab&#39; contains 17 entries:
 
 <div class="article_copyright">
     <p><span class="copy-title">文章标题:</span>编译与链接</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">1.7k</span></p>
+    <p><span class="copy-title">字数:</span><span class="post-count">2.8k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Cai Jiale">Cai Jiale</a></p>
     <p><span class="copy-title">发布时间:</span>2024-06-29, 17:34:12</p>
-    <p><span class="copy-title">最后更新:</span>2024-06-29, 17:35:42</p>
+    <p><span class="copy-title">最后更新:</span>2024-06-29, 19:00:07</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/06/29/%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5/" title="编译与链接">https://sheldoncoder1337.github.io/2024/06/29/%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
