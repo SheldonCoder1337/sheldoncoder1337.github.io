@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>SVD | 安居乐业</title>
-  <meta name="keywords" content=" pattern recognition ">
-  <meta name="description" content="SVD | 安居乐业">
+  <title>RISCV-pre | 安居乐业</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="RISCV-pre | 安居乐业">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="从零开始为 RISC-V 平台编写一个简单的操作系统内核。 1.环境配置推荐使用 Ubuntu 20.04，Ubuntu 20.04 是目前最新的 Ubuntu 长期稳定发行版，在这个环境下安装运行环境也最简单。 所有演示代码在以下环境下验证通过，请仔细核对你的 Ubuntu 版本和内核版本与以下信息是否一致。 $ lsb_release -a No LSB modules are availab">
 <meta property="og:type" content="article">
@@ -443,9 +443,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-svd" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-RISCV-pre" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">SVD</h1>
+        <h1 class="article-title">RISCV-pre</h1>
     
     <div class="article-meta">
         
@@ -455,27 +455,20 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="math">math</a>
+            <a  data-rel="RISCV">RISCV</a>
             
         </span>
         
         
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color5">pattern recognition</a>
-            
-        </span>
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2024-06-29 17:34:45'>2024-06-29 17:34</time>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-06-24 16:59:45'>2024-05-04 12:05</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        <span>字数:809</span>
+        <span>字数:762</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -505,7 +498,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-text">1.环境配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%9E%84%E5%BB%BA%E5%92%8C%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E"><span class="toc-text">2. 构建和使用说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-text">3. 参考文献</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -521,30 +514,71 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Problem: Decompose the matrix $\mathrm{A}&#x3D;\begin{pmatrix}5&amp;3 \\ 0&amp;-4\end{pmatrix}$ using Singular Value Decomposition(SVD). Please show detail calculation steps.</p>
-<p><strong>Step1:</strong> calculate $AA^T$ and $A^TA$</p>
-<p>$$A &#x3D; \begin{pmatrix}5&amp;3 \\ 0&amp;-4\end{pmatrix}, \text{then } A^T &#x3D; \begin{pmatrix}5&amp;0 \\ 3&amp;-4\end{pmatrix}$$</p>
-<p>$$AA^T &#x3D; \begin{pmatrix}5&amp;3 \\ 0&amp;-4\end{pmatrix}\begin{pmatrix}5&amp;0 \\ 3&amp;-4\end{pmatrix} &#x3D; \begin{pmatrix}34&amp;-12 \\ -12&amp;-16\end{pmatrix}$$</p>
-<p>$$A^TA &#x3D; \begin{pmatrix}5&amp;0 \\ 3&amp;-4\end{pmatrix}\begin{pmatrix}5&amp;3 \\ 0&amp;-4\end{pmatrix} &#x3D; \begin{pmatrix}25&amp;15 \\ 15&amp;25\end{pmatrix}$$</p>
-<p><strong>Step2:</strong> calculate $\lambda_1, \lambda_2$ and $S$</p>
-<p>$$\begin{aligned}<br>|AA^{T}-\lambda E|&#x3D;0<br>    &amp;\Rightarrow<br>    \left|\left(\begin{matrix}{34}&amp;{-12} \\ {-12}&amp;{16} \end{matrix}\right)-\lambda\left(\begin{matrix}{1}&amp;{0} \\ {0}&amp;{1} \end{matrix}\right)\right|&#x3D;0<br>\end{aligned}$$</p>
-<p>$$\Rightarrow<br>\left|\begin{matrix}{34-\lambda}&amp;{-12} \\ {-12}&amp;{16-\lambda} \end{matrix}\right|&#x3D;0\Rightarrow(34-\lambda)(16-\lambda)-12\times12&#x3D;0<br>$$</p>
-<p>$$\Rightarrow<br>\lambda^{2}-50\lambda+400&#x3D;0\Rightarrow(\lambda-40)(\lambda-10)&#x3D;0<br>$$</p>
-<p>Eigenvalues: $\lambda_1&#x3D;40, \lambda_2&#x3D;10$</p>
-<p>Singular values: $\sigma_1&#x3D;\sqrt{\lambda_1}&#x3D;\sqrt{40}&#x3D;2\sqrt{10},\sigma_2&#x3D;\sqrt{\lambda_2}&#x3D;\sqrt{10}$</p>
-<p>Diagonal matrix S:  $S&#x3D;\begin{pmatrix}\sigma_1&amp;0 \\ 0&amp;\sigma_1\end{pmatrix}&#x3D;\begin{pmatrix}2\sqrt{10}&amp;0 \\ 0&amp;\sqrt{10}\end{pmatrix}$</p>
-<p><strong>Step3:</strong> Finding $U$ $(AA^{T}-\lambda E)x&#x3D;0\Rightarrow U&#x3D;(u_{1},u_{2})&#x3D;\begin{pmatrix}-\frac{2}{\sqrt{5}}&amp;\frac{1}{\sqrt{5}} \\ \frac{1}{\sqrt{5}}&amp;\frac{2}{\sqrt{5}}\end{pmatrix}$</p>
-<p>$$\begin{aligned}<br>For~\lambda_{1}&amp;&#x3D;40,<br>(AA^{T}-\lambda_{1}E)x_{1}&#x3D;0<br>\Rightarrow<br>\left(\left(\begin{matrix}{34}&amp;{-12} \\ {-12}&amp;{16} \end{matrix}\right)-40\left(\begin{matrix}{1}&amp;{0} \\ {0}&amp;{1} \end{matrix}\right)\right)x_1&#x3D;0<br>&amp;\end{aligned}<br>$$</p>
-<p>$$\Rightarrow<br>\left(\begin{matrix}{-6}&amp;{-12} \\ {-12}&amp;{-24} \end{matrix}\right)x_1&#x3D;0<br>\Rightarrow<br>x_{1}&#x3D;\binom{-2a}{a}\Longrightarrow u_{1}&#x3D;\frac{x_{1}}{||x_{1}||}&#x3D;\begin{pmatrix}-\frac{2}{\sqrt{5}} \\ \frac{1}{\sqrt{5}}\end{pmatrix}<br>$$</p>
-<p>$$\begin{aligned}<br>For~\lambda_{2}&amp;&#x3D;10,<br>(AA^{T}-\lambda_{2}E)x_{2}&#x3D;0<br>\Rightarrow<br>\left(\left(\begin{matrix}{34}&amp;{-12} \\ {-12}&amp;{16} \end{matrix}\right)-10\left(\begin{matrix}{1}&amp;{0} \\ {0}&amp;{1} \end{matrix}\right)\right)x_2&#x3D;0<br>\end{aligned}<br>$$</p>
-<p>$$<br>\Rightarrow<br>\left(\begin{matrix}{24}&amp;{-12} \\ {-12}&amp;{6} \end{matrix}\right)x_2&#x3D;0<br>\Rightarrow<br>x_{2}&#x3D;\binom{a}{2a}\Longrightarrow u_{2}&#x3D;\frac{x_{2}}{||x_{2}||}&#x3D;\begin{pmatrix}\frac{1}{\sqrt{5}} \\ \frac{2}{\sqrt{5}}\end{pmatrix}<br>$$</p>
-<p><strong>Step4:</strong> Finding $V$ $(AA^{T}-\lambda E)x&#x3D;0\Rightarrow V&#x3D;(v_{1},v_{2})&#x3D;\begin{pmatrix}\frac{1}{\sqrt{2}}&amp;\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}&amp;-\frac{1}{\sqrt{2}}\end{pmatrix}$</p>
-<p>$$\begin{aligned}<br>For~\lambda_{1}&amp;&#x3D;40,<br>(AA^{T}-\lambda_{1}E)x_{3}&#x3D;0<br>\Rightarrow<br>\left(\left(\begin{matrix}{25}&amp;{15} \\ {15}&amp;{25} \end{matrix}\right)-40\left(\begin{matrix}{1}&amp;{0} \\ {0}&amp;{1} \end{matrix}\right)\right)x_3&#x3D;0<br>\end{aligned}<br>$$</p>
-<p>$$<br>\Rightarrow<br>\left(\begin{matrix}{-15}&amp;{15} \\ {15}&amp;{-15} \end{matrix}\right)x_3 &#x3D;0<br>\Rightarrow<br>x_{3}&#x3D;\binom{c}{c}\Longrightarrow v_{1}&#x3D;\frac{x_{3}}{||x_{3}||}&#x3D;\begin{pmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{pmatrix}<br>$$</p>
-<p>$$\begin{aligned}<br>For~\lambda_{2}&amp;&#x3D;10,<br>(AA^{T}-\lambda_{2}E)x_{4}&#x3D;0<br>\Rightarrow<br>\left(\left(\begin{matrix}{25}&amp;{15} \\ {15}&amp;{25}  \end{matrix}\right)-10\left(\begin{matrix}{1}&amp;{0} \\ {0}&amp;{1} \end{matrix}\right)\right)x_4&#x3D;0<br>\end{aligned}<br>$$</p>
-<p>$$<br>\Rightarrow<br>\left(\begin{matrix}{15}&amp;{15} \\ {15}&amp;{15} \end{matrix}\right)x_4&#x3D;0<br>\Rightarrow<br>x_{4}&#x3D;\binom{d}{-d}\Longrightarrow v_{2}&#x3D;\frac{x_{4}}{||x_{4}||}&#x3D;\begin{pmatrix}\frac{1}{\sqrt{2}} \\ -\frac{1}{\sqrt{2}}\end{pmatrix}<br>$$</p>
-<p><strong>Step5:</strong> Complete SVD</p>
-<p>$$<br>\left(\begin{matrix}{5}&amp;{3} \\ {0}&amp;{-4} \end{matrix}\right) &#x3D;<br>\left(\begin{matrix}{-\frac{2}{\sqrt{5}}}&amp;{\frac{1}{\sqrt{5}}} \\ {\frac{1}{\sqrt{5}}}&amp;{\frac{2}{\sqrt{5}}} \end{matrix}\right)<br>\left(\begin{matrix}{2\sqrt{10}}&amp;{0} \\ {0}&amp;{\sqrt{10}} \end{matrix}\right)<br>\left(\begin{matrix}{\frac{1}{\sqrt{2}}}&amp;{\frac{1}{\sqrt{2}}} \\ {\frac{1}{\sqrt{2}}}&amp;{-\frac{1}{\sqrt{2}}} \end{matrix}\right)<br>$$</p>
+        <p>从零开始为 RISC-V 平台编写一个简单的操作系统内核。</p>
+<h2 id="1-环境配置"><a href="#1-环境配置" class="headerlink" title="1.环境配置"></a>1.环境配置</h2><p>推荐使用 Ubuntu 20.04，Ubuntu 20.04 是目前最新的 Ubuntu 长期稳定发行版，在这个环境下安装运行环境也最简单。</p>
+<p>所有演示代码在以下环境下验证通过，请仔细核对你的 Ubuntu 版本和内核版本与以下信息是否一致。</p>
+<pre><code class="bash">$ lsb_release -a
+No LSB modules are available.
+Distributor ID:	Ubuntu
+Description:	Ubuntu 20.04.3 LTS
+Release:	20.04
+Codename:	focal
+
+$ uname -r
+5.11.0-27-generic
+</code></pre>
+<p>目前在 Ubuntu 20.04 环境下我们可以直接使用官方提供的 GNU工具链和 QEMU 模拟器，执行如下命令在线安装即可开始试验：</p>
+<pre><code class="bash">$ sudo apt update
+$ sudo apt install build-essential gcc make perl dkms git gcc-riscv64-unknown-elf gdb-multiarch qemu-system-misc
+</code></pre>
+<p>以下是每个依赖项的简要说明：</p>
+<ul>
+<li>build-essential：该软件包提供了编译和构建软件所需的基本工具，包括编译器和C库。</li>
+<li>gcc：GNU编译器集合，用于编译C和C++程序。</li>
+<li>make：一个构建工具，用于自动化软件构建过程。</li>
+<li>perl：一种脚本语言，常用于文本处理和系统管理任务。</li>
+<li>dkms：动态内核模块支持，用于自动编译和安装内核模块。</li>
+<li>git：版本控制系统，用于跟踪和管理项目代码。</li>
+<li>gcc-riscv64-unknown-elf：RISC-V架构的交叉编译器，用于编译RISC-V架构的程序。</li>
+<li>gdb-multiarch：一个多架构调试器，支持多种架构的程序调试。</li>
+<li>qemu-system-misc：QEMU模拟器的一部分，包含了一些杂项工具和二进制文件。</li>
+</ul>
+<p>使用包管理器：在终端中运行dpkg -s &lt;package-name&gt; 命令，将&lt;package-name&gt;替换为要检查的软件包名称。如果软件包已成功安装，将显示软件包的详细信息；否则，将显示软件包未安装的信息。例如，dpkg -s gcc将检查GCC编译器是否已安装。</p>
+<pre><code class="bash">$ dpkg -s gcc
+Package: gcc
+Status: install ok installed
+Priority: optional
+Section: devel
+Installed-Size: 50
+Maintainer: Ubuntu Developers &lt;ubuntu-devel-discuss@lists.ubuntu.com&gt;
+Architecture: amd64
+Source: gcc-defaults (1.185.1ubuntu2)
+Version: 4:9.3.0-1ubuntu2
+Provides: c-compiler, gcc-x86-64-linux-gnu (= 4:9.3.0-1ubuntu2)
+Depends: cpp (= 4:9.3.0-1ubuntu2), gcc-9 (&gt;= 9.3.0-3~)
+Recommends: libc6-dev | libc-dev
+Suggests: gcc-multilib, make, manpages-dev, autoconf, automake, libtool, flex, bison, gdb, gcc-doc
+Conflicts: gcc-doc (&lt;&lt; 1:2.95.3)
+Description: GNU C compiler
+ This is the GNU C compiler, a fairly portable optimizing compiler for C.
+ .
+ This is a dependency package providing the default GNU C compiler.
+Original-Maintainer: Debian GCC Maintainers &lt;debian-gcc@lists.debian.org&gt;
+</code></pre>
+<h2 id="2-构建和使用说明"><a href="#2-构建和使用说明" class="headerlink" title="2. 构建和使用说明"></a>2. 构建和使用说明</h2><ul>
+<li><code>make</code>：编译构建</li>
+<li><code>make run</code>：启动 qemu 并运行</li>
+<li><code>make debug</code>：启动调试</li>
+<li><code>make code</code>：反汇编查看二进制代码</li>
+<li><code>make clean</code>：清理</li>
+</ul>
+<p>具体使用请参考具体子项目下的 Makefile 文件。</p>
+<h2 id="3-参考文献"><a href="#3-参考文献" class="headerlink" title="3. 参考文献"></a>3. 参考文献</h2><p>本项目的设计参考了如下网络资源，在此表示感谢 :)</p>
+<ul>
+<li>The Adventures of OS：<a target="_blank" rel="noopener" href="https://osblog.stephenmarz.com/index.html">https://osblog.stephenmarz.com/index.html</a></li>
+<li>mini-riscv-os: <a target="_blank" rel="noopener" href="https://github.com/cccriscv/mini-riscv-os">https://github.com/cccriscv/mini-riscv-os</a></li>
+<li>Xv6, a simple Unix-like teaching operating system：<a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2020/xv6.html">https://pdos.csail.mit.edu/6.828/2020/xv6.html</a></li>
+</ul>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 862314702@qq.com </span>
@@ -554,12 +588,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>SVD</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">809</span></p>
+    <p><span class="copy-title">文章标题:</span>RISCV-pre</p>
+    <p><span class="copy-title">字数:</span><span class="post-count">762</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Cai Jiale">Cai Jiale</a></p>
-    <p><span class="copy-title">发布时间:</span>2024-05-04, 12:05:25</p>
-    <p><span class="copy-title">最后更新:</span>2024-06-24, 16:59:45</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/05/04/svd/" title="SVD">https://sheldoncoder1337.github.io/2024/05/04/svd/</a>
+    <p><span class="copy-title">发布时间:</span>2024-06-29, 17:34:12</p>
+    <p><span class="copy-title">最后更新:</span>2024-06-29, 17:34:45</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/06/29/RISCV-pre/" title="RISCV-pre">https://sheldoncoder1337.github.io/2024/06/29/RISCV-pre/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
     </p>
@@ -590,46 +624,6 @@
 
 
 
-    
-        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": {
-        preferredFont: "TeX",
-        availableFonts: ["STIX","TeX"],
-        linebreaks: { automatic:true },
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
-    },
-    tex2jax: {
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
-        processEscapes: true,
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
-        Macros: { href: "{}" }
-    },
-    messageStyle: "none"
-    });
-</script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-        src="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-<input type="hidden" id="MathJax-js"
-        value="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
-</input>
     
 
 
