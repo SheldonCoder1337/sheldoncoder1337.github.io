@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>PR-ch02-Bayes | 安居乐业</title>
-  <meta name="keywords" content=" pattern recognition ">
-  <meta name="description" content="PR-ch02-Bayes | 安居乐业">
+  <title>ML-Clustering | 安居乐业</title>
+  <meta name="keywords" content=" ML ">
+  <meta name="description" content="ML-Clustering | 安居乐业">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="GaussDB2024-07-04 工作小结:  不同会话不能同时查询、修改等，会阻塞； 执行事务有一条失败，就会整个回滚；可使用savepoint设置达到Oracle类似效果 默认空间为目录，与Oracle不一样 空串“”和null是否一致（不确定），Oracle是一样的，MySQL是不一样的 建议严格astore，使用vaccum对无用数据进行清除 DDL自身不会提交，未提交的DDL操作会阻塞">
 <meta property="og:type" content="article">
@@ -525,19 +525,21 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-PR-ch02-Bayes" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-ML-clustering" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">PR-ch02-Bayes</h1>
+        <h1 class="article-title">ML-Clustering</h1>
     
     <div class="article-meta">
         
+        
+        <span class="author"><a>sheldon</a></span>
         
         
         <span class="book">
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="Math">Math</a>
+            <a  data-rel="ML">ML</a>
             
         </span>
         
@@ -545,19 +547,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color5">pattern recognition</a>
+            <a class="color3">ML</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-07-05 18:39:03'>2024-04-30 20:45</time>
+            发布时间 : <time class="date" title='最后更新: 2024-07-05 18:34:58'>2024-04-10 22:22</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1.9k</span>
+        <span>字数:1.6k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -587,7 +589,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-text">References</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Preliminaries"><span class="toc-text">Preliminaries</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Task-1-Implement-and-try-different-clustering-techniques"><span class="toc-text">Task 1: Implement and try different clustering techniques</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Kmeans"><span class="toc-text">Kmeans</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Agglomerative-clustering"><span class="toc-text">Agglomerative clustering</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gaussian-mixture-model"><span class="toc-text">Gaussian mixture model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary"><span class="toc-text">Summary</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Task-2-Evaluate-the-clustering-results-against-ground-truth"><span class="toc-text">Task 2: Evaluate the clustering results against ground truth</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Task-3-Dimensionality-reduction-and-visualization"><span class="toc-text">Task 3:  Dimensionality reduction and visualization</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PCA"><span class="toc-text">PCA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#T-SNE"><span class="toc-text">T-SNE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Visualization"><span class="toc-text">Visualization</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -603,124 +605,349 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<p><strong>Problem 2.2:</strong> In a two-class one-dimensional problem, the pdfs are the Gaussians $\mathcal{N}(0,\sigma^2)$ and $\mathcal{N}(1,\sigma^2)$ for the two classes, respectively. Show that the threshold $x_0$ minimizing the average risk is equal to<br>$$x_0&#x3D;1&#x2F;2-\sigma^2\ln\frac{\lambda_{21}P(\omega_2)}{\lambda_{12}P(\omega_1)}$$<br>where $\lambda_{11}&#x3D;\lambda_{22}&#x3D;0$ has been assumed.</p>
-<hr>
-<p>Solution: In a two-class problem:</p>
-<p>$$R(\alpha_1|x)&#x3D;\lambda_{11}P(\omega_1|x)+\lambda_{12}P(\omega_2|x)$$</p>
-<p>$$R(\alpha_2|x)&#x3D;\lambda_{21}P(\omega_1|x)+\lambda_{22}P(\omega_2|x)$$</p>
-<p>The threshold $x_0$ minimizing the average risk where $R(\alpha_1|x_0)&#x3D;R(\alpha_2|x_0),$ then:</p>
-<p>$$\lambda_{11}P(\omega_1|x_0)+\lambda_{21}P(\omega_2|x_0)&#x3D;\lambda_{12}P(\omega_1|x_0)+\lambda_{22}P(\omega_2|x_0)$$</p>
-<p>$$\Rightarrow\frac{P(\omega_1|x_0)}{P(\omega_2|x_0)}&#x3D;\frac{p(x_0|\omega_1)P(\omega_1)}{p(x_0|\omega_2)P(\omega_2)}&#x3D;\frac{\lambda_{12}-\lambda_{22}}{\lambda_{21}-\lambda_{11}}$$</p>
-<p>To minimize the average risk, we have<br>$$\frac{P(x_0|\omega_1)}{P(x_0|\omega_2)}&#x3D;\frac{\lambda_{12}-\lambda_{22}}{\lambda_{21}-\lambda_{11}}\frac{P(\omega_2)}{P(\omega_1)}$$<br>and $\lambda_{11}&#x3D;\lambda_{22}&#x3D;0$,then</p>
-<p>$$\frac{P(x_0|\omega_1)}{P(x_0|\omega_2)}&#x3D;\frac{\lambda_{12}}{\lambda_{21}}\frac{P(\omega_2)}{P(\omega_1)}$$</p>
-<p>taking the logarithm of both sides,$$lnP(x_{0}|\omega_{1})-lnP(x_{0}|\omega_{2})&#x3D;ln\frac{\lambda_{12}P(\omega_{2})}{\lambda_{21}P(\omega_{1})}$$</p>
-<p>since $P(x_{0}|\omega_{1}){\sim}N(0,\sigma^{2}),$</p>
-<p>$$P(x_{0}|\omega_{1})&#x3D;\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{x_{0}^{2}}{2\sigma^{2}}}\quad\Rightarrow{lnP(x_{0}|\omega_{1})}&#x3D;-ln(\sqrt{2\pi}\sigma)-\frac{x_{0}^{2}}{2\sigma^{2}}$$</p>
-<p>and $P(x_{0}|\omega_{2}){\sim}N(1,\sigma^{2}),$</p>
-<p>$$P(x_{0}|\omega_{2})&#x3D;\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x_{0}-1)^{2}}{2\sigma^{2}}}\quad\Rightarrow{lnP(x_{0}|\omega_{2})}&#x3D;-ln(\sqrt{2\pi}\sigma)-\frac{(x_{0}-1)^{2}}{2\sigma^{2}}$$</p>
-<p>then, $lnP(x_0|\omega_1)-lnP(x_0|\omega_2)&#x3D;-ln(\sqrt{2\pi}\sigma)-\frac{x_0^2}{2\sigma^2}-(-ln(\sqrt{2\pi}\sigma)-\frac{(x_0-1)^2}{2\sigma^2})$</p>
-<p>$$lnP(x_0|\omega_1)-lnP(x_0|\omega_2)&#x3D;-\frac{(x_0-1)^2}{2\sigma^2}-\frac{x_0^2}{2\sigma^2}&#x3D;ln\frac{\lambda_{12}P(\omega_2)}{\lambda_{21}P(\omega_1)}$$</p>
-<p>$$(x_{0}-1)^{2}-x_{0}^{2}&#x3D;2\sigma^{2}ln\frac{\lambda_{12}P(\omega_{2})}{\lambda_{21}P(\omega_{1})}$$</p>
-<p>$$x_{0}^{2}-2x_{0}+1-x_{0}^{2}&#x3D;2\sigma^{2}ln\frac{\lambda_{12}P(\omega_{2})}{\lambda_{21}P(\omega_{1})}$$</p>
-<p>$$-2x_{0}+1&#x3D;2\sigma^{2}ln\frac{\lambda_{12}P(\omega_{2})}{\lambda_{21}P(\omega_{1})}$$</p>
-<p>$$\mathrm{thus},\quad x_0&#x3D;\frac{1}{2}-\sigma^2ln\frac{\lambda_{12}P(\omega_2)}{\lambda_{21}P(\omega_1)}$$</p>
-<hr>
-<p><strong>Problem 2.5:</strong> Consider a two (equiprobable) class, one-dimensional problem with samples distributed according to the Rayleigh pdf in each class, that is,<br>$$p(x|\omega_i)&#x3D;\begin{cases}\frac{x}{\sigma_i^2}\exp\left(\frac{-x^2}{2\sigma_i^2}\right)&amp;x\geq0 \\ 0&amp;x&lt;0\end{cases}$$<br>Compute the decision boundary point $g(x)&#x3D;0.$</p>
-<hr>
-<p>Solution: The decision boundary point corresponds to</p>
-<p>$$\frac{x_0}{\sigma_1^2}\exp(\frac{-x_0^2}{2\sigma_1^2})&#x3D;\frac{x_0}{\sigma_2^2}\exp(\frac{-x_0^2}{2\sigma_2^2})$$</p>
-<p>or by taking the logarithm</p>
-<p>$$\frac{-x_0^2}{2\sigma_1^2}&#x3D;\ln\frac{\sigma_1^2}{\sigma_2^2}-\frac{x_0^2}{2\sigma_2^2}$$</p>
-<p>and finally</p>
-<p>$$x_0&#x3D;\sqrt{\frac{2\sigma_1^2\sigma_2^2}{\sigma_1^2-\sigma_2^2}\ln\frac{\sigma_1^2}{\sigma_2^2}}$$</p>
-<hr>
-<p><strong>Problem 2.7:</strong> In a three-class,two-dimensional problem the feature vectors in each class are normally distributed with covariance matrix<br>$$\Sigma&#x3D;\begin{bmatrix}1.2&amp;0.4 \\ 0.4&amp;1.8\end{bmatrix}$$<br>The mean vectors for each class are $[0.1,0.1]^T,[2.1,1.9]^T,[-1.5,2.0]^T.$ Assuming that the classes are equiprobable,<br>(a) classify the feature vector [1.6,1.5]$^T$ according to the Bayes minimum error probability classifier;<br>(b) draw the curves of equal Mahalanobis distance from [2.1,1.9]$^{\acute{T}}.$</p>
-<hr>
-<p>Solution:</p>
-<p>(a) It suffices to compute the Mahalanobis distance of $[1.6,1.5]^T$ from mean vectors of the classes. We have:</p>
-<p>$$\Sigma^{-1}&#x3D;\left[\begin{array}{cc}0.9&amp;0.2 \\ -0.2&amp;0.6\end{array}\right]$$</p>
-<p>$$|\Sigma|&#x3D;1.2\times1.8-0.4\times0.4&#x3D;2,\Sigma^{-1}&#x3D;\frac{1}{|\Sigma|}\Big[\begin{matrix}1.8&amp;-0.4 \\ -0.4&amp;1.2\end{matrix}\Big]&#x3D;\Big[\begin{matrix}0.9&amp;-0.2 \\ -0.2&amp;0.6\end{matrix}\Big]$$</p>
-<p>Thus, $d_1^2&#x3D;2.361,d_2^2&#x3D;0.241,d_3^2&#x3D;9.416$</p>
-<p>Hence $[1.6,1.5]^T$ is assigned to $\mathcal{w_2}$</p>
-<p>(b) According to theory it suffices to compute the eigenvalues and eigenvectors of $\Sigma$. There are </p>
-<p>$$\lambda_{1}&#x3D;1,\lambda_{2}&#x3D;2 \\ v_{1}&#x3D;[0.89,-0.45]^{T} \\ v_{2}&#x3D;[0.45,0.89]^{T}$$</p>
-<p>Thus the ellipse, centered at $\mu_2$ and axis</p>
-<p>$2\sqrt{\lambda_1}c\boldsymbol{v}_1$ and $2\sqrt{\lambda_2}c\boldsymbol{v}_2$</p>
-<hr>
-<p><strong>Problem 2.12:</strong> Consider a two-class, two-dimensional classification task, where the feature vectors in each of the classes $\omega_1,\omega_{2}$ are distributed according to</p>
-<p>$$p(x|\omega_1)&#x3D;\frac{1}{\sqrt{2\pi\sigma_1^2}}\exp\biggl(-\frac{1}{2\sigma_1^2}(x-\mu_1)^T(x-\mu_1)\biggr)$$</p>
-<p>$$p(x|\omega_2)&#x3D;\dfrac{1}{\sqrt{2\pi\sigma_2^2}}\exp\biggl(-\dfrac{1}{2\sigma_2^2}(x-\mu_2)^T(x-\mu_2)\biggr)$$</p>
-<p>with</p>
-<p>$$\mu_{1}&#x3D;[1,1]^{T},\mu_{2}&#x3D;[1.5,1.5]^{T},\sigma_{1}^{2}&#x3D;\sigma_{2}^{2}&#x3D;0.2$$</p>
-<p>Assume that $P(\omega_1)&#x3D;P(\omega_2)$ and design a Bayesian classifier<br>(a) that minimizes the error probability<br>(b) that minimizes the average risk with loss matrix</p>
-<p>$$\Lambda&#x3D;\begin{bmatrix}0&amp;1 \\ 0.5&amp;0\end{bmatrix}$$</p>
-<p>Using a pseudorandom number generator, produce 100 feature vectors from each class, according to the preceding pdfs. Use the classifiers designed to classify the generated vectors. What is the percentage error for each case? Repeat the experiments for $\mu_{2}&#x3D;[3.0,3.0]^{T}.$</p>
-<hr>
-<p>Solution:</p>
-<p>(a) For the two-class classification, if $P(\omega_1)&#x3D;P(\omega_2)$ and $\lambda_{11}&#x3D;\lambda_{22}&#x3D;0$,</p>
-<p>The Bayesian classifier is: $x\to\omega_{1}$ if $P(x|\omega_{1})&gt;P(x|\omega_{2})\frac{\lambda_{12}}{\lambda_{21}}$</p>
-<p>If $\lambda_{12}&#x3D;\lambda_{21}$ , the Bayesian classifier minimizes the error probability. Thus, the Bayesian<br>classifier is: $x\to\omega_{1}$ if $P(x|\omega_{1})&gt;P(x|\omega_{2})$</p>
-<p>We have</p>
-<p>$$p(x|\omega_1)&#x3D;\frac{1}{\sqrt{2\pi\sigma_1^2}}\exp\biggl(-\frac{1}{2\sigma_1^2}(x-\mu_1)^T(x-\mu_1)\biggr)$$</p>
-<p>$$p(x|\omega_2)&#x3D;\dfrac{1}{\sqrt{2\pi\sigma_2^2}}\exp\biggl(-\dfrac{1}{2\sigma_2^2}(x-\mu_2)^T(x-\mu_2)\biggr)$$</p>
-<p>From $\sigma_1^2&#x3D;\sigma_2^2&#x3D;\sigma^2,|x-\mu_1|^2&#x3D;(x-\mu_1)^T(x-\mu_1)$ and $|x-\mu_2|^2&#x3D;(x-\mu_2)^T(x-\mu_2)$, we have</p>
-<p>$$P(x|\omega_1)&#x3D;\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{|x-\mu_1|^2}{2\sigma^2}\right),\quad P(x|\omega_2)&#x3D;\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{|x-\mu_2|^2}{2\sigma^2}\right)$$</p>
-<p>$P(x|\omega_1)&gt;P(x|\omega_2)$ is equivalent to $\ln P(x|\omega_1)&gt;\ln P(x|\omega_2)$</p>
-<p>$$\ln P(x|\omega_1)&#x3D;\ln\frac{1}{\sqrt{2\pi\sigma^2}}-\frac{|x-\mu_1|^2}{2\sigma^2},\quad\ln P(x|\omega_2)&#x3D;\ln\frac{1}{\sqrt{2\pi\sigma^2}}-\frac{|x-\mu_2|^2}{2\sigma^2}$$</p>
-<p>$P(x|\omega_1)&gt;P(x|\omega_2)$ is equivalent to $|x-\mu_1|&lt;|x-\mu_2|$</p>
-<p>Thus, for the Bayesian classifier minimizing the error probability is equivalent to the<br>classifier minimizing the Euclidean distance, namely,</p>
-<p>$$x\to\omega_1\text{ if }|x-\mu_1|&lt;|x-\mu_2|$$</p>
-<p>(b) In this case, $x$ is classified to $P(x|\omega_{1})&gt;P(x|\omega_{2})\frac{\lambda_{12}}{\lambda_{21}}$</p>
-<p>where $\lambda_{12}&#x3D;1$ and $\lambda_{21}&#x3D;0.5$. Thus following similar arguments as in theory, for Bayesian<br>classification for normal distributions, we conclude that the decision hyperplane is</p>
-<p>$$g_{12}(x)&#x3D;w^T(x-x_0) \\ w&#x3D;\mu_{1}-\mu_{2}$$</p>
-<p>and</p>
-<p>$$x_0&#x3D;\frac{1}{2}(\mu_1+\mu_2)-\sigma^2\ln\frac{\lambda_{21}P(\omega_1)}{\lambda_{12}P(\omega_2)}\frac{\mu_1-\mu_2}{|\mu_1-\mu_2|^2}$$</p>
-<p>(c) The following MATLAB function takes as input the variance (s), the mean ( m) and the number of samples N. The output is a vector 1xN, whose ele- ments are the N samples of the 1-D Gaussian. For 2-D independent variables, combine two samples generated above, in a single vector</p>
-<p>$$x&#x3D;[x_1,x_2]^T$$</p>
-<pre><code class="matlab">Function x=gaussian(m,s,N);
-x=randn(1,N);
-x=x*sqrt(s)+m;
+        <p>The notebook performs three tasks on the dataset <code>Wine</code>.</p>
+<ul>
+<li>Task 1: Implement and try different clustering techniques</li>
+<li>Task 2: Evaluate the clustering results against ground truth</li>
+<li>Task 3: Dimensionality reduction and visualization</li>
+</ul>
+<h2 id="Preliminaries"><a href="#Preliminaries" class="headerlink" title="Preliminaries"></a>Preliminaries</h2><pre><code class="python"># Load necessary libraries.
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans, AgglomerativeClustering
+from sklearn.mixture import GaussianMixture
+from sklearn.metrics import silhouette_samples, silhouette_score
+from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
+from scipy.cluster.hierarchy import dendrogram
+import pandas as pd
+from sklearn.decomposition import PCA
+from sklearn.manifold import TSNE
+from sklearn.preprocessing import StandardScaler
+from sklearn.datasets import load_wine
+
+np.random.seed(20240410)
+
+def plot_clusters(X, y):
+    plt.scatter(X[:, 0], X[:, 1], c=y, marker=&#39;o&#39;, cmap=plt.cm.coolwarm)
+    plt.xlabel(&#39;x1&#39;)
+    plt.ylabel(&#39;x2&#39;)
+
+# load dataset
+wine = load_wine()
+print(wine.feature_names)
+print(wine.DESCR)
+X, y = load_wine(return_X_y=True)
+
+# feature normalization
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
 </code></pre>
-<hr>
-<p><strong>Problem 2.17：</strong> In a heads or tails coin-tossing experiment the probability of occurrence of a head (1) is $q$ and that of a tail (0) is $1-q$. Let $x_i,i &#x3D;1,2,…,N$, be the resulting experimental outcomes, 𝑥𝑖 ∈ {0,1}. Show that the ML estimate of $q$ is</p>
-<p>$$q_{ML}&#x3D;\frac1N\sum_{i&#x3D;1}^Nx_i$$</p>
-<p>Hint: The likelihood function is</p>
-<p>$$P(X;q)&#x3D;\prod_{i&#x3D;1}^Nq^{x_i}(1-q)^{(1-x_i)}$$</p>
-<p>Then show that the ML results from the solution of the equation</p>
-<p>$$q^{\sum_{i}x_{i}}(1-q)^{(N-\sum_{i}x_{i})}\left(\frac{\sum_{i}x_{i}}{q}-\frac{N-\sum_{i}x_{i}}{1-q}\right)&#x3D;0$$</p>
-<hr>
-<p>Solution:</p>
-<img src="/2024/04/30/PR-ch02-Bayes/6.png" class>
-<img src="/2024/04/30/PR-ch02-Bayes/7.png" class>
-<hr>
-<p><strong>Problem 2.29：</strong> Show that for the lognormal distribution</p>
-<p>$$p(x)&#x3D;\frac{1}{\sigma x\sqrt{2\pi}}\exp\left(-\frac{(\ln{x}-\theta)^{2}}{2\sigma^{2}}\right),x&gt;0$$</p>
-<p>The ML estimate is given by</p>
-<p>$$\theta_{ML}&#x3D;\frac{1}{N}\sum_{k&#x3D;1}^{N}\ln{x_k}$$</p>
-<hr>
-<p>Solution:</p>
-<img src="/2024/04/30/PR-ch02-Bayes/8.png" class>
+<pre><code class="txt">...
 
-<hr>
-<p><strong>Problem:</strong> Consider two normal distributions in one dimension: $N(\mu_1,\sigma_1^2)$ and $N(\mu_2,\sigma_2^2).$ Imagine that we choose two random samples $x_1$ and $x_2$,one from each of the normal distributions and calculate their sum $x_3&#x3D;x_1+x_2.$ Suppose we do this repeatedly.</p>
-<p>(a) Consider the resulting distribution of the values of $x_3.$ Show from frst principles<br>that this is also a normal distribution.</p>
-<p>(b) What is the mean,  $\mu_{3}$, of your new distribution?</p>
-<p>(c) What is the variance, $\sigma_3^2?$</p>
-<p>(d) Repeat the above with two distributions in a multi-dimensional space, i.e., $N(\mu_1,\Sigma_1)$ and $N(\mu_2,\Sigma_2).$</p>
-<hr>
-<p>Solution:</p>
-<img src="/2024/04/30/PR-ch02-Bayes/1.png" class>
-<img src="/2024/04/30/PR-ch02-Bayes/2.png" class>
-<img src="/2024/04/30/PR-ch02-Bayes/3.png" class>
-<img src="/2024/04/30/PR-ch02-Bayes/4.png" class>
-<img src="/2024/04/30/PR-ch02-Bayes/5.png" class>
+Wine recognition dataset
+------------------------
 
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><img src="/2024/04/30/PR-ch02-Bayes/cover.png" class>
+**Data Set Characteristics:**
+
+    :Number of Instances: 178 (50 in each of three classes)
+    :Number of Attributes: 13 numeric, predictive attributes and the class
+    :Attribute Information:
+    - Alcohol
+    - Malic acid
+    - Ash
+    - Alcalinity of ash  
+    - Magnesium
+    - Total phenols
+    - Flavanoids
+    - Nonflavanoid phenols
+    - Proanthocyanins
+    - Color intensity
+    - Hue
+    - OD280/OD315 of diluted wines
+    - Proline
+
+    - class:
+            - class_0
+            - class_1
+            - class_2
+
+    :Summary Statistics:
+    
+    ============================= ==== ===== ======= =====
+                                   Min   Max   Mean     SD
+    ============================= ==== ===== ======= =====
+    Alcohol:                      11.0  14.8    13.0   0.8
+    Malic Acid:                   0.74  5.80    2.34  1.12
+    Ash:                          1.36  3.23    2.36  0.27
+    Alcalinity of Ash:            10.6  30.0    19.5   3.3
+    Magnesium:                    70.0 162.0    99.7  14.3
+    Total Phenols:                0.98  3.88    2.29  0.63
+    Flavanoids:                   0.34  5.08    2.03  1.00
+    Nonflavanoid Phenols:         0.13  0.66    0.36  0.12
+    Proanthocyanins:              0.41  3.58    1.59  0.57
+    Colour Intensity:              1.3  13.0     5.1   2.3
+    Hue:                          0.48  1.71    0.96  0.23
+    OD280/OD315 of diluted wines: 1.27  4.00    2.61  0.71
+    Proline:                       278  1680     746   315
+    ============================= ==== ===== ======= =====
+...
+</code></pre>
+<h2 id="Task-1-Implement-and-try-different-clustering-techniques"><a href="#Task-1-Implement-and-try-different-clustering-techniques" class="headerlink" title="Task 1: Implement and try different clustering techniques"></a>Task 1: Implement and try different clustering techniques</h2><ul>
+<li>Implement the following clustering methods and tune their hyperparameters accordingly. Set the random_state for ALL methods when applicable as random_state&#x3D;20240410 to ensure the reproducibility.<ul>
+<li>kmeans, using silhouette analysis to find the optimal number of clusters, ranging from 2 to 5 (both included), same for other methods</li>
+<li>Hierarchical (Agglomerative) clustering, using silhouette analysis to find the optimal number of clusters and linkage functions</li>
+<li>Gaussian Mixture Model, using silhouette analysis to find the optimal number of clusters and covariance types</li>
+</ul>
+</li>
+</ul>
+<h3 id="Kmeans"><a href="#Kmeans" class="headerlink" title="Kmeans"></a>Kmeans</h3><ul>
+<li>kmeans, using silhouette analysis to find the optimal number of clusters, ranging from 2 to 5 (both included), same for other methods</li>
+</ul>
+<pre><code class="python"># kmeans
+n_clusters = range(2,6)
+highest_scores = 0
+
+for n in n_clusters:
+    kmeans = KMeans(n_clusters=n, random_state=20240410)
+    kmeans.fit(X)
+    cluster_labels = kmeans.labels_
+    silhouette_avg = silhouette_score(X, cluster_labels)
+    if silhouette_avg &gt; highest_scores:
+        highest_scores = silhouette_avg
+        best_n = n
+
+kmeans = KMeans(n_clusters=best_n, random_state=20240410)
+kmeans.fit(X)
+cluster_labels = kmeans.labels_
+silhouette_avg = silhouette_score(X, cluster_labels)
+
+print(f&quot;The best parameters are: n_clusters=&#123;best_n&#125;&quot;)
+print(&quot;The average silhouette_score is :&quot;, silhouette_avg)
+</code></pre>
+<pre><code class="txt">The best parameters are: n_clusters=3
+The average silhouette_score is : 0.2848589191898987
+</code></pre>
+<h3 id="Agglomerative-clustering"><a href="#Agglomerative-clustering" class="headerlink" title="Agglomerative clustering"></a>Agglomerative clustering</h3><ul>
+<li>Hierarchical (Agglomerative) clustering, using silhouette analysis to find the optimal number of clusters and linkage functions</li>
+</ul>
+<pre><code class="python"># agglomerative clustering
+linkages = [&#39;ward&#39;, &#39;complete&#39;, &#39;average&#39;, &#39;single&#39;]
+n_clusters = range(2,6)
+highest_scores = 0
+
+for n in n_clusters:
+    for link in linkages:
+        agglo = AgglomerativeClustering(n_clusters=n, linkage = link)
+        agglo.fit(X)
+        cluster_labels = agglo.labels_
+        silhouette_avg = silhouette_score(X, cluster_labels)
+        if silhouette_avg &gt; highest_scores:
+            highest_scores = silhouette_avg
+            best_n = n
+            best_linkage = link
+
+
+agglo = AgglomerativeClustering(n_clusters=best_n, linkage = best_linkage)
+agglo.fit(X)
+cluster_labels = agglo.labels_
+silhouette_avg = silhouette_score(X, cluster_labels)
+
+print(f&quot;The best parameters are: n_clusters=&#123;best_n&#125;, linkage=&#123;best_linkage&#125;&quot;)
+print(&quot;The average silhouette_score is :&quot;, silhouette_avg)
+</code></pre>
+<pre><code class="txt">The best parameters are: n_clusters=3, linkage=ward
+The average silhouette_score is : 0.2774439826952266
+</code></pre>
+<h3 id="Gaussian-mixture-model"><a href="#Gaussian-mixture-model" class="headerlink" title="Gaussian mixture model"></a>Gaussian mixture model</h3><pre><code class="python"># gaussian mixture model
+
+covariance_type = [&#39;full&#39;,&#39;tied&#39;,&#39;diag&#39;,&#39;spherical&#39;]
+n_clusters = range(2,6)
+highest_scores = 0
+for n in n_clusters:
+    for covar in covariance_type:
+        gmm = GaussianMixture(n_components=n, covariance_type=covar, random_state=20240410)
+        cluster_labels = gmm.fit_predict(X)
+        silhouette_avg = silhouette_score(X, cluster_labels)
+        # print(f&quot;Covar: &#123;covar&#125; cluster: &#123;n&#125; Score: &#123;silhouette_avg&#125;&quot;)
+        if silhouette_avg &gt; highest_scores:
+            highest_scores = silhouette_avg
+            best_n = n
+            best_covar = covar
+
+gmm = GaussianMixture(n_components=best_n, covariance_type=best_covar, random_state=20240410)
+cluster_labels = gmm.fit_predict(X)
+silhouette_avg = silhouette_score(X, cluster_labels)
+
+print(f&quot;The best parameters are: n_clusters=&#123;best_n&#125;, covariance_type=&#123;best_covar&#125;&quot;)
+print(&quot;The average silhouette_score is :&quot;, silhouette_avg)
+</code></pre>
+<pre><code class="txt">The best parameters are: n_clusters=3, covariance_type=full
+The average silhouette_score is : 0.28356363134288903
+</code></pre>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><ul>
+<li>What are the best-performing hyperparameters for each method?<ul>
+<li>kmeans:<ul>
+<li>n_clusters&#x3D;3, aver_silhouette_score: 0.2848589191898987</li>
+</ul>
+</li>
+<li>Hierarchical (Agglomerative):<ul>
+<li>n_clusters&#x3D;3, linkage&#x3D;ward, aver_silhouette_score: 0.2774439826952266</li>
+</ul>
+</li>
+<li>Gaussian Mixture Model:<ul>
+<li>n_clusters&#x3D;3, covariance_type&#x3D;full, aver_silhouette_score is : 0.28356363134288903</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Task-2-Evaluate-the-clustering-results-against-ground-truth"><a href="#Task-2-Evaluate-the-clustering-results-against-ground-truth" class="headerlink" title="Task 2: Evaluate the clustering results against ground truth"></a>Task 2: Evaluate the clustering results against ground truth</h2><ul>
+<li>Select the best-performing hyperparameters for each method, set the random_state for ALL methods when applicable as random_state&#x3D;20240410 to ensure the reproducibility.</li>
+<li>Evaluate the clustering results from the three methods (kmeans, agglomerative clustering, and Gaussian mixture model) against ground truth y using<ul>
+<li><ol>
+<li>adjusted rand index and</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>normalized mutual information.</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python"># evaluation using ARI and NMI
+
+plt.figure(figsize=(12, 4))
+
+kmeans = KMeans(n_clusters=3, random_state=20240410)
+kmeans.fit(X)
+cluster_labels = kmeans.labels_
+ari = adjusted_rand_score(cluster_labels, y)
+nmi = normalized_mutual_info_score(cluster_labels, y)
+print(&quot;kmeans ARI is:&quot;, ari,  &quot;NMI is :&quot;, nmi)
+plt.subplot(1,3,1, title=&quot;kmeans&quot;)
+plot_clusters(X, cluster_labels)
+
+agglo = AgglomerativeClustering(n_clusters=3, linkage = &#39;ward&#39;)
+agglo.fit(X)
+cluster_labels = agglo.labels_
+ari = adjusted_rand_score(cluster_labels, y)
+nmi = normalized_mutual_info_score(cluster_labels, y)
+print(&quot;Agglo ARI is:&quot;, ari,  &quot;NMI is :&quot;, nmi)
+plt.subplot(1,3,2, title=&quot;agglo&quot;)
+plot_clusters(X, cluster_labels)
+
+gmm = GaussianMixture(n_components=3, covariance_type=&#39;full&#39;, random_state=20240410)
+cluster_labels = gmm.fit_predict(X)
+ari = adjusted_rand_score(cluster_labels, y)
+nmi = normalized_mutual_info_score(cluster_labels, y)
+print(&quot;GMM ARI is:&quot;, ari,  &quot;NMI is :&quot;, nmi)
+plt.subplot(1,3,3, title=&quot;gmm&quot;)
+plot_clusters(X, cluster_labels)
+</code></pre>
+<pre><code class="txt">kmeans ARI is: 0.8974949815093207 NMI is : 0.8758935341223069
+Agglo ARI is: 0.7899332213582837 NMI is : 0.7864652657004837
+GMM ARI is: 0.8974949815093207 NMI is : 0.8758935341223069
+</code></pre>
+<!-- ![Wine-Task2-Clustering](./Wine-Task2-Clustering.png) -->
+<img src="/2024/04/10/ML-clustering/Wine-Task2-Clustering.png" class>
 
 <ul>
-<li>Sergios Theodoridis Konstantinos Koutroumbas Pattern Recognition. 4th Edition. Springer, 2010.</li>
+<li>Which one is the best performing method?<ul>
+<li>both kmeans and GMM are best performing methods with (ARI&#x3D;0.8974949815093207,NMI&#x3D;0.8758935341223069)</li>
 </ul>
+</li>
+</ul>
+<h2 id="Task-3-Dimensionality-reduction-and-visualization"><a href="#Task-3-Dimensionality-reduction-and-visualization" class="headerlink" title="Task 3:  Dimensionality reduction and visualization"></a>Task 3:  Dimensionality reduction and visualization</h2><h3 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h3><ul>
+<li>The dataset contains 13 features, making it hard to visualize. Perform PCA to reduce it to a 2D space and visualize it using plot_clusters.</li>
+</ul>
+<pre><code class="python"># PCA visualization
+
+pca = PCA(n_components=2, random_state=20240410)
+X_reduced = pca.fit_transform(X)
+
+print(&quot;Singular values are:&quot;, pca.singular_values_)
+print(&quot;Absolute explained variance are:&quot;, pca.explained_variance_)
+print(&quot;Ratio of explained variance are:&quot;, pca.explained_variance_ratio_)
+print(&quot;Cumulative ratio of explained variance are:&quot;, np.cumsum(pca.explained_variance_ratio_))
+
+plot_clusters(X_reduced, y)
+</code></pre>
+<pre><code class="txt">Singular values are: [28.94203422 21.08225141]
+Absolute explained variance are: [4.73243698 2.51108093]
+Ratio of explained variance are: [0.36198848 0.1920749 ]
+Cumulative ratio of explained variance are: [0.36198848 0.55406338]
+</code></pre>
+<ul>
+<li>What is the ratio of explained variance captured by the 2D space?<ul>
+<li>0.55406338</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python">pca = PCA(random_state=20240410)
+X_pca = pca.fit_transform(X)
+cumulative_variance_ratio = np.cumsum(pca.explained_variance_ratio_)
+n_components = np.where(cumulative_variance_ratio &gt;= 0.8)[0][0] + 1
+print(f&quot;The number of PCs to retain &gt;80% data info is: &#123;n_components&#125;&quot;)
+</code></pre>
+<pre><code class="txt">The number of PCs to retain &gt;80% data info is: 5
+</code></pre>
+<h3 id="T-SNE"><a href="#T-SNE" class="headerlink" title="T-SNE"></a>T-SNE</h3><ul>
+<li>If the ratio of captured variance is too low (&lt;0.8 for example), it means a large loss of information by using linear transformation. So you may want to try t-SNE for visualization. Can you use t-SNE to project X to 2D and visualize clusters with ground truth y? Set random_state&#x3D;20240410 to ensure the reproducibility</li>
+</ul>
+<pre><code class="python"># TSNE visualization
+
+tsne = TSNE(n_components=2, random_state=20240410)
+X_reduced = tsne.fit_transform(X)  
+
+plt.figure(figsize=(12, 6))
+
+plt.subplot(1,2,1, title=&quot;original&quot;)
+plot_clusters(X, y)
+
+plt.subplot(1,2,2, title=&quot;2D-X_reduced&quot;)
+plot_clusters(X_reduced, y)
+</code></pre>
+<!-- ![TSNE](./Wine-Task3-TSNE.png) -->
+<img src="/2024/04/10/ML-clustering/Wine-Task3-TSNE.png" class>
+
+<h3 id="Visualization"><a href="#Visualization" class="headerlink" title="Visualization"></a>Visualization</h3><ul>
+<li>Visualize the clustering results (predicted labels) from the three methods (kmeans, agglomerative clustering, and Gaussian mixture model). Compare the clustering results visually against the ground truth, and think about whether the visualization corresponds to your answer to the last question in Task 2.</li>
+</ul>
+<pre><code class="python">plt.figure(figsize=(12, 12))
+
+plt.subplot(2,2,1, title=&quot;original&quot;)
+plot_clusters(X, y)
+
+kmeans = KMeans(n_clusters=3, init=&#39;random&#39;, random_state=20240410)
+kmeans.fit(X)
+cluster_labels = kmeans.labels_
+ari = adjusted_rand_score(cluster_labels, y)
+nmi = normalized_mutual_info_score(cluster_labels, y)
+print(&quot;kmeans ARI is:&quot;, ari,  &quot;NMI is :&quot;, nmi)
+plt.subplot(2,2,2, title=&quot;kmeans&quot;)
+plot_clusters(X, cluster_labels)
+
+agglo = AgglomerativeClustering(n_clusters=3, linkage = &#39;ward&#39;)
+agglo.fit(X)
+cluster_labels = agglo.labels_
+ari = adjusted_rand_score(cluster_labels, y)
+nmi = normalized_mutual_info_score(cluster_labels, y)
+print(&quot;Agglo ARI is:&quot;, ari,  &quot;NMI is :&quot;, nmi)
+plt.subplot(2,2,3, title=&quot;agglo&quot;)
+plot_clusters(X, cluster_labels)
+
+gmm = GaussianMixture(n_components=3, covariance_type=&#39;full&#39;, random_state=20240410)
+cluster_labels = gmm.fit_predict(X)
+ari = adjusted_rand_score(cluster_labels, y)
+nmi = normalized_mutual_info_score(cluster_labels, y)
+print(&quot;GMM ARI is:&quot;, ari,  &quot;NMI is :&quot;, nmi)
+plt.subplot(2,2,4, title=&quot;gmm&quot;)
+plot_clusters(X, cluster_labels)
+</code></pre>
+<!-- ![Wine-Task3-Clustering-Compare](./Wine-Task3-Clustering-Compare.png) -->
+<img src="/2024/04/10/ML-clustering/Wine-Task3-Clustering-Compare.png" class>
 
       
        <hr><span style="font-style: italic;color: gray;"> Please cite the source for reprints, feel free to verify the sources cited in the article, and feel free to point out any errors or lack of clarity of expression. You can comment in the comments section below or email to 862314702@qq.com 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 862314702@qq.com </span>
@@ -730,12 +957,12 @@ x=x*sqrt(s)+m;
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>PR-ch02-Bayes</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">1.9k</span></p>
+    <p><span class="copy-title">文章标题:</span>ML-Clustering</p>
+    <p><span class="copy-title">字数:</span><span class="post-count">1.6k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Sheldon &amp; Vila">Sheldon &amp; Vila</a></p>
-    <p><span class="copy-title">发布时间:</span>2024-04-30, 20:45:31</p>
-    <p><span class="copy-title">最后更新:</span>2024-07-05, 18:39:03</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/04/30/PR-ch02-Bayes/" title="PR-ch02-Bayes">https://sheldoncoder1337.github.io/2024/04/30/PR-ch02-Bayes/</a>
+    <p><span class="copy-title">发布时间:</span>2024-04-10, 22:22:21</p>
+    <p><span class="copy-title">最后更新:</span>2024-07-05, 18:34:58</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/04/10/ML-clustering/" title="ML-Clustering">https://sheldoncoder1337.github.io/2024/04/10/ML-clustering/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
     </p>
@@ -766,46 +993,6 @@ x=x*sqrt(s)+m;
 
 
 
-    
-        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": {
-        preferredFont: "TeX",
-        availableFonts: ["STIX","TeX"],
-        linebreaks: { automatic:true },
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
-    },
-    tex2jax: {
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
-        processEscapes: true,
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
-        Macros: { href: "{}" }
-    },
-    messageStyle: "none"
-    });
-</script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-        src="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-<input type="hidden" id="MathJax-js"
-        value="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
-</input>
     
 
 
