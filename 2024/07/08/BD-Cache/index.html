@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>ML-Autoencoder | 安居乐业</title>
-  <meta name="keywords" content=" ML ">
-  <meta name="description" content="ML-Autoencoder | 安居乐业">
+  <title>BD-Cache | 安居乐业</title>
+  <meta name="keywords" content=" Distribution , Big Data ">
+  <meta name="description" content="BD-Cache | 安居乐业">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="缓存失效 缓存穿透 缓存雪崩 缓存热点 数据不一致 数据并发竞争 Hot Key Big Key">
 <meta property="og:type" content="article">
@@ -636,9 +636,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-ML-Autoencoder" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-BD-Cache" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">ML-Autoencoder</h1>
+        <h1 class="article-title">BD-Cache</h1>
     
     <div class="article-meta">
         
@@ -650,7 +650,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="ML">ML</a>
+            <a  data-rel="BD">BD</a>
             
         </span>
         
@@ -658,19 +658,21 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color3">ML</a>
+            <a class="color3">Distribution</a>
+            
+            <a class="color4">Big Data</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-07-07 00:09:42'>2024-06-06 22:10</time>
+            发布时间 : <time class="date" title='最后更新: 2024-07-08 17:51:13'>2024-07-08 17:47</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1.3k</span>
+        <span>字数:31</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -700,7 +702,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-1-Prepare-Data"><span class="toc-text">Step 1: Prepare Data</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-2-Define-Neural-Nets"><span class="toc-text">Step 2: Define Neural Nets</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-3-Define-loss-function-and-the-optimizer"><span class="toc-text">Step 3: Define loss function and the optimizer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-4-Train-the-neural-nets"><span class="toc-text">Step 4: Train the neural nets</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-5-Dimensionality-reduction-using-PCA"><span class="toc-text">Step 5: Dimensionality reduction using PCA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-6-Visual-comparison-between-autoencoder-and-PCA"><span class="toc-text">Step 6: Visual comparison between autoencoder and PCA</span></a></li></ol>
+        
     
 <style>
     .left-col .switch-btn,
@@ -716,248 +718,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>We will build a complete autoencoder pipeline and compare the results with PCA on dimensionality reduction tasks.</p>
-<pre><code class="python"># load necessary libraries
-import torch
-from torch import nn
-from torch.utils.data import DataLoader
-from torchvision import datasets
-from torchvision.transforms import ToTensor, Lambda, Compose
-import matplotlib.pyplot as plt
-from time import time
-from sklearn.decomposition import PCA
-import numpy as np
-from sklearn.preprocessing import StandardScaler
-</code></pre>
-<p><code>Fashion-MNIST</code> is a dataset of Zalando’s article images consisting of of 60,000 training examples and 10,000 test examples. Each example comprises a 28×28 grayscale image and an associated label from one of 10 classes.</p>
-<pre><code class="python"># download FashionMNIST dataset
-training_data = datasets.FashionMNIST(
-    root=&quot;data&quot;,
-    train=True,
-    download=True,
-    transform=ToTensor() # ToTensor() transforms the data to tensor type and rescale [0,255] uint8 to [0,1] float
-)
+        <ul>
+<li>缓存失效</li>
+<li>缓存穿透</li>
+<li>缓存雪崩</li>
+<li>缓存热点</li>
+<li>数据不一致</li>
+<li>数据并发竞争</li>
+<li>Hot Key</li>
+<li>Big Key</li>
+</ul>
 
-# Download test data from open datasets.
-test_data = datasets.FashionMNIST(
-    root=&quot;data&quot;,
-    train=False,
-    download=True,
-    transform=ToTensor()
-)
-
-nsamples = 10
-imgs = training_data.data[0:nsamples,:]
-imgs = np.expand_dims(imgs,1)
-imgs = torch.tensor(imgs)
-imgs = imgs/255
-print(imgs.shape)
-labels = training_data.train_labels[0:nsamples]
-classes_names = [&#39;T-shirt/top&#39;, &#39;Trouser&#39;, &#39;Pullover&#39;, &#39;Dress&#39;, &#39;Coat&#39;, &#39;Sandal&#39;,&#39;Shirt&#39;, &#39;Sneaker&#39;, &#39;Bag&#39;, &#39;Ankle boot&#39;]
-
-fig=plt.figure(figsize=(20,5),facecolor=&#39;w&#39;)
-for i in range(nsamples):
-    ax = plt.subplot(1,nsamples, i+1)
-    plt.imshow(imgs[i, 0, :, :], cmap=plt.get_cmap(&#39;gray&#39;))
-    ax.set_title(&quot;&#123;&#125;&quot;.format(classes_names[labels[i]]), fontsize=15)
-    ax.get_xaxis().set_visible(False)
-    ax.get_yaxis().set_visible(False)
-
-plt.show()
-
-# print(dir(training_data)) # print all attribute of an object
-# print(training_data.data[0:9,:]) # print info of the first picture
-# plt.imshow(training_data.data[0,:], cmap=plt.get_cmap(&#39;gray&#39;)) # visualize the first picture
-</code></pre>
-<pre><code class="txt">torch.Size([10, 1, 28, 28])
-</code></pre>
-<img src="/2024/06/06/ML-Autoencoder/Fashion-MNIST.png" class>
-
-<h2 id="Step-1-Prepare-Data"><a href="#Step-1-Prepare-Data" class="headerlink" title="Step 1: Prepare Data"></a>Step 1: Prepare Data</h2><pre><code class="python">batch_size = 128
-
-# Create data loaders.
-train_dataloader = DataLoader(training_data, batch_size=batch_size, shuffle=True)
-test_dataloader = DataLoader(test_data, batch_size=batch_size)
-
-# check the first batch of the dataset
-for X, y in test_dataloader:
-    print(&quot;Shape of X [N, C, H, W]: &quot;, X.shape) # 
-    print(&quot;Shape of y: &quot;, y.shape, y.dtype)
-    break
-    
-# N: number of data instance in a batch
-# C: channel, number of colors in a pixel here
-# [H, W]: Height and width of a picture
-</code></pre>
-<pre><code class="txt">Shape of X [N, C, H, W]:  torch.Size([128, 1, 28, 28])
-Shape of y:  torch.Size([128]) torch.int64
-</code></pre>
-<h2 id="Step-2-Define-Neural-Nets"><a href="#Step-2-Define-Neural-Nets" class="headerlink" title="Step 2: Define Neural Nets"></a>Step 2: Define Neural Nets</h2><pre><code class="python">class AutoEncoder(nn.Module):
-    def __init__(self):
-        super(AutoEncoder, self).__init__()
-        self.encoder_stack = nn.Sequential(
-            nn.Flatten(),
-            nn.Linear(28*28, 128),
-            nn.ReLU(),
-            nn.Linear(128, 16),
-            nn.ReLU(),
-            nn.Linear(16, 2),
-            nn.ReLU()
-        )
-
-        self.decoder_stack = nn.Sequential(
-            nn.Linear(2, 16),
-            nn.ReLU(),
-            nn.Linear(16, 128),
-            nn.ReLU(),
-            nn.Linear(128, 28*28),
-            nn.Sigmoid()
-        )
-
-    def forward(self, x):
-        z = self.encoder_stack(x)
-        x = self.decoder_stack(z)
-        return x
-
-model = AutoEncoder()
-print(model)
-</code></pre>
-<pre><code class="txt">AutoEncoder(
-  (encoder_stack): Sequential(
-    (0): Flatten(start_dim=1, end_dim=-1)
-    (1): Linear(in_features=784, out_features=128, bias=True)
-    (2): ReLU()
-    (3): Linear(in_features=128, out_features=16, bias=True)
-    (4): ReLU()
-    (5): Linear(in_features=16, out_features=2, bias=True)
-    (6): ReLU()
-  )
-  (decoder_stack): Sequential(
-    (0): Linear(in_features=2, out_features=16, bias=True)
-    (1): ReLU()
-    (2): Linear(in_features=16, out_features=128, bias=True)
-    (3): ReLU()
-    (4): Linear(in_features=128, out_features=784, bias=True)
-    (5): Sigmoid()
-  )
-)
-</code></pre>
-<h2 id="Step-3-Define-loss-function-and-the-optimizer"><a href="#Step-3-Define-loss-function-and-the-optimizer" class="headerlink" title="Step 3: Define loss function and the optimizer"></a>Step 3: Define loss function and the optimizer</h2><pre><code class="python">loss_fn = nn.MSELoss()
-
-optimizer = torch.optim.Adam(model.parameters())
-</code></pre>
-<h2 id="Step-4-Train-the-neural-nets"><a href="#Step-4-Train-the-neural-nets" class="headerlink" title="Step 4: Train the neural nets"></a>Step 4: Train the neural nets</h2><pre><code class="python"># epochs: how many times we would like to traverse the whole dataset
-epochs=50
-
-for i in range(epochs): # over epochs
-    tic = time()
-    model.train()
-    train_loss = 0
-    for j, (X, y) in enumerate(train_dataloader): # over batches 
-        # Compute prediction error
-        pred = model(X)
-
-        loss = loss_fn(pred, X.reshape(X.size(0),-1))
-        train_loss += loss
-
-        # Backpropagation
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-
-        # print learning process
-#         if j % 100 == 0:
-#             loss, current = loss.item(), j * len(X)
-#             print(f&quot;epoch &#123;i&#125; batch &#123;j&#125; loss: &#123;loss/batch_size:&gt;7f&#125;&quot;)
-    train_time = time() - tic
-    
-    # print test results after every epochs    
-
-    print(f&quot;epoch &#123;i&#125; training time: &#123;train_time:&gt;7f&#125;s, train loss: &#123;train_loss/len(train_dataloader.dataset):&gt;7f&#125;&quot;)    
-</code></pre>
-<pre><code class="txt">epoch 0 training time: 5.038011s, train loss: 0.000559
-epoch 1 training time: 5.130287s, train loss: 0.000480
-epoch 2 training time: 5.422238s, train loss: 0.000448
-epoch 3 training time: 5.880179s, train loss: 0.000387
-epoch 4 training time: 5.521627s, train loss: 0.000376
-epoch 5 training time: 5.126778s, train loss: 0.000367
-epoch 6 training time: 5.206013s, train loss: 0.000362
-epoch 7 training time: 5.712925s, train loss: 0.000358
-epoch 8 training time: 5.457368s, train loss: 0.000355
-epoch 9 training time: 5.184317s, train loss: 0.000349
-epoch 10 training time: 5.153089s, train loss: 0.000344
-epoch 11 training time: 5.222293s, train loss: 0.000343
-epoch 12 training time: 5.173838s, train loss: 0.000340
-epoch 13 training time: 5.678778s, train loss: 0.000338
-epoch 14 training time: 5.614803s, train loss: 0.000336
-epoch 15 training time: 5.425945s, train loss: 0.000334
-epoch 16 training time: 5.560995s, train loss: 0.000332
-epoch 17 training time: 5.370713s, train loss: 0.000332
-epoch 18 training time: 5.385829s, train loss: 0.000330
-epoch 19 training time: 5.537868s, train loss: 0.000330
-epoch 20 training time: 5.746025s, train loss: 0.000328
-epoch 21 training time: 5.276327s, train loss: 0.000329
-epoch 22 training time: 5.439416s, train loss: 0.000326
-epoch 23 training time: 5.563997s, train loss: 0.000324
-epoch 24 training time: 5.372393s, train loss: 0.000323
-...
-epoch 46 training time: 5.110753s, train loss: 0.000297
-epoch 47 training time: 5.206847s, train loss: 0.000271
-epoch 48 training time: 5.143513s, train loss: 0.000262
-epoch 49 training time: 5.325914s, train loss: 0.000255
-</code></pre>
-<h2 id="Step-5-Dimensionality-reduction-using-PCA"><a href="#Step-5-Dimensionality-reduction-using-PCA" class="headerlink" title="Step 5: Dimensionality reduction using PCA"></a>Step 5: Dimensionality reduction using PCA</h2><pre><code class="python"># retrieve image data as array for PCA, each image [28,28] become a vector [1, 784]
-X = training_data.data.reshape(60000,-1).numpy()
-X = X/X.max()
-
-# fit PCA 
-pca = PCA(n_components=2)
-pca.fit(X)
-print(np.cumsum(pca.explained_variance_ratio_))
-
-# transform sampled imgs using PCA and recover images
-imgs_pca = imgs.reshape(nsamples,-1).numpy() # reshape sample images to vectors
-imgs_reduced = pca.transform(imgs_pca)
-imgs_recovered = pca.inverse_transform(imgs_reduced)
-imgs_recovered = np.reshape(imgs_recovered, [nsamples,28,28]) # reshape vectors to sample images
-</code></pre>
-<pre><code class="txt">[0.29039228 0.46794538]
-</code></pre>
-<h2 id="Step-6-Visual-comparison-between-autoencoder-and-PCA"><a href="#Step-6-Visual-comparison-between-autoencoder-and-PCA" class="headerlink" title="Step 6: Visual comparison between autoencoder and PCA"></a>Step 6: Visual comparison between autoencoder and PCA</h2><pre><code class="python">fig=plt.figure(figsize=(20,5),facecolor=&#39;w&#39;)
-for i in range(nsamples):
-    ax = plt.subplot(1,nsamples, i+1)
-    plt.imshow(imgs[i, 0, :, :], cmap=plt.get_cmap(&#39;gray&#39;))
-    ax.set_title(&quot;&#123;&#125;&quot;.format(classes_names[labels[i]]), fontsize=15)
-    ax.get_xaxis().set_visible(False)
-    ax.get_yaxis().set_visible(False)
-plt.show()
-
-fig=plt.figure(figsize=(20,5),facecolor=&#39;w&#39;)
-pred = model(imgs)
-pred = pred.reshape(pred.size(0),1,28,28).detach().numpy()
-for i in range(nsamples):
-    ax = plt.subplot(1,nsamples, i+1)
-#     print(pred[i, 0, :, :])
-    plt.imshow(pred[i, 0, :, :], cmap=plt.get_cmap(&#39;gray&#39;))
-    ax.set_title(&quot;&#123;&#125;&quot;.format(classes_names[labels[i]]), fontsize=15)
-    ax.get_xaxis().set_visible(False)
-    ax.get_yaxis().set_visible(False)
-plt.show()
-
-fig=plt.figure(figsize=(20,5),facecolor=&#39;w&#39;)
-for i in range(nsamples):
-    ax = plt.subplot(1,nsamples, i+1)
-    plt.imshow(imgs_recovered[i, :, :], cmap=plt.get_cmap(&#39;gray&#39;))
-    ax.set_title(&quot;&#123;&#125;&quot;.format(classes_names[labels[i]]), fontsize=15)
-    ax.get_xaxis().set_visible(False)
-    ax.get_yaxis().set_visible(False)
-plt.show()
-</code></pre>
-<img src="/2024/06/06/ML-Autoencoder/original.png" class>
-
-<img src="/2024/06/06/ML-Autoencoder/autoencoder.png" class>
-
-<img src="/2024/06/06/ML-Autoencoder/PCA.png" class>
       
        <hr><span style="font-style: italic;color: gray;"> Please cite the source for reprints, feel free to verify the sources cited in the article, and feel free to point out any errors or lack of clarity of expression. You can comment in the comments section below or email to 862314702@qq.com 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 862314702@qq.com </span>
     </div>
@@ -966,12 +737,12 @@ plt.show()
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>ML-Autoencoder</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">1.3k</span></p>
+    <p><span class="copy-title">文章标题:</span>BD-Cache</p>
+    <p><span class="copy-title">字数:</span><span class="post-count">31</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Sheldon &amp; Vila">Sheldon &amp; Vila</a></p>
-    <p><span class="copy-title">发布时间:</span>2024-06-06, 22:10:03</p>
-    <p><span class="copy-title">最后更新:</span>2024-07-07, 00:09:42</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/06/06/ML-Autoencoder/" title="ML-Autoencoder">https://sheldoncoder1337.github.io/2024/06/06/ML-Autoencoder/</a>
+    <p><span class="copy-title">发布时间:</span>2024-07-08, 17:47:40</p>
+    <p><span class="copy-title">最后更新:</span>2024-07-08, 17:51:13</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/07/08/BD-Cache/" title="BD-Cache">https://sheldoncoder1337.github.io/2024/07/08/BD-Cache/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
     </p>

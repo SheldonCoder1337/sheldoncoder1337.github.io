@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>ML-Autoencoder | 安居乐业</title>
-  <meta name="keywords" content=" ML ">
-  <meta name="description" content="ML-Autoencoder | 安居乐业">
+  <title>SE-OOD | 安居乐业</title>
+  <meta name="keywords" content=" Software Engineering , Object Oriented ">
+  <meta name="description" content="SE-OOD | 安居乐业">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="缓存失效 缓存穿透 缓存雪崩 缓存热点 数据不一致 数据并发竞争 Hot Key Big Key">
 <meta property="og:type" content="article">
@@ -636,9 +636,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-ML-Autoencoder" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-SE-OOD" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">ML-Autoencoder</h1>
+        <h1 class="article-title">SE-OOD</h1>
     
     <div class="article-meta">
         
@@ -650,7 +650,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="ML">ML</a>
+            <a  data-rel="SE">SE</a>
             
         </span>
         
@@ -658,19 +658,21 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color3">ML</a>
+            <a class="color1">Software Engineering</a>
+            
+            <a class="color1">Object Oriented</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-07-07 00:09:42'>2024-06-06 22:10</time>
+            发布时间 : <time class="date" title='最后更新: 2024-07-08 17:46:14'>2024-07-08 17:28</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1.3k</span>
+        <span>字数:1.6k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -700,7 +702,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-1-Prepare-Data"><span class="toc-text">Step 1: Prepare Data</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-2-Define-Neural-Nets"><span class="toc-text">Step 2: Define Neural Nets</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-3-Define-loss-function-and-the-optimizer"><span class="toc-text">Step 3: Define loss function and the optimizer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-4-Train-the-neural-nets"><span class="toc-text">Step 4: Train the neural nets</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-5-Dimensionality-reduction-using-PCA"><span class="toc-text">Step 5: Dimensionality reduction using PCA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-6-Visual-comparison-between-autoencoder-and-PCA"><span class="toc-text">Step 6: Visual comparison between autoencoder and PCA</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%8423%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="toc-text">面向对象的23种设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E5%A4%A7%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="toc-text">两大基础设计原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E5%9F%BA%E7%A1%80%E5%8E%9F%E5%88%99%E5%87%BA%E5%8F%91%EF%BC%8C%E4%BA%A7%E7%94%9F%E5%85%AD%E4%B8%AA%E5%85%B7%E4%BD%93%E7%9A%84%E5%8E%9F%E5%88%99"><span class="toc-text">从基础原则出发，产生六个具体的原则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="toc-text">设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F%EF%BC%88IOC%EF%BC%9A%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%EF%BC%8C%E5%B0%B1%E6%98%AF%E5%88%9B%E5%BB%BA%E5%88%86%E7%A6%BB%E7%9A%84%E9%9B%86%E5%A4%A7%E6%88%90%EF%BC%89"><span class="toc-text">创建型模式（IOC：控制反转，就是创建分离的集大成）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%BB%84%E6%88%90%E4%BB%A5%E5%8F%8A%E5%AF%B9%E8%B1%A1%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%EF%BC%89"><span class="toc-text">结构型模式（对象的组成以及对象之间的依赖关系）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%8D%B3%E6%96%B9%E6%B3%95%E5%8F%8A%E5%85%B6%E8%B0%83%E7%94%A8%E5%85%B3%E7%B3%BB%EF%BC%89"><span class="toc-text">行为型模式（即方法及其调用关系）</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -716,248 +718,52 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>We will build a complete autoencoder pipeline and compare the results with PCA on dimensionality reduction tasks.</p>
-<pre><code class="python"># load necessary libraries
-import torch
-from torch import nn
-from torch.utils.data import DataLoader
-from torchvision import datasets
-from torchvision.transforms import ToTensor, Lambda, Compose
-import matplotlib.pyplot as plt
-from time import time
-from sklearn.decomposition import PCA
-import numpy as np
-from sklearn.preprocessing import StandardScaler
-</code></pre>
-<p><code>Fashion-MNIST</code> is a dataset of Zalando’s article images consisting of of 60,000 training examples and 10,000 test examples. Each example comprises a 28×28 grayscale image and an associated label from one of 10 classes.</p>
-<pre><code class="python"># download FashionMNIST dataset
-training_data = datasets.FashionMNIST(
-    root=&quot;data&quot;,
-    train=True,
-    download=True,
-    transform=ToTensor() # ToTensor() transforms the data to tensor type and rescale [0,255] uint8 to [0,1] float
-)
+        <h2 id="面向对象的23种设计模式"><a href="#面向对象的23种设计模式" class="headerlink" title="面向对象的23种设计模式"></a>面向对象的23种设计模式</h2><p>设计原则：高内聚低耦合，开闭原则。</p>
+<h3 id="两大基础设计原则"><a href="#两大基础设计原则" class="headerlink" title="两大基础设计原则"></a>两大基础设计原则</h3><p>在说面向对象设计的六大原则之前，我们先来说下程序设计的原则：模块内高内聚，模块间低耦合。我们在面向对象时只需把类看成模块，那么就容易理解封装等了。</p>
+<p>说是七大原则，这里我先提出来一个：对扩展开放，对修改关闭。 为啥这么说，因为我们都知道软件是要改的。对扩展开放保证了可以增加功能，像泛型啦这些。对修改关闭保证了像前的兼容性，jdk7兼容jdk6这样。所以开闭原则围绕软件的整个生命周期。</p>
+<h3 id="从基础原则出发，产生六个具体的原则"><a href="#从基础原则出发，产生六个具体的原则" class="headerlink" title="从基础原则出发，产生六个具体的原则"></a>从基础原则出发，产生六个具体的原则</h3><ul>
+<li>SOLID 设计原则是由 Robert C. Martin 在21世纪早期提出的便于记忆的首字母缩写，指代面向对象编程和面向对象设计的五个基本原则。</li>
+<li>这些原则提供了一套方法论，帮助开发者避免设计上的常见陷阱，如过度耦合、缺乏灵活性、难以测试等问题，从而是代码更加易于理解、修改和扩展</li>
+<li>SOLID 设计原则主要包括以下五项设计原则：<ul>
+<li>单一职责原则（Single Responsibility Principle, SRP</li>
+<li>开闭原则（Open-Closed Principle, OCP</li>
+<li>里氏替换原则（Liskov Substitution Principle, LSP</li>
+<li>接口隔离原则（Interface Segregation Principle, ISP）</li>
+<li>依赖倒置原则（Dependency Inversion Principle, DIP）</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>单一职责（一个方法或一个类只做一件事，为了模块内高内聚）</li>
+<li>迪米特法则（也叫最少知道原则，为了模块间低耦合）</li>
+<li>里氏替换（就是继承原则，子类可以无缝替代父类。很好的符合了开闭原则）</li>
+<li>依赖倒置（类之间的依赖通过接口实现，低耦合的同时对扩展开放）</li>
+<li>接口隔离（即把单个复杂接口拆分为多个独立接口，与上条共同实现面向接口编程）</li>
+<li>合成复用原则（即尽量使用合成&#x2F;聚合的方式，而不是使用继承。主要为了防止继承滥用而导致的类之间耦合严重。记住只有符合继承原则时才用继承）</li>
+</ol>
+<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><p>我觉得程序员最好的沟通方式是代码，所以每个设计模式都是一个例子。所有例子都很方便，可以复制直接运行。因为对java熟悉，所以下面设计模式例子都是用java语言来实现的。</p>
+<h3 id="创建型模式（IOC：控制反转，就是创建分离的集大成）"><a href="#创建型模式（IOC：控制反转，就是创建分离的集大成）" class="headerlink" title="创建型模式（IOC：控制反转，就是创建分离的集大成）"></a>创建型模式（IOC：控制反转，就是创建分离的集大成）</h3><ol>
+<li>Singleton:单例模式(全局只要一个实例)</li>
+<li>Prototype:原型模式（通过拷贝原对象创建新对象）</li>
+<li>Factory Method:工厂方法模式（对象创建可控，隐藏具体类名等实现解耦）</li>
+<li>Abstract Factory:抽象工厂模式（解决对象与其属性匹配的工厂模式）</li>
+<li>Builder:建造者模式（封装降低耦合，生成的对象与构造顺序无关）</li>
+</ol>
+<p>创建型模式的五种有各自的使用环境，单例和原型比较简单就不说了，工厂方法模式和建造者模式，都是封装和降低耦合有啥不同呢，其实工厂方法关注的是一个类有多个子类的对象创建（汽车类的各种品牌），而建造者模式关注的是属性较多的对象创建（能达到过程无关）。而抽象工厂模式关注的是对象和属性及属性与属性的匹配关系（如奥迪汽车与其发动机及空调的匹配）。</p>
+<h3 id="结构型模式（对象的组成以及对象之间的依赖关系）"><a href="#结构型模式（对象的组成以及对象之间的依赖关系）" class="headerlink" title="结构型模式（对象的组成以及对象之间的依赖关系）"></a>结构型模式（对象的组成以及对象之间的依赖关系）</h3><ol>
+<li>Adapter:适配器模式（适配不同接口和类，一般解决历史遗留问题）</li>
+<li>Decorator:装饰器模式（比继承更灵活，可用排列组合形成多种扩展类）</li>
+<li>Proxy:代理模式（可以给类的每个方法增加逻辑，如身份验证）</li>
+<li>Facade:外观模式（对模块或产品的封装，降低耦合）</li>
+<li>Bridge:桥接模式（就是接口模式，抽象与实现分离）</li>
+<li>Plyweight:享元模式（相同对象的重用）</li>
+<li>Composite:组合模式（整体和部分相同时，如文件夹包含文件夹）</li>
+</ol>
+<p>我们可以看到适配器模式、装饰器模式、代理模式都可以用包装对象来实现（把对象作为一个属性放在用的对象里），所以模式关注的并不是实现，而是解决的问题。模式更多体现的是类与类之间的逻辑关系，比如代理模式和装饰器模式很像。但从字面就知道，代理是访问不了实际工作对象的，这是他们的区别。</p>
+<h3 id="行为型模式（即方法及其调用关系）"><a href="#行为型模式（即方法及其调用关系）" class="headerlink" title="行为型模式（即方法及其调用关系）"></a>行为型模式（即方法及其调用关系）</h3><p>行为型模式(即方法及其调用关系)</p>
+<p>1.Strategy:策略模式 (提供功能不同实现方式，且实现可选) 2.Template Method:模板方法模式(相同流程用一个模板方法) 3.Observer:观察者模式(用订阅-发布实现的被观察者变化时回调)<br>4.Iterator:迭代器模式(一种内部实现无关的集合遍历模式)<br>5.Chain of Responsibility:责任链模式 (事件处理的分层结构产生的责任链条)<br>6.Command:命令模式 (将命令者与被命令者分离)<br>7.Memento:备忘录模式(需要撤销与恢复操作时使用)<br>8.Slate:状态模式(当对象两种状态差别很大时使用)<br>9.Visitor.访问者模式(当对同一对象有多种不同操作时使用)<br>10.Mediator:中介者模式(以中介为中心，将网状关系变成星型关系)<br>11.Interpreter:解释器模式(常用于纯文本的表达式执行)</p>
+<p>写完设计模式之后感觉设计模式更多的一种逻辑关系，如果代码中有这种逻辑关系就可以用了。记得需要时候再用，不能为了设计模式而设计模式。没有什么就是好的，最主要用起来舒服吧。</p>
 
-# Download test data from open datasets.
-test_data = datasets.FashionMNIST(
-    root=&quot;data&quot;,
-    train=False,
-    download=True,
-    transform=ToTensor()
-)
-
-nsamples = 10
-imgs = training_data.data[0:nsamples,:]
-imgs = np.expand_dims(imgs,1)
-imgs = torch.tensor(imgs)
-imgs = imgs/255
-print(imgs.shape)
-labels = training_data.train_labels[0:nsamples]
-classes_names = [&#39;T-shirt/top&#39;, &#39;Trouser&#39;, &#39;Pullover&#39;, &#39;Dress&#39;, &#39;Coat&#39;, &#39;Sandal&#39;,&#39;Shirt&#39;, &#39;Sneaker&#39;, &#39;Bag&#39;, &#39;Ankle boot&#39;]
-
-fig=plt.figure(figsize=(20,5),facecolor=&#39;w&#39;)
-for i in range(nsamples):
-    ax = plt.subplot(1,nsamples, i+1)
-    plt.imshow(imgs[i, 0, :, :], cmap=plt.get_cmap(&#39;gray&#39;))
-    ax.set_title(&quot;&#123;&#125;&quot;.format(classes_names[labels[i]]), fontsize=15)
-    ax.get_xaxis().set_visible(False)
-    ax.get_yaxis().set_visible(False)
-
-plt.show()
-
-# print(dir(training_data)) # print all attribute of an object
-# print(training_data.data[0:9,:]) # print info of the first picture
-# plt.imshow(training_data.data[0,:], cmap=plt.get_cmap(&#39;gray&#39;)) # visualize the first picture
-</code></pre>
-<pre><code class="txt">torch.Size([10, 1, 28, 28])
-</code></pre>
-<img src="/2024/06/06/ML-Autoencoder/Fashion-MNIST.png" class>
-
-<h2 id="Step-1-Prepare-Data"><a href="#Step-1-Prepare-Data" class="headerlink" title="Step 1: Prepare Data"></a>Step 1: Prepare Data</h2><pre><code class="python">batch_size = 128
-
-# Create data loaders.
-train_dataloader = DataLoader(training_data, batch_size=batch_size, shuffle=True)
-test_dataloader = DataLoader(test_data, batch_size=batch_size)
-
-# check the first batch of the dataset
-for X, y in test_dataloader:
-    print(&quot;Shape of X [N, C, H, W]: &quot;, X.shape) # 
-    print(&quot;Shape of y: &quot;, y.shape, y.dtype)
-    break
-    
-# N: number of data instance in a batch
-# C: channel, number of colors in a pixel here
-# [H, W]: Height and width of a picture
-</code></pre>
-<pre><code class="txt">Shape of X [N, C, H, W]:  torch.Size([128, 1, 28, 28])
-Shape of y:  torch.Size([128]) torch.int64
-</code></pre>
-<h2 id="Step-2-Define-Neural-Nets"><a href="#Step-2-Define-Neural-Nets" class="headerlink" title="Step 2: Define Neural Nets"></a>Step 2: Define Neural Nets</h2><pre><code class="python">class AutoEncoder(nn.Module):
-    def __init__(self):
-        super(AutoEncoder, self).__init__()
-        self.encoder_stack = nn.Sequential(
-            nn.Flatten(),
-            nn.Linear(28*28, 128),
-            nn.ReLU(),
-            nn.Linear(128, 16),
-            nn.ReLU(),
-            nn.Linear(16, 2),
-            nn.ReLU()
-        )
-
-        self.decoder_stack = nn.Sequential(
-            nn.Linear(2, 16),
-            nn.ReLU(),
-            nn.Linear(16, 128),
-            nn.ReLU(),
-            nn.Linear(128, 28*28),
-            nn.Sigmoid()
-        )
-
-    def forward(self, x):
-        z = self.encoder_stack(x)
-        x = self.decoder_stack(z)
-        return x
-
-model = AutoEncoder()
-print(model)
-</code></pre>
-<pre><code class="txt">AutoEncoder(
-  (encoder_stack): Sequential(
-    (0): Flatten(start_dim=1, end_dim=-1)
-    (1): Linear(in_features=784, out_features=128, bias=True)
-    (2): ReLU()
-    (3): Linear(in_features=128, out_features=16, bias=True)
-    (4): ReLU()
-    (5): Linear(in_features=16, out_features=2, bias=True)
-    (6): ReLU()
-  )
-  (decoder_stack): Sequential(
-    (0): Linear(in_features=2, out_features=16, bias=True)
-    (1): ReLU()
-    (2): Linear(in_features=16, out_features=128, bias=True)
-    (3): ReLU()
-    (4): Linear(in_features=128, out_features=784, bias=True)
-    (5): Sigmoid()
-  )
-)
-</code></pre>
-<h2 id="Step-3-Define-loss-function-and-the-optimizer"><a href="#Step-3-Define-loss-function-and-the-optimizer" class="headerlink" title="Step 3: Define loss function and the optimizer"></a>Step 3: Define loss function and the optimizer</h2><pre><code class="python">loss_fn = nn.MSELoss()
-
-optimizer = torch.optim.Adam(model.parameters())
-</code></pre>
-<h2 id="Step-4-Train-the-neural-nets"><a href="#Step-4-Train-the-neural-nets" class="headerlink" title="Step 4: Train the neural nets"></a>Step 4: Train the neural nets</h2><pre><code class="python"># epochs: how many times we would like to traverse the whole dataset
-epochs=50
-
-for i in range(epochs): # over epochs
-    tic = time()
-    model.train()
-    train_loss = 0
-    for j, (X, y) in enumerate(train_dataloader): # over batches 
-        # Compute prediction error
-        pred = model(X)
-
-        loss = loss_fn(pred, X.reshape(X.size(0),-1))
-        train_loss += loss
-
-        # Backpropagation
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-
-        # print learning process
-#         if j % 100 == 0:
-#             loss, current = loss.item(), j * len(X)
-#             print(f&quot;epoch &#123;i&#125; batch &#123;j&#125; loss: &#123;loss/batch_size:&gt;7f&#125;&quot;)
-    train_time = time() - tic
-    
-    # print test results after every epochs    
-
-    print(f&quot;epoch &#123;i&#125; training time: &#123;train_time:&gt;7f&#125;s, train loss: &#123;train_loss/len(train_dataloader.dataset):&gt;7f&#125;&quot;)    
-</code></pre>
-<pre><code class="txt">epoch 0 training time: 5.038011s, train loss: 0.000559
-epoch 1 training time: 5.130287s, train loss: 0.000480
-epoch 2 training time: 5.422238s, train loss: 0.000448
-epoch 3 training time: 5.880179s, train loss: 0.000387
-epoch 4 training time: 5.521627s, train loss: 0.000376
-epoch 5 training time: 5.126778s, train loss: 0.000367
-epoch 6 training time: 5.206013s, train loss: 0.000362
-epoch 7 training time: 5.712925s, train loss: 0.000358
-epoch 8 training time: 5.457368s, train loss: 0.000355
-epoch 9 training time: 5.184317s, train loss: 0.000349
-epoch 10 training time: 5.153089s, train loss: 0.000344
-epoch 11 training time: 5.222293s, train loss: 0.000343
-epoch 12 training time: 5.173838s, train loss: 0.000340
-epoch 13 training time: 5.678778s, train loss: 0.000338
-epoch 14 training time: 5.614803s, train loss: 0.000336
-epoch 15 training time: 5.425945s, train loss: 0.000334
-epoch 16 training time: 5.560995s, train loss: 0.000332
-epoch 17 training time: 5.370713s, train loss: 0.000332
-epoch 18 training time: 5.385829s, train loss: 0.000330
-epoch 19 training time: 5.537868s, train loss: 0.000330
-epoch 20 training time: 5.746025s, train loss: 0.000328
-epoch 21 training time: 5.276327s, train loss: 0.000329
-epoch 22 training time: 5.439416s, train loss: 0.000326
-epoch 23 training time: 5.563997s, train loss: 0.000324
-epoch 24 training time: 5.372393s, train loss: 0.000323
-...
-epoch 46 training time: 5.110753s, train loss: 0.000297
-epoch 47 training time: 5.206847s, train loss: 0.000271
-epoch 48 training time: 5.143513s, train loss: 0.000262
-epoch 49 training time: 5.325914s, train loss: 0.000255
-</code></pre>
-<h2 id="Step-5-Dimensionality-reduction-using-PCA"><a href="#Step-5-Dimensionality-reduction-using-PCA" class="headerlink" title="Step 5: Dimensionality reduction using PCA"></a>Step 5: Dimensionality reduction using PCA</h2><pre><code class="python"># retrieve image data as array for PCA, each image [28,28] become a vector [1, 784]
-X = training_data.data.reshape(60000,-1).numpy()
-X = X/X.max()
-
-# fit PCA 
-pca = PCA(n_components=2)
-pca.fit(X)
-print(np.cumsum(pca.explained_variance_ratio_))
-
-# transform sampled imgs using PCA and recover images
-imgs_pca = imgs.reshape(nsamples,-1).numpy() # reshape sample images to vectors
-imgs_reduced = pca.transform(imgs_pca)
-imgs_recovered = pca.inverse_transform(imgs_reduced)
-imgs_recovered = np.reshape(imgs_recovered, [nsamples,28,28]) # reshape vectors to sample images
-</code></pre>
-<pre><code class="txt">[0.29039228 0.46794538]
-</code></pre>
-<h2 id="Step-6-Visual-comparison-between-autoencoder-and-PCA"><a href="#Step-6-Visual-comparison-between-autoencoder-and-PCA" class="headerlink" title="Step 6: Visual comparison between autoencoder and PCA"></a>Step 6: Visual comparison between autoencoder and PCA</h2><pre><code class="python">fig=plt.figure(figsize=(20,5),facecolor=&#39;w&#39;)
-for i in range(nsamples):
-    ax = plt.subplot(1,nsamples, i+1)
-    plt.imshow(imgs[i, 0, :, :], cmap=plt.get_cmap(&#39;gray&#39;))
-    ax.set_title(&quot;&#123;&#125;&quot;.format(classes_names[labels[i]]), fontsize=15)
-    ax.get_xaxis().set_visible(False)
-    ax.get_yaxis().set_visible(False)
-plt.show()
-
-fig=plt.figure(figsize=(20,5),facecolor=&#39;w&#39;)
-pred = model(imgs)
-pred = pred.reshape(pred.size(0),1,28,28).detach().numpy()
-for i in range(nsamples):
-    ax = plt.subplot(1,nsamples, i+1)
-#     print(pred[i, 0, :, :])
-    plt.imshow(pred[i, 0, :, :], cmap=plt.get_cmap(&#39;gray&#39;))
-    ax.set_title(&quot;&#123;&#125;&quot;.format(classes_names[labels[i]]), fontsize=15)
-    ax.get_xaxis().set_visible(False)
-    ax.get_yaxis().set_visible(False)
-plt.show()
-
-fig=plt.figure(figsize=(20,5),facecolor=&#39;w&#39;)
-for i in range(nsamples):
-    ax = plt.subplot(1,nsamples, i+1)
-    plt.imshow(imgs_recovered[i, :, :], cmap=plt.get_cmap(&#39;gray&#39;))
-    ax.set_title(&quot;&#123;&#125;&quot;.format(classes_names[labels[i]]), fontsize=15)
-    ax.get_xaxis().set_visible(False)
-    ax.get_yaxis().set_visible(False)
-plt.show()
-</code></pre>
-<img src="/2024/06/06/ML-Autoencoder/original.png" class>
-
-<img src="/2024/06/06/ML-Autoencoder/autoencoder.png" class>
-
-<img src="/2024/06/06/ML-Autoencoder/PCA.png" class>
       
        <hr><span style="font-style: italic;color: gray;"> Please cite the source for reprints, feel free to verify the sources cited in the article, and feel free to point out any errors or lack of clarity of expression. You can comment in the comments section below or email to 862314702@qq.com 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 862314702@qq.com </span>
     </div>
@@ -966,12 +772,12 @@ plt.show()
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>ML-Autoencoder</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">1.3k</span></p>
+    <p><span class="copy-title">文章标题:</span>SE-OOD</p>
+    <p><span class="copy-title">字数:</span><span class="post-count">1.6k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Sheldon &amp; Vila">Sheldon &amp; Vila</a></p>
-    <p><span class="copy-title">发布时间:</span>2024-06-06, 22:10:03</p>
-    <p><span class="copy-title">最后更新:</span>2024-07-07, 00:09:42</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/06/06/ML-Autoencoder/" title="ML-Autoencoder">https://sheldoncoder1337.github.io/2024/06/06/ML-Autoencoder/</a>
+    <p><span class="copy-title">发布时间:</span>2024-07-08, 17:28:44</p>
+    <p><span class="copy-title">最后更新:</span>2024-07-08, 17:46:14</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/07/08/SE-OOD/" title="SE-OOD">https://sheldoncoder1337.github.io/2024/07/08/SE-OOD/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
     </p>
