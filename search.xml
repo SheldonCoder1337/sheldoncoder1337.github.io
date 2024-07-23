@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title>RV-practice</title>
+      <link href="/2024/07/12/RV-Arithmetic-practice/"/>
+      <url>/2024/07/12/RV-Arithmetic-practice/</url>
+      
+        <content type="html"><![CDATA[<h2 id="汇编指令练习"><a href="#汇编指令练习" class="headerlink" title="汇编指令练习"></a>汇编指令练习</h2><ul><li>对sub执行反汇编，查看<code>sub x5, x6, x7</code>这条汇编指令对应的机器指令的编码，并对照RISC-V的specification解析该条指令的编码</li><li>现知道某条RISC-V的机器指令在内存中的值为<code>b3 05 95 00</code>, 从左往右从低地址到高地址，单位为字节，请将其翻译为对应的汇编指令。</li></ul><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul><li><a href="https://riscv.org/wp-content/uploads/2019/12/riscv-spec-20191213.pdf">The RISC-V Instruction Set Manual https://riscv.org/wp-content/uploads/2019/12/riscv-spec-20191213.pdf</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> RISCV </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> RV </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>RV-Arithmetic-Instructions</title>
+      <link href="/2024/07/12/RV-Arithmetic-Ins/"/>
+      <url>/2024/07/12/RV-Arithmetic-Ins/</url>
+      
+        <content type="html"><![CDATA[<h2 id="算术运算指令-Arithmetic-Instructions"><a href="#算术运算指令-Arithmetic-Instructions" class="headerlink" title="算术运算指令 (Arithmetic Instructions)"></a>算术运算指令 (Arithmetic Instructions)</h2><table><thead><tr><th>指令</th><th>格式</th><th>语法</th><th>描述</th><th>例子</th></tr></thead><tbody><tr><td>AND</td><td>R-type</td><td>ADD RD,RS1,RS2</td><td>RS1和RS2的值相加，结果保存到RD</td><td>add x5,x6,x7</td></tr><tr><td>SUB</td><td>R-type</td><td>SUB RD,RS1,RS2</td><td>RS1的值减去RS2的值，结果保存到RD</td><td>sub x5,x6,x7</td></tr><tr><td>ADDI</td><td>I-type</td><td>ADDI RD,RS1,IMM</td><td>RS1的值和IMM相加，结果保存到RD</td><td>addi x5,x6,100</td></tr><tr><td>LUI</td><td>U-type</td><td>LUI RD,IMM</td><td>构造一个32bit的数，高20bit存放IMM，低12位清零。结果保存到RD</td><td>lui x5, 0x12345</td></tr><tr><td>AUIPC</td><td>U-type</td><td>AUIPC RD,IMM</td><td>构造一个32bit的数，高20bit存放IMM，低12位清零。结果和PC相加后保存到RD</td><td>auipc x5, 0x12345</td></tr></tbody></table><p>还有由基本的算术运算指令衍生的伪指令</p><table><thead><tr><th>指令</th><th>等价指令</th><th>语法</th><th>描述</th><th>例子</th></tr></thead><tbody><tr><td>LI</td><td>LUI + ADDI</td><td>LI RD,IMM</td><td>将立即数IMM加载到RD中</td><td>li x5, 0x12345678</td></tr><tr><td>LA</td><td>AUIPC + ADDI</td><td>LA RD,LABEL</td><td>为RD加载一个地址值</td><td>la x5, label</td></tr><tr><td>NEG</td><td>SUB RD,x0,RS</td><td>NEG RD,RS</td><td>对RS中的值取反并将结果存放在RD中</td><td>neg x5, x6</td></tr><tr><td>MV</td><td>ADDI RD,RS,0</td><td>MV RD,RS</td><td>将RS中的值拷贝到RD中</td><td>mv x5, x6</td></tr><tr><td>NOP</td><td>ADDI x0,x0,0</td><td>NOP</td><td>什么也不做</td><td>nop</td></tr></tbody></table><h3 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h3><table><thead><tr><th>指令</th><th>格式</th><th>语法</th><th>描述</th><th>例子</th></tr></thead><tbody><tr><td>AND</td><td>R-type</td><td>ADD RD,RS1,RS2</td><td>RS1和RS2的值相加，结果保存到RD</td><td>add x5,x6,x7</td></tr></tbody></table><p>具体编码规则如下：</p><table><thead><tr><th>funct7</th><th>rs2</th><th>rs1</th><th>funct3</th><th>rd</th><th>opcode</th></tr></thead><tbody><tr><td>0000000</td><td>x7</td><td>x6</td><td>000</td><td>x5</td><td>0110011</td></tr><tr><td>0000000</td><td>00111</td><td>00110</td><td>000</td><td>00101</td><td>0110011</td></tr></tbody></table><ul><li>二进制 <code>0000000-00111-00110-000-00101-0110011</code>转为16进制为<code>0x007302B3</code>，即为可执行文件中的二进制编码</li><li>注意编译生成的可执行文件的字节序问题：<code>00 73 02 B3</code> -&gt; <code>B3 02 73 00</code></li><li>示例汇编代码：</li></ul><pre><code class="s"># Add# Format:#   ADD RD, RS1, RS2# Description:#   The contents of RS1 is added to the contents of RS2 and the result is #   placed in RD.    .text           # Define beginning of text section    .global _start  # Define entry _start_start:    li x6, 1        # x6 = 1    li x7, 2        # x7 = 2    add x5, x6, x7  # x5 = x6 + x7stop:    j stop          # Infinite loop to stop execution    .end            # End of file</code></pre><h3 id="二进制补码？"><a href="#二进制补码？" class="headerlink" title="二进制补码？"></a>二进制补码？</h3><ul><li>无符号数 v.s. 有符号数</li><li>有符号数在计算中的表示：二进制补码(two’s complement)</li><li>符号扩展(Sign extension) v.s. 零扩展(Zero extension)</li><li>口诀：取绝对值、转二进制、取反+1</li><li>例如：<code>-4</code> 取绝对值、转二进制 -&gt; <code>100</code> 取反+1 -&gt; <code>011+1</code> <code>100</code></li><li>符号扩展 <code>11111-100</code></li><li>零扩展 <code>00000-100</code></li></ul><pre><code class="s"># Add# Format:#   ADD RD, RS1, RS2# Description:#   The contents of RS1 is added to the contents of RS2 and the result is #   placed in RD.    .text           # Define beginning of text section    .global _start  # Define entry _start_start:    li x6, 1        # x6 = 1    li x7, -2       # x7 = -2    add x5, x6, x7  # x5 = x6 + x7stop:    j stop          # Infinite loop to stop execution    .end            # End of file</code></pre><h3 id="SUB-Substract"><a href="#SUB-Substract" class="headerlink" title="SUB(Substract)"></a>SUB(Substract)</h3><table><thead><tr><th>指令</th><th>格式</th><th>语法</th><th>描述</th><th>例子</th></tr></thead><tbody><tr><td>SUB</td><td>R-type</td><td>SUB RD,RS1,RS2</td><td>RS1的值减去RS2的值，结果保存到RD</td><td>sub x5,x6,x7</td></tr></tbody></table><pre><code class="s"># Substract# Format:#   SUB RD, RS1, RS2# Description:#   The contents of RS2 is subtracted from the contents of RS1 and the result#   is placed in RD.    .text           # Define beginning of text section    .global_start  # Define entry _start_start:    li x6, -1       # x6 = -1    li x7, -2       # x7 = -2    sub x5, x6, x7      # x5 = x6 - x7stop:    j stop          # Infinite loop to stop execution    .end            # End of file</code></pre><h3 id="ADDI-ADD-Immediate"><a href="#ADDI-ADD-Immediate" class="headerlink" title="ADDI(ADD Immediate)"></a>ADDI(ADD Immediate)</h3><p>|imm[11:0]     |rs1  |funct3|rd   |opcode |<br>|—    —    |—  |—   |—  |—    |<br>|0000 0000 0000|x6   |000   |x5   |0110011|<br>|0000 0000 0000|00110|000   |00101|0110011|</p><h3 id="LUI-Load-Upper-Immediate"><a href="#LUI-Load-Upper-Immediate" class="headerlink" title="LUI(Load Upper Immediate)"></a>LUI(Load Upper Immediate)</h3><p>|imm[31:12]              |rd   |opcode |<br>|—    —              |—  |—    |<br>|0000 0000 0000 0000 0000|x5   |0110111|<br>|0000 0000 0000 0000 0000|00101|0110111|</p><h3 id="AUIPC-ADD-Upper-Immediate-Program-Counter"><a href="#AUIPC-ADD-Upper-Immediate-Program-Counter" class="headerlink" title="AUIPC(ADD Upper Immediate Program Counter)"></a>AUIPC(ADD Upper Immediate Program Counter)</h3><p>|imm[31:12]              |rd   |opcode |<br>|—    —              |—  |—    |<br>|0000 0000 0000 0000 0000|x5   |0110111|<br>|0000 0000 0000 0000 0000|00101|0110111|</p><h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><ul><li>对sub执行反汇编，查看<code>sub x5, x6, x7</code>这条汇编指令对应的机器指令的编码，并对照RISC-V的specification解析该条指令的编码</li><li>现知道某条RISC-V的机器指令在内存中的值为<code>b3 05 95 00</code>, 从左往右从低地址到高地址，单位为字节，请将其翻译为对应的汇编指令。</li></ul><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul><li><a href="https://riscv.org/wp-content/uploads/2019/12/riscv-spec-20191213.pdf">The RISC-V Instruction Set Manual https://riscv.org/wp-content/uploads/2019/12/riscv-spec-20191213.pdf</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> RISCV </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> RV </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>BD-Cache</title>
       <link href="/2024/07/08/BD-Cache/"/>
       <url>/2024/07/08/BD-Cache/</url>

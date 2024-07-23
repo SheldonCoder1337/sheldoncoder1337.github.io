@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>BD-Cache | 安居乐业</title>
-  <meta name="keywords" content=" Distribution , Big Data ">
-  <meta name="description" content="BD-Cache | 安居乐业">
+  <title>RV-Arithmetic-Instructions | 安居乐业</title>
+  <meta name="keywords" content=" RV ">
+  <meta name="description" content="RV-Arithmetic-Instructions | 安居乐业">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="汇编指令练习 对sub执行反汇编，查看sub x5, x6, x7这条汇编指令对应的机器指令的编码，并对照RISC-V的specification解析该条指令的编码 现知道某条RISC-V的机器指令在内存中的值为b3 05 95 00, 从左往右从低地址到高地址，单位为字节，请将其翻译为对应的汇编指令。  Reference The RISC-V Instruction Set Manual ht">
 <meta property="og:type" content="article">
@@ -653,21 +653,19 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-BD-Cache" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-RV-Arithmetic-Ins" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">BD-Cache</h1>
+        <h1 class="article-title">RV-Arithmetic-Instructions</h1>
     
     <div class="article-meta">
         
-        
-        <span class="author"><a>sheldon</a></span>
         
         
         <span class="book">
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="BD">BD</a>
+            <a  data-rel="RISCV">RISCV</a>
             
         </span>
         
@@ -675,21 +673,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color3">Distribution</a>
-            
-            <a class="color4">Big Data</a>
+            <a class="color3">RV</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-07-08 17:51:13'>2024-07-08 17:47</time>
+            发布时间 : <time class="date" title='最后更新: 2024-07-12 15:28:21'>2024-07-12 10:30</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:31</span>
+        <span>字数:913</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -719,7 +715,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4-Arithmetic-Instructions"><span class="toc-text">算术运算指令 (Arithmetic Instructions)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ADD"><span class="toc-text">ADD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%A1%A5%E7%A0%81%EF%BC%9F"><span class="toc-text">二进制补码？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SUB-Substract"><span class="toc-text">SUB(Substract)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ADDI-ADD-Immediate"><span class="toc-text">ADDI(ADD Immediate)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LUI-Load-Upper-Immediate"><span class="toc-text">LUI(Load Upper Immediate)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AUIPC-ADD-Upper-Immediate-Program-Counter"><span class="toc-text">AUIPC(ADD Upper Immediate Program Counter)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0"><span class="toc-text">练习</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -735,15 +731,247 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li>缓存失效</li>
-<li>缓存穿透</li>
-<li>缓存雪崩</li>
-<li>缓存热点</li>
-<li>数据不一致</li>
-<li>数据并发竞争</li>
-<li>Hot Key</li>
-<li>Big Key</li>
+        <h2 id="算术运算指令-Arithmetic-Instructions"><a href="#算术运算指令-Arithmetic-Instructions" class="headerlink" title="算术运算指令 (Arithmetic Instructions)"></a>算术运算指令 (Arithmetic Instructions)</h2><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>格式</th>
+<th>语法</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AND</td>
+<td>R-type</td>
+<td>ADD RD,RS1,RS2</td>
+<td>RS1和RS2的值相加，结果保存到RD</td>
+<td>add x5,x6,x7</td>
+</tr>
+<tr>
+<td>SUB</td>
+<td>R-type</td>
+<td>SUB RD,RS1,RS2</td>
+<td>RS1的值减去RS2的值，结果保存到RD</td>
+<td>sub x5,x6,x7</td>
+</tr>
+<tr>
+<td>ADDI</td>
+<td>I-type</td>
+<td>ADDI RD,RS1,IMM</td>
+<td>RS1的值和IMM相加，结果保存到RD</td>
+<td>addi x5,x6,100</td>
+</tr>
+<tr>
+<td>LUI</td>
+<td>U-type</td>
+<td>LUI RD,IMM</td>
+<td>构造一个32bit的数，高20bit存放IMM，低12位清零。结果保存到RD</td>
+<td>lui x5, 0x12345</td>
+</tr>
+<tr>
+<td>AUIPC</td>
+<td>U-type</td>
+<td>AUIPC RD,IMM</td>
+<td>构造一个32bit的数，高20bit存放IMM，低12位清零。结果和PC相加后保存到RD</td>
+<td>auipc x5, 0x12345</td>
+</tr>
+</tbody></table>
+<p>还有由基本的算术运算指令衍生的伪指令</p>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>等价指令</th>
+<th>语法</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>LI</td>
+<td>LUI + ADDI</td>
+<td>LI RD,IMM</td>
+<td>将立即数IMM加载到RD中</td>
+<td>li x5, 0x12345678</td>
+</tr>
+<tr>
+<td>LA</td>
+<td>AUIPC + ADDI</td>
+<td>LA RD,LABEL</td>
+<td>为RD加载一个地址值</td>
+<td>la x5, label</td>
+</tr>
+<tr>
+<td>NEG</td>
+<td>SUB RD,x0,RS</td>
+<td>NEG RD,RS</td>
+<td>对RS中的值取反并将结果存放在RD中</td>
+<td>neg x5, x6</td>
+</tr>
+<tr>
+<td>MV</td>
+<td>ADDI RD,RS,0</td>
+<td>MV RD,RS</td>
+<td>将RS中的值拷贝到RD中</td>
+<td>mv x5, x6</td>
+</tr>
+<tr>
+<td>NOP</td>
+<td>ADDI x0,x0,0</td>
+<td>NOP</td>
+<td>什么也不做</td>
+<td>nop</td>
+</tr>
+</tbody></table>
+<h3 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h3><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>格式</th>
+<th>语法</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AND</td>
+<td>R-type</td>
+<td>ADD RD,RS1,RS2</td>
+<td>RS1和RS2的值相加，结果保存到RD</td>
+<td>add x5,x6,x7</td>
+</tr>
+</tbody></table>
+<p>具体编码规则如下：</p>
+<table>
+<thead>
+<tr>
+<th>funct7</th>
+<th>rs2</th>
+<th>rs1</th>
+<th>funct3</th>
+<th>rd</th>
+<th>opcode</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0000000</td>
+<td>x7</td>
+<td>x6</td>
+<td>000</td>
+<td>x5</td>
+<td>0110011</td>
+</tr>
+<tr>
+<td>0000000</td>
+<td>00111</td>
+<td>00110</td>
+<td>000</td>
+<td>00101</td>
+<td>0110011</td>
+</tr>
+</tbody></table>
+<ul>
+<li>二进制 <code>0000000-00111-00110-000-00101-0110011</code>转为16进制为<code>0x007302B3</code>，即为可执行文件中的二进制编码</li>
+<li>注意编译生成的可执行文件的字节序问题：<code>00 73 02 B3</code> -&gt; <code>B3 02 73 00</code></li>
+<li>示例汇编代码：</li>
+</ul>
+<pre><code class="s"># Add
+# Format:
+#   ADD RD, RS1, RS2
+# Description:
+#   The contents of RS1 is added to the contents of RS2 and the result is 
+#   placed in RD.
+
+    .text           # Define beginning of text section
+    .global _start  # Define entry _start
+
+_start:
+    li x6, 1        # x6 = 1
+    li x7, 2        # x7 = 2
+    add x5, x6, x7  # x5 = x6 + x7
+
+stop:
+    j stop          # Infinite loop to stop execution
+
+    .end            # End of file
+</code></pre>
+<h3 id="二进制补码？"><a href="#二进制补码？" class="headerlink" title="二进制补码？"></a>二进制补码？</h3><ul>
+<li>无符号数 v.s. 有符号数</li>
+<li>有符号数在计算中的表示：二进制补码(two’s complement)</li>
+<li>符号扩展(Sign extension) v.s. 零扩展(Zero extension)</li>
+<li>口诀：取绝对值、转二进制、取反+1</li>
+<li>例如：<code>-4</code> 取绝对值、转二进制 -&gt; <code>100</code> 取反+1 -&gt; <code>011+1</code> <code>100</code></li>
+<li>符号扩展 <code>11111-100</code></li>
+<li>零扩展 <code>00000-100</code></li>
+</ul>
+<pre><code class="s"># Add
+# Format:
+#   ADD RD, RS1, RS2
+# Description:
+#   The contents of RS1 is added to the contents of RS2 and the result is 
+#   placed in RD.
+
+    .text           # Define beginning of text section
+    .global _start  # Define entry _start
+
+_start:
+    li x6, 1        # x6 = 1
+    li x7, -2       # x7 = -2
+    add x5, x6, x7  # x5 = x6 + x7
+
+stop:
+    j stop          # Infinite loop to stop execution
+
+    .end            # End of file
+</code></pre>
+<h3 id="SUB-Substract"><a href="#SUB-Substract" class="headerlink" title="SUB(Substract)"></a>SUB(Substract)</h3><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>格式</th>
+<th>语法</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SUB</td>
+<td>R-type</td>
+<td>SUB RD,RS1,RS2</td>
+<td>RS1的值减去RS2的值，结果保存到RD</td>
+<td>sub x5,x6,x7</td>
+</tr>
+</tbody></table>
+<pre><code class="s"># Substract
+# Format:
+#   SUB RD, RS1, RS2
+# Description:
+#   The contents of RS2 is subtracted from the contents of RS1 and the result
+#   is placed in RD.
+
+    .text           # Define beginning of text section
+    .global	_start  # Define entry _start
+
+_start:
+    li x6, -1       # x6 = -1
+    li x7, -2       # x7 = -2
+    sub x5, x6, x7      # x5 = x6 - x7
+
+stop:
+    j stop          # Infinite loop to stop execution
+
+    .end            # End of file
+</code></pre>
+<h3 id="ADDI-ADD-Immediate"><a href="#ADDI-ADD-Immediate" class="headerlink" title="ADDI(ADD Immediate)"></a>ADDI(ADD Immediate)</h3><p>|imm[11:0]     |rs1  |funct3|rd   |opcode |<br>|—    —    |—  |—   |—  |—    |<br>|0000 0000 0000|x6   |000   |x5   |0110011|<br>|0000 0000 0000|00110|000   |00101|0110011|</p>
+<h3 id="LUI-Load-Upper-Immediate"><a href="#LUI-Load-Upper-Immediate" class="headerlink" title="LUI(Load Upper Immediate)"></a>LUI(Load Upper Immediate)</h3><p>|imm[31:12]              |rd   |opcode |<br>|—    —              |—  |—    |<br>|0000 0000 0000 0000 0000|x5   |0110111|<br>|0000 0000 0000 0000 0000|00101|0110111|</p>
+<h3 id="AUIPC-ADD-Upper-Immediate-Program-Counter"><a href="#AUIPC-ADD-Upper-Immediate-Program-Counter" class="headerlink" title="AUIPC(ADD Upper Immediate Program Counter)"></a>AUIPC(ADD Upper Immediate Program Counter)</h3><p>|imm[31:12]              |rd   |opcode |<br>|—    —              |—  |—    |<br>|0000 0000 0000 0000 0000|x5   |0110111|<br>|0000 0000 0000 0000 0000|00101|0110111|</p>
+<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><ul>
+<li>对sub执行反汇编，查看<code>sub x5, x6, x7</code>这条汇编指令对应的机器指令的编码，并对照RISC-V的specification解析该条指令的编码</li>
+<li>现知道某条RISC-V的机器指令在内存中的值为<code>b3 05 95 00</code>, 从左往右从低地址到高地址，单位为字节，请将其翻译为对应的汇编指令。</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://riscv.org/wp-content/uploads/2019/12/riscv-spec-20191213.pdf">The RISC-V Instruction Set Manual https://riscv.org/wp-content/uploads/2019/12/riscv-spec-20191213.pdf</a></li>
 </ul>
 
       
@@ -754,12 +982,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>BD-Cache</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">31</span></p>
+    <p><span class="copy-title">文章标题:</span>RV-Arithmetic-Instructions</p>
+    <p><span class="copy-title">字数:</span><span class="post-count">913</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Sheldon &amp; Vila">Sheldon &amp; Vila</a></p>
-    <p><span class="copy-title">发布时间:</span>2024-07-08, 17:47:40</p>
-    <p><span class="copy-title">最后更新:</span>2024-07-08, 17:51:13</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/07/08/BD-Cache/" title="BD-Cache">https://sheldoncoder1337.github.io/2024/07/08/BD-Cache/</a>
+    <p><span class="copy-title">发布时间:</span>2024-07-12, 10:30:05</p>
+    <p><span class="copy-title">最后更新:</span>2024-07-12, 15:28:21</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/07/12/RV-Arithmetic-Ins/" title="RV-Arithmetic-Instructions">https://sheldoncoder1337.github.io/2024/07/12/RV-Arithmetic-Ins/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
     </p>
