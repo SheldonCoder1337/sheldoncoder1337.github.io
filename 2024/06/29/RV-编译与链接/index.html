@@ -312,7 +312,7 @@
     </div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="27">
-<input type="hidden" id="yelog_site_word_count" value="22.5k">
+<input type="hidden" id="yelog_site_word_count" value="22.4k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -708,12 +708,12 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-07-24 15:15:10'>2024-06-29 17:34</time>
+            发布时间 : <time class="date" title='最后更新: 2024-07-24 17:50:45'>2024-06-29 17:34</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:3.4k</span>
+        <span>字数:3.3k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -856,23 +856,28 @@
 <tr>
 <th>ELF文件类型</th>
 <th>说明</th>
+<th>实例</th>
 </tr>
 </thead>
 <tbody><tr>
 <td>Executable File</td>
 <td>可执行文件，可以运行在操作系统上</td>
+<td>Linux上的.out文件</td>
 </tr>
 <tr>
 <td>Relocatable File</td>
 <td>可重定位文件，内容包含了代码和数据，可以被链接成可执行文件或者共享目标文件</td>
+<td>.o 文件</td>
 </tr>
 <tr>
 <td>Shared Object File</td>
 <td>共享目标文件，内容包含了代码和数据，可以链接到动态链接库或者可执行文件</td>
+<td>.so文件</td>
 </tr>
 <tr>
 <td>Core Dump File</td>
 <td>核心转储文件，进程意外终止时，用于存储程序崩溃时的状态信息，以供调试分析</td>
+<td>core文件</td>
 </tr>
 </tbody></table>
 <h3 id="Binutils-ELF文件处理工具"><a href="#Binutils-ELF文件处理工具" class="headerlink" title="Binutils - ELF文件处理工具"></a>Binutils - ELF文件处理工具</h3><p><a target="_blank" rel="noopener" href="https://www.gnu.org/software/binutils/">Binutils</a></p>
@@ -986,29 +991,26 @@ void main()
 <pre><code class="c">#include &lt;stdio.h&gt; 
  
 int global_init = 0x11111111;         // 初始化全局变量
-const int global_const = 0x22222222;  // 初始化全局变量
+
+const int global_const = 0x22222222;  // 初始化全局常量
  
 void main() 
 &#123; 
-        static int static_var = 0x33333333;  // 已经初始化的静态变量
+        static int static_var = 0x33333333;  // 已初始化的静态变量
+
         static int static_var_uninit;        // 未初始化的静态变量
  
         int auto_var = 0x44444444;           // 自动变量
  
         printf(&quot;hello world!\n&quot;);            // 只读字符串常量
+
         return; 
 &#125;
 </code></pre>
 <p>请问编译为 .o 文件后，global_init, global_const, static_var, static_var_uninit, auto_var 这些变量分别存放在那些 section 里，”hello world!\n” 这个字符串又在哪里？并尝试用工具查看并验证你的猜测。</p>
-<p><strong>解答：</strong> 编译为 .o 文件后，这些变量和字符串会被放置在不同的 section 中：</p>
 <ul>
-<li>global_init 和 global_const 存放在 .data section 中，因为它们都是已初始化的全局变量。</li>
-<li>static_var 存放在 .data section 中，因为它是已初始化的静态变量。</li>
-<li>static_var_uninit 存放在 .bss section 中，因为它是未初始化的静态变量。</li>
-<li>auto_var 存放在栈中，因为它是自动变量。</li>
-<li>“hello world!\n” 存放在 .rodata section 中，因为它是一个只读字符串常量。</li>
+<li>可以使用 gcc -c example.c 命令来编译生成 .o 文件，然后使用 readelf -a example.o 命令查看文件的详细信息。其中，可以查看到各个 section 的起始地址、大小等信息，也可以查看到字符串常量的位置和内容信息。</li>
 </ul>
-<p>可以使用 gcc -c example.c 命令来编译生成 .o 文件，然后使用 readelf -a example.o 命令查看文件的详细信息。其中，可以查看到各个 section 的起始地址、大小等信息，也可以查看到字符串常量的位置和内容信息。</p>
 <pre><code class="bash">&gt; gcc -c example.c -o example.o
 &gt; readelf -a examlple.o
 &gt; readelf -aW example.o
@@ -1080,16 +1082,12 @@ Symbol table &#39;.symtab&#39; contains 17 entries:
     16: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND puts
 ...
 </code></pre>
-<p>从返回的ELF信息可以看到，</p>
+<p><strong>解答：</strong> 编译为 .o 文件后，这些变量和字符串会被放置在不同的 section 中，从返回的ELF信息可以看到，</p>
 <ul>
-<li><p>global_init 和 static_var 存放在 [3]号段, 即.data section 中，已初始化的静态变量和未初始化的静态变量。</p>
-</li>
-<li><p>static_var_uninit 存放在[4]号段即.bss section 中，因为它是未初始化的静态变量。</p>
-</li>
-<li><p>global_const, “hello world!\n” 存放在[5]号段即 .rodata section 中，因为它们是一个只读字符串常量。</p>
-</li>
-<li><p>auto_var 存放在栈中，因为它是自动变量</p>
-</li>
+<li>global_init 和 static_var 存放在 [3]号段, 即.data section 中，已初始化的全局变量和已初始化的静态变量。</li>
+<li>static_var_uninit 存放在[4]号段即.bss section 中，因为它是未初始化的静态变量。</li>
+<li>global_const, “hello world!\n” 存放在[5]号段即 .rodata section 中，因为它们是一个只读字符串常量。</li>
+<li>auto_var 存放在栈中，因为它是自动变量</li>
 </ul>
 <h2 id="练习-3"><a href="#练习-3" class="headerlink" title="练习 3"></a>练习 3</h2><p>熟悉交叉编译概念，使用 riscv gcc 编译代码并使用 binutils 工具对生成的目标文件和可执行文件（ELF 格式）进行分析。具体要求如下：</p>
 <ul>
@@ -1272,10 +1270,10 @@ clean:
 
 <div class="article_copyright">
     <p><span class="copy-title">文章标题:</span>RV-编译与链接</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">3.4k</span></p>
+    <p><span class="copy-title">字数:</span><span class="post-count">3.3k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Sheldon &amp; Vila">Sheldon &amp; Vila</a></p>
     <p><span class="copy-title">发布时间:</span>2024-06-29, 17:34:12</p>
-    <p><span class="copy-title">最后更新:</span>2024-07-24, 15:15:10</p>
+    <p><span class="copy-title">最后更新:</span>2024-07-24, 17:50:45</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/06/29/RV-%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5/" title="RV-编译与链接">https://sheldoncoder1337.github.io/2024/06/29/RV-%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
