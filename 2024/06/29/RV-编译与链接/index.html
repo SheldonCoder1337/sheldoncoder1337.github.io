@@ -312,7 +312,7 @@
     </div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="27">
-<input type="hidden" id="yelog_site_word_count" value="22.4k">
+<input type="hidden" id="yelog_site_word_count" value="22.5k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -708,7 +708,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-07-24 14:46:50'>2024-06-29 17:34</time>
+            发布时间 : <time class="date" title='最后更新: 2024-07-24 15:15:10'>2024-06-29 17:34</time>
         
     </div>
     <div class="article-meta">
@@ -840,15 +840,13 @@
 <td>可执行文件</td>
 </tr>
 </tbody></table>
-<h3 id="GDB调试步骤"><a href="#GDB调试步骤" class="headerlink" title="GDB调试步骤"></a>GDB调试步骤</h3><pre class="mermaid">flowchart LR
-    Editor[foo.c] --> Preprocessor[gcc -E foo.c -o foo.i]
-    Preprocessor --> Compiler[gcc -S foo.i -o foo.s]
-    Compiler --> Assembler[gcc -c foo.s -o foo.o]
-    Assembler --> Linker[gcc foo.o -o a.out]
-    .C --> .i
-    .i --> .s
-    .s --> .o</pre>
-
+<h3 id="GDB调试步骤"><a href="#GDB调试步骤" class="headerlink" title="GDB调试步骤"></a>GDB调试步骤</h3><ul>
+<li>Editor[foo.c] –&gt; Preprocessor[gcc -E foo.c -o foo.i]</li>
+<li>Preprocessor –&gt; Compiler[gcc -S foo.i -o foo.s]</li>
+<li>Compiler –&gt; Assembler[gcc -c foo.s -o foo.o]</li>
+<li>Assembler –&gt; Linker[gcc foo.o -o a.out]</li>
+<li>.C –&gt; .i –&gt; .s –&gt; .o</li>
+</ul>
 <h2 id="ELF文件格式"><a href="#ELF文件格式" class="headerlink" title="ELF文件格式"></a>ELF文件格式</h2><ul>
 <li>ELF（Executable and Linkable Format，可执行和链接格式）是一种 Unix-like系统上的二进制文件格式，由 GNU 开源软件基金会开发，用于描述可执行文件、共享库、动态链接库、object 文件等。</li>
 <li>ELF标准中定义的采用ELF格式的文件分为4类：</li>
@@ -1277,7 +1275,7 @@ clean:
     <p><span class="copy-title">字数:</span><span class="post-count">3.4k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Sheldon &amp; Vila">Sheldon &amp; Vila</a></p>
     <p><span class="copy-title">发布时间:</span>2024-06-29, 17:34:12</p>
-    <p><span class="copy-title">最后更新:</span>2024-07-24, 14:46:50</p>
+    <p><span class="copy-title">最后更新:</span>2024-07-24, 15:15:10</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/06/29/RV-%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5/" title="RV-编译与链接">https://sheldoncoder1337.github.io/2024/06/29/RV-%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
