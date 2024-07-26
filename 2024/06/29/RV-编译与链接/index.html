@@ -708,12 +708,12 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-07-24 17:50:45'>2024-06-29 17:34</time>
+            发布时间 : <time class="date" title='最后更新: 2024-07-26 16:29:19'>2024-06-29 17:34</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:3.3k</span>
+        <span>字数:3.4k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -989,25 +989,39 @@ void main()
 </code></pre>
 <h2 id="练习-2"><a href="#练习-2" class="headerlink" title="练习 2"></a>练习 2</h2><p>如下例子 C 语言代码 example.c：</p>
 <pre><code class="c">#include &lt;stdio.h&gt; 
- 
-int global_init = 0x11111111;         // 初始化全局变量
 
-const int global_const = 0x22222222;  // 初始化全局常量
+/* unintialize */
+int global_uninit;
+const int global_uninit_const;
+static int global_uninit_static;
+const static int global_uninit_static_const;
+
+/* initialize */
+int global_init = 1;
+const int global_init_const = 2;
+static int global_init_static = 3;
+const static int global_init_static_const = 4;
  
 void main() 
-&#123; 
-        static int static_var = 0x33333333;  // 已初始化的静态变量
+&#123;
+        /* unintialize */
+        int local_uninit;
+        const int local_uninit_const;
+        static int local_uninit_static;
+        const static int local_uninit_static_const;
 
-        static int static_var_uninit;        // 未初始化的静态变量
- 
-        int auto_var = 0x44444444;           // 自动变量
- 
-        printf(&quot;hello world!\n&quot;);            // 只读字符串常量
+        /* initialize */
+        int local_init = 5;
+        const int local_init_const = 6;
+        static int local_init_static = 7;
+        const static int local_init_static_const = 8;
 
+        // string
+        printf(&quot;hello world!\n&quot;); 
         return; 
 &#125;
 </code></pre>
-<p>请问编译为 .o 文件后，global_init, global_const, static_var, static_var_uninit, auto_var 这些变量分别存放在那些 section 里，”hello world!\n” 这个字符串又在哪里？并尝试用工具查看并验证你的猜测。</p>
+<p>请问编译为 .o 文件后，global_init, global_init_const, global_init_static, local_uninit, local_init 等这些变量分别存放在那些 section 里，”hello world!\n” 这个字符串又在哪里？并尝试用工具查看并验证你的猜测。</p>
 <ul>
 <li>可以使用 gcc -c example.c 命令来编译生成 .o 文件，然后使用 readelf -a example.o 命令查看文件的详细信息。其中，可以查看到各个 section 的起始地址、大小等信息，也可以查看到字符串常量的位置和内容信息。</li>
 </ul>
@@ -1026,7 +1040,7 @@ ELF Header:
   Version:                           0x1
   Entry point address:               0x0
   Start of program headers:          0 (bytes into file)
-  Start of section headers:          976 (bytes into file)
+  Start of section headers:          1392 (bytes into file)
   Flags:                             0x0
   Size of this header:               64 (bytes)
   Size of program headers:           0 (bytes)
@@ -1038,19 +1052,19 @@ ELF Header:
 Section Headers:
   [Nr] Name              Type            Address          Off    Size   ES Flg Lk Inf Al
   [ 0]                   NULL            0000000000000000 000000 000000 00      0   0  0
-  [ 1] .text             PROGBITS        0000000000000000 000040 000022 00  AX  0   0  1
-  [ 2] .rela.text        RELA            0000000000000000 000310 000030 18   I 11   1  8
-  [ 3] .data             PROGBITS        0000000000000000 000064 000008 00  WA  0   0  4
-  [ 4] .bss              NOBITS          0000000000000000 00006c 000004 00  WA  0   0  4
-  [ 5] .rodata           PROGBITS        0000000000000000 00006c 000011 00   A  0   0  4
-  [ 6] .comment          PROGBITS        0000000000000000 00007d 00002c 01  MS  0   0  1
-  [ 7] .note.GNU-stack   PROGBITS        0000000000000000 0000a9 000000 00      0   0  1
-  [ 8] .note.gnu.property NOTE            0000000000000000 0000b0 000020 00   A  0   0  8
-  [ 9] .eh_frame         PROGBITS        0000000000000000 0000d0 000038 00   A  0   0  8
-  [10] .rela.eh_frame    RELA            0000000000000000 000340 000018 18   I 11   9  8
-  [11] .symtab           SYMTAB          0000000000000000 000108 000198 18     12  12  8
-  [12] .strtab           STRTAB          0000000000000000 0002a0 00006b 00      0   0  1
-  [13] .shstrtab         STRTAB          0000000000000000 000358 000074 00      0   0  1
+  [ 1] .text             PROGBITS        0000000000000000 000040 000029 00  AX  0   0  1
+  [ 2] .rela.text        RELA            0000000000000000 0004b0 000030 18   I 11   1  8
+  [ 3] .data             PROGBITS        0000000000000000 00006c 00000c 00  WA  0   0  4
+  [ 4] .bss              NOBITS          0000000000000000 000078 000008 00  WA  0   0  4
+  [ 5] .rodata           PROGBITS        0000000000000000 000078 000024 00   A  0   0  4
+  [ 6] .comment          PROGBITS        0000000000000000 00009c 00002c 01  MS  0   0  1
+  [ 7] .note.GNU-stack   PROGBITS        0000000000000000 0000c8 000000 00      0   0  1
+  [ 8] .note.gnu.property NOTE            0000000000000000 0000c8 000020 00   A  0   0  8
+  [ 9] .eh_frame         PROGBITS        0000000000000000 0000e8 000038 00   A  0   0  8
+  [10] .rela.eh_frame    RELA            0000000000000000 0004e0 000018 18   I 11   9  8
+  [11] .symtab           SYMTAB          0000000000000000 000120 000258 18     12  18  8
+  [12] .strtab           STRTAB          0000000000000000 000378 000133 00      0   0  1
+  [13] .shstrtab         STRTAB          0000000000000000 0004f8 000074 00      0   0  1
 Key to Flags:
   W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
   L (link order), O (extra OS processing required), G (group), T (TLS),
@@ -1059,35 +1073,51 @@ Key to Flags:
 
 ...
 
-The decoding of unwind sections for machine type Advanced Micro Devices X86-64 is not currently supported.
-
-Symbol table &#39;.symtab&#39; contains 17 entries:
+Symbol table &#39;.symtab&#39; contains 25 entries:
    Num:    Value          Size Type    Bind   Vis      Ndx Name
      0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND 
      1: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS example.c
      2: 0000000000000000     0 SECTION LOCAL  DEFAULT    1 
      3: 0000000000000000     0 SECTION LOCAL  DEFAULT    3 
      4: 0000000000000000     0 SECTION LOCAL  DEFAULT    4 
-     5: 0000000000000000     0 SECTION LOCAL  DEFAULT    5 
-     6: 0000000000000000     4 OBJECT  LOCAL  DEFAULT    4 static_var_uninit.2318
-     7: 0000000000000004     4 OBJECT  LOCAL  DEFAULT    3 static_var.2317
-     8: 0000000000000000     0 SECTION LOCAL  DEFAULT    7 
-     9: 0000000000000000     0 SECTION LOCAL  DEFAULT    8 
-    10: 0000000000000000     0 SECTION LOCAL  DEFAULT    9 
-    11: 0000000000000000     0 SECTION LOCAL  DEFAULT    6 
-    12: 0000000000000000     4 OBJECT  GLOBAL DEFAULT    3 global_init
-    13: 0000000000000000     4 OBJECT  GLOBAL DEFAULT    5 global_const
-    14: 0000000000000000    34 FUNC    GLOBAL DEFAULT    1 main
-    15: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND _GLOBAL_OFFSET_TABLE_
-    16: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND puts
+     5: 0000000000000000     4 OBJECT  LOCAL  DEFAULT    4 global_uninit_static
+     6: 0000000000000000     0 SECTION LOCAL  DEFAULT    5 
+     7: 0000000000000000     4 OBJECT  LOCAL  DEFAULT    5 global_uninit_static_const
+     8: 0000000000000004     4 OBJECT  LOCAL  DEFAULT    3 global_init_static
+     9: 0000000000000008     4 OBJECT  LOCAL  DEFAULT    5 global_init_static_const
+    10: 000000000000001c     4 OBJECT  LOCAL  DEFAULT    5 local_init_static_const.2330
+    11: 0000000000000008     4 OBJECT  LOCAL  DEFAULT    3 local_init_static.2329
+    12: 0000000000000020     4 OBJECT  LOCAL  DEFAULT    5 local_uninit_static_const.2326
+    13: 0000000000000004     4 OBJECT  LOCAL  DEFAULT    4 local_uninit_static.2325
+    14: 0000000000000000     0 SECTION LOCAL  DEFAULT    7 
+    15: 0000000000000000     0 SECTION LOCAL  DEFAULT    8 
+    16: 0000000000000000     0 SECTION LOCAL  DEFAULT    9 
+    17: 0000000000000000     0 SECTION LOCAL  DEFAULT    6 
+    18: 0000000000000004     4 OBJECT  GLOBAL DEFAULT  COM global_uninit
+    19: 0000000000000004     4 OBJECT  GLOBAL DEFAULT  COM global_uninit_const
+    20: 0000000000000000     4 OBJECT  GLOBAL DEFAULT    3 global_init
+    21: 0000000000000004     4 OBJECT  GLOBAL DEFAULT    5 global_init_const
+    22: 0000000000000000    41 FUNC    GLOBAL DEFAULT    1 main
+    23: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND _GLOBAL_OFFSET_TABLE_
+    24: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND puts
 ...
 </code></pre>
 <p><strong>解答：</strong> 编译为 .o 文件后，这些变量和字符串会被放置在不同的 section 中，从返回的ELF信息可以看到，</p>
 <ul>
-<li>global_init 和 static_var 存放在 [3]号段, 即.data section 中，已初始化的全局变量和已初始化的静态变量。</li>
-<li>static_var_uninit 存放在[4]号段即.bss section 中，因为它是未初始化的静态变量。</li>
-<li>global_const, “hello world!\n” 存放在[5]号段即 .rodata section 中，因为它们是一个只读字符串常量。</li>
-<li>auto_var 存放在栈中，因为它是自动变量</li>
+<li>[3]号节即.data section：global_init, global_init_static, local_init_static</li>
+<li>栈: Auto 自动变量：local_init</li>
+<li>[4]号节即.bss section：global_uninit_static, local_uninit_static</li>
+<li>[5]号节即.rodata section：包含const声明的对象(除了global_uninit_const)</li>
+<li>COM 公共变量：global_uninit, global_uninit_const</li>
+</ul>
+<p>【C语言复习】</p>
+<ul>
+<li>存储类型 static 的作用：<ul>
+<li>块外：外部链接改为内部链接</li>
+<li>块内：自动存储期限改为静态存储期限</li>
+</ul>
+</li>
+<li>类型限定符 const 的作用：只读</li>
 </ul>
 <h2 id="练习-3"><a href="#练习-3" class="headerlink" title="练习 3"></a>练习 3</h2><p>熟悉交叉编译概念，使用 riscv gcc 编译代码并使用 binutils 工具对生成的目标文件和可执行文件（ELF 格式）进行分析。具体要求如下：</p>
 <ul>
@@ -1270,10 +1300,10 @@ clean:
 
 <div class="article_copyright">
     <p><span class="copy-title">文章标题:</span>RV-编译与链接</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">3.3k</span></p>
+    <p><span class="copy-title">字数:</span><span class="post-count">3.4k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Sheldon &amp; Vila">Sheldon &amp; Vila</a></p>
     <p><span class="copy-title">发布时间:</span>2024-06-29, 17:34:12</p>
-    <p><span class="copy-title">最后更新:</span>2024-07-24, 17:50:45</p>
+    <p><span class="copy-title">最后更新:</span>2024-07-26, 16:29:19</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2024/06/29/RV-%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5/" title="RV-编译与链接">https://sheldoncoder1337.github.io/2024/06/29/RV-%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
