@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>LLM-init</title>
+      <link href="/2025/01/20/LLM-init/"/>
+      <url>/2025/01/20/LLM-init/</url>
+      
+        <content type="html"><![CDATA[<pre><code class="bash"># Hardware RequirementsCPU ≥ 8 cores;RAM ≥ 32 GB;Disk ≥ 100 GB;# System RequirementsmacOS User：macOS Monterey 12.6 or laterLinux User：CentOS 7 / Ubuntu 20.04 or laterWindows User：Windows 10 LTSC 2021 or later# Software RequirementsmacOS / Linux User：Docker，Docker ComposeWindows User：WSL 2 / Hyper-V，Docker，Docker Compose-----Docker ≥ 24.0.0 &amp; Docker Compose ≥ v2.26.1.</code></pre><p>If Docker is not installed locally (Windows, Mac, or Linux), please refer to <a href="https://docs.docker.com/engine/install/">Install Docker Engine</a> to complete the installation.</p><pre><code class="bash"># Clone the repository$ git clone https://github.com/SheldonCoder1337/KGRAG.git# Go to the project directory$ cd KGRAG# Compose up the containers$ docker compose -f docker-compose.yml up -d# Check the status of the containers$ docker ps# Potential issues: ports are used$ # check the port and kill the process$ netstat -ano | findstr &quot;3306&quot;# if the containers are started, access http://localhost:8887/#/home</code></pre><pre><code class="shell"># Install conda# Follow https://docs.anaconda.com/miniconda/# Create a new virtual environment$ conda create -n kag python=3.10 &amp;&amp; conda activate kag# If you are in China, you can use the following command to speed up the installation:# $ conda config --add channels https://mirrors.aliyun.com/anaconda/pkgs/main# $ pip config set global.index-url https://mirrors.aliyun.com/pypi/simple# Enter the project root directory, which is ./KAG, and install KAG:$ cd ./KAG &amp;&amp; pip install -e .# Verify whether the installation was successful$ knext --version$ knext --helpUsage: knext [OPTIONS] COMMAND [ARGS]...Options:  --version  Show the version and exit.  --help     Show this message and exit.Commands:  project   Project client.  reasoner  Reasoner client.  schema    Schema client.  thinker   Thinker client.$ cd ./kag/examples/medicine# Initialize the project$ knext project restore --host_addr http://127.0.0.1:8887 --proj_path# Submit your schemaknext schema commit</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> LLM </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> LLM </tag>
+            
+            <tag> Data Science </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>READ-Telemetry</title>
       <link href="/2024/07/28/READ-Telemetry/"/>
       <url>/2024/07/28/READ-Telemetry/</url>
