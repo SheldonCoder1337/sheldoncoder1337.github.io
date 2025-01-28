@@ -6,15 +6,15 @@
   <meta name="keywords" content=" LLM , Data Science ">
   <meta name="description" content="LLM-init | 安居乐业">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="# Hardware Requirements CPU ≥ 8 cores; RAM ≥ 32 GB; Disk ≥ 100 GB;  # System Requirements macOS User：macOS Monterey 12.6 or later Linux User：CentOS 7 &#x2F; Ubuntu 20.04 or later Windows User：Windows 10 LT">
+<meta name="description" content="# Hardware Requirements CPU ≥ 8 cores; RAM ≥ 16 GB; Disk ≥ 100 GB;  # System Requirements macOS User：macOS Monterey 12.6 or later Linux User：CentOS 7 &#x2F; Ubuntu 20.04 or later Windows User：Windows 10 LT">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LLM-init">
 <meta property="og:url" content="https://sheldoncoder1337.github.io/2025/01/20/LLM-init/index.html">
 <meta property="og:site_name" content="安居乐业">
-<meta property="og:description" content="# Hardware Requirements CPU ≥ 8 cores; RAM ≥ 32 GB; Disk ≥ 100 GB;  # System Requirements macOS User：macOS Monterey 12.6 or later Linux User：CentOS 7 &#x2F; Ubuntu 20.04 or later Windows User：Windows 10 LT">
+<meta property="og:description" content="# Hardware Requirements CPU ≥ 8 cores; RAM ≥ 16 GB; Disk ≥ 100 GB;  # System Requirements macOS User：macOS Monterey 12.6 or later Linux User：CentOS 7 &#x2F; Ubuntu 20.04 or later Windows User：Windows 10 LT">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-01-20T09:47:40.000Z">
-<meta property="article:modified_time" content="2025-01-28T07:47:43.454Z">
+<meta property="article:modified_time" content="2025-01-28T16:06:11.952Z">
 <meta property="article:author" content="Sheldon &amp; Vila">
 <meta property="article:tag" content="LLM">
 <meta property="article:tag" content="Data Science">
@@ -321,7 +321,7 @@
     </div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="29">
-<input type="hidden" id="yelog_site_word_count" value="24.8k">
+<input type="hidden" id="yelog_site_word_count" value="24.6k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -747,12 +747,12 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2025-01-28 15:47:43'>2025-01-20 17:47</time>
+            发布时间 : <time class="date" title='最后更新: 2025-01-29 00:06:11'>2025-01-20 17:47</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:311</span>
+        <span>字数:151</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -800,7 +800,7 @@
       
         <pre><code class="bash"># Hardware Requirements
 CPU ≥ 8 cores;
-RAM ≥ 32 GB;
+RAM ≥ 16 GB;
 Disk ≥ 100 GB;
 
 # System Requirements
@@ -833,47 +833,6 @@ $ netstat -ano | findstr &quot;3306&quot;
 
 # if the containers are started, access http://localhost:8887/#/home
 </code></pre>
-<pre><code class="shell"># Install conda
-# Follow https://docs.anaconda.com/miniconda/
-
-# Create a new virtual environment
-
-$ conda create -n kag python=3.10 &amp;&amp; conda activate kag
-
-# If you are in China, you can use the following command to speed up the installation:
-# $ conda config --add channels https://mirrors.aliyun.com/anaconda/pkgs/main
-# $ pip config set global.index-url https://mirrors.aliyun.com/pypi/simple
-
-# Enter the project root directory, which is ./KGRAG, and install KGRAG:
-$ cd ./KGRAG &amp;&amp; pip install -e .
-
-# Verify whether the installation was successful
-$ knext --version
-$ knext --help
-Usage: knext [OPTIONS] COMMAND [ARGS]...
-
-Options:
-  --version  Show the version and exit.
-  --help     Show this message and exit.
-
-Commands:
-  project   Project client.
-  reasoner  Reasoner client.
-  schema    Schema client.
-  thinker   Thinker client.
-</code></pre>
-<pre><code class="bash">$ cd ./kag/medicine
-# Initialize the project
-$ knext project restore --host_addr http://127.0.0.1:8887 --proj_path
-# Submit your schema
-knext schema commit
-
-# Generate Knowledge Graph
-$ python builder/indexer.py
-
-# Run the demo
-$ python solver/evaForMedicine.py
-</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> Please cite the source for reprints, feel free to verify the sources cited in the article, and feel free to point out any errors or lack of clarity of expression. You can comment in the comments section below or email to 862314702@qq.com 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 862314702@qq.com </span>
@@ -884,10 +843,10 @@ $ python solver/evaForMedicine.py
 
 <div class="article_copyright">
     <p><span class="copy-title">文章标题:</span>LLM-init</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">311</span></p>
+    <p><span class="copy-title">字数:</span><span class="post-count">151</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Sheldon &amp; Vila">Sheldon &amp; Vila</a></p>
     <p><span class="copy-title">发布时间:</span>2025-01-20, 17:47:40</p>
-    <p><span class="copy-title">最后更新:</span>2025-01-28, 15:47:43</p>
+    <p><span class="copy-title">最后更新:</span>2025-01-29, 00:06:11</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2025/01/20/LLM-init/" title="LLM-init">https://sheldoncoder1337.github.io/2025/01/20/LLM-init/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
