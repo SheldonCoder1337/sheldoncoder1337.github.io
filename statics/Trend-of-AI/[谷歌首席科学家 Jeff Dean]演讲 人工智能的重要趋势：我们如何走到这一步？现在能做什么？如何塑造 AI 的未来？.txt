@@ -1,0 +1,2256 @@
+[谷歌首席科学家 Jeff Dean]演讲 人工智能的重要趋势：我们如何走到这一步？现在能做什么？如何塑造 AI 的未来？
+https://www.bilibili.com/video/BV1Wx5tzgErQ/
+指南针ComPass 2025-04-19 19:32:12
+
+好吧，欢迎大家，很高兴看到一个满房子。<br>All right, welcome everyone, great to see a full house.
+我很高兴介绍杰夫·迪恩（Jeff Dean）<br>It is my great pleasure to introduce Jeff Dean, who
+是Google的首席科学家。<br>is Google's chief scientist.
+他于1999年加入Google<br>He joined Google in 1999, where he's
+一直在建造和共同设计，共同实施<br>been building and co-designing, co-implementing
+the pillars of Google's distributed technology
+with systems like MapReduce, Victable, Spanner,
+and TensorFlow, more recently Pathways.
+And in 2011, he co-founded the Google Brain team.
+And since then, his focus and research
+has been on systems and applications for AI.
+And today, he's going to tell us about important trends in AI.
+And I should also mention he's won many awards.
+He's the recipient of the ACM Prize for Computing,
+the IEEE on Newman Medal, the Mark Weiser Award.
+And he's an ACM fellow, amongst many others.
+So we are very, very excited to have you here in case
+you can't tell by the turnout and very much
+looking forward to your talk.
+So a warm welcome to Jeff Dean.
+Thank you.
+Thank you so much for the delightful introduction.
+I'm really excited to be here.
+And I'm going to talk to you today
+about important trends in AI.
+How do we get to where we are with the current state of what
+models can do?
+What can we do now, now that the field is
+advanced to the current level?
+And how can we shape what we want AI to do in the future?
+And this is joint work with many, many people at Google
+and elsewhere.
+So it's not all my work.
+Many of it is collaborative work.
+Some of it is not necessarily my work,
+but I think it's an important set of work to sort of discuss.
+OK, so some observations, most of which
+are probably reasonably obvious to you.
+So I think, most importantly, machine learning
+has really changed our expectations of what
+we think of computers as being able to do.
+If you think back 10 years ago, computers
+could barely see with the sort of rudimentary computer vision
+performance.
+They could speech recognition work, but not super well.
+Language understanding in terms of language models
+was kind of somewhat limited in terms of its capabilities.
+But what we've seen over the last 12, 13, 14 years
+is that increasing scale of both the compute used
+to train the models, the data and the model size,
+increasing those things generally
+delivers better results.
+There's almost a truism to that in many ways,
+where we've seen this over and over and over
+over the last 15 years.
+That bigger model, more data, gives you better performance
+and problems we actually really do care about
+in terms of capabilities of computers.
+And algorithmic and model architecture improvements
+have also been really important in this.
+It's not just a throw more hardware at the problem
+kind of thing.
+Algorithmic and model architecture improvements
+have actually been even more significant
+than just the hardware improvements
+we've seen in the last decade.
+And finally, as a sort of result of all of this,
+the kind of computations we wanna run
+on computing hardware are really changing
+and how we think about building the computer hardware
+to run kind of the applications of today and tomorrow
+is really shifting from traditional CPU based computation.
+Okay, so first I'm gonna go through a section
+that is a whirlwind one slide per advance.
+Oh, I should relaunch Chrome within two days.
+Hang on, let me, I agree I should probably relaunch Chrome,
+but let's try to not do it right now.
+So a whirlwind of one or two slides per particular
+technique that has been really influential
+in getting modern models to how they came to be
+and let's just launch right into that
+and it's gonna be mostly chronological, but not quite.
+Okay, so obviously a key building block
+from the last century is neural networks.
+A lot of, almost all of the advances you see
+in machine learning at the largest scale
+and in the capabilities you see computers have
+is based on sort of neural network based computation.
+And these are sort of made up of artificial neurons.
+They're loosely based on how real neurons behave
+in some ways, but they're sort of very imperfect reproductions
+of how we even understand real neurons to behave
+and there's lots we don't understand.
+But they are sort of one of the underlying building blocks.
+And another key building block is back propagation
+as a way to optimize the weights of the neural network.
+So by essentially back propagating errors
+from the output the model gave you
+to the output you wanted the model to give you
+really gives this effective algorithm
+for updating the weights of a neural network
+to minimize errors on training data.
+And then because of the generalization properties
+of neural networks you can then generalize
+to problems or particular examples
+the neural network has not seen.
+So those two things really are key
+to a lot of the deep learning revolution
+is back propagation and neural nets.
+So one of the things that I and some other people
+worked on in 2012 was really this notion
+that maybe if we were to train really, really big
+neural networks they would be even better than small ones.
+And so we had this hypothesis and in 2012
+we decided it would be kind of fun
+to train a very large neural network
+and see if we could do it using
+an unsupervised learning algorithm.
+And so we trained this large neural network
+which is about 60x bigger
+than the previously largest known neural network in 2012.
+Using 16,000 CPU cores
+at that time we didn't have GPUs in our data center.
+We had a lot of regular old CPU computers.
+And what we saw was that this unsupervised training objective
+followed by some supervised training
+actually gave a 70% relative improvement
+in the less thinly contested ImageNet 22K category.
+Most of the ImageNet results you hear about
+are in the 1,000 category section.
+This was more interesting perhaps
+because it has 22,000 very fine-grained categories.
+And this was quite a significant advance
+and kind of proved our hypothesis
+of larger models being more capable
+if you sort of put sufficient training computation behind them.
+As part of doing that work
+we developed our first sort of neural network,
+large scale infrastructure systems project.
+This was called Disbelief, DIST belief.
+Partly because it was distributed over many machines
+for a distributed computing system
+but also because our colleagues
+didn't really think it was gonna work.
+So it was a little bit of a play on words.
+But really when you're training these large models
+and the model doesn't fit on a single computer
+there's a few different ways you can imagine
+paralyzing that computation.
+The first is you take your model
+which typically in a neural network
+you have many layers of neurons
+and you can slice them both vertically
+and horizontally say to produce pieces
+of the model on each computer
+and then have communication managed
+between the edges that cross
+between the different splits you've made in your model.
+The other thing you can do
+is you can do data parallelism
+where now you have many copies
+of the underlying model on different machines
+or perhaps combined with model parallelism
+each copy being on many machines
+and then you partition the data you're training on
+across those different model replicas
+and in the case of what we were doing in disbelief
+we actually had a centralized system
+that could accept gradient updates
+from different replicas of the model
+and would apply them sort of to the parameters
+but we actually did this kind of
+in the not mathematically correct way
+because we were just doing this completely asynchronously
+different model replicas would get new copies
+of the parameters, would compute on a bit of data
+would send a gradient based on those parameters
+and the training data for that batch
+back to the parameter server by then
+the parameters have moved
+because other model replicas
+have applied their gradient in the interim
+and so this is clearly not mathematically correct
+according to the gradient descent algorithm
+but it works so that's nice
+and that's what really enabled us to scale
+to very large scale models even using CPUs
+in 2013 we used that framework
+to actually scale up training of dense representations of words
+using a word embedding model called word2vec
+and one of the things that is really useful
+coming out of this particular piece of work
+is that by having a representation of a word
+that is a high-dimensional vector
+you get two nice properties if you train it
+in particular ways, one of the ways you can train it
+is shown at the bottom here
+where you can take the representation
+the vector representing the middle word
+and then try to predict the nearby words
+from that representation
+there's a different version where you can take
+all the surrounding words
+and try to predict the middle word
+but they both work kind of roughly equally well
+but if you train the embedding vectors
+for words in this way
+what you find is that you can then represent words
+with these high-dimensional vectors
+which have two nice properties
+one is that nearby words in this high-dimensional space
+after you train on lots of data
+tend to be related
+because you sort of nudged all of the words
+related to cats and pumas and tigers
+into the same part of the thousand-dimensional space
+the other interesting thing
+is that directions are meaningful in this space
+so in order to transform a male version of a word
+to a female version
+you go in roughly the same direction
+regardless of whether the words are
+king and queen, man and woman, bull and cow
+various things like that
+so interesting linguistic properties
+sort of emerge from the training process
+in the directions of the
+the directions between different points in the space
+in 2014, three of my colleagues
+Ilya Setsgever, Oriole Vinyals and Cochle
+developed a model called Sequence to Sequence Learning
+with neural networks
+and so the idea here is you have
+some input sequence
+and you want to try to predict an output sequence
+from the input sequence
+a very classic case is translation
+where you have the English sentence
+and then using the representation
+you've been able to build up
+by processing the input English sentence
+one word at a time
+you now have a dense representation
+that you start to do what's called decoding
+of the French sentence
+and in the process of doing
+lots of language sentence pairs of English and French
+you can essentially learn to do a
+language translation system
+purely from this kind of sequence to sequence-based
+neural network
+and if you use that to initialize the state of the neural decoder
+when translating
+starting to translate
+that actually works
+and you scale up the LSTMs in it
+and you show that it can work better and better
+so in about 2013
+I started to get worried
+because as we were making bigger and bigger
+neural networks for things like speech and vision
+and in some sense language
+I started to do some calculations of
+you know well if say speech recognition starts to work better
+people might use it
+and that might be problematic
+if we actually want to serve a lot of users in the system
+so I did a very rough calculation of like
+okay I suppose a hundred million of our users
+start to talk to their phones
+three minutes a day
+and at that time the models were big enough
+you couldn't run them on device
+you had to run them in our data center
+and I discovered that rolling out a better speech model
+we actually had a better speech model at that time
+that would
+that reduced the error rate by 40%
+which is an enormous amount in
+improvement in speech recognition
+so we knew it was going to be better
+if we could serve it to a lot of people
+but
+the calculation I did said a hundred million people
+three minutes a day
+we would need to double the number of computers Google had
+just to roll out that improvement
+in the speech recognition model
+which is kind of one of our many
+sort of products
+so
+I started to talk to some of our
+colleagues in our technical infrastructure group
+who have hardware expertise
+and we decided it would be sensible
+to build a more customized hardware
+for neural network inference
+and that was the genesis of the tensor processing unit
+line
+and the first version of this
+was really specialized for
+inference only
+so it used very reduced precision
+it had only 8-bit integer operations
+in its multiplier
+but
+really the target was let's build
+something that's really good
+at low precision linear algebra
+and that will be useful in a lot of different
+serving a lot of different kinds of neural network based models
+and you don't need
+all the other kinds of bells and whistles
+in say modern CPUs
+that make things much more complicated
+like branch predictors
+or caches of various kinds
+you can instead just try to build
+the fastest and smallest
+dense linear algebra low precision thing you can
+and sure enough
+that was what
+a large-ish team
+produced was a TPU
+that was 15-30 times faster
+than contemporary CPUs and GPUs of these kinds of tasks
+and 30-80x
+more energy efficient
+and by the way this is now the most
+cited paper in ESCA's 50-year history
+which is pretty impressive
+because it was only published in 2017
+but this has really
+started our foray into more
+specialized compute for
+machine learning models
+then we said well
+it would be really good to actually scale things up
+and also focus on training
+in not just inference
+and so that's where we started
+to think about
+system really more like
+machine learning supercomputer based systems
+that have really high speed
+interconnect between a lot of chips
+that are densely connected
+by this custom high speed interconnect
+so we've now done
+six generations of
+five generations of TPU pods
+which are really good for both inference
+and training
+and these connect
+thousands of chips together
+the initial one was 256, then a thousand
+then 4,000 and the most recent ones
+have been around 8 or 9,000 chips
+all connected together
+with custom high speed networks
+since version 4
+they've had this really exotic
+optical network
+so you can take a rack of 64 chips
+and a rack of 64 chips
+over there and use
+funny optical switching and moving of
+mirrors to make it seem as though
+they're next to each other in the data center floor
+even if they're not
+so you can read all about that in that ESCA paper
+and we actually
+just announced last week
+the latest version of this, this is Ironwood
+we stopped naming them
+with numbers which confuses me
+but so Ironwood
+has
+a quite large pod size
+it's got 9216 chips
+each of which can do
+4,614 teraflops
+and so that's 42.5
+exaflops in one of these
+pods
+of reduced precision floating
+points, this is
+8-bit floating point precision
+but it is quite a
+boost up from the previous generation
+and so
+compared to the first
+training pod, it's about a
+3600 increase in
+compute capability in the pod
+in
+7 years or something
+and importantly
+by
+doing lots of clever
+circuit design, you know, shrinking
+of fab processes
+lower precision operations
+than the original TPU v2
+we're getting about a 30x
+energy and efficiency improvement per flop
+compared to the
+version, the first training
+pod of 2018
+another trend that's really
+important is that open source
+tools for machine learning have really enabled
+a much broader community
+to
+participate in improving those tools
+but also to use those tools
+to tackle machine learning problems
+of all kinds of different
+ilk across many different disciplines
+and I think TensorFlow
+which we released in 2015
+PyTorch I think came in 2016
+and JAX which is another Google developed
+open source framework
+with a bit more of a functional style
+in 2017 or 2018 I think
+these three things
+packages have really I think pushed
+the field forward quite a lot in terms of
+how accessible machine
+learning is to people, how standardized
+the way in which
+algorithms are expressed
+in these different frameworks
+in 2017
+several of my colleagues came up
+with this very nice observation
+that in a recurrent
+model you have this
+very sequential process of absorbing
+one token at a time
+and then updating the internal
+state of the model before you advance
+the next one and that inherent
+sequential step
+really limits how much parallelism
+and how efficiently you can learn
+from large amounts of data
+and so they had this really nice observation
+that were instead of sort of
+taking the current state
+advancing at one step and changing
+that internal state and then advancing
+to the next training token
+and updating that internal state again
+they would just save all the internal
+states and then they would
+have a mechanism called attention
+that would enable you to refer back
+to all the states you went through
+in order to get to the particular
+you know if you're 117
+tokens in you have all 117
+states that you went through
+and you can attend to them and look
+at which pieces of the representation
+seem most relevant for the task
+you're doing which is often predicting
+the next token so this is a hugely
+influential paper and part
+of the reason it's so influential
+is they were able to demonstrate
+on machine translation initially
+that with 10 to
+100x less compute
+and 10 times smaller models you could
+get better performance than
+the state of the art LSTM
+or other model architectures
+at the time and you know that's a log
+scale so that difference
+is quite large even though
+the arrow is small
+so that's been really really
+important nearly all
+modern large language models that
+you're hearing about use a transformer
+as the underlying
+sort of model architecture with
+some variations
+this is probably not new in 2018
+but really
+came more in to vogue
+in 2018 which was the
+realization that
+language modeling at scale can be done
+with self supervised data
+if you think about any piece of text
+and you
+can use that text to
+predict other parts of the text
+and by doing so you actually
+have the right answer in some
+sense what the actual text is
+and that has been
+shown it gives you
+sort of very very large amounts of
+training data and
+that's one of the major reasons
+these language models have gotten so good
+is you can get more and more text
+to train on and improve
+the quality and there's a couple of different
+kinds of training objectives the first
+is autoregressive where you get to look
+at the prefix of words
+and then you try to predict the next word
+so many of the models you hear about today
+are you know of this form
+and so you can make
+lots of little training game puzzles
+for your model Zurich is blank
+Zurich is the
+blank, Zurich is the
+largest blank and the model
+is forced to use the state
+that it sees to the left to try to predict
+the
+missing word
+from the context
+you can also use kind of fill in the blank
+style representation
+or training objectives so
+Zurich blank the largest blank in blank
+is
+an interesting training example
+and you can then take the same text
+and turn it into a completely different
+training example with different things
+you have to fill in Zurich is the blank city
+blank Switzerland
+and so both of these kinds
+of training objectives are very useful
+the autoregressive one tends to be used more
+because that's what you're trying to do
+when you're say
+operating a chat bot and you have a conversation
+you don't have the conversation
+to the right because it hasn't happened yet
+you only have the stuff to the left
+in
+2021
+some other colleagues of mine developed
+a way of mapping
+image tasks into a
+transformer based model so prior to that
+most people were using convolutional
+neural networks of some form
+but essentially they were able
+to take an image break it
+into some patches and in the same way
+the word to VEC embeds
+words into a dense
+representation of those words
+they're able to take patches of pixels
+and do a similar thing where
+you now represent that with some high
+dimensional vector for that patch
+you know it might incorporate aspects
+of the you know the color
+and the kinds of orientations of things
+but those embeddings are learned and then
+once you have them then you feed them
+into the rest of the transformer model
+and instead of using
+word embeddings for the input here
+you use patch embeddings
+and that sort of enables
+you to deal with
+image data
+as you'll see later when you're training
+multimodal models you can actually
+combine these so you can put in
+either text or images
+and the text the visual
+patches you just embed
+with a visual model and then the text
+patches you embed with a early
+early part of a text model
+and you can kind of visualize
+that the attention
+operation in the transformer
+on the right hand side here is actually
+attending to kind of
+interesting parts of the image when it's asked
+to say what's in that image
+you know it's attending to the airplane
+or the dog or when it's got a snake
+and there's a lot of kind of confusing stuff
+the attention is less focused
+it's trying to look it all over the
+image to see the visual clues
+that might enable to predict the right thing
+so this has been
+hugely influential in unifying
+transformers for text
+with transformers for images
+another innovation
+was
+I and some colleagues
+in 2017
+developed a way to make sparse models
+essentially having a very large
+capacity model but now
+instead of activating the entire model
+on every token or every example
+you can activate just
+a small portion of it
+so in our original paper we actually
+had quite a lot of experts like
+2048 experts per layer
+and we would activate two of
+those 2048
+and so that's really nice
+because now your model has this gigantic
+capacity to remember lots of stuff
+and the choice of which things
+to activate is also learned in an
+end-to-end manner with back propagation
+and that enables you to sort of have
+experts that are good at
+you know discussing dates and times
+another expert that's really good at
+sort of geographic places
+another one that's good at biology
+kinds of context
+so that has been really good
+and again similar to
+the improvement you saw with transformers
+we get another algorithmic win
+with you know roughly an 8x reduction
+in training compute costs for the same accuracy
+that's line A
+or major improvements
+in accuracy for the same training cost
+that's B
+and often when you're reading these kinds
+of graphs of like some compute budget
+versus some accuracy
+score you want to line up
+things horizontally because that's
+the amount less
+of compute you need to get to the same accuracy
+and you can also look
+vertically can you actually get much
+better quality as your
+sort of using the same
+amount of compute
+and we've continued to do quite a
+lot of work on sparse models because we think
+it's a really important overall
+direction to have these
+nice models that have a lot of
+capacity but you might only
+touch 1% or 2% or 5%
+of the model
+in 2018
+we started to think about what
+better software abstractions could we have
+for these large distributed machine learning
+computations
+and we knew we wanted to train
+models at larger
+scales so each one of these sort of smaller
+boxes with yellow dots
+in it you can think of as a TPU
+pod and you want to be able
+to train a model
+where you can
+connect together many of these TPU
+pods in software
+and have kind of
+an underlying distributed system
+manage the right sort of
+communication mechanism
+for when one of these chips
+needs to talk to another so when
+two yellow chips in the same
+small box need to talk to each other
+use the very high speed TPU network
+when
+say the chip in the
+upper left
+box needs to talk to one in
+the pod in the same building
+it will use the data center network within that building
+if it needs to talk across buildings
+it will use the
+network that goes between buildings in the same
+say data center facility
+and you can even have
+TPU pods connected together in
+different regions via
+you know larger
+wider area network links
+that big orange red
+arrow and by having
+this nice scalable software
+that can simplify running these large scale computations
+so in fact one of the
+abstractions the pathways gives
+to the sort of machine learning developer
+researcher is
+you just have a single python process
+and jacks has a notion
+of devices so normally if you're just running on a single
+machine with say four TPU
+chips in it
+it just shows up and it's a process
+with four chips
+but what pathways does
+when you run it jacks
+with pathways underneath it
+all the chips in this
+entire training job just show up as devices
+for jacks so you have a single
+python process and it looks like
+you just have a single
+C of say 10,000 or 20,000
+TPU devices
+and you can
+run computations on that
+and pathways takes care of mapping
+that computation onto the actual physical
+devices
+and one of the things we've just done
+last week was made the pathway
+system which we've used internally for now
+six or so years
+available for cloud customers
+for
+people using our cloud TPU products
+another observation
+by some colleagues of mine
+was that thinking longer
+at inference time is very useful
+so in the same way
+that your third grade math teacher
+told you to show your work
+when you were solving problems
+because you were more likely to get
+the sequence of steps right in order to
+solve the problem correctly
+it turns out a large language model
+is the same way if you just give them
+an example problem
+Sean has five toys for Christmas he got
+two from his mom and his dad
+how many toys do you have now
+the answer is nine
+that's the one shot example in the input
+and now you're asked a new problem
+John takes care of ten dogs
+each dog takes half an hour a day to walk
+and takes care of the business
+how many hours a week does he spend taking care of dogs
+then the model
+got this particular problem wrong
+said 50, that's not correct
+but if you
+encourage the model to show its work
+by in the one example problem
+you've given it
+actually show it that hey
+this is kind of the sequence of steps
+to work out the problem
+Sean started with five toys
+if he got two toys each from his mom and his dad
+then he has four more toys five plus four
+is nine the answer is nine
+so that seems very simple
+but it actually turns out
+that this tremendously helps models
+become more accurate
+because they are now
+encouraged to think through the steps
+in order to solve the problem in a finer
+than way
+and you see that as the model
+scale improves
+increases
+the solve rate goes up
+somewhat if you just use standard prompting
+but goes up dramatically
+when you use chain of thought prompting
+this is for like a benchmark
+of like roughly eighth grade math level
+problems
+so prompting the model to show its work
+improves the accuracy on reasoning tasks
+and you can think of this as also a way
+of using more
+computed inference time
+because now it has to produce all these extra tokens
+in order to actually
+get to the right format of answer
+in 2014
+Jeff Hinton
+and Oriole Vinyals and I
+developed a technique called distillation
+distilling the knowledge in a neural network
+the idea was
+you have a really good model
+and you want to put
+its knowledge into a different model
+in typically a smaller one
+and so the typical way
+you're training the small model
+is let's say you're doing next token prediction
+so the prefix you see
+is perform the concerto for blank
+and the true next word
+is violin
+so you can train your model
+your language model with that objective
+and if you guess violin correctly
+great if you guess it wrong
+then you get some back propagation
+error from the training objective
+and it turns out
+that works okay
+but if you can use
+your teacher model
+to give you not just the correct answer
+but a distribution over
+what it thinks are good answers for this question
+for this particular word
+it gives you a much richer signal
+of training so think of the loss
+or the objectives
+you get for
+the original just violin
+you get
+zero correct for everything
+except violin and then you get a one
+but here
+the distribution of probabilities
+is violin 0.4, piano 0.2
+trumpet 0.01
+but airplane is extremely unlikely
+in this circumstance
+concerto for airplane
+I guess you could have one
+but unlikely
+and that really rich gradient signal
+is something that you can use
+to inject much more knowledge
+into every training example
+for the smaller model
+and enables you to get
+to convergence much more quickly
+so if you look at some of these comparisons
+this is a speech based setting
+where you have a training frame accuracy
+but what you really care about is the test frame accuracy
+how did you predict the sound
+in this frame of audio
+correctly
+and the baseline with 100% of the training data
+gets 58.9%
+on the test frame accuracy
+if you
+strip the training set down to only 3%
+of the training data
+then your training
+frame accuracy actually goes up
+because your model over fits to the very small
+number of training examples you have
+but your test frame accuracy
+plummets because you're now in an overfitting regime
+and you can't do very well
+on new
+test examples you've never seen before
+but if you use these soft targets
+produced by the distillation process
+and use only 3% of the training data
+what you see is you get
+pretty good training frame accuracy
+but you get almost
+as accurate as the test frame accuracy
+with only 3% of the data
+and this is a really nice property because it means
+you can suddenly
+transfer the knowledge of a large neural network
+into a small neural network
+and make it almost as accurate as the large one
+so this was rejected
+from NREPS 2014
+we published it in a workshop
+and put it in an archive
+and it now has 24,000 citations
+so
+we'll take it
+in 2022
+2022
+some colleagues and I
+looked at different ways of mapping
+computation on to
+our TPU pods
+for
+doing efficient inference
+and there's a whole bunch of variations
+one can consider
+do you keep the weights stationary
+in one of the dimensions of the network
+do you keep them stationary in both
+dimensions so that your weights are now
+spread across a two-dimensional
+thing or do you gather the
+weights and bring them to the part
+the details aren't that important
+but there's a bunch of different ways of doing it
+and one of the things
+that is true is the right choices
+for how to do this actually depend
+on a lot of different factors
+so one is
+what is your batch size actually can have a lot of influence
+on whether one of these three techniques
+is actually better
+and latency constraints can also have a big effect
+so if you think about this
+we have these three different techniques
+weight stationary, X weight gathered
+and XY weight gathered
+and there's even another one XYZ weight gathered
+what you see is
+the little dotted things at the bottom of these things
+are the best thing to do
+at varying different batch sizes
+and that
+the right answer changes
+as you change the batch size
+and that also means
+your floating point utilization of your hardware
+also changes depending on your strategy
+and the right answer depends
+on
+how large your batch size is
+at very small batch size
+you want to use a 2D weight gathered in this case
+and at larger batch size
+a 2D, oh sorry
+I've ever said 2D weight stationary
+small sizes
+and a 2D weight gathered at
+larger
+it's just to say there's a lot of complicated choices
+in how do you decide
+how to partition a model
+and do inference
+scale
+in 2023
+some colleagues of mine
+developed a technique
+called speculative decoding
+and so the idea here is
+we're going to use a small drafter model
+maybe 10 to 20 times
+smaller than the larger model
+with the idea being that many things
+are actually quite predictable by a small model
+and so
+we can sequentially predict
+from the very small drafter model much more rapidly
+than we can sequentially predict
+from the very large model
+and so we're going to predict
+the next K tokens with the small model
+and that's
+and then we're going to ask
+the large model
+to predict K tokens
+in a row
+and we can advance
+this generation by as many tokens
+as match in the prefix of size K
+so essentially
+if you do this with just the large
+slow model it's going to trundle along
+predicting one word at a time
+but if you do this with the
+ah there we go
+the drafter model
+you see the drafter is predicting
+four or five words at a time
+and then the larger model is trying
+to predict and will advance
+as many of the words match
+that the drafter model created for you
+and by doing
+size K predictions
+for K words
+you essentially amortize the memory overhead
+of bringing in the weights of the model
+in order to then predict
+K words instead of just one
+so
+there's an awful lot of things
+that have happened all kind of combining
+together to really improve
+the quality of models
+that people are seeing today
+you know better accelerator
+hardware that's true in TPUs
+but also NVIDIA GPUs
+have gotten a lot better in recent years
+for machine learning focused
+applications as well
+software abstractions are really important
+because they enable you to have
+these nice layers where you can focus a lot
+on the performance and the abstractions
+provided by those things
+and then people on top can build
+useful things without necessarily having to think
+about the details
+as much underneath those abstractions
+model architectures
+if you've seen huge improvements
+in particular transformers
+visual transformers and MOEs
+are really heavily used in the most
+modern models
+training algorithms
+unsupervised and self supervised learning
+asynchronous training
+distillation
+I didn't talk about supervised fine tuning
+after you've pre-trained your model
+or RL from human feedback
+or other kinds of
+computational feedback
+that's a super important aspect
+chain of thought speculative decoding
+and inference time compute scaling
+all of these are really really important
+in the modern sort of era
+so now I'm going to talk a little bit about
+the Gemini models
+that we've been training and how
+most of these innovations
+are used in various iterations
+of the Gemini models
+so Gemini is really a project
+that started as a collaboration between
+Google DeepMind
+Google Research and the rest of Google
+and we started this
+in February 2023
+with our goal being to train
+the best multimodal models
+in the world and use them
+all across Google
+there's all kinds of ways in which
+these models can help various Google products
+they're also
+available externally
+through our cloud APIs
+and so this is kind of a timeline
+of what we've been up to since
+February 2023
+we released Gemini 1.0
+in December
+2023 followed soon thereafter
+by Gemini 1.5
+and so on
+so one of the things we wanted
+was to make these models multimodal
+from the very beginning because we felt like
+just text models were not
+as useful as models that could
+sort of understand language, understand
+visual inputs, understand audio
+and also produce all those things
+the initial versions of the model
+did not produce audio as output
+but they could take audio
+and video and images and
+text as input
+and produce images and text
+as output
+we since added the ability to produce
+audio output as well
+Gemini 1.5
+introduced this very long
+context length
+so that you can provide inputs
+that are millions of tokens
+in length
+to think about a thousand page
+document is about a million tokens
+so you can now put
+50 research papers
+or a very long book
+or multiple books into the context
+window and one of the nice
+things about the input data
+in the model
+particularly transformer models because of the
+attention mechanism that information is very
+very clear to the model
+unlike training data where you sort of
+trained on trillions of tokens
+and you've optimized
+your billions or tens of billions
+of parameters of weights
+with those trillions of tokens
+you've kind of stirred them all together
+and you've lost a little bit of the fidelity
+of the exact pieces
+of information there but in the context window
+that information is very clear to the model
+and enables it to sort of
+extract and summarize and reason
+over that data much more
+capably than other kind of data
+and in Gemini 2.0
+as I said these models build
+on a lot of these innovations
+so we use TPUs, we do cross data center training
+across metropolitan areas using pathways
+using Jax on top of that
+the distributed
+representations of words and image
+data is super important
+transformers, sparse mixture of experts
+and distillation and a lot more things besides
+but really these all
+kind of come together in our model
+training recipe and our model
+serving recipes
+just about a month ago I guess
+we released Gemini 2.5
+Pro which is our most recent model
+and this has been
+pretty well received because it has
+pretty soon having it leap
+forward in some of our
+various benchmarks
+that it performs on it's gotten
+a lot better at coding
+compared to our previous Gemini models
+and actually there's a
+arena for how
+to compare model quality across
+different models that is run
+by LMRina
+which is a Berkeley affiliated
+group of grad students
+and they sort of
+enable users to enter a prompt
+and then
+give the pick two random models
+that they're backed by
+that are behind the scenes
+and then they show the output
+from both models to the user
+anonymously so you don't know which
+model is which, and then you're asked
+which output do you like better
+so it's sort of a head to head competition
+of language models
+and through thousands of trials
+like this you can actually get a very good
+sense of the strength of models
+at least in terms of how well do the
+answers reflect what people
+using this LMRina like
+and we found it pretty useful, it does correlate
+quite well with the strength of the models
+and so this has a pretty significant
+elo improvement over our previous models
+and it's actually done pretty well
+on a whole bunch of independent
+evaluations that people do across the
+web and on various
+sort of more academic benchmarks
+on the left there
+we are sadly number four
+on New York Times connections
+so we'll have to work on that
+but in general
+this set of
+leaderboards covers quite a broad
+set of areas, some of these are quoting related
+some are math related, some are sort of multimodal
+related and so we really
+try to focus on making good
+general purpose models that are good
+a lot of different things
+users are generally
+enjoying this
+you know some of this is a little
+over the top
+phrase but whatever
+people do seem to like it
+in particular the long
+context abilities are really really good for
+coding particularly now the reasoning
+capabilities of the model are also
+greatly improved you know so having
+a million or two million tokens of context
+enables you to put quite large
+code bases
+entirely into the context window and then
+ask the model to do fairly
+complicated things like can you please
+refactor this for me or can you introduce
+a new feature that has this
+capability this sort of
+property
+and you know also
+enables you to process
+other kind of data
+so like this bottom person has
+a data set of a thousand
+poems at 230,000
+tokens and then ask a bunch
+of stuff which requires reasoning over all those
+poems and
+they were quite impressed by that
+because I guess that's hard
+very very good
+anyway so
+one of the things we
+really focus on if you look at the
+y-axis here this is the ELO score I mentioned
+from Ella Marina so higher
+in the ELO score
+means a more capable higher quality model
+as judged by those users
+and then on the
+x-axis is
+the cost of a whole bunch of different kinds
+of commercial models
+importantly the
+x-axis is a log scale
+so don't miss that important
+point
+okay
+um
+um
+oh yes
+that really rings a bell
+um
+so
+where you want to be is as far up
+into the right as you possibly can
+and you know we produce a series of
+different models with different quality
+and cost trade-offs so our flash models
+over to the right
+are generally quite cheap so they're
+like 15 cents per million tokens
+our most recent
+2.5 pro model is more expensive
+because it's a much heavier weight model
+costs more for us to run it
+but it's still quite affordable for the quality
+you get and so generally
+we like to see that we have a variety
+of offerings on the Pareto frontier of
+this quality cost trade-off
+and we're going to work to keep pushing
+up into the right there
+as much as we possibly can
+okay
+um let me
+talk a little bit
+about the organ
+what happened
+it was there
+I didn't do it promise
+um
+so Gemini is a pretty large
+scale uh effort
+um if you look at the Gemini 1.5
+paper
+uh
+we do have quite a few
+authors
+it's very hard to write a short paper
+if you have to list all your authors
+haha
+um
+but truly it's like really a large
+scale team effort and really
+everyone here really contributed
+tremendously to this and
+um you know one of the things we've
+had to figure out was how
+can we best structure this so we can have
+that many people be effectively
+contributing to a single
+single model project
+um and so
+some of the structuring techniques we use
+are to have different areas that
+people kind of loosely affiliate with
+um so some people are much more focused
+on say the pre-training process
+or on data
+or on safety or
+vows not to say that these are
+very hard boundaries but generally
+some people have you know some
+affiliation with some of these more than others
+um so there's overall
+tech leads of the project so that's
+myself, Oriole Vinyals
+and Noam Shazir
+uh and then we have a really capable
+program management and product management
+team although Gemini is kind of
+a model creation thing
+it does have a lot of product implications
+because we want to
+release that model into
+lots of different surfaces at google
+and so interacting with all those other
+teams about what features
+do they need, where are they seeing the model perform
+well, where more importantly
+where is it not performing well
+uh and you know getting feedback
+from those is something that's really important
+and then we kind of have
+three broad categories of these
+different areas one is model development
+pre-training where you're training on
+a large corpus of uh
+text and other multimodal data
+post-training where you've got
+you've finished pre-training the model on lots
+of data and now you're trying to coax
+the model into behaving in
+certain ways with relatively small amounts of
+data using things like reinforcement
+learning or supervised fine tuning
+so that it has you know
+politeness in the responses
+that it gives or you know
+has a propensity to get
+mathematical problems more correct
+than just looking at pre-training
+pre-training model
+on device models is another important one
+you know we have gemini models
+running on phones and that
+has a slightly different character than some of the larger
+data center based ones
+the core areas are kind of ones
+that cross cut most aspects
+of Gemini so training
+data evaluations
+infrastructure the code base
+for research and for model
+expressing the production model training
+and inference systems
+serving is really important longer term research
+within
+Gemini there's also a lot of research that
+happens outside of Gemini
+and we sort of keep an eye on that
+kind of work and and our colleagues
+will say hey we have something that might
+be sensible to consider for the next generation
+of Gemini and then
+capabilities are generally about
+particular sort of narrower aspects
+of the model can we make it safe and behave
+well is it really good for coding
+can we make it good at vision tasks
+in particular or audio tasks in particular
+agent behavior is now
+a very important aspect of what we're doing
+internationalization because we want this thing to work
+well and you know hundreds of languages
+not not five
+so these are kind of broad areas
+we have
+of those people
+roughly a third of them are in the San Francisco
+area I'm based in Mountain View
+about a third are in London
+and a third are in a bunch of other places
+including Zurich but New York City
+Paris Boston
+Bangalore Tel Aviv in Seattle are some of the bigger
+concentrations of people not in the
+first two areas
+time zones are really annoying
+I don't know if you all feel this but
+the golden hours between
+the California West Coast and London Europe
+during the work day
+are relatively limited maybe two
+or three hours a day that you really have
+sensible meeting times for both
+sides and past
+that then one side is like
+I don't know
+our poor Bangalore
+colleagues are
+never in golden hours with anyone
+else but it's
+you know but it is a worldwide effort
+so there's some benefits to having people all
+around the world because when the model is
+training there's always someone awake and
+sort of paying attention to a large scale
+training run
+you know often you might fire off
+a question to a colleague in London
+and they're not there but when you wake up in
+the morning you know they've answered and done a
+bunch of work on your behalf
+so there are benefits but
+distributed work is
+challenging
+one of the ways we've been able to make
+this work is we have lots and lots
+of large and small discussions
+and information sharing conducted
+in virtual Google chat spaces
+I'm in 200 of these
+so I wake up and I'm
+brushing my teeth and I get like probably
+seven alerts while I'm brushing my teeth in the morning
+because my London colleagues
+are busy at work and
+excited about sharing things
+in various chat rooms. We have a
+slightly formalized request for comments
+which is really a you know
+think of it as a anywhere
+from a one to a 10 page
+document about some
+piece of work or thread of work or
+results that have been gotten or
+experiments they're thinking about doing
+to sort of get some results
+people will give feedback in
+Google Docs style things
+we have a slightly formalized way for some of these
+to say yes we think
+this should make it into the next
+generation of our model training or the new
+recipe. We have
+leaderboards and common baselines
+to enable good data to
+decision making about how to improve the model
+so many rounds of experimentation
+lots of experiments at small scale
+you want to advance the smaller scale
+experiments that seem promising
+to the next scale to see if
+the results kind of hold up and are on
+trend.
+Every so often
+every few weeks you incorporate successful
+experiments in demonstrated at the
+largest scale into a new candidate
+baseline you run that candidate baseline
+see if it's better than the previous baseline
+and does it have any
+sort of unexpected interactions
+among the few things you piled in there
+and then you repeat
+so that's kind of
+particularly for some of the pre-training
+recipe development that's kind of the
+way we do that
+I mentioned
+scaling of people but also training
+of computing hardware
+scaling of computing hardware
+is quite annoying so I'll
+give you just one example silent data corruption
+so despite
+the best efforts given the scale of these
+ML systems and the size of the training
+jobs you will get hardware
+errors that sometimes are not going to be
+detected by the hardware
+and these incorrect computations
+because it's a very large
+coupled system
+from one buggy chip can then spread to the
+entire model
+so non-deterministically
+producing incorrect results
+which can happen
+for particular pieces of hardware
+which can happen on any piece of hardware
+randomly
+due to like
+various
+background radiation kinds of aspects
+these become worse
+at scale with synchronous stochastic
+gradient scent and it can spread bad results
+so
+one of the things we do
+as we're training we monitor
+the norm of our gradients
+and if we see
+large spikes in that we get
+concerned
+so is it justified to be concerned
+we don't know
+it's certainly a large
+gradient relative to the ones we've seen
+recently
+and you can also get anomalies
+with no silent data
+corruption error
+so the first one was actually a silent data corruption
+error and the way we detect that
+is we rewind a few steps
+and we replay
+in a deterministic
+manner and if we see
+the same result
+then we say well it must be in the data
+it's probably not hardware failures
+if we see a different answer though
+that's concerning because everything's supposed to be deterministic
+when we replay
+and so in this
+case we did see an anomaly in the gradient
+but we replayed it and we actually
+saw that the
+you know the same
+large gradient value occurred
+in the replay as well
+now you can also detect
+SDCs if you just happen to
+replay without an anomaly
+right so this is probably
+like the low bits of your exponent getting flipped
+by an error rather than the high bits
+the high bits being flipped
+is bad because then all of a sudden you have
+10 to the 12th in the gradient
+when you expect it to 0.7
+yeah okay
+I'm going to skip that
+and give you some examples
+of what these models can do
+so they can help fix
+bugs in your code
+which is nice
+this person can upload their entire code base
+all the issues and like
+it identified the urgent thing
+I guess it was replaying
+it was calling some handler twice
+and so the code added a flag
+to say it has the handler been called
+and if it hasn't then call it
+in context learning
+so Kalamang is a language
+spoken by about 200 people in the world
+and there's a woman
+who wrote a PhD thesis
+on a grammar of Kalamang
+there's no effectively written
+internet training data on Kalamang
+but what we've observed
+is that if you put this book
+into context in the model
+and then ask it to translate
+English to Kalamang or Kalamang to English
+it can actually do about as well
+as a human language learner
+who's been given the grammar book
+and a dictionary for Kalamang
+to translate
+so that's kind of nice because it shows
+in context learning
+at the level of I put in a 400 page
+PhD thesis
+about a topic the model has no idea about
+and it actually is able to
+sort of make sense of Kalamang
+and translate it with that
+video of a bookshelf
+to JSON
+it's kind of fun
+you might not have thought of that as an input method
+but you know you can do that
+it's kind of good
+video understanding
+and summarization
+so you can actually put in fairly long videos
+a million tokens is about two hours of video
+and
+you know
+the prompt is in a table please write the sport
+the team and athletes involved the year
+in a short description of why each of these moments in sports are so iconic
+and the model gets to see the pixels
+of the video and the audio track
+and it's like an 11 minute video
+I think
+and so then the output of the model is that
+which is you know
+probably more
+sort of text
+extraction structure data extraction
+than you thought you might be able to get out of
+of in context video
+so I think people are not yet
+clued into the fact that you can actually
+take multimodal data like that
+and do pretty interesting things
+digitization of historical data
+I just saw this the other day
+you know you can take weather data that looks like that
+from 100 years ago
+and just say please give it to me and Jason
+and it will do that
+they've done it for 144 tables
+and that cost them 10 pence
+but now they're able to actually
+sort of unlock all this weather data
+okay code generation
+via high level language so here's the prompt
+we're going to give to our
+Gemini 2.5 model
+P5JS to explore a Mandelbrot set
+that's the prompt
+oh I'm so sad
+why is it not able to do that
+it was working before
+oh
+I'm not on the wifi it's true I'm not
+well anyway it makes a really nice
+interactive
+visual Mandelbrot
+explorer like that
+and then I will
+skip over the next thing
+oops
+sorry about that
+I'm going to
+skip to
+a very brief part of this
+because I'm now running longer than I thought
+so now that we have these models
+what will this all mean for us in society
+I think it's a really important
+set of topics so I
+and eight other co-authors
+recently got together and wrote this paper
+called shaping AI's impact
+on billions of lives
+so
+a bunch of computer scientists
+and people with machine learning backgrounds
+from academia
+like big tech companies and startups
+and we wanted to propose
+what the impact of
+AI in the world could be
+given directed research and policy
+efforts you know a lot of
+people in this space are thinking about
+what will happen with AI
+if we're just lazy fair
+you know will we all be doomed
+or will we you know have
+incredible advances
+you know I think really a pragmatic approach
+is to say let's
+as society and machine learning researchers
+and practitioners and experts
+all work together to try to
+shape things so that we get the best
+aspects of AI and minimize
+the downsides and really that was what this paper
+was intended to be is a discussion
+of how might we do that collectively
+yep
+so
+and there's the audience it's all
+of those people
+and we interviewed 24 different
+experts in seven different fields
+employment education healthcare
+information media
+huh okay so
+for example we talked to former president Barack Obama
+Sal Khan and education
+John Jumper who
+we talked to him before he won the Nobel prize
+but he won the Nobel prize later
+Neil Stevenson
+Dario Amade Babachter
+and we uncovered five
+guidelines for AI for public good
+I will ignore everything after this
+but you can see shaping AI.com
+there's an archive paper
+from that site that I think is a pretty
+nice discussion of
+what will happen in a bunch of different areas
+including employment, education, healthcare
+or what could happen in some of those
+areas and it's pretty important
+for us to all work together to get this
+all right
+and with that I will conclude
+by
+we also propose
+some nice milestones of what people should
+work on in some of these areas
+that was part of the motivation of the paper
+so these models are becoming incredibly powerful
+and useful tools
+and I think you're going to see continued
+improvement in this as
+there's more investment and more people in the field
+doing research and those
+sort of advances get incorporated into
+the leading models
+you're going to see even more capable models
+it's going to have a dramatic impact in a lot of areas
+and it's going to potentially
+make really deep expertise
+available to a lot of people
+across a lot of different areas
+and I think that's one of the things that is
+most exciting but also kind of
+disconcerting to some people
+is that expertise being
+widely available
+but done well I think
+our AI assisted future is really bright
+all right
+thank you
+thank you very much for the great
+talk a little token of appreciation from the department
+thank you so much
+some chocolates and a systems group t-shirt
+I love coming to Switzerland because
+I get chocolate and a t-shirt
+thank you very much
+and we'll now proceed to the Q&A
+so we have one mic and we have
+one cube that we can toss around
+and we've discussed that
+we also tried to prioritize
+students especially for questions
+if you can raise your hands
+if you have questions and you can point in a general area
+and my aim is probably not that great
+nice
+well done
+hi, thank you so much
+and especially for the last paper you presented
+hold it into your mouth
+like this
+there we go
+thank you for the talk and especially the last paper
+it's very important I think
+and so on that point a bit
+AI safety is definitely
+on our minds I think
+and it's super
+unclear especially from outside
+for example big research labs
+what would even be
+positive, what would be
+really impactful
+so maybe from the perspective of
+really making sure everything goes well
+everything is in human control
+and everything
+what would you do as maybe a PhD
+student starting a thesis, a professor
+with a bunch of research grant
+money, or even a startup
+like let's say you could acquire a startup this year
+what would it do in the area of AI safety
+particularly in the area of AI safety
+yes exactly
+so I mean I think AI
+safety is a pretty broad topic
+I think there's
+a bunch of concerns about
+the increasing capabilities of these models
+being able to enable people
+to do things that they wouldn't
+otherwise be able to do that are
+somewhat nefarious
+or undesirable from
+a society perspective
+so I think
+some of that can be addressed with some technical
+means but I also think
+that there's going to need to be
+policy based
+and regulatory based things
+that impose
+some restrictions on
+some aspects of that
+in terms of one of the topics that we covered
+in the paper was about
+misinformation and public
+discourse and there I think
+you know there's clearly
+a ability for AI models
+to create more realistic
+misinformation in the world
+and enable people to create it at mass scale
+with you know lower cost
+you know misinformation is not
+a new thing you could always create it
+but now you have these tools
+enable sort of more realistic
+and more rapid creation
+so that is definitely an issue
+I think there's a corresponding research
+question of how do you detect this information
+that is perhaps generated
+by a different machine learning model
+there's also some questions
+about how
+turning
+the problem onto a more positive spin
+one of the things we suggested
+in the paper was there's actually some early evidence
+that AI models can be
+used to enable
+more constructive discourse
+in online forums
+and so that's an area where I think
+looking at how could AI models
+sort of encourage
+you know more positive conversations
+more
+you know identify misinformation in the flows
+of conversations that people are having
+with each other you know
+these are some of the things that I think are pretty interesting
+but there's a whole bunch of ideas
+in that paper that I think are
+worthy of study
+and I don't think the solution is necessarily going to be purely
+technical for all these problems
+yeah thank you
+send the cube over to him
+but we'll take someone else for the moment
+if that's okay
+where was the question here
+I thought there was one over here
+today?
+when I go to social networks
+I'm very hyped
+right and I see messages
+like the ones that you saw
+so these LLMs are truly
+incredible however
+in my day-to-day work
+when I try to use
+AI or LLMs I'm often
+disappointed
+who needs training
+is the LLM that needs more training or is me
+I'm asking wrong
+it's an excellent question
+I suspect the answer is a bit of both
+I do think
+using these tools
+like first the arc
+of progress in these models has gotten
+quite steep
+so the Gemini models
+from 8 months ago
+are not nearly as good as the Gemini models now
+and so sometimes
+people develop an impression of what the models are capable of
+from their previous
+experience trying to ask them to do something complicated
+and they failed miserably
+but now
+that might be something that is on the border
+of possibility or actually will work really well
+so I think
+part of it is
+looking at what the current models can do
+not what the ones of
+ancient history 8 months ago
+can do
+another aspect is
+becoming facile with how to coax
+the models to do what you want
+it's
+quite interesting that
+with like a
+one page carefully crafted
+prompt you can almost create a completely
+different application of a general
+model than if you craft
+a different one page prompt
+one page prompt might say
+can you take this video contents
+and please make me an educational game
+that reflects the concepts explored
+in the lecture video
+and it will actually in some cases
+do create a
+fully working software based
+game that highlights the concepts
+in
+arbitrary
+lecture or scientific
+video doesn't always work
+but that is kind of at the frontier
+of possibilities now 30% of the time
+it might work or something
+but also
+more training for the models will help because
+then the models are going to get better and I think you're seeing this
+from Gemini 1
+to 1.5 to 2 to 2.5
+a lot of progress
+and I suspect Gemini 3.0 models
+and beyond
+will be substantially better than the current
+ones and that's a general
+trend in the industry is the model
+of becoming better
+you with the cube. Yep
+thanks for your talk
+I noticed on your slide where you summarized all of the
+innovations in AI
+you listed hardware, you listed algorithms
+you listed
+all the improvements but data was absent
+and there's lots of concerns in the field
+that data might be the new bottleneck
+I'm curious about your personal opinion
+on this
+is it a bottleneck and if not
+how do people get by
+how do we get past scraping all of the internet?
+Yeah I guess I didn't list data
+but it has been really really important
+it's just there's not like a specific artifact
+generally to point to
+for a lot of the data related work it's really
+about curation of high quality
+data
+that we spend a lot of time on say within
+the Gemini project
+you know I think
+there's concerns I've heard
+of we're running out of
+high quality data in order to
+improve the capabilities of these models
+and I find that not
+very credible at the moment because
+first there's an awful
+lot of data we're not training on
+right now so if you think about all the
+video data in the world
+that's you know we're training on some
+video data but it's a very tiny fraction of
+say the YouTube corpus
+and that's only some of the
+video in the world so I don't think we're running
+close to running out of
+我要说的另一件事<br>of raw data the other thing I would say
+是ML研究问题是<br>is an ML research problem is
+there's a whole bunch
+of work I think we can
+do to get more
+quality improvements
+from the model
+per unit of training
+or per token of training
+right if you think about
+we were just discussing this
+in a session earlier
+you have a two-sentence
+description of how to add numbers together
+right so the model is just
+trained to absorb
+that by predicting the next token
+but that doesn't generally mean it's
+actually learned the algorithm
+for adding two numbers together
+in a deep and sort of
+algorithmic way it's got
+a next token predictor for predicting
+the rule but in some sense
+it's oblivious to the actual algorithm
+and so I think if you think about
+what you would really want the model to be able to do
+it would be to read that algorithm
+and then in sort of
+build a representation
+internally that enables it to run that algorithm
+when it needs to so
+that would be extracting way
+more value out of those 15
+tokens than what it is
+currently so I
+think there's lots of room to go
+the other thing I would say in this space is
+in the like
+improving image net
+convolutional neural network era
+you know people were training on a million images
+with a thousand categories and one of the ways
+they would make the models more powerful
+is they would make many many many many
+passes over that training data
+the
+textural data corpus we have is large enough
+that we're not able to computationally
+afford to make lots and lots
+of passes over it but with improving
+hard work capabilities
+you know you might be able to make 50 passes
+over the data instead of 3
+and that would probably improve the qualities
+of the model but
+you know we don't know how much and so on
+thanks a lot for the
+super interesting talk
+where in your personal life or work
+work life do you use AI
+most and where do you use at least
+because it doesn't work yet
+like what are you like surprised by on both
+ends of the capability spectrum like as
+you in your work as
+an employee of a you know of
+a research lab or a leader sorry
+yeah I mean I think
+where
+I personally use it and where many of my
+colleagues use it is like helping to write
+some bits of code
+you know I often tend to ask it to do
+things that are
+you know not super complicated
+I think with the more
+capable models I should start
+venturing out as this gentleman
+perhaps should to more and more
+expectations of what the model can do
+but it will sort of do a reasonable
+job of writing sort of test cases
+for code I've written or extensions
+of things that are
+straightforward
+seeing it I've used it to generate images
+for various kinds of things I think I used it
+for this kind of thing
+I
+use it to summarize
+papers or I put in a large
+piece of textual content
+and ask it questions about that
+but I think
+more and more
+you're seeing people integrate use
+of these models into
+things they find that they are able to do
+that are useful for them and I think that's
+sort of the general trend in society
+and where doesn't it work like where have you tried it
+and it's like yeah doesn't work
+doesn't
+I mean I have asked it to do more complicated
+coding questions and sometimes it works
+sometimes it doesn't and then you're like oh okay I
+understand why it didn't work because that's pretty complicated
+and it would have taken me a long time to figure out
+so thanks okay
+right there yeah
+hang on let's
+let's get a microphone
+thank you for your presentation
+it was super interesting and I was
+wondering for the
+upcoming research what would be
+the most interesting
+part to focus on is it
+improving transformers for the
+computer region area more important
+or
+AI safety regarding to prevent
+hallucination of large language models
+would be the most
+important part that you are going to focus on
+yeah I mean I
+think one of the beauties of this
+field is it's not
+that there's just one important problem
+there's many many sort of important
+problems and so one
+of the sort of meta things I do
+when I'm trying to think about
+research topics is
+to try to
+pick something that if
+I make progress on it or we as
+a collective set of colleagues
+make progress on
+something important will be
+advanced right so I think
+avoiding sort of
+incremental things where even if
+you the best possible outcome happens
+you're kind of like
+you want to avoid that
+but I think all
+the areas you mentioned and like
+50 other ones besides
+are really important you know
+other ones that I'm personally thinking about
+like how can we have much more efficient
+inference hardware you know how can you
+have much larger
+context windows for these models than a
+million tokens
+you know how do you
+identify higher quality data
+how do you scale infrastructure
+how do you do asynchronous training
+in a better way
+in a distributed fashion
+with low bandwidth between the systems
+how do you
+have interesting more exotic
+sparser model structures
+than just kind of branch out to
+experts and come back together which seems
+kind of like relatively
+too simple
+for truly sparse
+interesting model structures so I think
+there's like 50 other ideas I could rattle off
+you should pick something you're really excited about
+and that you think will matter
+thank you
+yeah one more question
+I don't know you picked
+how about we get one farther in the back
+because we have ignored the back
+the gentleman in the black t-shirt there
+and it's close enough
+to throw there we go see
+we're two for two on our passing
+I love it
+thank you very much for the presentation
+it was incredible
+my question is about what's the next challenge
+because I see that
+these models are getting better and better
+以及所有基准逐渐<br>and all the benchmarks gradually
+but is there some sort of binary
+challenge some outcome
+that they are not yet able to do
+I don't know formal reasoning
+some activity that's
+let's call it the next breakthrough
+yeah I mean I think
+one thing that's not quite a
+discrete step
+but I think is going to be very hard
+is the current models
+if you think about what we're going to want
+the models to be able to do
+is to operate sort of
+a bit autonomously
+and to do fairly complicated things
+that you ask the model to do
+with relative independence
+can you go off and plan me
+visit to Zurich for two days
+because I have a couple extra days
+and I want to do some fun stuff
+and then
+that is a little ambiguous
+it might require the model to use some tools
+to go figure out
+what is the Zurich place and what could I do here
+and then I think what you're seeing is
+这些模型能够分解<br>the models are capable of breaking down
+将事物分为几个步骤<br>complex things into a few steps
+也许做一些<br>maybe doing some
+链条使用量有限<br>limited amount of tool use to chain
+有些事情是为了<br>some things together in order to
+做那些相对简单的任务<br>sort of do those relatively simple tasks
+但是你不是<br>but you're not
+看到能够<br>seeing models able to
+做一个非常复杂的事情<br>take a very complicated thing
+并将其分解为<br>and break it down into
+50个子步骤<br>50 sub steps
+自己<br>on its own
+使用许多复杂的工具<br>use many many complicated tools
+为了完成一些主要部分<br>in order to accomplish some major piece of
+可能需要你两个月的东西<br>thing that might take you two months
+right and I think
+there's a huge vast difference
+between where we are now which is
+it can do those kind of three
+or four or five step
+tasks with maybe 60 to 70%
+accuracy and
+it can do a month
+of work in a thousand steps
+with 95% accuracy
+right I mean I think
+that is
+where people would like to be able to get
+systems
+going but it's a very
+vast gulf between where we are now
+and what
+一个人认为可能<br>one imagines would be possible
+但这绝对不是现在<br>but it's definitely not now
+所以我认为那也许是<br>so I think that's maybe
+一种连续性<br>a sort of continuum
+而不是一件事<br>rather than a single thing
+现在突然你可以做到这一点<br>that suddenly now you can do this
+但是您会看到越来越多的<br>but you will see more and more
+模型的功能<br>capabilities of the models
+因为他们可以做10步<br>as they can do 10 steps things
+具有90％的精度<br>with 90% accuracy
+作为中间点<br>as an intermediate point
+好吧<br>alright
+alright thank you very much let's thank
+Jeff one more time
