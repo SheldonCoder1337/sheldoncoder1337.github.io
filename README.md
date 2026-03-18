@@ -13,6 +13,8 @@
 > chmod 600 .git/ssh_key
 > export GIT_SSH_COMMAND="ssh -i .git/ssh_key"
 > ssh -i .git/ssh_key -T git@github.com
+
+> git pull code master
 > git add mkdocs.yml docs/ README.md
 > git commit -m "Modified form Zhuzhu desktop"
 > git push -u code master
