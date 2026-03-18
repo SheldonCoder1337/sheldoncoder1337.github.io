@@ -11,6 +11,7 @@ nav:
     - 00-Introduction: "cs01-computer-architecture/00-introduction.md"
   - DataStructure:
     - 00-Introduction: "cs02-data-structure/00-introduction.md"
+    - top100: "cs02-data-structure/20-top100.md"
   - OperatingSystem:
     - 00-Introduction: "cs03-operating-system/00-introduction.md"
   - ComputerNetwork:
