@@ -1,0 +1,2246 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Personal Blog by Sheldon">
+      
+      
+        <meta name="author" content="jialecai">
+      
+      
+        <link rel="canonical" href="https://sheldoncoder1337.github.io/cs07-deep-learning/03-dense/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>03 dense - Harmony</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M22%2012a10%2010%200%200%201-10%2010A10%2010%200%200%201%202%2012%2010%2010%200%200%201%2012%202a10%2010%200%200%201%2010%2010M6%2013h8l-3.5%203.5%201.42%201.42L17.84%2012l-5.92-5.92L10.5%207.5%2014%2011H6z%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#linear-regression-refres" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Harmony" class="md-header__button md-logo" aria-label="Harmony" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Harmony
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              03 dense
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sheldoncoder1337.github.io/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Harmony" class="md-nav__button md-logo" aria-label="Harmony" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Harmony
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sheldoncoder1337.github.io/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ComputerArchitecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ComputerArchitecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs01-computer-architecture/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DataStructure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DataStructure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs02-data-structure/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs02-data-structure/20-top100/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    top100
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OperatingSystem
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    OperatingSystem
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs03-operating-system/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ComputerNetwork
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ComputerNetwork
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs04-computer-network/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Database
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs05-database-system/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MachineLearning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MachineLearning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs06-machine-learning/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deeplearning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deeplearning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-nano-vllm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15-nanovllm.md
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-asr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16-asr.md
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SoftwareEngineering
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SoftwareEngineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs08-software-engineering/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs08-software-engineering/01-cookc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01-CookC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Math
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../math/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handbook
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Handbook
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/markdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Markdown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/powershell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Powershell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/git/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/wsl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WSL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/uv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UV
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#linear-regression-refres" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linear Regression Refres
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nonlinearity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nonlinearity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#activation-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Activation Functions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multiple-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiple Layers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multiple-units" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiple Units
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculating-layer-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calculating Layer Outputs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculating-w-and-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calculating W and B
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backpropagation-through-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backpropagation Through Layers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layer-2-gradients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 2 Gradients
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layer-1-gradients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 1 Gradients
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layer-1-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 1 Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backpropagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backpropagation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#batch-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batch Size
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it all together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wrap-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wrap-up
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>03 dense</h1>
+
+<h2 id="linear-regression-refres">Linear Regression Refres</h2>
+<p>In the last <a href="http://127.0.0.1:8000/deeplearning/02-linreg/">lesson</a>, we learned how to use gradient descent to train a linear regression algorithm.  In this lesson, we'll extend what we built to make a multi layer neural network.</p>
+<p>Before we dive in, let's quickly refresh on linear regression.  Let's say we're trying to predict tomorrow's temperature (<code>tmax_tomorrow</code>) using today's max temperature (<code>tmax</code>), today's min temperature (<code>tmin</code>), and how much it rained today (<code>rain</code>).</p>
+<p>We'll call tomorrow's temperature <span class="arithmatex">\(y\)</span>, <code>tmax</code> <span class="arithmatex">\(x_{1}\)</span>, <code>tmin</code> <span class="arithmatex">\(x_{2}\)</span>, and <code>rain</code> <span class="arithmatex">\(x_{3}\)</span>.</p>
+<p>Then we can predict tomorrow's temperature using the equation <span class="arithmatex">\(\hat{y}=w_{1}x_{1} + w_{2}x_{2} + w_{3}x_{3} + b\)</span>.  <span class="arithmatex">\(\hat{y}\)</span> is our prediction for tomorrow's temperature.  The <span class="arithmatex">\(w\)</span> values are called weights, and the <span class="arithmatex">\(b\)</span> value is called a bias.</p>
+<p>We multiply each of our <span class="arithmatex">\(x\)</span> values by its corresponding weight, then add in the bias.  In the last lesson, we learned how to calculate the <span class="arithmatex">\(w\)</span> and <span class="arithmatex">\(b\)</span> values.</p>
+<h2 id="nonlinearity">Nonlinearity</h2>
+<p>A big limitation of linear regression is that the prediction will always be linearly related to the inputs.  In real-world data, this is rarely the case.</p>
+<p>Let's say we're predicting <code>tmax_tomorrow</code> using only <code>tmax</code>.  Then the equation is simplified to <span class="arithmatex">\(\hat{y}=w_{1}x_{1} + b\)</span>.  We can say that <span class="arithmatex">\(w_{1}\)</span> is <code>.82</code>, and <span class="arithmatex">\(b\)</span> is <code>11.99</code>.</p>
+<p>Now, let's load in our data and graph <code>tmax_tomorrow</code> and <code>tmax</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># Read in the data</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/clean_weather.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># Fill in any missing values in the data with past values</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">ffill</span><span class="p">()</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># Create a scatter plot of tmax and tmax_tomorrow</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">data</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s2">&quot;tmax&quot;</span><span class="p">,</span> <span class="s2">&quot;tmax_tomorrow&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>&lt;AxesSubplot: xlabel=&#39;tmax&#39;, ylabel=&#39;tmax_tomorrow&#39;&gt;
+</code></pre></div>
+<p><img alt="png" src="../images/dense/dense_2_1.png" /></p>
+<p>As you can see above, the relationship between <code>tmax</code> and <code>tmax_tomorrow</code> isn't perfectly linear.  We can show this by drawing a linear regression line using <span class="arithmatex">\(w_{1}\)</span> equals <code>.82</code>, and <span class="arithmatex">\(b\)</span> equals <code>11.99</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">data</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s2">&quot;tmax&quot;</span><span class="p">,</span> <span class="s2">&quot;tmax_tomorrow&quot;</span><span class="p">)</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Calculate the prediction given our weight and bias</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">prediction</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">w1</span><span class="o">=</span><span class="mf">.82</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mf">11.99</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">w1</span> <span class="o">+</span> <span class="n">b</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># Plot a linear regression line over our data</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">30</span><span class="p">,</span> <span class="mi">120</span><span class="p">],</span> <span class="p">[</span><span class="n">prediction</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span><span class="n">prediction</span><span class="p">(</span><span class="mi">120</span><span class="p">)],</span> <span class="s1">&#39;green&#39;</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>[&lt;matplotlib.lines.Line2D at 0x12f9b3130&gt;]
+</code></pre></div>
+<p><img alt="png" src="../images/dense/dense_4_1.png" /></p>
+<p>The line fits our data as well as a linear regression line can fit it (the mean squared error between the predictions and the actual <code>tmax_tomorrow</code> is as low as possible).</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">mse</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">predicted</span><span class="p">):</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="c1"># Calculate mean squared error</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">actual</span> <span class="o">-</span> <span class="n">predicted</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># Error with the weight of .82 and the bias of 11.99</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">mse</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;tmax_tomorrow&quot;</span><span class="p">],</span> <span class="n">prediction</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;tmax&quot;</span><span class="p">])))</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># Error with a small shift in our weight, to .83, and in our bias, to 12</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="nb">print</span><span class="p">(</span><span class="n">mse</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;tmax_tomorrow&quot;</span><span class="p">],</span> <span class="n">prediction</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;tmax&quot;</span><span class="p">],</span> <span class="mf">.83</span><span class="p">,</span> <span class="mi">12</span><span class="p">)))</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>22.897335324598416
+23.489303834480715
+</code></pre></div>
+<p>As we can see above, even a small shift in our weight and bias away from our optimal values increases error.</p>
+<p>But the error is stil fairly high.  This is because our linear regression model isn't properly capturing the nonlinear interactions in our data.  For example, if <code>tmax</code> is <code>100</code>, maybe <code>tmax_tomorrow</code> will be <code>tmax</code> times <code>.7</code>, but if <code>tmax</code> is <code>50</code>, <code>tmax_tomorrow</code> might be <code>tmax</code> times <code>.8</code>.</p>
+<p>This type of relationship is nonlinear - the ratio between <code>tmax</code> and <code>tmax_tomorrow</code> isn't always a constant value like <code>.82</code>.</p>
+<p>If we plot tomorrow's temperature versus today's temperature, we can see that this is in fact the case:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Cut our tmax range into 25 bins</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">tmax_bins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;tmax&quot;</span><span class="p">],</span> <span class="mi">25</span><span class="p">)</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Calculate the average ratio between tmax_tomorrow and tmax in each bin</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">ratios</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;tmax_tomorrow&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">11.99</span> <span class="p">)</span><span class="o">/</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;tmax&quot;</span><span class="p">]</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">binned_ratio</span> <span class="o">=</span> <span class="n">ratios</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">tmax_bins</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># Calculate the average tmax in each bin</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="n">binned_tmax</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;tmax&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">tmax_bins</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1"># Graph the tmax values versus the ratios</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">binned_tmax</span><span class="p">,</span> <span class="n">binned_ratio</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>&lt;matplotlib.collections.PathCollection at 0x12fab14e0&gt;
+</code></pre></div>
+<p><img alt="png" src="../images/dense/dense_8_1.png" /></p>
+<p>Linear regression can't capture this kind of nonlinearity properly, but neural networks can!</p>
+<p>Neural networks add to linear regression in three important ways:</p>
+<ul>
+<li>A nonlinear transformation on top of the linear transformation</li>
+<li>Multiple layers, which can capture interactions between features</li>
+<li>Multiple hidden units, which each have slightly different linear and nonlinear transformations</li>
+</ul>
+<h2 id="activation-functions">Activation Functions</h2>
+<p>Let's discuss each of these concepts separately.  First, nonlinear transformations, which are called activation functions.  The most common activation function used in neural networks is called a rectified linear unit, or <strong>relu</strong>.  Conceptually, relu is pretty straightforward.  Any value below zero is set to zero, and any value above zero is passed through as normal.</p>
+<p>All of our temperature values are above zero, but let's generate some new temperatures to visualize what relu does.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Generate a range of predictions between -50 and 50.</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">temps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span><span class="mi">50</span><span class="p">)</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Predict tmax_tomorrow given each of our input temps</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temps</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">prediction</span><span class="p">(</span><span class="n">temps</span><span class="p">)))</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>[&lt;matplotlib.lines.Line2D at 0x12fb211e0&gt;]
+</code></pre></div>
+<p><img alt="png" src="../images/dense/dense_10_1.png" /></p>
+<p>You can see that any predictions below 0 are set to 0.  This creates a nonlinear relationship between the input and the prediction.  In this example, if <span class="arithmatex">\(w_{1}x_{1} + b\)</span> is less than <code>0</code>, then the output prediction will be <code>0</code>.  If <span class="arithmatex">\(w_{1}x_{1} + b\)</span> is greater than <code>0</code>, then the prediction will be <span class="arithmatex">\(w_{1}x_{1} + b\)</span>.</p>
+<p>This means that the prediction is no longer linearly related to the input.</p>
+<p>The equation for this looks like <span class="arithmatex">\(\hat{y}=relu(w_{1}x_{1} + b)\)</span>.</p>
+<h2 id="multiple-layers">Multiple Layers</h2>
+<p>Of course, if all we did was add relu, our error would increase a lot!  This is because we'd be making the same prediction for any temperature less than 0.  To fix this, we use multiple layers in our neural network.</p>
+<p>A neural network with two layers would have the equation <span class="arithmatex">\(\hat{y}=w_{2}relu(w_{1}x_{1} + b) + b_{2}\)</span>.</p>
+<p>We won't use an activation function on our output layer - this is the layer that we'll use in our predictions, so we need to not modify the value of the prediction.  This way, we can use a nonlinearity in our network, while still outputting a full range of predictions.</p>
+<p>You might notice that this doesn't fully solve the problem, though.  If our first layer <span class="arithmatex">\(relu(w_{1}x_{1} + b)\)</span> return <code>0</code>, then multiplying by <span class="arithmatex">\(w_{2}\)</span> will still result in <code>0</code>.  We'd only be adding in <span class="arithmatex">\(b_{2}\)</span> to generate our output.</p>
+<p>Here's a concrete example, with <span class="arithmatex">\(w_{2}\)</span> set to <code>.5</code>, and <span class="arithmatex">\(b_{2}\)</span> set to <code>10</code></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Generate a range of predictions between -50 and 50.</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">temps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span><span class="mi">50</span><span class="p">)</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># Predict tmax_tomorrow given each of our input temps</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># Apply prediction twice to simulate 2 network layers</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">layer1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">prediction</span><span class="p">(</span><span class="n">temps</span><span class="p">))</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">layer2</span> <span class="o">=</span> <span class="n">prediction</span><span class="p">(</span><span class="n">layer1</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temps</span><span class="p">,</span> <span class="n">layer2</span><span class="p">)</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="c1"># Set the y axis of the plot to start at 0</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">40</span><span class="p">))</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>(0.0, 40.0)
+</code></pre></div>
+<p><img alt="png" src="../images/dense/dense_12_1.png" /></p>
+<p>As you can see above, our predictions that are below zero have had <span class="arithmatex">\(b_{2}\)</span> of <code>10</code> added to them, but they're still all the same.  This is because if the output of <code>layer1</code> was <code>0</code>, then multiplying by <span class="arithmatex">\(w_{2}\)</span> still results in <code>0</code>.  So if the output of <code>layer1</code> is <code>0</code>, then <code>layer2</code> can only add in <span class="arithmatex">\(b_{2}\)</span>, which is <code>10</code>.</p>
+<p>This is a problem if we want to make accurate predictions - if <code>tmax</code> is below <code>0</code>, it's highly unlikely that <code>tmax_tomorrow</code> will always be <code>10</code>.</p>
+<h2 id="multiple-units">Multiple Units</h2>
+<p>We can solve this by adding multiple units at each layer.  This will basically be running linear regression multiple times, with different weights and biases.</p>
+<p>For example, we can run linear regression twice, with slightly different weights and biases.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Plot our first regression line, with w1 of .82, and b of 11.99</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temps</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">prediction</span><span class="p">(</span><span class="n">temps</span><span class="p">)))</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># Plot our second regression line, with w1 of .1, and b of 10</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temps</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">prediction</span><span class="p">(</span><span class="n">temps</span><span class="p">,</span> <span class="mf">.1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)))</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>[&lt;matplotlib.lines.Line2D at 0x12fdaf100&gt;]
+</code></pre></div>
+<p><img alt="png" src="../images/dense/dense_14_1.png" /></p>
+<p>Above, we plotted two lines.  The first line is the output of the first unit in the first layer of the neural network, and the second line is the output of the second unit in the first layer.</p>
+<p>As you can see, the second unit stays positive across the range of the input temperatures, and thus can pass temperature information to the next layer.  So we maintain a nonlinear relationship between <code>tmax</code> and the output while not just passing <code>0</code> to the next layer for all temperatures below <code>0</code>.</p>
+<p>We can then pass the output of both units into the second layer of the network to get a prediction.</p>
+<p>Let's take a quick look at a diagram of this neural network:</p>
+<p><img alt="2 layer network" src="../images/dense/2layer_network.svg" /></p>
+<p>Then we can code this network, where <span class="arithmatex">\(w_{1}\)</span> is <code>.82</code>, <span class="arithmatex">\(w_{2}\)</span> is <code>.1</code>, <span class="arithmatex">\(w_{3}\)</span> is <code>.5</code>, <span class="arithmatex">\(w_{4}\)</span> is <code>.2</code>, <span class="arithmatex">\(b_{1}\)</span> is <code>11.99</code>, <span class="arithmatex">\(b_{2}\)</span> is <code>10</code>, and <span class="arithmatex">\(b_{3}\)</span> is <code>5</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Generate a range of predictions between -50 and 50.</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">temps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span><span class="mi">50</span><span class="p">)</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># Predict tmax_tomorrow given each of our input temps</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># Output from unit 1 of layer 1</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">layer1_unit1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">prediction</span><span class="p">(</span><span class="n">temps</span><span class="p">))</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1"># Output from unit 2 of layer 1</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">layer1_unit2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">prediction</span><span class="p">(</span><span class="n">temps</span><span class="p">,</span> <span class="mf">.1</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="c1"># Output from layer 2 - multiply the outputs of layer 1 unit 1 and layer 1 unit 2 by the respective weights, and add the bias</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="n">layer2</span> <span class="o">=</span> <span class="n">prediction</span><span class="p">(</span><span class="n">layer1_unit1</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">prediction</span><span class="p">(</span><span class="n">layer1_unit2</span><span class="p">,</span> <span class="mf">.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temps</span><span class="p">,</span> <span class="n">layer2</span><span class="p">)</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="c1"># Set the y axis of the plot to start at 0</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">40</span><span class="p">))</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>(0.0, 40.0)
+</code></pre></div>
+<p><img alt="png" src="../images/dense/dense_16_1.png" /></p>
+<p>This looks a lot better!  We now see that the network doesn't make the exact same prediction for all input temperatures below a certain value.  This is because the second layer was able to look at multiple inputs, and the output was only zeroed out in one of them.</p>
+<p>This still enabled us to have a nonlinear relationship between the input and the output, but it also preserves the input signal - we still have some information about the original <code>tmax</code> in the second layer.</p>
+<h2 id="calculating-layer-outputs">Calculating Layer Outputs</h2>
+<p>In practice, we can use dozens or hundreds of layers and units in each layer.  It can get annoying to have to write out <span class="arithmatex">\(w_{1}\)</span>, <span class="arithmatex">\(w_{2}\)</span>, and so on.  To both make it easier to show the weights and biases, and faster to execute the network, we store our weights and biases in matrices.</p>
+<p><img alt="layer 1 weights" src="../images/dense/layer1_weights.svg" /></p>
+<p>When weights are in matrices, we use matrix multiplication to multiply them with the inputs. Matrix multiplication works by multiplying each element of each row of the first matrix by each column of the second matrix, then adding them together:</p>
+<p><img alt="layer 1 weights" src="../images/dense/matrix_mult.gif" /></p>
+<p>We can then add the biases to each row of the output.  Here is the full process of multiplying two input <code>tmax</code> values <code>80</code> and <code>90</code> by the weights and adding the bias.  Since there are two units in layer 1, we end up with two outputs for each input.  Each row in the output corresponds to a row in the input.</p>
+<p><img alt="layer 1 weights" src="../images/dense/layer1_mult.svg" /></p>
+<p>The shapes of the matrices matter a lot in matrix multiplication.  The shape is the number of rows in a matrix by the number of columns, like <code>2x1</code>.  We can only multiply matrix A with matrix B if the number of columns in matrix A equals the number of rows in matrix B.</p>
+<p>In the diagram above, we take a <code>2x1</code> matrix of <code>tmax</code> values, multiply by a <code>1x2</code> matrix of weights, then end up with a <code>2x2</code> matrix.  We then add a <code>1x2</code> matrix to this (which adds the bias values to each row).  The output is a <code>2x2</code> matrix.</p>
+<p>We can implement our matrix multiplication in code.  We'll use a library called <code>tsensor</code> so you can see how the matrix shapes change:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">tsensor</span><span class="w"> </span><span class="kn">import</span> <span class="n">explain</span> <span class="k">as</span> <span class="n">exp</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c1"># Get 5 temperature values</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="nb">input</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">80</span><span class="p">],</span> <span class="p">[</span><span class="mi">90</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">20</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">]])</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="c1"># Create the weight matrix, which is 1x2</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="n">l1_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">.82</span><span class="p">,</span> <span class="mf">.1</span><span class="p">]])</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="c1"># Create the 1x2 bias matrix</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="n">l1_bias</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">11.99</span><span class="p">,</span> <span class="mi">10</span><span class="p">]])</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="c1"># This is the output of the layer</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="k">with</span> <span class="n">exp</span><span class="p">()</span> <span class="k">as</span> <span class="n">c</span><span class="p">:</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>    <span class="n">l1_output</span> <span class="o">=</span> <span class="nb">input</span> <span class="o">@</span> <span class="n">l1_weights</span> <span class="o">+</span> <span class="n">l1_bias</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="n">l1_output</span>
+</span></code></pre></div>
+<p><img alt="svg" src="../images/dense/dense_18_0.svg" /></p>
+<div class="language-text highlight"><pre><span></span><code>array([[77.59, 18.  ],
+       [85.79, 19.  ],
+       [93.99, 20.  ],
+       [-4.41,  8.  ],
+       [ 3.79,  9.  ]])
+</code></pre></div>
+<p>As you can see above, the output is a <code>5x2</code> matrix, which results from the multiplication and the addition.  We get one output column for each input column.  We then need to apply relu to get the final result:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">l1_activated</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">l1_output</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">l1_activated</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[77.59, 18.  ],
+       [85.79, 19.  ],
+       [93.99, 20.  ],
+       [ 0.  ,  8.  ],
+       [ 3.79,  9.  ]])
+</code></pre></div>
+<p>We can rewrite our equation for layer 1 to use matrices - <span class="arithmatex">\(layer_{1}=relu(XW_{1} + B_{1})\)</span>.  The capital letters indicate that we are multiplying and adding matrices, not single numbers.  This equation is much simpler to look at, especially when we add in a second layer <span class="arithmatex">\(\hat{y}=W_{2}relu(XW_{1} + B_{1}) + B_{2}\)</span>.</p>
+<p>Now, we can apply layer 2 on top of layer 1:</p>
+<p><img alt="layer 2 multiplied" src="../images/dense/layer2_mult.svg" /></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">l2_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    <span class="p">[</span><span class="mf">.5</span><span class="p">],</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="p">[</span><span class="mf">.2</span><span class="p">]</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="p">])</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="n">l2_bias</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">5</span><span class="p">]])</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="c1"># This is the output of the layer</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="k">with</span> <span class="n">exp</span><span class="p">():</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>    <span class="n">output</span> <span class="o">=</span> <span class="n">l1_activated</span> <span class="o">@</span> <span class="n">l2_weights</span> <span class="o">+</span> <span class="n">l2_bias</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="n">output</span>
+</span></code></pre></div>
+<p><img alt="svg" src="../images/dense/dense_22_0.svg" /></p>
+<div class="language-text highlight"><pre><span></span><code>array([[47.395],
+       [51.695],
+       [55.995],
+       [ 6.6  ],
+       [ 8.695]])
+</code></pre></div>
+<p>We then get a <code>5x1</code> output where each row corresponds to a prediction.  One nice way to think about neural network layers is that each layer generates new features in the data.  Our input had 1 feature <code>tmax</code>, and our first layer generated <code>2</code> new features to describe <code>tmax</code>.  Our second layer then compressed those <code>2</code> features back into one prediction for <code>tmax_tomorrow</code>.</p>
+<p><mark>One handy rule of thumb is that the number of rows in the weight matrix should equal the number of columns in the input matrix, and the number of columns in the weight matrix should equal the number of columns in the output matrix.</mark>  So in layer one, our weight matrix is <code>1x2</code> so we go from <code>1</code> feature in the input to <code>2</code> features in the output.</p>
+<h2 id="calculating-w-and-b">Calculating W and B</h2>
+<p>We now know how to calculate the outputs of a neural network given <span class="arithmatex">\(W\)</span> and <span class="arithmatex">\(B\)</span>.  This is called the forward pass of a neural network.</p>
+<p>Let's learn how to calculate <span class="arithmatex">\(W\)</span> and <span class="arithmatex">\(B\)</span> from the data.  We'll be extending our work in the last lesson with gradient descent, which helps us find the <span class="arithmatex">\(W\)</span> and <span class="arithmatex">\(B\)</span> values that have the lowest error.  The difference this time is that we'll need to use backpropagation to transmit our loss gradient across multiple layers.</p>
+<p>First of all, we need to calculate the loss between the actual <code>tmax_tomorrow</code> and our predictions.  We can do that using mean squared error, with the formula <span class="arithmatex">\(\text{MSE}=(\hat{y} - y) ^ 2\)</span>.</p>
+<p>Let's say these are our <code>tmax</code> and <code>tmax_tomorrow</code> values:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">tmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">80</span><span class="p">],</span> <span class="p">[</span><span class="mi">90</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">20</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">]])</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">tmax_tomorrow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">83</span><span class="p">],</span> <span class="p">[</span><span class="mi">89</span><span class="p">],</span> <span class="p">[</span><span class="mi">95</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">22</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">9</span><span class="p">]])</span>
+</span></code></pre></div>
+<p>We can then calculate the mean squared error between the actual <code>tmax_tomorrow</code> and the <code>output</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">mse</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">predicted</span><span class="p">):</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    <span class="k">return</span> <span class="p">(</span><span class="n">actual</span> <span class="o">-</span> <span class="n">predicted</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">mse</span><span class="p">(</span><span class="n">tmax_tomorrow</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[1267.716025],
+       [1391.663025],
+       [1521.390025],
+       [ 817.96    ],
+       [ 313.113025]])
+</code></pre></div>
+<p>We now have a mean squared error value corresponding to each of our outputs.  To begin backpropagation, we need to take the derivative of mean squared error, which will tell us which direction we need to adjust our prediction in to lower our loss:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">mse_grad</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">predicted</span><span class="p">):</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    <span class="k">return</span> <span class="n">predicted</span> <span class="o">-</span> <span class="n">actual</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="n">mse_grad</span><span class="p">(</span><span class="n">tmax_tomorrow</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[-35.605],
+       [-37.305],
+       [-39.005],
+       [ 28.6  ],
+       [ 17.695]])
+</code></pre></div>
+<p>This tells us how to adjust each prediction to get it close to the actual value.</p>
+<h2 id="backpropagation-through-layers">Backpropagation Through Layers</h2>
+<p>Backpropagation will essentially reverse the forward pass to send the gradient to the various network parameters (weights and biases).  This gradient is how the network uses gradient descent to learn.</p>
+<p>Here is the full forward pass of the network, with the operations we'll need to reverse:</p>
+<p><img alt="forward pass" src="../images/dense/fwd.svg" /></p>
+<p>And here is how we'll reverse them:</p>
+<p><img alt="backward pass" src="../images/dense/bwd.svg" /></p>
+<p>Now let's start reversing our operations, starting at the top of layer 2.</p>
+<h2 id="layer-2-gradients">Layer 2 Gradients</h2>
+<p>Now, we can calculate the gradient of our layer 2 parameters relative to our output gradient.  This is like undoing our forward pass, but with our error value as input.</p>
+<p>We can first get our gradient with respect to our weights by multiplying the loss gradient by the output of layer 1:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">output_gradient</span> <span class="o">=</span> <span class="n">mse_grad</span><span class="p">(</span><span class="n">tmax_tomorrow</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="k">with</span> <span class="n">exp</span><span class="p">():</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>    <span class="n">l2_w_gradient</span> <span class="o">=</span>  <span class="n">l1_activated</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">output_gradient</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="n">l2_w_gradient</span>
+</span></code></pre></div>
+<p><img alt="svg" src="../images/dense/dense_31_0.svg" /></p>
+<div class="language-text highlight"><pre><span></span><code>array([[-9562.0038],
+       [-1741.73  ]])
+</code></pre></div>
+<p>Let's discuss why this operation makes sense.  In the forward pass, we multiply each output of layer 1 by a weight to get the output of layer 2.  Let's use a diagram to visualize this. We'll leave the bias out to make things clearer:</p>
+<p><img alt="layer 2 backwards" src="../images/dense/layer2_bw.svg" /></p>
+<p>The diagram above shows us how the inputs are multiplied by the weights in the forward pass to get the output.  As we can see, each weight is multiplied by multiple inputs.</p>
+<p>Another way to think about this is that each weight is connected to multiple inputs and to multiple outputs:</p>
+<p><img alt="layer 2 backwards" src="../images/dense/layer2_bw_conn.svg" /></p>
+<p>In the backward pass, we want to know whether to increase or decrease our weights.  The output gradient tells us how much each output needs to increase or decrease to reduce error.</p>
+<p>To figure out how much each weight needs to change based on the output gradient, we need to look at each input connected to the weight, and reverse the operation we did in the forward pass.</p>
+<p>This is because each weight affects several output values, and is scaled by several input values.  So multiplying the output gradient by the inputs that the weight is connected to tells us how much changing each weight will change the outputs:</p>
+<p><img alt="layer 2 backwards" src="../images/dense/layer2_bw_grad.svg" /></p>
+<p>For example if <span class="arithmatex">\(w_{1}\)</span> is multiplied by an input of <code>90</code> to get one output, and by <code>80</code> to get another output, changing <span class="arithmatex">\(w_{1}\)</span> will change both outputs.  But it will change them proportionally to the input.  If we add <code>1</code> to <span class="arithmatex">\(w_{1}\)</span>, then it will increase the first output by <code>90</code>, and the second output by <code>80</code>.  What we're doing in the backward pass is scaling the output gradient by the inputs to find the weight gradient.</p>
+<p>Another way to think about it is reversing the weight connections:</p>
+<p><img alt="layer 2 backwards" src="../images/dense/layer2_bw_grad_conn.svg" /></p>
+<p>We transpose the layer one output matrix (the inputs to layer 2) to ensure that each input that was connected to an output through a weight is multiplied by that output gradient.</p>
+<p>If we multiply our output gradients by the inputs to the layer, it tells us how much we need to increase or decrease our weights:</p>
+<p><img alt="layer 2 backwards" src="../images/dense/layer2_grad.svg" /></p>
+<p>This is due to the chain rule of partial derivatives, which we covered in the last lesson.  If we want to find the gradient with respect to the layer 2 weights, or <span class="arithmatex">\(\frac{\partial L}{\partial W_{2}}\)</span>, we can write it out as a chain of multiplications:</p>
+<div class="arithmatex">\[\frac{\partial L}{\partial W_{2}}=\partial L\frac{\partial (XW_{2})}{\partial W_{2}}\]</div>
+<p>In the equation above, <span class="arithmatex">\(\partial L\)</span> is really <span class="arithmatex">\(\frac{\partial L}{\partial XW_{2}}\)</span>, but we just simplify it to make it easier to read.  The partial derivative of the loss with respect to the layer 2 weights is the partial derivative of the loss with respect to the layer 2 output <span class="arithmatex">\(XW_{2}\)</span> times the partial derivative of <span class="arithmatex">\(XW_{2}\)</span> with respect to <span class="arithmatex">\(W_{2}\)</span>.  We'll leave the bias out just to make things simpler.</p>
+<p>We know that <span class="arithmatex">\(\partial L\)</span> is <span class="arithmatex">\(XW_{2} - Y\)</span>.  <span class="arithmatex">\(XW_{2}\)</span> is our output prediction, and the MSE gradient is <code>predicted - actual</code>.  Then we have to solve for <span class="arithmatex">\(\frac{\partial (XW_{2})}{\partial W_{2}}\)</span>.  This is just <span class="arithmatex">\(X\)</span>, since any change to <span class="arithmatex">\(X\)</span> will directly change the output <span class="arithmatex">\(XW_{2}\)</span>.</p>
+<p>So we can say that <span class="arithmatex">\(\frac{\partial (XW_{2})}{\partial W_{2}} = X\)</span>, and that <span class="arithmatex">\(\frac{\partial L}{\partial W_{2}} = \partial LX\)</span>.</p>
+<p>If you ever want to verify derivatives, you can use the Python sympy library:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="kn">import</span> <span class="n">diff</span><span class="p">,</span> <span class="n">symbols</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="c1"># Define symbols for our equation</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="n">x</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;X, W&#39;</span><span class="p">)</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="c1"># Define input times weights in sympy</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="n">sympy_output</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">w</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="c1"># Take the derivative of output with respect to w</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="n">diff</span><span class="p">(</span><span class="n">sympy_output</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+</span></code></pre></div>
+<p><span class="arithmatex">\(\displaystyle X\)</span></p>
+<p>What we're doing in the backward pass of the neural network is using the chain rule to take the partial derivatives of each parameter with respect to the loss.</p>
+<p>The layer 2 bias equally affects all outputs.  If we increase the bias by <code>5</code>, all of the outputs will also be increased by <code>5</code>.  So the bias gradient is the average of all the output gradient values:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">with</span> <span class="n">exp</span><span class="p">():</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>    <span class="n">l2_b_gradient</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">output_gradient</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="n">l2_b_gradient</span>
+</span></code></pre></div>
+<p><img alt="svg" src="../images/dense/dense_36_0.svg" /></p>
+<div class="language-text highlight"><pre><span></span><code>array([-13.124])
+</code></pre></div>
+<p>To update our layer 2 weights and biases, we need to subtract the gradient from the <span class="arithmatex">\(W\)</span> and <span class="arithmatex">\(B\)</span> values, adjusted by the learning rate.  You may recall that the learning rate prevents us from making updates to the parameters that are too large (which will move us away from the area of lowest error):</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># Display original layer 2 weights</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">l2_weights</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[0.5],
+       [0.2]])
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># Set a learning rate</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="n">lr</span> <span class="o">=</span> <span class="mf">1e-5</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="k">with</span> <span class="n">exp</span><span class="p">():</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>    <span class="c1"># Update the bias values</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>    <span class="n">l2_bias</span> <span class="o">=</span> <span class="n">l2_bias</span> <span class="o">-</span> <span class="n">l2_b_gradient</span> <span class="o">*</span> <span class="n">lr</span>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>    <span class="c1"># Update the weight values</span>
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>    <span class="n">l2_weights</span> <span class="o">=</span> <span class="n">l2_weights</span> <span class="o">-</span> <span class="n">l2_w_gradient</span> <span class="o">*</span> <span class="n">lr</span>
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="n">l2_weights</span>
+</span></code></pre></div>
+<p><img alt="svg" src="../images/dense/dense_39_0.svg" /></p>
+<p><img alt="svg" src="../images/dense/dense_39_1.svg" /></p>
+<div class="language-text highlight"><pre><span></span><code>array([[0.59562004],
+       [0.2174173 ]])
+</code></pre></div>
+<h2 id="layer-1-gradients">Layer 1 Gradients</h2>
+<p>Do continue backpropagation, we now need to find our loss gradient with respect to our layer 1 outputs.  Our layer 1 outputs are scaled by the weights to get our layer 2 output:</p>
+<p><img alt="layer 2 backwards" src="../images/dense/layer2_bw.svg" /></p>
+<p>Another way to think about this is that each output is connected to multiple inputs through multiple weights:</p>
+<p><img alt="layer 2 backwards" src="../images/dense/layer2_in_bw.svg" /></p>
+<p>To find the gradient of the loss with respect to layer 1 output, we have to scale the output gradient by the weights (reversing the forward pass):</p>
+<p><img alt="layer 2 backwards" src="../images/dense/layer2_in_bw_grad.svg" /></p>
+<p>You can also think of this as reversing the connections from the forward pass:</p>
+<p><img alt="layer 2 backwards" src="../images/dense/layer2_in_bw_grad_conn.svg" /></p>
+<p>We transpose the weights matrix to reverse the connections - every output will be multiplied by every weight connected to that output.  This tells us how much we need to change each output value in layer 1 to reduce our loss.</p>
+<p>We can code this operation up:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="k">with</span> <span class="n">exp</span><span class="p">():</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>    <span class="c1"># Calculate the gradient on the output of layer 1</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>    <span class="n">l1_activated_gradient</span> <span class="o">=</span> <span class="n">output_gradient</span> <span class="o">@</span> <span class="n">l2_weights</span><span class="o">.</span><span class="n">T</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="n">l1_activated_gradient</span>
+</span></code></pre></div>
+<p><img alt="svg" src="../images/dense/dense_41_0.svg" /></p>
+<div class="language-text highlight"><pre><span></span><code>array([[-21.20705145,  -7.74114297],
+       [-22.21960552,  -8.11075238],
+       [-23.23215958,  -8.48036179],
+       [ 17.03473309,   6.21813478],
+       [ 10.53949657,   3.84719912]])
+</code></pre></div>
+<h2 id="layer-1-parameters">Layer 1 Parameters</h2>
+<p>Now, we can calculate the gradient with respect to the parameters in layer 1 (<span class="arithmatex">\(W_{1}\)</span> and <span class="arithmatex">\(B_{1}\)</span>).  Before we do this, we have to differentiate across the nonlinear activation function.</p>
+<p>You may remember that the derivative is the rate of change of a function:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># Generate a range of predictions between -50 and 50.</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="n">temps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span><span class="mi">50</span><span class="p">)</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="c1"># Predict tmax_tomorrow given each of our input temps</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temps</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">temps</span><span class="p">))</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>[&lt;matplotlib.lines.Line2D at 0x13fb0e560&gt;]
+</code></pre></div>
+<p><img alt="png" src="../images/dense/dense_43_1.png" /></p>
+<p>As we can see above, the rate of change of the relu function is constant when the input is above <code>0</code>, and <code>0</code> when the input is below <code>0</code>.  The derivative of the relu function is undefined when the input equals <code>0</code> (it is <code>1</code> above and <code>0</code> below).  But by convention, we assign a derivative of <code>0</code> to the relu function at <code>0</code>.</p>
+<p>We can plot the derivative of the relu function:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># Compute the relu function over the temperatures</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="n">activation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">temps</span><span class="p">)</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="c1"># Plot the input temperatures against the derivative of relu (the slope)</span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="c1"># np.roll will shift the values to the right one place, so we subtract the previous value</span>
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temps</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">activation</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">activation</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">:])</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>[&lt;matplotlib.lines.Line2D at 0x13fbe6a40&gt;]
+</code></pre></div>
+<p><img alt="png" src="../images/dense/dense_45_1.png" /></p>
+<p>To get from the gradient on the activation function to the pre-nonlinearity gradient, we have to multiply the gradient by <code>1</code> if the input is greater than <code>0</code>, and by <code>0</code> otherwise.  Intuitively, if the output of the nonlinearity was <code>0</code> in the forward pass, then it didn't contribute to the final prediction at all.  So this is making sure that we properly zero out our gradient at these points, matching what happened in the forward pass.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">with</span> <span class="n">exp</span><span class="p">():</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>    <span class="n">l1_output_gradient</span> <span class="o">=</span> <span class="n">l1_activated_gradient</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">heaviside</span><span class="p">(</span><span class="n">l1_output</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="n">l1_output_gradient</span>
+</span></code></pre></div>
+<p><img alt="svg" src="../images/dense/dense_47_0.svg" /></p>
+<div class="language-text highlight"><pre><span></span><code>array([[-21.20705145,  -7.74114297],
+       [-22.21960552,  -8.11075238],
+       [-23.23215958,  -8.48036179],
+       [  0.        ,   6.21813478],
+       [ 10.53949657,   3.84719912]])
+</code></pre></div>
+<p>After doing this, the layer 1 weight and bias updates are the same as for layer 2:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># Calculate gradients wrt weights and biases for layer 1</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="n">l1_w_gradient</span> <span class="o">=</span>  <span class="nb">input</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">l1_output_gradient</span>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="n">l1_b_gradient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">l1_output_gradient</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="n">l1_weights</span> <span class="o">-=</span> <span class="n">l1_w_gradient</span> <span class="o">*</span> <span class="n">lr</span>
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="n">l1_bias</span> <span class="o">-=</span> <span class="n">l1_b_gradient</span> <span class="o">*</span> <span class="n">lr</span>
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="n">l1_weights</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[0.8812494, 0.1236013]])
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">l1_bias</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[11.99011224, 10.00002853]])
+</code></pre></div>
+<p>At this point, we can end backpropagation, since we've computed the gradients at each of our layers.</p>
+<h2 id="backpropagation">Backpropagation</h2>
+<p>Here is the algorithm we followed:</p>
+<ol>
+<li>Run the network forward pass, and get the output:</li>
+<li>Compute gradient with respect to the outputs of the network. (the <code>mse_grad</code> function)</li>
+<li>For each layer in the network:<ul>
+<li>Compute the gradient with respect to the pre-nonlinearity output (if the layer has a nonlinearity)</li>
+<li>Compute the gradient with respect to the weights</li>
+<li>Compute the gradient with respect to the biases</li>
+<li>Compute the gradient with respect to the inputs to the layer</li>
+</ul>
+</li>
+<li>Update the parameters in the network using gradient descent</li>
+</ol>
+<p>For convenience, we combined step 4 into step 3.  But it's important to note that backpropagation is step 3 above, and gradient descent is step 4.  Splitting these steps up makes it easier to use variations of regular gradient descent to update the weights (like Adam or RMSProp).</p>
+<p>Steps 3 and 4 are usually called the backward pass of a neural network.</p>
+<p>Backpropagation and gradient descent are the most complicated parts of training neural networks.  Intuitively, backpropagation is about reversing the forward pass of the network so that we can figure out how to reduce error.  To do this, we pass the loss gradient from layer to layer (applying the chain rule).</p>
+<h2 id="batch-size">Batch Size</h2>
+<p>In the example above, we used a <strong>batch size</strong> of <code>5</code>.  This means that we did the forward and backward pass using <code>5</code> inputs from the training dataset.  Larger batch sizes will use more memory, since we need to create larger matrices.  But they will also run faster, since we can process more examples at once.</p>
+<p>Batch size also affects gradient descent.  When we process <code>1</code> example at a time, we do a backward pass using the gradient of that single example.  With a larger batch size, we're averaging the gradient over every example in the batch when we update weights and biases.  This means that we may lose some accuracy in the updates when the batch size is too high.</p>
+<p>When the batch size is the same as the rows in the training data, then the update process is called <strong>batch gradient descent</strong> (confusing, I know!).  Otherwise, it is called <strong>stochastic gradient descent</strong>.  Either way, we still use backpropagation to find the gradients.</p>
+<h2 id="putting-it-all-together">Putting it all together</h2>
+<p>We now know enough to train a neural network to predict the weather!</p>
+<p>Let's first load our data and split it into 3 sets:</p>
+<ul>
+<li>A training set, which we'll use to train our algorithm</li>
+<li>A validation set, which we'll use to measure error during training</li>
+<li>A test set, which we'll use to evaluate the model after it has been fit</li>
+</ul>
+<p>Creating separate sets like this helps us avoid overfitting, where our model looks great in training, but doesn't work in the real world.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="n">PREDICTORS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tmax&quot;</span><span class="p">,</span> <span class="s2">&quot;tmin&quot;</span><span class="p">,</span> <span class="s2">&quot;rain&quot;</span><span class="p">]</span>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="n">TARGET</span> <span class="o">=</span> <span class="s2">&quot;tmax_tomorrow&quot;</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="c1"># Scale our data so relu works better</span>
+</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a><span class="c1"># All temperature values in the original dataset are over 0, so relu won&#39;t do much for several epochs</span>
+</span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a><span class="c1"># Scaling will make some of the input data negative</span>
+</span><span id="__span-27-9"><a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a><span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+</span><span id="__span-27-10"><a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a><span class="n">data</span><span class="p">[</span><span class="n">PREDICTORS</span><span class="p">]</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">PREDICTORS</span><span class="p">])</span>
+</span><span id="__span-27-11"><a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a>
+</span><span id="__span-27-12"><a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a><span class="n">split_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="mf">.7</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)),</span> <span class="nb">int</span><span class="p">(</span><span class="mf">.85</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))])</span>
+</span><span id="__span-27-13"><a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a><span class="p">(</span><span class="n">train_x</span><span class="p">,</span> <span class="n">train_y</span><span class="p">),</span> <span class="p">(</span><span class="n">valid_x</span><span class="p">,</span> <span class="n">valid_y</span><span class="p">),</span> <span class="p">(</span><span class="n">test_x</span><span class="p">,</span> <span class="n">test_y</span><span class="p">)</span> <span class="o">=</span> <span class="p">[[</span><span class="n">d</span><span class="p">[</span><span class="n">PREDICTORS</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">d</span><span class="p">[[</span><span class="n">TARGET</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span>
+</span><span id="__span-27-14"><a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a>                                                            <span class="n">split_data</span><span class="p">]</span>
+</span></code></pre></div>
+<p>We'll train a neural network to predict <code>tmax_tomorrow</code> using <code>tmax</code>, <code>tmin</code>, and <code>rain</code>.</p>
+<p>To train our neural network, we need 4 elements:</p>
+<ul>
+<li>A way to initialize our parameters (weights and biases for each layer)</li>
+<li>A <code>forward</code> pass that computes predictions using the parameters</li>
+<li>A loss function that measures the error of our predictions</li>
+<li>A <code>backward</code> pass that updates our parameters to reduce the loss</li>
+</ul>
+<p>To initialize our weight parameters, we can use random initialization.  Random initialization helps the gradient descent algorithm descend to a global minimum efficiently (feel free to experiment with other initializations, like 0 or 1 to see what happens).</p>
+<p>It's common to initialize the bias to be <code>1</code> or <code>0</code>.</p>
+<p>We'll shrink the initial parameter values so we don't end up with predictions that are too large (this can cause gradient descent to take steps that are too large).</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">init_layers</span><span class="p">(</span><span class="n">inputs</span><span class="p">):</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>    <span class="n">layers</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)):</span>
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>        <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">([</span>
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">-</span> <span class="mf">.1</span><span class="p">,</span>
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>            <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>        <span class="p">])</span>
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>    <span class="k">return</span> <span class="n">layers</span>
+</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a>
+</span><span id="__span-28-10"><a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a><span class="c1"># This will initialize weights and biases for a 3-layer neural network with 10 units in the first layer, 10 in the second, and 1 in the final</span>
+</span><span id="__span-28-11"><a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a><span class="c1"># The first number (3) is our number of input features</span>
+</span><span id="__span-28-12"><a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a><span class="n">layer_conf</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+</span></code></pre></div>
+<p>We initialize one weight matrix and one bias matrix for each of our layers.</p>
+<p>In the forward pass of our network, we generate outputs for each layer by multiplying <span class="arithmatex">\(W\)</span> and <span class="arithmatex">\(X\)</span>, then adding <span class="arithmatex">\(B\)</span>.  If the layer is not our output layer, we also apply a nonlinearity (relu).</p>
+<p>The output of the last layer is our prediction for <code>tmax_tomorrow</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">layers</span><span class="p">):</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>    <span class="n">hidden</span> <span class="o">=</span> <span class="p">[</span><span class="n">batch</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">layers</span><span class="p">)):</span>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>        <span class="n">batch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>            <span class="n">batch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>        <span class="c1"># Store the forward pass hidden values for use in backprop</span>
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>        <span class="n">hidden</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">batch</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>    <span class="k">return</span> <span class="n">batch</span><span class="p">,</span> <span class="n">hidden</span>
+</span></code></pre></div>
+<p>Once we have predictions, we need to calculate error.  We have two functions, one to calculate the loss, and one to calculate the loss gradient (which helps us update our parameters):</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">mse</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">predicted</span><span class="p">):</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>    <span class="k">return</span> <span class="p">(</span><span class="n">actual</span> <span class="o">-</span> <span class="n">predicted</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">mse_grad</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">predicted</span><span class="p">):</span>
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>    <span class="k">return</span> <span class="n">predicted</span> <span class="o">-</span> <span class="n">actual</span>
+</span></code></pre></div>
+<p>In the backward pass of the network, we adjust <span class="arithmatex">\(W\)</span> and <span class="arithmatex">\(B\)</span> by the gradient times learning rate.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">backward</span><span class="p">(</span><span class="n">layers</span><span class="p">,</span> <span class="n">hidden</span><span class="p">,</span> <span class="n">grad</span><span class="p">,</span> <span class="n">lr</span><span class="p">):</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>        <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>            <span class="n">grad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">heaviside</span><span class="p">(</span><span class="n">hidden</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">))</span>
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>        <span class="n">w_grad</span> <span class="o">=</span> <span class="n">hidden</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">grad</span>
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>        <span class="n">b_grad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>
+</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>        <span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-=</span> <span class="n">w_grad</span> <span class="o">*</span> <span class="n">lr</span>
+</span><span id="__span-31-10"><a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a>        <span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="n">b_grad</span> <span class="o">*</span> <span class="n">lr</span>
+</span><span id="__span-31-11"><a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a>
+</span><span id="__span-31-12"><a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a>        <span class="n">grad</span> <span class="o">=</span> <span class="n">grad</span> <span class="o">@</span> <span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+</span><span id="__span-31-13"><a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a>    <span class="k">return</span> <span class="n">layers</span>
+</span></code></pre></div>
+<p>Finally, we'll write a loop that:</p>
+<ul>
+<li>Makes predictions for each batch (we'll use a batch size of <code>8</code>)</li>
+<li>Computes the gradient for each batch</li>
+<li>Updates the parameters based on the gradient</li>
+</ul>
+<p>We will run the algorithm for several epochs - an epoch is each iteration over the training set.  Up to a point, more epochs will improve the accuracy.</p>
+<p>We will print out the loss on the validation set regularly so we can monitor the loss.  We know we have too many epochs if the validation loss is increasing instead of decreasing.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">statistics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="n">lr</span> <span class="o">=</span> <span class="mf">1e-6</span>
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="n">epochs</span><span class="o">=</span><span class="mi">10</span>
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">8</span>
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="n">layers</span> <span class="o">=</span> <span class="n">init_layers</span><span class="p">(</span><span class="n">layer_conf</span><span class="p">)</span>
+</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a>    <span class="n">epoch_loss</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-32-11"><a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a>
+</span><span id="__span-32-12"><a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">train_x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">batch_size</span><span class="p">):</span>
+</span><span id="__span-32-13"><a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a>        <span class="n">x_batch</span> <span class="o">=</span> <span class="n">train_x</span><span class="p">[</span><span class="n">i</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="n">batch_size</span><span class="p">)]</span>
+</span><span id="__span-32-14"><a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a>        <span class="n">y_batch</span> <span class="o">=</span> <span class="n">train_y</span><span class="p">[</span><span class="n">i</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="n">batch_size</span><span class="p">)]</span>
+</span><span id="__span-32-15"><a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a>        <span class="n">pred</span><span class="p">,</span> <span class="n">hidden</span> <span class="o">=</span> <span class="n">forward</span><span class="p">(</span><span class="n">x_batch</span><span class="p">,</span> <span class="n">layers</span><span class="p">)</span>
+</span><span id="__span-32-16"><a id="__codelineno-32-16" name="__codelineno-32-16" href="#__codelineno-32-16"></a>
+</span><span id="__span-32-17"><a id="__codelineno-32-17" name="__codelineno-32-17" href="#__codelineno-32-17"></a>        <span class="n">loss</span> <span class="o">=</span> <span class="n">mse_grad</span><span class="p">(</span><span class="n">y_batch</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span>
+</span><span id="__span-32-18"><a id="__codelineno-32-18" name="__codelineno-32-18" href="#__codelineno-32-18"></a>        <span class="n">epoch_loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">loss</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+</span><span id="__span-32-19"><a id="__codelineno-32-19" name="__codelineno-32-19" href="#__codelineno-32-19"></a>
+</span><span id="__span-32-20"><a id="__codelineno-32-20" name="__codelineno-32-20" href="#__codelineno-32-20"></a>        <span class="n">layers</span> <span class="o">=</span> <span class="n">backward</span><span class="p">(</span><span class="n">layers</span><span class="p">,</span> <span class="n">hidden</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">lr</span><span class="p">)</span>
+</span><span id="__span-32-21"><a id="__codelineno-32-21" name="__codelineno-32-21" href="#__codelineno-32-21"></a>
+</span><span id="__span-32-22"><a id="__codelineno-32-22" name="__codelineno-32-22" href="#__codelineno-32-22"></a>
+</span><span id="__span-32-23"><a id="__codelineno-32-23" name="__codelineno-32-23" href="#__codelineno-32-23"></a>    <span class="n">valid_preds</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">forward</span><span class="p">(</span><span class="n">valid_x</span><span class="p">,</span> <span class="n">layers</span><span class="p">)</span>
+</span><span id="__span-32-24"><a id="__codelineno-32-24" name="__codelineno-32-24" href="#__codelineno-32-24"></a>
+</span><span id="__span-32-25"><a id="__codelineno-32-25" name="__codelineno-32-25" href="#__codelineno-32-25"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch: </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s2"> Train MSE: </span><span class="si">{</span><span class="n">mean</span><span class="p">(</span><span class="n">epoch_loss</span><span class="p">)</span><span class="si">}</span><span class="s2"> Valid MSE: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">mse</span><span class="p">(</span><span class="n">valid_preds</span><span class="p">,</span><span class="n">valid_y</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>Epoch: 0 Train MSE: 3298.4814409496876 Valid MSE: 1698.6755724272155
+Epoch: 1 Train MSE: 345.40078470794464 Valid MSE: 27.80144186428462
+Epoch: 2 Train MSE: 24.252381700389204 Valid MSE: 21.752866039853455
+Epoch: 3 Train MSE: 22.69885488837237 Valid MSE: 20.965108979472102
+Epoch: 4 Train MSE: 22.261625244357383 Valid MSE: 20.793625509963046
+Epoch: 5 Train MSE: 22.148946241777665 Valid MSE: 20.76249233433996
+Epoch: 6 Train MSE: 22.118371865472543 Valid MSE: 20.760424067388534
+Epoch: 7 Train MSE: 22.108580704876303 Valid MSE: 20.762591439612102
+Epoch: 8 Train MSE: 22.10415944153222 Valid MSE: 20.764782894467896
+Epoch: 9 Train MSE: 22.101148121799504 Valid MSE: 20.766197583199283
+</code></pre></div>
+<p>We can display our final parameters from each layer:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="n">layers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>[array([[ 0.13627073,  0.10734905,  0.17262407,  0.09384974,  0.12110305,
+          0.10433614,  0.21250811,  0.05317818,  0.07851443,  0.13120318],
+        [-0.04181835,  0.01112021,  0.05947605,  0.09442577,  0.01488811,
+          0.03294442,  0.08459158, -0.08258339,  0.01831939,  0.04747595],
+        [ 0.10899102, -0.09314925, -0.12027735, -0.04524359, -0.04634872,
+         -0.00824166,  0.02547093, -0.0172699 , -0.02959506,  0.12033973]]),
+ array([[1.06998918, 1.07313452, 1.06852117, 1.07559753, 1.07423911,
+         1.07931344, 1.08156855, 1.05428857, 1.07007705, 1.07094374]])]
+</code></pre></div>
+<p>We can also measure error on the test set:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="n">pred</span><span class="p">,</span> <span class="n">hidden</span> <span class="o">=</span> <span class="n">forward</span><span class="p">(</span><span class="n">test_x</span><span class="p">,</span> <span class="n">layers</span><span class="p">)</span>
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">mse</span><span class="p">(</span><span class="n">test_y</span><span class="p">,</span> <span class="n">pred</span><span class="p">))</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>22.069973497275438
+</code></pre></div>
+<h2 id="wrap-up">Wrap-up</h2>
+<p>We learned a lot in this lesson!  You should now have a good idea of how to train a neural network with multiple layers, and use it to make predictions.  Trying changing batch size and learning rate to see how it affects the network.</p>
+<p>In the <a href="http://127.0.0.1:8000/deeplearning/04-classification/">next lesson</a>, we'll cover how to do classification with a neural network.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 <a href="https://sheldoncoder1337.github.io">jialecai</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/sheldoncoder1337" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["header.autohide", "content.code.copy", "content.code.select", "content.code.annotate", "content.footnote.tooltips", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

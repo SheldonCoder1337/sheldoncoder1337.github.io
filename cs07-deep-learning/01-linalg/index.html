@@ -1,0 +1,2274 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Personal Blog by Sheldon">
+      
+      
+        <meta name="author" content="jialecai">
+      
+      
+        <link rel="canonical" href="https://sheldoncoder1337.github.io/cs07-deep-learning/01-linalg/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>Math fundamentals - Harmony</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M22%2012a10%2010%200%200%201-10%2010A10%2010%200%200%201%202%2012%2010%2010%200%200%201%2012%202a10%2010%200%200%201%2010%2010M6%2013h8l-3.5%203.5%201.42%201.42L17.84%2012l-5.92-5.92L10.5%207.5%2014%2011H6z%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#math-fundamentals" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Harmony" class="md-header__button md-logo" aria-label="Harmony" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Harmony
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Math fundamentals
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sheldoncoder1337.github.io/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Harmony" class="md-nav__button md-logo" aria-label="Harmony" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Harmony
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sheldoncoder1337.github.io/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ComputerArchitecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ComputerArchitecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs01-computer-architecture/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DataStructure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DataStructure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs02-data-structure/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs02-data-structure/20-top100/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    top100
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OperatingSystem
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    OperatingSystem
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs03-operating-system/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ComputerNetwork
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ComputerNetwork
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs04-computer-network/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Database
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs05-database-system/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MachineLearning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MachineLearning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs06-machine-learning/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deeplearning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deeplearning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-nano-vllm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15-nanovllm.md
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-asr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16-asr.md
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SoftwareEngineering
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SoftwareEngineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs08-software-engineering/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs08-software-engineering/01-cookc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01-CookC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Math
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../math/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handbook
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Handbook
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/markdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Markdown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/powershell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Powershell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/git/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/wsl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WSL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/uv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UV
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#vectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vectors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vectors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vector-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vector Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basis-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basis Change
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matrices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linear-regression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linear Regression
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Linear Regression">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vector-multiplication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vector multiplication
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matrix-multiplication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrix Multiplication
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-normal-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Normal Equation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Normal Equation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matrix-transposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrix Transposition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matrix-inversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrix Inversion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solving-the-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solving The Equation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#broadcasting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Broadcasting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#derivatives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Derivatives
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wrap-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wrap-up
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#terminology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Terminology
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="math-fundamentals">Math fundamentals</h1>
+<p>To fully understand deep learning, you need to know some linear algebra and calculus.  We'll cover the basics in this lesson, including how to use NumPy to apply the math using Python.  This will give you a foundation for the rest of this course.</p>
+<p>Math terminology can be intimidating, but don't worry - everything will be explained using code, diagrams, and plain language.</p>
+<h2 id="vectors">Vectors</h2>
+<p id="vector">At a very basic level, linear algebra is about manipulating vectors. This manipulation happens by combining and scaling vectors. A <mark><strong><em>vector</em></strong></mark> is a one-dimensional array of numbers.  Here's an example of a vector:</p>
+<div class="arithmatex">\[v = [1,1]\]</div>
+<p>We can create this vector using NumPy, a Python library for working with arrays.  We'll use NumPy to create and manipulate vectors and matrices.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># Create a vector as a numpy array</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>[1 1]
+</code></pre></div>
+<p>As you can see, our vector has two elements, <code>1</code> and <code>1</code>.  We call this one-dimensional since it only has elements in one direction.  Here's an example of a two-dimensional array, also called a <mark><strong><em><code>matrix</code></em></strong></mark>.  A matrix is a table of data with rows and columns. We can think of a vector as a single row or a single column from a matrix.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Create a matrix as a numpy array</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>[[1 1]
+ [1 0]]
+</code></pre></div>
+<p>We'll discuss matrices more later, but for now, let's keep talking about vectors.  We can graph our vector to understand it better.  By convention, we always draw vectors starting at the origin (0,0).  Here's a diagram of our vector <code>v</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># set x-axis limits</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># set y-axis limits</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># Plot the arrow</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">head_width</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">head_length</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>  <span class="c1"># draw arrow</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>&lt;matplotlib.patches.FancyArrow at 0x1066cfa60&gt;
+</code></pre></div>
+<p><img alt="png" src="../images/linalg/linalg_6_1.png" /></p>
+<p>As you can see, we draw a line from the coordinate <code>0,0</code> to the coordinate <code>1,1</code>.  The vector specifies the end of the line.  The first element in the vector is the x-coordinate of the end of the line, and the second element is the y-coordinate.  We draw the vector with an arrow to indicate the direction of the vector.  In this case, the vector is pointing up and to the right.</p>
+<p id="norm">The length of the vector, also called <mark><strong><em>the norm</em></strong></mark>, is the distance from the origin to the end of the line.  We can calculate the norm of a vector using this formula:</p>
+<div class="arithmatex">\[||x||_{2} = \sqrt{x_{1}^{2} + x_{2}^{2} + \cdots + x_{n}^{2}}\]</div>
+<p id="L2_Norm">This is called the <mark><strong><em>L2 norm</em></strong></mark>, and is the most common norm in deep learning.  We're essentially taking the distance from the origin to the end of the vector.  We can calculate the L2 norm of our vector using NumPy:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">v</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>1.4142135623730951
+</code></pre></div>
+<p>We would draw a vector with 3 elements in 3-dimensional space.  Here's an example of a 3-dimensional vector:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Create a vector as a numpy array</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>[0 1 1]
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="c1"># Plot vector</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">length</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>&lt;mpl_toolkits.mplot3d.art3d.Line3DCollection at 0x11e435ba0&gt;
+</code></pre></div>
+<p><img alt="png" src="../images/linalg/linalg_11_1.png" /></p>
+<p id="vector_space">The number of elements in a vector determines the number of dimensions of the <mark><strong><em>vector space</em></strong></mark> that the vector exists in.  A vector with 1 element exists in a 1-dimensional space, a vector with 2 elements exists in a 2-dimensional space, and a vector with 3 elements exists in a 3-dimensional space.  In deep learning, you'll often work with vectors that have thousands of elements - more than we can visualize.</p>
+<p>The dimensionality of a vector space is different from the dimensionality of an array.  A vector is a one-dimensional array, but it can exist in a multi-dimensional vector space.</p>
+<p>You may have noticed that we indexed <code>v</code> using the numbers <code>0</code>, <code>1</code>, and <code>2</code> when we drew our plot.  In NumPy, we index a vector with a single number (since it is a one-dimensional array).  The index corresponds to the position of the element we want.</p>
+<h3 id="vector-operations">Vector Operations</h3>
+<p>We can scale vectors by scalars (single numbers).  For example, we can multiply our 2-dimensional vector <code>1,1</code> by <code>.5</code> to get <code>.5, .5</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="mf">.5</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>[0.5 0.5]
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># set x-axis limits</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># set y-axis limits</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># Plot the arrow</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">head_width</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">head_length</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>  <span class="c1"># draw arrow</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>&lt;matplotlib.patches.FancyArrow at 0x11e4a63e0&gt;
+</code></pre></div>
+<p><img alt="png" src="../images/linalg/linalg_15_1.png" /></p>
+<p>You can see that the vector now ends at <code>.5, .5</code>.  We can also add vectors together.  For example, we can add <code>1,1</code> and <code>1,0</code> to get <code>2,1</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>[2 1]
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># set x-axis limits</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># set y-axis limits</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># Plot the arrow</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">head_width</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">head_length</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>  <span class="c1"># draw arrow</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>&lt;matplotlib.patches.FancyArrow at 0x11e4a4310&gt;
+</code></pre></div>
+<p><img alt="png" src="../images/linalg/linalg_18_1.png" /></p>
+<p>This vector now ends at <code>2,1</code>.</p>
+<p>We can use the basis vectors <code>0,1</code> and <code>1,0</code> along with our operations (multiply by a scalar and add vectors) to create any vector in the 2-d Euclidean space that we normally use in graphs.</p>
+<p>Here's a plot of the basis vectors:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">v1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">v2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># set x-axis limits</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># set y-axis limits</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1"># Plot the arrows with plt.quiver</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">v1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">v2</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">v1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">v2</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>&lt;matplotlib.quiver.Quiver at 0x11e5a3640&gt;
+</code></pre></div>
+<p><img alt="png" src="../images/linalg/linalg_20_1.png" /></p>
+<p>If we wanted to "reach" the point <code>.3,1</code>, we would do the following operations:</p>
+<ol>
+<li>Multiply <code>1,0</code> by <code>.3</code> to get <code>.3,0</code></li>
+<li>Add <code>.3,0</code> to <code>0,1</code> to get <code>.3,1</code></li>
+</ol>
+<p id="span">We call the set of vectors that can be "reached" from a given set of vectors <mark><strong>the <em>span</em> of the vectors</strong></mark>. In this case, the span of <code>0,1</code> and <code>1,0</code> is the entire 2-dimensional Euclidean space.</p>
+<p id="orthogonal">One additional property that is important is that <code>0,1</code> and <code>1,0</code> are <mark><strong><em>orthogonal</em></strong></mark> to each other.  This means that they don't have any overlap in the directions that they point.  We can check this using NumPy:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Find the dot product of v1 and v2</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>0
+</code></pre></div>
+<p>The <strong><em>dot product</em></strong> tells you how much the direction of one vector overlaps with the direction of another vector.  Since the dot product is 0, we know that the vectors are orthogonal.</p>
+<h3 id="basis-change">Basis Change</h3>
+<p id="basic_vector">We express coordinates in terms of a <mark><strong>basis</strong></mark>.  We know that <mark><strong>the canonical basis vectors</strong></mark> for the 2-dimensional Euclidean space are <code>0,1</code> and <code>1,0</code>.  A coordinate specifies how much we multiply each canonical basis vector to get the vector we want.  For example, the coordinate <code>2,1</code> specifies that we multiply <code>1,0</code> by <code>2</code> and <code>0,1</code> by <code>1</code> to get <code>2,0</code> and <code>0,1</code>, which we then add together to get <code>2,1</code>.</p>
+<p id="linear_combination">We call this a <mark><strong><em>linear combination</em></strong></mark> of the basis vectors.</p>
+<p>In deep learning, we often change the basis that we use to express coordinates.  For example, we might want to express the coordinates <code>2,1</code> in terms of the basis vectors <code>1,1</code> and <code>1,-1</code>.  Showing you how to do a basis change is outside the scope of this lesson, but it's important to know that it's possible.</p>
+<h2 id="matrices">Matrices</h2>
+<p id="matrix">We can arrange vectors into matrices.  A <mark><strong><em>matrix</em></strong></mark> is a two-dimensional array of numbers.  By convention, we use lower-case letters to represent vectors, and upper-case letters to represent matrices. Here's an example of a 2x2 matrix with both of the vectors from above:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Create a matrix as a numpy array</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>[[0 1 2]
+ [1 0 2]
+ [2 1 0]]
+</code></pre></div>
+<p>A matrix has a certain number of rows and columns.  We can find the number of rows and columns in a matrix using the <code>shape</code> attribute:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">M</span><span class="o">.</span><span class="n">shape</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>(3, 3)
+</code></pre></div>
+<p>To index a matrix, we need 2 numbers instead of 1.  The first number is the row index, and the second number is the column index.  For example, we can get the element at the first row and first column of <code>M</code> like this:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">M</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>0
+</code></pre></div>
+<p>We can also get entire rows and columns at once, or slices of them:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Select the entire first row</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="c1"># Select the entire first column</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">M</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="c1"># Select elements in the upper left corner</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="nb">print</span><span class="p">(</span><span class="n">M</span><span class="p">[:</span><span class="mi">2</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>[0 1 2]
+[0 1 2]
+[[0 1]
+ [1 0]]
+</code></pre></div>
+<p>We can also use indexing for assignment:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># Set the first element to 10</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="n">M</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+</span></code></pre></div>
+<p>In deep learning, you will often work with arrays that are 3 or more dimensions.  To index these, you'll need to use as many index numbers as there are dimensions.</p>
+<h2 id="linear-regression">Linear Regression</h2>
+<p id="linear_regression">Now that we understand a bit about vectors and matrices, let's look at a concrete example.  We'll use linear regression to predict tomorrow's temperature.  We do this with the equation <span class="arithmatex">\(\hat{y}=wx + b\)</span> where <span class="arithmatex">\(\hat{y}\)</span> is the prediction, <span class="arithmatex">\(w\)</span> is the weight, <span class="arithmatex">\(x\)</span> is the input, and <span class="arithmatex">\(b\)</span> is the bias.</p>
+<p>We can first read in our data using pandas:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="c1"># Read in the data</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/clean_weather.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="c1"># Fill in any missing values in the data with past values</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">ffill</span><span class="p">()</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="c1"># Show the first 5 rows of the data</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>tmax</th>
+<th>tmin</th>
+<th>rain</th>
+<th>tmax_tomorrow</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1970-01-01</td>
+<td>60.0</td>
+<td>35.0</td>
+<td>0.0</td>
+<td>52.0</td>
+</tr>
+<tr>
+<td>1970-01-02</td>
+<td>52.0</td>
+<td>39.0</td>
+<td>0.0</td>
+<td>52.0</td>
+</tr>
+<tr>
+<td>1970-01-03</td>
+<td>52.0</td>
+<td>35.0</td>
+<td>0.0</td>
+<td>53.0</td>
+</tr>
+<tr>
+<td>1970-01-04</td>
+<td>53.0</td>
+<td>36.0</td>
+<td>0.0</td>
+<td>52.0</td>
+</tr>
+<tr>
+<td>1970-01-05</td>
+<td>52.0</td>
+<td>35.0</td>
+<td>0.0</td>
+<td>50.0</td>
+</tr>
+</tbody>
+</table>
+<p>In the table above, tomorrow's temperature is <code>tmax_tomorrow</code>, today's max temperature is <code>tmax</code>, today's min temperature is <code>tmin</code>, and how much it rained today is <code>rain</code>.  We're going to use <code>tmax</code>, <code>tmin</code>, and <code>rain</code> to predict <code>tmax_tomorrow</code>.</p>
+<p>Because we have more than one predictor, we can extend our equation to multiple predictors like this:</p>
+<div class="arithmatex">\[\hat{y} = w_{1}x_{1} + w_{2}x_{2} + w_{3}x_{3} + b\]</div>
+<p>So to get a prediction for tomorrow's temperature <span class="arithmatex">\(\hat{y}\)</span>, we can take a value called <span class="arithmatex">\(w_{1}\)</span>, and multiply it by <code>tmax</code>, then take <span class="arithmatex">\(w_{2}\)</span> and multiply it by <code>tmin</code>, then take <span class="arithmatex">\(w_{3}\)</span> and multiply it by <code>rain</code>.  We'd then add in <span class="arithmatex">\(b\)</span>.  Here's how that could look:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="mf">.7</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="mf">.3</span> <span class="o">*</span> <span class="mi">35</span> <span class="o">+</span> <span class="mf">.1</span> <span class="o">*</span> <span class="mi">0</span> <span class="o">+</span> <span class="mi">10</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>62.5
+</code></pre></div>
+<p>The above could be our prediction for the first row of the data, if our <span class="arithmatex">\(w\)</span> values are <code>.7</code>, <code>.3</code>, and <code>.1</code>, and our <span class="arithmatex">\(b\)</span> value is <code>10</code>.  We'll discuss how you can calculate the correct <span class="arithmatex">\(w\)</span> and <span class="arithmatex">\(b\)</span> values later, but for now, let's just use these values.</p>
+<p>Whenever we want to make a new prediction, we apply the same equation:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">w1</span> <span class="o">=</span> <span class="mf">.7</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="n">w2</span> <span class="o">=</span> <span class="mf">.3</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="n">w3</span> <span class="o">=</span> <span class="mf">.1</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="n">b</span> <span class="o">=</span> <span class="mi">10</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="n">w1</span> <span class="o">*</span> <span class="mi">52</span> <span class="o">+</span> <span class="n">w2</span> <span class="o">*</span> <span class="mi">39</span> <span class="o">+</span> <span class="n">w3</span> <span class="o">*</span> <span class="mi">0</span> <span class="o">+</span> <span class="n">b</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>58.099999999999994
+</code></pre></div>
+<h3 id="vector-multiplication">Vector multiplication</h3>
+<p id="dot_product">You may notice that we're actually multiplying two vectors, then adding the results together.  We can think of <span class="arithmatex">\(w\)</span> and <span class="arithmatex">\(x\)</span> as vectors that we're multiplying.  We multiply each element in the <span class="arithmatex">\(x\)</span> vector by the corresponding element in the <span class="arithmatex">\(w\)</span> vector.  We then add up all the results.  This is called a <mark><strong><em>dot product</em></strong></mark>.</p>
+<p>Here's an example of a dot product:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">.7</span><span class="p">,</span> <span class="mf">.3</span><span class="p">,</span> <span class="mf">.1</span><span class="p">])</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">52</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="c1"># Multiply w and x elementwise</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>48.1
+</code></pre></div>
+<p>Our result is <code>48.1</code>.  We then need to add the bias term <code>b</code> to get our prediction.  We can do this in NumPy like this:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>58.1
+</code></pre></div>
+<h3 id="matrix-multiplication">Matrix Multiplication</h3>
+<p>What if we want to make predictions for multiple rows at once?  It would be annoying to have to do the dot product for each row.  Luckily, we can use linear algebra to help us out.  We first need to convert our x data and our weights to a matrix.  We can then do a matrix multiplication to get our predictions.</p>
+<p><mark><strong><em>Matrix multiplication</em></strong></mark> is a linear algebra operation defined like this:</p>
+<div class="arithmatex">\[
+\begin{equation}
+    A \times B =
+    \begin{bmatrix}
+      a_{11} &amp; a_{12} \\
+      a_{21} &amp; a_{22}
+    \end{bmatrix}
+    \times
+    \begin{bmatrix}
+    b_{11} \\
+    b_{21}
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      a_{11}b_{11} + a_{12}b_{21} \\
+      a_{21}b_{11} + a_{22}b_{21}
+    \end{bmatrix}
+\end{equation}
+\]</div>
+<p>We can visualize how it works with this gif:</p>
+<p><img alt="Matrix mult" src="../images/linalg/matrix_mult.gif" /></p>
+<p>As you can see, we essentially take each row of matrix A and multiply it by each column of matrix B, then add everything together.  The number of columns in the first matrix has to equal the number of rows in the second matrix.</p>
+<p>This is very useful to us when we're multiplying weights by input numbers.  We can take our <span class="arithmatex">\(x\)</span> values, put them into a matrix, then multiply by the weights (also in a matrix):</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># Convert the first 3 rows of data into a numpy matrix from a pandas dataframe</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="c1"># the first column of the matrix is tmax, second is tmin, third is rain</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;tmax&quot;</span><span class="p">,</span> <span class="s2">&quot;tmin&quot;</span><span class="p">,</span> <span class="s2">&quot;rain&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="n">X</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[60., 35.,  0.],
+       [52., 39.,  0.],
+       [52., 35.,  0.]])
+</code></pre></div>
+<p>We can verify the shapes of our matrices to make sure they can be multiplied:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># Print the shape (number of rows and columns) in X</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>(3, 3)
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># Print the shape of w</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="n">w</span><span class="o">.</span><span class="n">shape</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>(3,)
+</code></pre></div>
+<p>As we can see, <code>x</code> is a matrix with <code>3</code> rows and <code>3</code> columns.  <code>w</code> is actually a vector with <code>3</code> columns.</p>
+<p><code>x</code> has length <code>3</code> in dimension <code>0</code> (rows) and length <code>1</code> columns.  <code>w</code> has length <code>3</code> in dimension <code>0</code>.</p>
+<p>We'll need to convert <code>w</code> from a vector into a matrix.  To do that, we can use the numpy <code>reshape</code> method.  We pass in our desired lengths in each dimension:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1"># Reshape w into a 3 by 1 matrix</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="c1"># The new dimensions must match the number of elements in w</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="n">W</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="n">W</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[0.7],
+       [0.3],
+       [0.1]])
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">W</span><span class="o">.</span><span class="n">shape</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>(3, 1)
+</code></pre></div>
+<p>We now have a <code>3x3</code> matrix, and a <code>3x1</code> matrix.  Since the number of columns in <code>x</code> matches the number of rows in <code>w</code>, we can multiply them:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="n">X</span> <span class="o">@</span> <span class="n">W</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[52.5],
+       [48.1],
+       [46.9]])
+</code></pre></div>
+<p>We can now add in our <span class="arithmatex">\(b\)</span> value, <code>10</code>.  <span class="arithmatex">\(b\)</span> is just a single number.  When we add it to <code>x @ w</code>, it will be broadcast across the matrix (added to each element):</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">])</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="n">X</span> <span class="o">@</span> <span class="n">W</span> <span class="o">+</span> <span class="n">b</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[62.5],
+       [58.1],
+       [56.9]])
+</code></pre></div>
+<p>This gives us the same results as when we manually multiplied our <code>w</code> and <code>x</code> values.  This is the power of matrix multiplication - it enables us to store all of our parameters (<span class="arithmatex">\(w\)</span> and <span class="arithmatex">\(b\)</span> values) into arrays and then use them to modify our inputs.  This is a lot faster than keeping track of each individual variable!</p>
+<h2 id="the-normal-equation">The Normal Equation</h2>
+<p>Earlier, we used values for <span class="arithmatex">\(w\)</span> and <span class="arithmatex">\(b\)</span> that were given to us.  We can also directly calculate the correct values for <span class="arithmatex">\(w\)</span> and <span class="arithmatex">\(b\)</span> using the <mark><strong><em>normal equation</em></strong></mark>.</p>
+<p>The normal equation is a mathematical equation that gives us the exact solution for <span class="arithmatex">\(w\)</span> and <span class="arithmatex">\(b\)</span> that minimizes the error of our model.  It's defined like this:</p>
+<div class="arithmatex">\[W = (X^T X)^{-1} X^T Y\]</div>
+<p>You can think of this equation as finding the coefficients <span class="arithmatex">\(W\)</span> that project the coordinates <span class="arithmatex">\(Y\)</span> onto the basis <span class="arithmatex">\(X\)</span>. Another way to say this is that we're multiplying the predictors <span class="arithmatex">\(X\)</span> by the weights <span class="arithmatex">\(W\)</span> and trying to get as close as possible to <span class="arithmatex">\(Y\)</span>.</p>
+<p>Yet another way to say this (it's a complicated concept!) is that we're changing the basis vectors of <span class="arithmatex">\(Y\)</span> to the vectors in <span class="arithmatex">\(X\)</span>.  The coefficients <span class="arithmatex">\(W\)</span> find a way to do this while minimizing error.</p>
+<p>We won't go into more detail on this here, but I recommend reading <a href="https://mml-book.github.io/">this book</a> for more detail.</p>
+<h3 id="matrix-transposition">Matrix Transposition</h3>
+<p>You may have noticed a term in the equation that looks like <span class="arithmatex">\(X^T\)</span>.  This is called <mark><strong><em>matrix transposition</em></strong></mark>.  It's a way to switch the rows and columns of a matrix.  For example, we can transpose our weights and <span class="arithmatex">\(X\)</span> values:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="c1"># Use .T to get the transpose of a matrix</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="n">W</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="n">b</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[62.5, 58.1, 56.9]])
+</code></pre></div>
+<p>Transposition takes the <code>3x1</code> weight matrix, and turns it into a <code>1x3</code> matrix.  It then transposes the <code>3x3</code> x matrix.  The dimensions of x will stay the same, but transposition will switch the rows and columns:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="n">W</span><span class="o">.</span><span class="n">T</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[0.7, 0.3, 0.1]])
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="n">X</span><span class="o">.</span><span class="n">T</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[60., 52., 52.],
+       [35., 39., 35.],
+       [ 0.,  0.,  0.]])
+</code></pre></div>
+<p><code>W.T @ X.T</code> will multiply each column in the weight matrix by each row in the x matrix.  This is the exact same thing that will happen when we do <code>X @ W</code>.  It's just that <code>W.T @ X.T</code> returns a <code>1x3</code> matrix, and <code>X @ W</code> returns a <code>3x1</code> matrix.  So we need to do another transposition to correct this:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="c1"># The numpy allclose function tells us if two matrices are approximately equal</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">((</span><span class="n">W</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span> <span class="o">@</span> <span class="n">W</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>True
+</code></pre></div>
+<p>Above, we use <code>np.allclose</code> to ensure that both multiplications return the same result.  When comparing the results of matrix multiplication we usually use <code>np.allclose</code> instead of <code>==</code> because the way computers represent floating point numbers can cause the same number to appear slightly differently.  You can see an explanation for <a href="https://floating-point-gui.de/">this here</a>.</p>
+<h3 id="matrix-inversion">Matrix Inversion</h3>
+<p>You may have also noticed this term in the normal equation - <span class="arithmatex">\((X^T X)^{-1}\)</span>. This is called <mark><strong><em>matrix inversion</em></strong></mark>.  The inverse of a matrix is similar to the inverse of a number.  For example, the inverse of <code>4</code> is <code>1/4</code>, and <code>4 * 1/4</code> equals <code>1</code>.  <span class="arithmatex">\(X \cdot X^{-1}\)</span> is equal to the identity matrix, <span class="arithmatex">\(I\)</span>.  The identity matrix is a matrix with 1s on the diagonal, and 0s everywhere else.  It's a way to represent the number 1 in matrix form.</p>
+<p>Here's the <code>3x3</code> identity matrix:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[1., 0., 0.],
+       [0., 1., 0.],
+       [0., 0., 1.]])
+</code></pre></div>
+<p>Now we can invert our <code>X</code> matrix:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="c1"># Use np.linalg.inv to get the inverse of a matrix</span>
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>---------------------------------------------------------------------------
+
+LinAlgError                               Traceback (most recent call last)
+
+Cell In[35], line 2
+      1 # Use np.linalg.inv to get the inverse of a matrix
+----&gt; 2 np.linalg.inv(X)
+
+
+File &lt;__array_function__ internals&gt;:200, in inv(*args, **kwargs)
+
+
+File ~/.virtualenvs/nnets/lib/python3.10/site-packages/numpy/linalg/linalg.py:538, in inv(a)
+    536 signature = &#39;D-&gt;D&#39; if isComplexType(t) else &#39;d-&gt;d&#39;
+    537 extobj = get_linalg_error_extobj(_raise_linalgerror_singular)
+--&gt; 538 ainv = _umath_linalg.inv(a, signature=signature, extobj=extobj)
+    539 return wrap(ainv.astype(result_t, copy=False))
+
+
+File ~/.virtualenvs/nnets/lib/python3.10/site-packages/numpy/linalg/linalg.py:89, in _raise_linalgerror_singular(err, flag)
+     88 def _raise_linalgerror_singular(err, flag):
+---&gt; 89     raise LinAlgError(&quot;Singular matrix&quot;)
+
+
+LinAlgError: Singular matrix
+</code></pre></div>
+<p>If any rows and columns of a matrix are linear combinations of other rows and columns, then the matrix is singular.  This means that the matrix cannot be inverted.  Here's an example:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="c1"># This matrix is singular</span>
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a><span class="c1"># This matrix is not singular</span>
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[1, 2],
+       [3, 6]])
+</code></pre></div>
+<p>The reason for this is when a matrix is singular, the length of the matrix is 0 in one dimension.  This means that the area of the matrix is 0.  The formula for the inverse uses <span class="arithmatex">\(1 / \text{area}\)</span> as a term, which is undefined.  This makes the inverse of a singular matrix also undefined.</p>
+<p>To correct for this, we can add a small "ridge" to the diagonal of the matrix by scaling the identity matrix.  This forces each row and column to be unique (not a linear combination of others).</p>
+<p :=":" id="ridge" regression="regression">This is known as <mark><strong><em>ridge regression</em></strong></mark>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="c1"># Add a ridge to the diagonal of the matrix</span>
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">X</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[ 0.07378611, -0.06604895,  0.        ],
+       [-0.09812987,  0.11341549,  0.        ],
+       [-4.02332472, -5.34996509, 10.        ]])
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="c1"># This returns the identity matrix</span>
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="n">ridge</span> <span class="o">=</span> <span class="n">X</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="n">ridge</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">ridge</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[ 1.00000000e+00,  5.55111512e-17,  0.00000000e+00],
+       [ 1.06185910e-16,  1.00000000e+00,  0.00000000e+00],
+       [ 1.66403976e-16, -2.96151798e-16,  1.00000000e+00]])
+</code></pre></div>
+<h3 id="solving-the-equation">Solving The Equation</h3>
+<p>We can now use the normal equation to solve for <span class="arithmatex">\(W\)</span>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="c1"># Load in our Y values from the data</span>
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="n">Y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;tmax_tomorrow&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="c1"># Use the normal equation to solve for W</span>
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a><span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">X</span> <span class="o">+</span> <span class="mf">.1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">Y</span>
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a><span class="n">W</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[0.38283829],
+       [0.86270249],
+       [0.        ]])
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="c1"># Multiply X by W to get our predictions</span>
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="n">X</span> <span class="o">@</span> <span class="n">W</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[53.16488447],
+       [53.55298814],
+       [50.10217817]])
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="n">Y</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[52.],
+       [52.],
+       [53.]])
+</code></pre></div>
+<p>As you can see, our predictions are pretty close to the actual values.  We left out <span class="arithmatex">\(b\)</span> to make the calculation simpler, but you could also use this method to calculate it (but it's out of scope of this lesson!).</p>
+<h2 id="broadcasting">Broadcasting</h2>
+<p>A couple of sections back, we used broadcasting to add the bias <code>b</code> to the result of <code>X @ W</code>.  Broadcasting enables arrays with compatible shapes to be added or multiplied.</p>
+<p>If shapes are compatible, it means that:</p>
+<ul>
+<li>The smaller array has all of its dimensions exactly matching the length dimensions of the larger array</li>
+<li>Or the smaller array is length 1 in the non-matching dimensions.</li>
+</ul>
+<p>Here are some examples:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="c1"># np.ones enables us to create an array filled with ones of a certain shape</span>
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>
+</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a><span class="c1"># This works</span>
+</span><span id="__span-41-6"><a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a><span class="n">A</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[2.],
+       [2.],
+       [2.],
+       [2.],
+       [2.]])
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="c1"># This works</span>
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="n">A</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">))</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[2.],
+       [2.],
+       [2.],
+       [2.],
+       [2.]])
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="c1"># This does not work</span>
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="n">A</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>---------------------------------------------------------------------------
+
+ValueError                                Traceback (most recent call last)
+
+Cell In[44], line 2
+      1 # This does not work
+----&gt; 2 A + np.ones((2,1))
+
+
+ValueError: operands could not be broadcast together with shapes (5,1) (2,1)
+</code></pre></div>
+<p>We can also use broadcasting to multiply individual elements:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="c1"># np.full initializes an array filled with a given value</span>
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="c1"># Using the * means that each element in array b is multiplied by the elements in array b</span>
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="n">A</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[2.],
+       [2.],
+       [2.],
+       [2.],
+       [2.]])
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="c1"># np.random.rand generates random numbers between 0 and 1 of a given shape</span>
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a><span class="n">A</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>array([[0.60888367],
+       [0.27445549],
+       [0.41672986],
+       [0.18109412],
+       [0.89991161]])
+</code></pre></div>
+<h2 id="derivatives">Derivatives</h2>
+<p>The last math concept we'll cover is derivatives, a key part of calculus.  We'll cover derivatives in a lot more depth later, so this will just be a high-level overview.</p>
+<p>Derivatives tell us the rate of change of a function.  For example, the derivative of <span class="arithmatex">\(x^2\)</span> is <span class="arithmatex">\(2x\)</span>.  Let's look at how this works, by first plotting <span class="arithmatex">\(f(x) = x^2\)</span>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a><span class="c1"># Create a list of numbers from -10 to 10, stepping by .1</span>
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a><span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">.1</span><span class="p">)</span>
+</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a><span class="c1"># Square all of our x values</span>
+</span><span id="__span-46-6"><a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a><span class="n">ys</span> <span class="o">=</span> <span class="n">xs</span> <span class="o">**</span> <span class="mi">2</span>
+</span><span id="__span-46-7"><a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a>
+</span><span id="__span-46-8"><a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a><span class="c1"># Plot the result</span>
+</span><span id="__span-46-9"><a id="__codelineno-46-9" name="__codelineno-46-9" href="#__codelineno-46-9"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>[&lt;matplotlib.lines.Line2D at 0x14cf0be80&gt;]
+</code></pre></div>
+<p><img alt="png" src="../images/linalg/linalg_93_1.png" /></p>
+<p>The function graph has a curved shape.  This is because the difference between y values is increasing as x gets further from <code>0</code>.   For example, if x is positive, <span class="arithmatex">\((x+2) ^ 2 - (x+1) ^ 2\)</span> is greater than <span class="arithmatex">\((x+1) ^ 2 - x ^ 2\)</span>.  If x is negative, <span class="arithmatex">\((x-2) ^ 2 - (x-1) ^ 2\)</span> is greater than <span class="arithmatex">\((x-1) ^ 2 - x ^ 2\)</span>.  We can also say that the slope of the function is increasing as we get further from <code>0</code>.</p>
+<p>As you can see below, the derivative is the slope between 2 points on the function curve:</p>
+<p><img alt="slope" src="../images/linalg/slope.svg" /></p>
+<p>We can calculate the slope by the equation <span class="arithmatex">\(\frac{y_2 - y_1}{x_2 - x_1}\)</span>, where <span class="arithmatex">\(x_2\)</span> and <span class="arithmatex">\(x_1\)</span> are the x values of 2 points, and <span class="arithmatex">\(y_2\)</span> and <span class="arithmatex">\(y_1\)</span> are the y values of the same points.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="c1"># Find 2 x points close to 5</span>
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a><span class="n">x1</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">-</span> <span class="mf">1e-8</span>
+</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a><span class="n">x2</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="mf">1e-8</span>
+</span><span id="__span-47-4"><a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>
+</span><span id="__span-47-5"><a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a><span class="c1"># Calculate the corresponding y values</span>
+</span><span id="__span-47-6"><a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a><span class="n">y1</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">**</span> <span class="mi">2</span>
+</span><span id="__span-47-7"><a id="__codelineno-47-7" name="__codelineno-47-7" href="#__codelineno-47-7"></a><span class="n">y2</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">**</span> <span class="mi">2</span>
+</span><span id="__span-47-8"><a id="__codelineno-47-8" name="__codelineno-47-8" href="#__codelineno-47-8"></a>
+</span><span id="__span-47-9"><a id="__codelineno-47-9" name="__codelineno-47-9" href="#__codelineno-47-9"></a><span class="c1"># Calculate the slope (or derivative)</span>
+</span><span id="__span-47-10"><a id="__codelineno-47-10" name="__codelineno-47-10" href="#__codelineno-47-10"></a><span class="c1"># This will equal 2 times the midpoint of the x values (5)</span>
+</span><span id="__span-47-11"><a id="__codelineno-47-11" name="__codelineno-47-11" href="#__codelineno-47-11"></a><span class="p">(</span><span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>10.0
+</code></pre></div>
+<p>Derivatives are at a single point, so we would say that <span class="arithmatex">\(f'(5) = 10\)</span>.  This means that the rate of change of <span class="arithmatex">\(x^2\)</span> at <span class="arithmatex">\(x=5\)</span> is <span class="arithmatex">\(10\)</span>.</p>
+<p>We can now plot the derivative, <span class="arithmatex">\(f'(x) = 2x\)</span>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="n">ys</span> <span class="o">=</span> <span class="n">xs</span> <span class="o">*</span> <span class="mi">2</span>
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>
+</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a><span class="c1"># Plot the derivative</span>
+</span><span id="__span-48-4"><a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>[&lt;matplotlib.lines.Line2D at 0x14d1896f0&gt;]
+</code></pre></div>
+<p><img alt="png" src="../images/linalg/linalg_97_1.png" /></p>
+<p>As you can see, the derivative is an upward-sloping line.  This tells us that the rate of change of the function increases as x increases.</p>
+<p>Derivatives are important for training neural networks.  They allow us to determine how much to increase or decrease our network parameters.  We'll learn more about this in the next lesson.</p>
+<p>You usually don't need to know how to find the equation of the derivative yourself, since you'll be given it beforehand.  In a later lesson, we'll discuss how to find the derivative if you need to.</p>
+<h2 id="wrap-up">Wrap-up</h2>
+<p>In the next <a href="http://127.0.0.1:8000/deeplearning/02-linreg/">lesson</a>, we'll build on what we learned here to automatically calculate the correct <span class="arithmatex">\(w\)</span> and <span class="arithmatex">\(b\)</span> values for linear regression using gradient descent.  Gradient descent is a foundational concept of neural networks.  I hope to see you there!</p>
+<h2 id="terminology">Terminology</h2>
+<ul>
+<li><a href="#vector">Vector</a></li>
+<li><a href="#norm">Norm</a></li>
+<li><a href="#L2_Norm">L2 Norm</a></li>
+<li><a href="#vector_space">Vector space</a></li>
+<li><a href="#span">Span</a></li>
+<li><a href="#orthogonal">Orthogonal</a></li>
+<li><a href="#basic_vector">Basic Vector</a></li>
+<li><a href="#linear_combination">Linear Combination</a></li>
+<li><a href="#matrix">Matrix</a></li>
+<li><a href="#linear_regression">Linear Regression</a></li>
+<li><a href="#dot_product">Dot Product</a></li>
+<li><a href="#matrix-multiplication">Matrix Multiplication</a></li>
+<li><a href="#the-normal-equation">Normal Equation</a></li>
+<li><a href="#matrix-transposition">Matrix Transposition</a></li>
+<li><a href="#matrix-inversion">Matrix Inversion</a></li>
+<li><a href="#broadcasting">Broadcasting</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 <a href="https://sheldoncoder1337.github.io">jialecai</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/sheldoncoder1337" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["header.autohide", "content.code.copy", "content.code.select", "content.code.annotate", "content.footnote.tooltips", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

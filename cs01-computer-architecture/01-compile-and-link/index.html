@@ -1,0 +1,2592 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Personal Blog by Sheldon">
+      
+      
+        <meta name="author" content="jiale cai">
+      
+      
+        <link rel="canonical" href="https://sheldoncoder1337.github.io/cs01-computer-architecture/01-compile-and-link/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>01 compile and link - Harmony</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M22%2012a10%2010%200%200%201-10%2010A10%2010%200%200%201%202%2012%2010%2010%200%200%201%2012%202a10%2010%200%200%201%2010%2010M6%2013h8l-3.5%203.5%201.42%201.42L17.84%2012l-5.92-5.92L10.5%207.5%2014%2011H6z%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gcc" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Harmony" class="md-header__button md-logo" aria-label="Harmony" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Harmony
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              01 compile and link
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sheldoncoder1337.github.io/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Harmony" class="md-nav__button md-logo" aria-label="Harmony" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Harmony
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sheldoncoder1337.github.io/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ComputerArchitecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ComputerArchitecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DataStructure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DataStructure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs02-data-structure/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs02-data-structure/20-top100/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    top100
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OperatingSystem
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    OperatingSystem
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs03-operating-system/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ComputerNetwork
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ComputerNetwork
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs04-computer-network/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Database
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs05-database-system/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MachineLearning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MachineLearning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs06-machine-learning/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deeplearning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deeplearning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs07-deep-learning/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs07-deep-learning/15-nano-vllm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15-nanovllm.md
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs07-deep-learning/16-asr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16-asr.md
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SoftwareEngineering
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SoftwareEngineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs08-software-engineering/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs08-software-engineering/01-cookc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01-CookC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Math
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../math/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handbook
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Handbook
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/markdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Markdown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/powershell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Powershell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/git/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/wsl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WSL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/uv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UV
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#gcc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCC简介
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#elf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ELF文件格式
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ELF文件格式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#binutils-elf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binutils - ELF文件处理工具
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#make-makefile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Make &amp; Makefile
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Make &amp; Makefile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第一个案例
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        案例
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="案例">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        练习 1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        练习 2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        练习 3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        练习 4
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        练习 5
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>01 compile and link</h1>
+
+<p>在正式步入RISCV的学习之前，与善其事必先利其器。</p>
+<h2 id="gcc">GCC简介</h2>
+<ul>
+<li><a href="https://gcc.gnu.org/">GCC (GNU Compiler Collection)</a> 由 GNU开发的，遵循 GPL 许可证发行的编译器套件。</li>
+<li>支持 C、C++、Objective-C、Fortran、Ada 和 Go 语言等多种语言前端，已被移植到多种计算机体系架构上，如 x86、ARM、RISC-V 等。</li>
+<li>GCC 的初衷是为 GNU 操作系统专门编写一款编译器，现已被大多数 “Unix-like”操作系统（如 Linux、BSD、MacOS 等）采纳为标准的编译器。</li>
+</ul>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">GCC命令格式</label><label for="__tabbed_1_2">GCC涉及的文件类型</label><label for="__tabbed_1_3">GDB调试步骤</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><strong>gcc [option] [filenames]</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-E</td>
+<td>Preprocess only; do not compile, assemble or link.</td>
+</tr>
+<tr>
+<td>-S</td>
+<td>Compile only; do not assemble or link.</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>Compile and assemble, but do not link.</td>
+</tr>
+<tr>
+<td>-o file</td>
+<td>把输出生成到由file指定文件名的文件中</td>
+</tr>
+<tr>
+<td>-g</td>
+<td>把输出的文件中加入支持调试的信息</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>显示输出详细的命令执行过程信息</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tabbed-block">
+<table>
+<thead>
+<tr>
+<th>文件类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.c</td>
+<td>C 源文件</td>
+</tr>
+<tr>
+<td>.i</td>
+<td>预处理后的 C 源文件</td>
+</tr>
+<tr>
+<td>.s/.S</td>
+<td>汇编代码</td>
+</tr>
+<tr>
+<td>.h</td>
+<td>头文件</td>
+</tr>
+<tr>
+<td>.o</td>
+<td>目标文件</td>
+</tr>
+<tr>
+<td>.a</td>
+<td>静态库文件</td>
+</tr>
+<tr>
+<td>.so</td>
+<td>动态库文件</td>
+</tr>
+<tr>
+<td>.out</td>
+<td>可执行文件</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tabbed-block">
+<pre class="mermaid"><code>graph TB
+SourceCode[foo.c];
+IntermediateCode[foo.i];
+AssemblyCode[foo.s];
+ObjectCode[foo.o]
+ExecutableFile[a.out];
+
+Preprocessor[Preprocessor];
+Compiler[Compiler];
+Assembler[Assembler];
+Linker[Linker];
+
+SourceCode --&gt;|gcc -E foo.c -o foo.i| IntermediateCode;
+IntermediateCode --&gt;|gcc -S foo.i -o foo.s| AssemblyCode;
+AssemblyCode --&gt;|gcc -c foo.s -o foo.o| ObjectCode;
+ObjectCode --&gt;|gcc foo.o -o a.out| ExecutableFile;
+
+SourceCode --&gt;|gcc -E| Preprocessor;
+Preprocessor --&gt; IntermediateCode;
+IntermediateCode --&gt;|gcc -S| Compiler;
+Compiler --&gt; AssemblyCode;
+AssemblyCode --&gt;|gcc -c| Assembler;
+Assembler --&gt; ObjectCode;
+ObjectCode --&gt; Linker;
+Linker --&gt; ExecutableFile;</code></pre>
+</div>
+</div>
+</div>
+<h2 id="elf">ELF文件格式</h2>
+<ul>
+<li>ELF（Executable and Linkable Format，可执行和链接格式）是一种 Unix-like系统上的二进制文件格式，由 GNU 开源软件基金会开发，用于描述可执行文件、共享库、动态链接库、object 文件等。</li>
+<li>ELF标准中定义的采用ELF格式的文件分为4类：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>ELF文件类型</th>
+<th>说明</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Executable File</td>
+<td>可执行文件，可以运行在操作系统上</td>
+<td>Linux上的.out文件</td>
+</tr>
+<tr>
+<td>Relocatable File</td>
+<td>可重定位文件，内容包含了代码和数据，可以被链接成可执行文件或者共享目标文件</td>
+<td>.o 文件</td>
+</tr>
+<tr>
+<td>Shared Object File</td>
+<td>共享目标文件，内容包含了代码和数据，可以链接到动态链接库或者可执行文件</td>
+<td>.so文件</td>
+</tr>
+<tr>
+<td>Core Dump File</td>
+<td>核心转储文件，进程意外终止时，用于存储程序崩溃时的状态信息，以供调试分析</td>
+<td>core文件</td>
+</tr>
+</tbody>
+</table>
+<h3 id="binutils-elf">Binutils - ELF文件处理工具</h3>
+<p><a href="https://www.gnu.org/software/binutils/">Binutils</a></p>
+<ul>
+<li>ar：归档文件，将多个文件打包成一个大文件。</li>
+<li>as：被 gcc 调用，输入汇编文件，输出目标文件供链接器 ld 连接。</li>
+<li>ld：GNU 链接器。被 gcc 调用，它把目标文件和各种库文件结合在一起，重定位数据，并链接符号引用。</li>
+<li>objcopy：执行文件格式转换。</li>
+<li>objdump：显示 ELF 文件的信息。</li>
+<li>readelf：显示更多 ELF 格式文件的信息（包括 DWARF 调试信息）。</li>
+<li>......</li>
+</ul>
+<h2 id="make-makefile">Make &amp; Makefile</h2>
+<p>make 是一个 构建工具；Makefile 是它读的 “菜谱”，告诉它“哪些文件要先编译、怎么编译、最后链接成什么”。为了方便演示，后续的每一个案例代码将按照如下Makefile结构构建:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:5"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><input id="__tabbed_2_4" name="__tabbed_2" type="radio" /><input id="__tabbed_2_5" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Makefile Folder Template</label><label for="__tabbed_2_2">A Make Rule</label><label for="__tabbed_2_3">asm/demo/Makefile</label><label for="__tabbed_2_4">asm/rule.mk</label><label for="__tabbed_2_5">asm/common.mk</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>asm/
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    demo1/
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        Makefile
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        test.s
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    demo2/
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        Makefile
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        test.s
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    demo3/
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        ...
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>rule.mk
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>common.mk
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-makefile highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nf">target</span><span class="o">:</span><span class="w"> </span><span class="n">dependencies</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nb">command</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nf">target</span><span class="o">:</span><span class="w"> </span><span class="n">prerequisites</span>   <span class="c"># 目标文件 : 依赖文件</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>recipe<span class="w">             </span><span class="c1"># 由 Tab 缩进的 shell 命令</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="nf">main</span><span class="o">:</span><span class="w"> </span><span class="n">main</span>.<span class="n">o</span> <span class="n">utils</span>.<span class="n">o</span> <span class="c"># 要得到 main，先要有 main.o 和 utils.o</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span>gcc<span class="w"> </span>main.o<span class="w"> </span>utils.o<span class="w"> </span>-o<span class="w"> </span>main
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="nf">main.o</span><span class="o">:</span><span class="w"> </span><span class="n">main</span>.<span class="n">c</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span>gcc<span class="w"> </span>-c<span class="w"> </span>main.c
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="nf">utils.o</span><span class="o">:</span><span class="w"> </span><span class="n">utils</span>.<span class="n">c</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">  </span>gcc<span class="w"> </span>-c<span class="w"> </span>utils.c
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-makefile highlight"><span class="filename">asm/demo/Makefile</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nv">EXEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">test</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nv">SRC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="si">${</span><span class="nv">EXEC</span><span class="si">}</span>.s
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nv">GDBINIT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>../gdbinit
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="cp">include ../rule.mk</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-makefile highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="cp">include ../common.mk</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nv">.DEFAULT_GOAL</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>all
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nf">all</span><span class="o">:</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span>@<span class="si">${</span><span class="nv">CC</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">CFLAGS</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">SRC</span><span class="si">}</span><span class="w"> </span>-Ttext<span class="o">=</span>0x80000000<span class="w"> </span>-o<span class="w"> </span><span class="si">${</span><span class="nv">EXEC</span><span class="si">}</span>.elf
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span>@<span class="si">${</span><span class="nv">OBJCOPY</span><span class="si">}</span><span class="w"> </span>-O<span class="w"> </span>binary<span class="w"> </span><span class="si">${</span><span class="nv">EXEC</span><span class="si">}</span>.elf<span class="w"> </span><span class="si">${</span><span class="nv">EXEC</span><span class="si">}</span>.bin
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="nf">.PHONY </span><span class="o">:</span><span class="w"> </span><span class="n">run</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="nf">run</span><span class="o">:</span><span class="w"> </span><span class="n">all</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span>@echo<span class="w"> </span><span class="s2">&quot;Press Ctrl-A and then X to exit QEMU&quot;</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">    </span>@echo<span class="w"> </span><span class="s2">&quot;------------------------------------&quot;</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span>@echo<span class="w"> </span><span class="s2">&quot;No output, please run &#39;make debug&#39; to see details&quot;</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">    </span>@<span class="si">${</span><span class="nv">QEMU</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">QFLAGS</span><span class="si">}</span><span class="w"> </span>-kernel<span class="w"> </span>./<span class="si">${</span><span class="nv">EXEC</span><span class="si">}</span>.elf
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="nf">.PHONY </span><span class="o">:</span><span class="w"> </span><span class="n">debug</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="nf">debug</span><span class="o">:</span><span class="w"> </span><span class="n">all</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">    </span>@echo<span class="w"> </span><span class="s2">&quot;Press Ctrl-C and then input &#39;quit&#39; to exit GDB and QEMU&quot;</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">    </span>@echo<span class="w"> </span><span class="s2">&quot;-------------------------------------------------------&quot;</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">    </span>@<span class="si">${</span><span class="nv">QEMU</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">QFLAGS</span><span class="si">}</span><span class="w"> </span>-kernel<span class="w"> </span><span class="si">${</span><span class="nv">EXEC</span><span class="si">}</span>.elf<span class="w"> </span>-s<span class="w"> </span>-S<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">    </span>@<span class="si">${</span><span class="nv">GDB</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">EXEC</span><span class="si">}</span>.elf<span class="w"> </span>-q<span class="w"> </span>-x<span class="w"> </span><span class="si">${</span><span class="nv">GDBINIT</span><span class="si">}</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="err">...</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-makefile highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">CROSS_COMPILE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>riscv64-unknown-elf-
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nv">CFLAGS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>-nostdlib<span class="w"> </span>-fno-builtin<span class="w"> </span>-march<span class="o">=</span>rv32g<span class="w"> </span>-mabi<span class="o">=</span>ilp32<span class="w"> </span>-g<span class="w"> </span>-Wall
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c"># QEMU系统模式模拟</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nv">QEMU</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>qemu-system-riscv32
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c"># 非图形界面 单核 virt设备类型</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="nv">QFLAGS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>-nographic<span class="w"> </span>-smp<span class="w"> </span><span class="m">1</span><span class="w"> </span>-machine<span class="w"> </span>virt<span class="w"> </span>-bios<span class="w"> </span>none<span class="w">  </span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="c"># 调试器</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="nv">GDB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>gdb-multiarch
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="nv">CC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="si">${</span><span class="nv">CROSS_COMPILE</span><span class="si">}</span>gcc
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="nv">OBJCOPY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="si">${</span><span class="nv">CROSS_COMPILE</span><span class="si">}</span>objcopy
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="nv">OBJDUMP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="si">${</span><span class="nv">CROSS_COMPILE</span><span class="si">}</span>objdump
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<div class="language-makefile highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span>
+<span class="normal"><a href="#__codelineno-5-18">18</a></span>
+<span class="normal"><a href="#__codelineno-5-19">19</a></span>
+<span class="normal"><a href="#__codelineno-5-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="cp">include ../common.mk</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="nv">.DEFAULT_GOAL</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>all
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="nf">all</span><span class="o">:</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">    </span>@<span class="si">${</span><span class="nv">CC</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">CFLAGS</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">SRC</span><span class="si">}</span><span class="w"> </span>-Ttext<span class="o">=</span>0x80000000<span class="w"> </span>-o<span class="w"> </span><span class="si">${</span><span class="nv">EXEC</span><span class="si">}</span>.elf
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">    </span>@<span class="si">${</span><span class="nv">OBJCOPY</span><span class="si">}</span><span class="w"> </span>-O<span class="w"> </span>binary<span class="w"> </span><span class="si">${</span><span class="nv">EXEC</span><span class="si">}</span>.elf<span class="w"> </span><span class="si">${</span><span class="nv">EXEC</span><span class="si">}</span>.bin
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="nf">.PHONY </span><span class="o">:</span><span class="w"> </span><span class="n">run</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="nf">run</span><span class="o">:</span><span class="w"> </span><span class="n">all</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="w">    </span>@echo<span class="w"> </span><span class="s2">&quot;Press Ctrl-A and then X to exit QEMU&quot;</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">    </span>@echo<span class="w"> </span><span class="s2">&quot;------------------------------------&quot;</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="w">    </span>@echo<span class="w"> </span><span class="s2">&quot;No output, please run &#39;make debug&#39; to see details&quot;</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="w">    </span>@<span class="si">${</span><span class="nv">QEMU</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">QFLAGS</span><span class="si">}</span><span class="w"> </span>-kernel<span class="w"> </span>./<span class="si">${</span><span class="nv">EXEC</span><span class="si">}</span>.elf
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13"></a>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="nf">.PHONY </span><span class="o">:</span><span class="w"> </span><span class="n">debug</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="nf">debug</span><span class="o">:</span><span class="w"> </span><span class="n">all</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16"></a><span class="w">    </span>@echo<span class="w"> </span><span class="s2">&quot;Press Ctrl-C and then input &#39;quit&#39; to exit GDB and QEMU&quot;</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17"></a><span class="w">    </span>@echo<span class="w"> </span><span class="s2">&quot;-------------------------------------------------------&quot;</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18"></a><span class="hll"><span class="w">    </span>@<span class="si">${</span><span class="nv">QEMU</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">QFLAGS</span><span class="si">}</span><span class="w"> </span>-kernel<span class="w"> </span><span class="si">${</span><span class="nv">EXEC</span><span class="si">}</span>.elf<span class="w"> </span>-s<span class="w"> </span>-S<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>
+</span></span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19"></a><span class="hll"><span class="w">    </span>@<span class="si">${</span><span class="nv">GDB</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">EXEC</span><span class="si">}</span>.elf<span class="w"> </span>-q<span class="w"> </span>-x<span class="w"> </span><span class="si">${</span><span class="nv">GDBINIT</span><span class="si">}</span>
+</span></span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20"></a><span class="err">...</span>
+</span></code></pre></div></td></tr></table></div>
+<div class="admonition qemu模拟器启动参数">
+<p class="admonition-title">Qemu模拟器启动参数</p>
+<ul>
+<li><code>-s</code>: 启动gdbserver调试服务</li>
+<li><code>-S-</code>: suspend 断点等待</li>
+<li><code>&amp;</code>: 后台运行</li>
+</ul>
+</div>
+<div class="admonition gdb调试器启动参数 annotate">
+<p class="admonition-title">Gdb调试器启动参数</p>
+<ul>
+<li><code>-q</code>: quiet</li>
+<li><code>-S-</code>: suspend 断点等待</li>
+<li><code>x</code>: 执行 GDBINIT (1)</li>
+</ul>
+</div>
+<ol>
+<li>
+<p>每次你在某个目录（或 home 目录）启动 gdb 时，GDB 会自动读取该目录下的 .gdbinit 文件，并按顺序执行里面的命令，相当于“给 GDB 预设好的工作环境”。</p>
+<div class="language-text highlight"><span class="filename">.gdbinit</span><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>display/z $x5 # (1)
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>display/z $x6
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>display/z $x7
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>set disassemble-next-line on # (2)
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>b _start # (3) 
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>target remote : 1234 # (4)
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>c # (5)
+</span></code></pre></div>
+<ol>
+<li>display/z 是 GDB 命令，每次程序停下来时自动打印后面的表达式</li>
+<li>让 GDB 自动反汇编接下来要执行的指令并显示出来，省去手动 disassemble 的麻烦</li>
+<li>在符号 _start 处下断点, _start 通常是裸机程序、bootloader 或 OS 的入口标签</li>
+<li>连接到本地 1234 端口的 GDB server</li>
+<li>连接成功后立即 继续运行（continue）</li>
+</ol>
+</li>
+</ol>
+<h3 id="_1">第一个案例</h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:5"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><input id="__tabbed_3_4" name="__tabbed_3" type="radio" /><input id="__tabbed_3_5" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1"><strong>构建和使用说明</strong></label><label for="__tabbed_3_2">demo1.s</label><label for="__tabbed_3_3">make debug</label><label for="__tabbed_3_4">make hex</label><label for="__tabbed_3_5">make code</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<ul>
+<li><code>make</code>：编译构建</li>
+<li><code>make run</code>：启动 qemu 并运行</li>
+<li><code>make debug</code>：启动调试</li>
+<li><code>make code</code>：反汇编查看二进制代码</li>
+<li><code>make clean</code>：清理</li>
+</ul>
+</div>
+<div class="tabbed-block">
+<div class="language-s highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Add</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># Format:</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># ADD RD, RS1, RS2</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># Description:</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># The contents of RS1 is added to the contents of RS2 and the result is</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="c1"># placed in RD.</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="n">.text</span><span class="w">     </span><span class="c1"># Define beginning of text section</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">  </span><span class="n">.global</span><span class="w"> </span>_<span class="n">start</span><span class="w">    </span><span class="c1"># Define entry _start</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>_<span class="n">start</span><span class="o">:</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">  </span><span class="n">li</span><span class="w"> </span><span class="n">x6</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="w">    </span><span class="c1"># x6 = 1</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">  </span><span class="n">li</span><span class="w"> </span><span class="n">x7</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="w">    </span><span class="c1"># x7 = 2</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">  </span><span class="n">add</span><span class="w"> </span><span class="n">x5</span><span class="p">,</span><span class="w"> </span><span class="n">x6</span><span class="p">,</span><span class="w"> </span><span class="n">x7</span><span class="w">    </span><span class="c1"># x5 = x6 + x7</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="n">stop</span><span class="o">:</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">  </span><span class="n">j</span><span class="w"> </span><span class="n">stop</span><span class="w">      </span><span class="c1"># Infinite loop to stop execution</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">  </span><span class="n">.end</span><span class="w">      </span><span class="c1"># End of file</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>$<span class="w"> </span>make<span class="w"> </span>debug
+</span></code></pre></div>
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Console Output</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span>
+<span class="normal"><a href="#__codelineno-9-12">12</a></span>
+<span class="normal"><a href="#__codelineno-9-13">13</a></span>
+<span class="normal"><a href="#__codelineno-9-14">14</a></span>
+<span class="normal"><a href="#__codelineno-9-15">15</a></span>
+<span class="normal"><a href="#__codelineno-9-16">16</a></span>
+<span class="normal"><a href="#__codelineno-9-17">17</a></span>
+<span class="normal"><a href="#__codelineno-9-18">18</a></span>
+<span class="normal"><a href="#__codelineno-9-19">19</a></span>
+<span class="normal"><a href="#__codelineno-9-20">20</a></span>
+<span class="normal"><a href="#__codelineno-9-21">21</a></span>
+<span class="normal"><a href="#__codelineno-9-22">22</a></span>
+<span class="normal"><a href="#__codelineno-9-23">23</a></span>
+<span class="normal"><a href="#__codelineno-9-24">24</a></span>
+<span class="normal"><a href="#__codelineno-9-25">25</a></span>
+<span class="normal"><a href="#__codelineno-9-26">26</a></span>
+<span class="normal"><a href="#__codelineno-9-27">27</a></span>
+<span class="normal"><a href="#__codelineno-9-28">28</a></span>
+<span class="normal"><a href="#__codelineno-9-29">29</a></span>
+<span class="normal"><a href="#__codelineno-9-30">30</a></span>
+<span class="normal"><a href="#__codelineno-9-31">31</a></span>
+<span class="normal"><a href="#__codelineno-9-32">32</a></span>
+<span class="normal"><a href="#__codelineno-9-33">33</a></span>
+<span class="normal"><a href="#__codelineno-9-34">34</a></span>
+<span class="normal"><a href="#__codelineno-9-35">35</a></span>
+<span class="normal"><a href="#__codelineno-9-36">36</a></span>
+<span class="normal"><a href="#__codelineno-9-37">37</a></span>
+<span class="normal"><a href="#__codelineno-9-38">38</a></span>
+<span class="normal"><a href="#__codelineno-9-39">39</a></span>
+<span class="normal"><a href="#__codelineno-9-40">40</a></span>
+<span class="normal"><a href="#__codelineno-9-41">41</a></span>
+<span class="normal"><a href="#__codelineno-9-42">42</a></span>
+<span class="normal"><a href="#__codelineno-9-43">43</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1"></a>Press<span class="w"> </span>Ctrl-C<span class="w"> </span>and<span class="w"> </span><span class="k">then</span><span class="w"> </span>input<span class="w"> </span><span class="s1">&#39;quit&#39;</span><span class="w"> </span>to<span class="w"> </span><span class="nb">exit</span><span class="w"> </span>GDB<span class="w"> </span>and<span class="w"> </span>QEMU
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2"></a>-------------------------------------------------------
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3"></a>Reading<span class="w"> </span>symbols<span class="w"> </span>from<span class="w"> </span>test.elf...
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4"></a>Breakpoint<span class="w"> </span><span class="m">1</span><span class="w"> </span>at<span class="w"> </span>0x80000000:<span class="w"> </span>file<span class="w"> </span>test.s,<span class="w"> </span>line<span class="w"> </span><span class="m">12</span>.
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5"></a>0x00001000<span class="w"> </span><span class="k">in</span><span class="w"> </span>??<span class="w"> </span><span class="o">()</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="o">=</span>&gt;<span class="w"> </span>0x00001000:<span class="w">  </span><span class="m">97</span><span class="w"> </span><span class="m">02</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w">     </span>auipc<span class="w">   </span>t0,0x0
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="hll"><span class="m">1</span>:<span class="w"> </span>/z<span class="w"> </span><span class="nv">$x5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x00000000
+</span></span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="m">2</span>:<span class="w"> </span>/z<span class="w"> </span><span class="nv">$x6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x00000000
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="m">3</span>:<span class="w"> </span>/z<span class="w"> </span><span class="nv">$x7</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x00000000
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10"></a>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11"></a>Breakpoint<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>_start<span class="w"> </span><span class="o">()</span><span class="w"> </span>at<span class="w"> </span>test.s:12
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12"></a><span class="m">12</span><span class="w">              </span>li<span class="w"> </span>x6,<span class="w"> </span><span class="m">1</span><span class="w">                </span><span class="c1"># x6 = 1</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13"></a>--Type<span class="w"> </span>&lt;RET&gt;<span class="w"> </span><span class="k">for</span><span class="w"> </span>more,<span class="w"> </span>q<span class="w"> </span>to<span class="w"> </span>quit,<span class="w"> </span>c<span class="w"> </span>to<span class="w"> </span><span class="k">continue</span><span class="w"> </span>without<span class="w"> </span>paging--si
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14"></a><span class="o">=</span>&gt;<span class="w"> </span>0x80000000<span class="w"> </span>&lt;_start+0&gt;:<span class="w">       </span><span class="m">13</span><span class="w"> </span><span class="m">03</span><span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="m">00</span><span class="w">     </span>li<span class="w">      </span>t1,1
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15"></a><span class="hll"><span class="m">1</span>:<span class="w"> </span>/z<span class="w"> </span><span class="nv">$x5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x80000000
+</span></span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16"></a><span class="m">2</span>:<span class="w"> </span>/z<span class="w"> </span><span class="nv">$x6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x00000000
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17"></a><span class="m">3</span>:<span class="w"> </span>/z<span class="w"> </span><span class="nv">$x7</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x00000000
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18"></a><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>si
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19"></a><span class="m">13</span><span class="w">              </span>li<span class="w"> </span>x7,<span class="w"> </span><span class="m">2</span><span class="w">                </span><span class="c1"># x7 = 2</span>
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20"></a><span class="o">=</span>&gt;<span class="w"> </span>0x80000004<span class="w"> </span>&lt;_start+4&gt;:<span class="w">       </span><span class="m">93</span><span class="w"> </span><span class="m">03</span><span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="m">00</span><span class="w">     </span>li<span class="w">      </span>t2,2
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21"></a><span class="hll"><span class="m">1</span>:<span class="w"> </span>/z<span class="w"> </span><span class="nv">$x5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x80000000
+</span></span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22"></a><span class="m">2</span>:<span class="w"> </span>/z<span class="w"> </span><span class="nv">$x6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x00000001
+</span><span id="__span-9-23"><a id="__codelineno-9-23" name="__codelineno-9-23"></a><span class="m">3</span>:<span class="w"> </span>/z<span class="w"> </span><span class="nv">$x7</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x00000000
+</span><span id="__span-9-24"><a id="__codelineno-9-24" name="__codelineno-9-24"></a><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>si
+</span><span id="__span-9-25"><a id="__codelineno-9-25" name="__codelineno-9-25"></a><span class="m">14</span><span class="w">              </span>add<span class="w"> </span>x5,<span class="w"> </span>x6,<span class="w"> </span>x7<span class="w">          </span><span class="c1"># x5 = x6 + x7</span>
+</span><span id="__span-9-26"><a id="__codelineno-9-26" name="__codelineno-9-26"></a><span class="o">=</span>&gt;<span class="w"> </span>0x80000008<span class="w"> </span>&lt;_start+8&gt;:<span class="w">       </span>b3<span class="w"> </span><span class="m">02</span><span class="w"> </span><span class="m">73</span><span class="w"> </span><span class="m">00</span><span class="w">     </span>add<span class="w">     </span>t0,t1,t2
+</span><span id="__span-9-27"><a id="__codelineno-9-27" name="__codelineno-9-27"></a><span class="hll"><span class="m">1</span>:<span class="w"> </span>/z<span class="w"> </span><span class="nv">$x5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x80000000
+</span></span><span id="__span-9-28"><a id="__codelineno-9-28" name="__codelineno-9-28"></a><span class="m">2</span>:<span class="w"> </span>/z<span class="w"> </span><span class="nv">$x6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x00000001
+</span><span id="__span-9-29"><a id="__codelineno-9-29" name="__codelineno-9-29"></a><span class="m">3</span>:<span class="w"> </span>/z<span class="w"> </span><span class="nv">$x7</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x00000002
+</span><span id="__span-9-30"><a id="__codelineno-9-30" name="__codelineno-9-30"></a><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>
+</span><span id="__span-9-31"><a id="__codelineno-9-31" name="__codelineno-9-31"></a>stop<span class="w"> </span><span class="o">()</span><span class="w"> </span>at<span class="w"> </span>test.s:17
+</span><span id="__span-9-32"><a id="__codelineno-9-32" name="__codelineno-9-32"></a><span class="m">17</span><span class="w">              </span>j<span class="w"> </span>stop<span class="w">                  </span><span class="c1"># Infinite loop to stop execution</span>
+</span><span id="__span-9-33"><a id="__codelineno-9-33" name="__codelineno-9-33"></a><span class="o">=</span>&gt;<span class="w"> </span>0x8000000c<span class="w"> </span>&lt;stop+0&gt;:<span class="w"> </span>6f<span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w">     </span>j<span class="w">       </span>0x8000000c<span class="w"> </span>&lt;stop&gt;
+</span><span id="__span-9-34"><a id="__codelineno-9-34" name="__codelineno-9-34"></a><span class="hll"><span class="m">1</span>:<span class="w"> </span>/z<span class="w"> </span><span class="nv">$x5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x00000003
+</span></span><span id="__span-9-35"><a id="__codelineno-9-35" name="__codelineno-9-35"></a><span class="m">2</span>:<span class="w"> </span>/z<span class="w"> </span><span class="nv">$x6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x00000001
+</span><span id="__span-9-36"><a id="__codelineno-9-36" name="__codelineno-9-36"></a><span class="m">3</span>:<span class="w"> </span>/z<span class="w"> </span><span class="nv">$x7</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x00000002
+</span><span id="__span-9-37"><a id="__codelineno-9-37" name="__codelineno-9-37"></a><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>
+</span><span id="__span-9-38"><a id="__codelineno-9-38" name="__codelineno-9-38"></a><span class="m">17</span><span class="w">              </span>j<span class="w"> </span>stop<span class="w">                  </span><span class="c1"># Infinite loop to stop execution</span>
+</span><span id="__span-9-39"><a id="__codelineno-9-39" name="__codelineno-9-39"></a><span class="o">=</span>&gt;<span class="w"> </span>0x8000000c<span class="w"> </span>&lt;stop+0&gt;:<span class="w"> </span>6f<span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w">     </span>j<span class="w">       </span>0x8000000c<span class="w"> </span>&lt;stop&gt;
+</span><span id="__span-9-40"><a id="__codelineno-9-40" name="__codelineno-9-40"></a><span class="hll"><span class="m">1</span>:<span class="w"> </span>/z<span class="w"> </span><span class="nv">$x5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x00000003
+</span></span><span id="__span-9-41"><a id="__codelineno-9-41" name="__codelineno-9-41"></a><span class="m">2</span>:<span class="w"> </span>/z<span class="w"> </span><span class="nv">$x6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x00000001
+</span><span id="__span-9-42"><a id="__codelineno-9-42" name="__codelineno-9-42"></a><span class="m">3</span>:<span class="w"> </span>/z<span class="w"> </span><span class="nv">$x7</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x00000002
+</span><span id="__span-9-43"><a id="__codelineno-9-43" name="__codelineno-9-43"></a><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>
+</span></code></pre></div></td></tr></table></div>
+<ul>
+<li>在gbdinit文件中，定义了<code>display/z $x5</code>, 会显示当前寄存器的数值</li>
+<li>在gbdinit文件中，定义了<code>set disassemble-next-line on</code>逐句编译, 可以输入<code>si</code>(single instruction), 执行下一条指令。</li>
+</ul>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>$<span class="w"> </span>make<span class="w"> </span>hex
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="m">00000000</span><span class="w">  </span><span class="m">13</span><span class="w"> </span><span class="m">03</span><span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">93</span><span class="w"> </span><span class="m">03</span><span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="m">00</span><span class="w">  </span>b3<span class="w"> </span><span class="m">02</span><span class="w"> </span><span class="m">73</span><span class="w"> </span><span class="m">00</span><span class="w"> </span>6f<span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w">  </span><span class="p">|</span>......<span class="w"> </span>...s.o...<span class="p">|</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="m">00000010</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>$<span class="w"> </span>make<span class="w"> </span>code
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>test.elf:<span class="w">     </span>file<span class="w"> </span>format<span class="w"> </span>elf32-littleriscv
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>Disassembly<span class="w"> </span>of<span class="w"> </span>section<span class="w"> </span>.text:
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="m">80000000</span><span class="w"> </span>&lt;_start&gt;:
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">        </span>.text<span class="w">                   </span><span class="c1"># Define beginning of text section</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">        </span>.global<span class="w"> </span>_start<span class="w">          </span><span class="c1"># Define entry _start</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>_start:
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="w">        </span>li<span class="w"> </span>x6,<span class="w"> </span><span class="m">1</span><span class="w">                </span><span class="c1"># x6 = 1</span>
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="m">80000000</span>:<span class="w">       </span><span class="m">00100313</span><span class="w">                </span>li<span class="w">      </span>t1,1
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="w">        </span>li<span class="w"> </span>x7,<span class="w"> </span><span class="m">2</span><span class="w">                </span><span class="c1"># x7 = 2</span>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="m">80000004</span>:<span class="w">       </span><span class="m">00200393</span><span class="w">                </span>li<span class="w">      </span>t2,2
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="w">        </span>add<span class="w"> </span>x5,<span class="w"> </span>x6,<span class="w"> </span>x7<span class="w">          </span><span class="c1"># x5 = x6 + x7</span>
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="m">80000008</span>:<span class="w">       </span>007302b3<span class="w">                </span>add<span class="w">     </span>t0,t1,t2
+</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>
+</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>8000000c<span class="w"> </span>&lt;stop&gt;:
+</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a>
+</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a>stop:
+</span><span id="__span-13-22"><a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a><span class="w">        </span>j<span class="w"> </span>stop<span class="w">                  </span><span class="c1"># Infinite loop to stop execution</span>
+</span><span id="__span-13-23"><a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a>8000000c:<span class="w">       </span>0000006f<span class="w">                </span>j<span class="w">       </span>8000000c<span class="w"> </span>&lt;stop&gt;
+</span><span id="__span-13-24"><a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a><span class="o">(</span>END<span class="o">)</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p>上述案例显示了add操作经过编译后的结果<code>007302b3</code>。具体来说add属于R-type指令，通过查询手册 <a href="https://riscv.org/wp-content/uploads/2019/12/riscv-spec-20191213.pdf">The RISC-V Instruction Set Manual https://riscv.org/wp-content/uploads/2019/12/riscv-spec-20191213.pdf</a> 得知，一条R-type指令的构成：</p>
+<table>
+<thead>
+<tr>
+<th>funct7</th>
+<th>rs2</th>
+<th>rs1</th>
+<th>funct3</th>
+<th>rd</th>
+<th>opcode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0000000</td>
+<td>x7</td>
+<td>x6</td>
+<td>000</td>
+<td>x5</td>
+<td>0110011</td>
+</tr>
+<tr>
+<td>0000000</td>
+<td>00111</td>
+<td>00110</td>
+<td>000</td>
+<td>00101</td>
+<td>0110011</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>funct7、funct3、opcode确定了add指令</li>
+<li>32bit 重新编排，注意字节序 <code>b3 02 73 00</code> -&gt; <code>00 73 02 b3</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>0000</th>
+<th>0000</th>
+<th>0111</th>
+<th>0011</th>
+<th>0000</th>
+<th>0010</th>
+<th>1011</th>
+<th>0011</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>7</td>
+<td>3</td>
+<td>0</td>
+<td>2</td>
+<td>b</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_2">案例</h2>
+<h3 id="1">练习 1</h3>
+<p>使用 gcc 编译代码并使用 binutils 工具对生成的目标文件和可执行文件（ELF 格式）进行分析。具体要求如下：</p>
+<ul>
+<li>编写一个简单的打印 “hello world！” 的程序源文件：hello.c</li>
+<li>对源文件进行本地编译，生成针对支持 x86_64 指令集架构处理器的目标文件 hello.o。</li>
+<li>查看 hello.o 的文件的文件头信息。</li>
+<li>查看 hello.o 的 Section header table。</li>
+<li>对 hello.o 反汇编，并查看 hello.c 的 C 程序源码和机器指令的对应关系。</li>
+</ul>
+<p><strong>解答：</strong></p>
+<p>1.编写一个简单的打印 “hello world！” 的程序源文件：hello.c :</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="p">{</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello, world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>2.对源文件进行本地编译，生成针对支持 x86_64 指令集架构处理器的目标文件 hello.o :</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>&gt;<span class="w"> </span>gcc<span class="w"> </span>-c<span class="w"> </span>hello.c<span class="w"> </span>-o<span class="w"> </span>hello.o
+</span></code></pre></div>
+<p>3.查看 hello.o 的文件的文件头信息。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>&gt;<span class="w"> </span>readelf<span class="w"> </span>-h<span class="w"> </span>hello.o
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>ELF<span class="w"> </span>Header:
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span>Magic:<span class="w">   </span>7f<span class="w"> </span><span class="m">45</span><span class="w"> </span>4c<span class="w"> </span><span class="m">46</span><span class="w"> </span><span class="m">02</span><span class="w"> </span><span class="m">01</span><span class="w"> </span><span class="m">01</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">  </span>Class:<span class="w">                             </span>ELF64
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">  </span>Data:<span class="w">                              </span><span class="m">2</span><span class="err">&#39;</span>s<span class="w"> </span>complement,<span class="w"> </span>little<span class="w"> </span>endian
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">  </span>Version:<span class="w">                           </span><span class="m">1</span><span class="w"> </span><span class="o">(</span>current<span class="o">)</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">  </span>OS/ABI:<span class="w">                            </span>UNIX<span class="w"> </span>-<span class="w"> </span>System<span class="w"> </span>V
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="w">  </span>ABI<span class="w"> </span>Version:<span class="w">                       </span><span class="m">0</span>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">  </span>Type:<span class="w">                              </span>REL<span class="w"> </span><span class="o">(</span>Relocatable<span class="w"> </span>file<span class="o">)</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="w">  </span>Machine:<span class="w">                           </span>Advanced<span class="w"> </span>Micro<span class="w"> </span>Devices<span class="w"> </span>X86-64
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="w">  </span>Version:<span class="w">                           </span>0x1
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="w">  </span>Entry<span class="w"> </span>point<span class="w"> </span>address:<span class="w">               </span>0x0
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="w">  </span>Start<span class="w"> </span>of<span class="w"> </span>program<span class="w"> </span>headers:<span class="w">          </span><span class="m">0</span><span class="w"> </span><span class="o">(</span>bytes<span class="w"> </span>into<span class="w"> </span>file<span class="o">)</span>
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="w">  </span>Start<span class="w"> </span>of<span class="w"> </span>section<span class="w"> </span>headers:<span class="w">          </span><span class="m">784</span><span class="w"> </span><span class="o">(</span>bytes<span class="w"> </span>into<span class="w"> </span>file<span class="o">)</span>
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="w">  </span>Flags:<span class="w">                             </span>0x0
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="w">  </span>Size<span class="w"> </span>of<span class="w"> </span>this<span class="w"> </span>header:<span class="w">               </span><span class="m">64</span><span class="w"> </span><span class="o">(</span>bytes<span class="o">)</span>
+</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="w">  </span>Size<span class="w"> </span>of<span class="w"> </span>program<span class="w"> </span>headers:<span class="w">           </span><span class="m">0</span><span class="w"> </span><span class="o">(</span>bytes<span class="o">)</span>
+</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a><span class="w">  </span>Number<span class="w"> </span>of<span class="w"> </span>program<span class="w"> </span>headers:<span class="w">         </span><span class="m">0</span>
+</span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="w">  </span>Size<span class="w"> </span>of<span class="w"> </span>section<span class="w"> </span>headers:<span class="w">           </span><span class="m">64</span><span class="w"> </span><span class="o">(</span>bytes<span class="o">)</span>
+</span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="w">  </span>Number<span class="w"> </span>of<span class="w"> </span>section<span class="w"> </span>headers:<span class="w">         </span><span class="m">14</span>
+</span><span id="__span-16-22"><a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a><span class="w">  </span>Section<span class="w"> </span>header<span class="w"> </span>string<span class="w"> </span>table<span class="w"> </span>index:<span class="w"> </span><span class="m">13</span>
+</span></code></pre></div>
+<p>4.查看 hello.o 的 Section header table。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>&gt;<span class="w"> </span>readelf<span class="w"> </span>-SW<span class="w"> </span>hello.o<span class="w">  </span>//<span class="w"> </span>这里的W参数是让命令行输出样式<span class="w"> </span><span class="s2">&quot;widely&quot;</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>There<span class="w"> </span>are<span class="w"> </span><span class="m">14</span><span class="w"> </span>section<span class="w"> </span>headers,<span class="w"> </span>starting<span class="w"> </span>at<span class="w"> </span>offset<span class="w"> </span>0x310:
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>Section<span class="w"> </span>Headers:
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="w">  </span><span class="o">[</span>Nr<span class="o">]</span><span class="w"> </span>Name<span class="w">              </span>Type<span class="w">            </span>Address<span class="w">          </span>Off<span class="w">    </span>Size<span class="w">   </span>ES<span class="w"> </span>Flg<span class="w"> </span>Lk<span class="w"> </span>Inf<span class="w"> </span>Al
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">0</span><span class="o">]</span><span class="w">                   </span>NULL<span class="w">            </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000000</span><span class="w"> </span><span class="m">000000</span><span class="w"> </span><span class="m">00</span><span class="w">      </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">0</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">1</span><span class="o">]</span><span class="w"> </span>.text<span class="w">             </span>PROGBITS<span class="w">        </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000040</span><span class="w"> </span><span class="m">000017</span><span class="w"> </span><span class="m">00</span><span class="w">  </span>AX<span class="w">  </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">1</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">2</span><span class="o">]</span><span class="w"> </span>.rela.text<span class="w">        </span>RELA<span class="w">            </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000250</span><span class="w"> </span><span class="m">000030</span><span class="w"> </span><span class="m">18</span><span class="w">   </span>I<span class="w"> </span><span class="m">11</span><span class="w">   </span><span class="m">1</span><span class="w">  </span><span class="m">8</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">3</span><span class="o">]</span><span class="w"> </span>.data<span class="w">             </span>PROGBITS<span class="w">        </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000057</span><span class="w"> </span><span class="m">000000</span><span class="w"> </span><span class="m">00</span><span class="w">  </span>WA<span class="w">  </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">1</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">4</span><span class="o">]</span><span class="w"> </span>.bss<span class="w">              </span>NOBITS<span class="w">          </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000057</span><span class="w"> </span><span class="m">000000</span><span class="w"> </span><span class="m">00</span><span class="w">  </span>WA<span class="w">  </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">1</span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">5</span><span class="o">]</span><span class="w"> </span>.rodata<span class="w">           </span>PROGBITS<span class="w">        </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000057</span><span class="w"> </span>00000d<span class="w"> </span><span class="m">00</span><span class="w">   </span>A<span class="w">  </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">1</span>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">6</span><span class="o">]</span><span class="w"> </span>.comment<span class="w">          </span>PROGBITS<span class="w">        </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000064</span><span class="w"> </span>00002c<span class="w"> </span><span class="m">01</span><span class="w">  </span>MS<span class="w">  </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">1</span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">7</span><span class="o">]</span><span class="w"> </span>.note.GNU-stack<span class="w">   </span>PROGBITS<span class="w">        </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000090</span><span class="w"> </span><span class="m">000000</span><span class="w"> </span><span class="m">00</span><span class="w">      </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">1</span>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">8</span><span class="o">]</span><span class="w"> </span>.note.gnu.property<span class="w"> </span>NOTE<span class="w">            </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000090</span><span class="w"> </span><span class="m">000020</span><span class="w"> </span><span class="m">00</span><span class="w">   </span>A<span class="w">  </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">8</span>
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">9</span><span class="o">]</span><span class="w"> </span>.eh_frame<span class="w">         </span>PROGBITS<span class="w">        </span><span class="m">0000000000000000</span><span class="w"> </span>0000b0<span class="w"> </span><span class="m">000038</span><span class="w"> </span><span class="m">00</span><span class="w">   </span>A<span class="w">  </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">8</span>
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a><span class="w">  </span><span class="o">[</span><span class="m">10</span><span class="o">]</span><span class="w"> </span>.rela.eh_frame<span class="w">    </span>RELA<span class="w">            </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000280</span><span class="w"> </span><span class="m">000018</span><span class="w"> </span><span class="m">18</span><span class="w">   </span>I<span class="w"> </span><span class="m">11</span><span class="w">   </span><span class="m">9</span><span class="w">  </span><span class="m">8</span>
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a><span class="w">  </span><span class="o">[</span><span class="m">11</span><span class="o">]</span><span class="w"> </span>.symtab<span class="w">           </span>SYMTAB<span class="w">          </span><span class="m">0000000000000000</span><span class="w"> </span>0000e8<span class="w"> </span><span class="m">000138</span><span class="w"> </span><span class="m">18</span><span class="w">     </span><span class="m">12</span><span class="w">  </span><span class="m">10</span><span class="w">  </span><span class="m">8</span>
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a><span class="w">  </span><span class="o">[</span><span class="m">12</span><span class="o">]</span><span class="w"> </span>.strtab<span class="w">           </span>STRTAB<span class="w">          </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000220</span><span class="w"> </span><span class="m">000029</span><span class="w"> </span><span class="m">00</span><span class="w">      </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">1</span>
+</span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a><span class="w">  </span><span class="o">[</span><span class="m">13</span><span class="o">]</span><span class="w"> </span>.shstrtab<span class="w">         </span>STRTAB<span class="w">          </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000298</span><span class="w"> </span><span class="m">000074</span><span class="w"> </span><span class="m">00</span><span class="w">      </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">1</span>
+</span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a>Key<span class="w"> </span>to<span class="w"> </span>Flags:
+</span><span id="__span-17-22"><a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a><span class="w">  </span>W<span class="w"> </span><span class="o">(</span>write<span class="o">)</span>,<span class="w"> </span>A<span class="w"> </span><span class="o">(</span>alloc<span class="o">)</span>,<span class="w"> </span>X<span class="w"> </span><span class="o">(</span>execute<span class="o">)</span>,<span class="w"> </span>M<span class="w"> </span><span class="o">(</span>merge<span class="o">)</span>,<span class="w"> </span>S<span class="w"> </span><span class="o">(</span>strings<span class="o">)</span>,<span class="w"> </span>I<span class="w"> </span><span class="o">(</span>info<span class="o">)</span>,
+</span><span id="__span-17-23"><a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a><span class="w">  </span>L<span class="w"> </span><span class="o">(</span>link<span class="w"> </span>order<span class="o">)</span>,<span class="w"> </span>O<span class="w"> </span><span class="o">(</span>extra<span class="w"> </span>OS<span class="w"> </span>processing<span class="w"> </span>required<span class="o">)</span>,<span class="w"> </span>G<span class="w"> </span><span class="o">(</span>group<span class="o">)</span>,<span class="w"> </span>T<span class="w"> </span><span class="o">(</span>TLS<span class="o">)</span>,
+</span><span id="__span-17-24"><a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a><span class="w">  </span>C<span class="w"> </span><span class="o">(</span>compressed<span class="o">)</span>,<span class="w"> </span>x<span class="w"> </span><span class="o">(</span>unknown<span class="o">)</span>,<span class="w"> </span>o<span class="w"> </span><span class="o">(</span>OS<span class="w"> </span>specific<span class="o">)</span>,<span class="w"> </span>E<span class="w"> </span><span class="o">(</span>exclude<span class="o">)</span>,
+</span><span id="__span-17-25"><a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a><span class="w">  </span>l<span class="w"> </span><span class="o">(</span>large<span class="o">)</span>,<span class="w"> </span>p<span class="w"> </span><span class="o">(</span>processor<span class="w"> </span>specific<span class="o">)</span>
+</span></code></pre></div>
+<p>5.对 hello.o 反汇编，并查看 hello.c 的 C 程序源码和机器指令的对应关系。重新编译并添加调试信息命令：gcc -g -c</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>&gt;<span class="w"> </span>rm<span class="w"> </span>hello.o
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>&gt;<span class="w"> </span>gcc<span class="w"> </span>-g<span class="w"> </span>-c<span class="w"> </span>hello.c
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>&gt;<span class="w"> </span>objdump<span class="w"> </span>-S<span class="w"> </span>hello.o
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>hello.o:<span class="w">     </span>file<span class="w"> </span>format<span class="w"> </span>elf64-x86-64
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>Disassembly<span class="w"> </span>of<span class="w"> </span>section<span class="w"> </span>.text:
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="m">0000000000000000</span><span class="w"> </span>&lt;main&gt;:
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="c1">#include &lt;stdio.h&gt;</span>
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>void<span class="w"> </span>main<span class="o">()</span>
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="o">{</span>
+</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="w">   </span><span class="m">0</span>:<span class="w">   </span>f3<span class="w"> </span>0f<span class="w"> </span>1e<span class="w"> </span>fa<span class="w">             </span>endbr64<span class="w"> </span>
+</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="w">   </span><span class="m">4</span>:<span class="w">   </span><span class="m">55</span><span class="w">                      </span>push<span class="w">   </span>%rbp
+</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="w">   </span><span class="m">5</span>:<span class="w">   </span><span class="m">48</span><span class="w"> </span><span class="m">89</span><span class="w"> </span>e5<span class="w">                </span>mov<span class="w">    </span>%rsp,%rbp
+</span><span id="__span-18-18"><a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="w">        </span>printf<span class="o">(</span><span class="s2">&quot;hellp world!\n&quot;</span><span class="o">)</span><span class="p">;</span>
+</span><span id="__span-18-19"><a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="w">   </span><span class="m">8</span>:<span class="w">   </span><span class="m">48</span><span class="w"> </span>8d<span class="w"> </span>3d<span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w">    </span>lea<span class="w">    </span>0x0<span class="o">(</span>%rip<span class="o">)</span>,%rdi<span class="w">        </span><span class="c1"># f &lt;main+0xf&gt;</span>
+</span><span id="__span-18-20"><a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a><span class="w">   </span>f:<span class="w">   </span>e8<span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w">          </span>callq<span class="w">  </span><span class="m">14</span><span class="w"> </span>&lt;main+0x14&gt;
+</span><span id="__span-18-21"><a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="o">}</span>
+</span><span id="__span-18-22"><a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a><span class="w">  </span><span class="m">14</span>:<span class="w">   </span><span class="m">90</span><span class="w">                      </span>nop
+</span><span id="__span-18-23"><a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a><span class="w">  </span><span class="m">15</span>:<span class="w">   </span>5d<span class="w">                      </span>pop<span class="w">    </span>%rbp
+</span><span id="__span-18-24"><a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a><span class="w">  </span><span class="m">16</span>:<span class="w">   </span>c3<span class="w">                      </span>retq<span class="w">   </span>
+</span></code></pre></div>
+<h3 id="2">练习 2</h3>
+<p>如下例子 C 语言代码 example.c：</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="c1"> </span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="cm">/* unintialize */</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="kt">int</span><span class="w"> </span><span class="n">global_uninit</span><span class="p">;</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">global_uninit_const</span><span class="p">;</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">global_uninit_static</span><span class="p">;</span>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="k">const</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">global_uninit_static_const</span><span class="p">;</span>
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="cm">/* initialize */</span>
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="kt">int</span><span class="w"> </span><span class="n">global_init</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">global_init_const</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">global_init_static</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="k">const</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">global_init_static_const</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+</span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>
+</span><span id="__span-19-15"><a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span>
+</span><span id="__span-19-16"><a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a><span class="p">{</span>
+</span><span id="__span-19-17"><a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a><span class="w">        </span><span class="cm">/* unintialize */</span>
+</span><span id="__span-19-18"><a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">local_uninit</span><span class="p">;</span>
+</span><span id="__span-19-19"><a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">local_uninit_const</span><span class="p">;</span>
+</span><span id="__span-19-20"><a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a><span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">local_uninit_static</span><span class="p">;</span>
+</span><span id="__span-19-21"><a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">local_uninit_static_const</span><span class="p">;</span>
+</span><span id="__span-19-22"><a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a>
+</span><span id="__span-19-23"><a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a><span class="w">        </span><span class="cm">/* initialize */</span>
+</span><span id="__span-19-24"><a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">local_init</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+</span><span id="__span-19-25"><a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">local_init_const</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span>
+</span><span id="__span-19-26"><a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a><span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">local_init_static</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7</span><span class="p">;</span>
+</span><span id="__span-19-27"><a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">local_init_static_const</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span>
+</span><span id="__span-19-28"><a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a>
+</span><span id="__span-19-29"><a id="__codelineno-19-29" name="__codelineno-19-29" href="#__codelineno-19-29"></a><span class="w">        </span><span class="c1">// string</span>
+</span><span id="__span-19-30"><a id="__codelineno-19-30" name="__codelineno-19-30" href="#__codelineno-19-30"></a><span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"> </span>
+</span><span id="__span-19-31"><a id="__codelineno-19-31" name="__codelineno-19-31" href="#__codelineno-19-31"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w"> </span>
+</span><span id="__span-19-32"><a id="__codelineno-19-32" name="__codelineno-19-32" href="#__codelineno-19-32"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>请问编译为 .o 文件后，global_init, global_init_const, global_init_static, local_uninit, local_init 等这些变量分别存放在那些 section 里，"hello world!\n" 这个字符串又在哪里？并尝试用工具查看并验证你的猜测。</p>
+<ul>
+<li>可以使用 gcc -c example.c 命令来编译生成 .o 文件，然后使用 readelf -a example.o 命令查看文件的详细信息。其中，可以查看到各个 section 的起始地址、大小等信息，也可以查看到字符串常量的位置和内容信息。</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>&gt;<span class="w"> </span>gcc<span class="w"> </span>-c<span class="w"> </span>example.c<span class="w"> </span>-o<span class="w"> </span>example.o
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>&gt;<span class="w"> </span>readelf<span class="w"> </span>-a<span class="w"> </span>examlple.o
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>&gt;<span class="w"> </span>readelf<span class="w"> </span>-aW<span class="w"> </span>example.o
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>ELF<span class="w"> </span>Header:
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">  </span>Magic:<span class="w">   </span>7f<span class="w"> </span><span class="m">45</span><span class="w"> </span>4c<span class="w"> </span><span class="m">46</span><span class="w"> </span><span class="m">02</span><span class="w"> </span><span class="m">01</span><span class="w"> </span><span class="m">01</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="w">  </span>Class:<span class="w">                             </span>ELF64
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="w">  </span>Data:<span class="w">                              </span><span class="m">2</span><span class="s1">&#39;s complement, little endian</span>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="s1">  Version:                           1 (current)</span>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="s1">  OS/ABI:                            UNIX - System V</span>
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="s1">  ABI Version:                       0</span>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="s1">  Type:                              REL (Relocatable file)</span>
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="s1">  Machine:                           Advanced Micro Devices X86-64</span>
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="s1">  Version:                           0x1</span>
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="s1">  Entry point address:               0x0</span>
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a><span class="s1">  Start of program headers:          0 (bytes into file)</span>
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a><span class="s1">  Start of section headers:          1392 (bytes into file)</span>
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a><span class="s1">  Flags:                             0x0</span>
+</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a><span class="s1">  Size of this header:               64 (bytes)</span>
+</span><span id="__span-20-19"><a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a><span class="s1">  Size of program headers:           0 (bytes)</span>
+</span><span id="__span-20-20"><a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a><span class="s1">  Number of program headers:         0</span>
+</span><span id="__span-20-21"><a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a><span class="s1">  Size of section headers:           64 (bytes)</span>
+</span><span id="__span-20-22"><a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a><span class="s1">  Number of section headers:         14</span>
+</span><span id="__span-20-23"><a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a><span class="s1">  Section header string table index: 13</span>
+</span><span id="__span-20-24"><a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a>
+</span><span id="__span-20-25"><a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a><span class="s1">Section Headers:</span>
+</span><span id="__span-20-26"><a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a><span class="s1">  [Nr] Name              Type            Address          Off    Size   ES Flg Lk Inf Al</span>
+</span><span id="__span-20-27"><a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a><span class="s1">  [ 0]                   NULL            0000000000000000 000000 000000 00      0   0  0</span>
+</span><span id="__span-20-28"><a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a><span class="s1">  [ 1] .text             PROGBITS        0000000000000000 000040 000029 00  AX  0   0  1</span>
+</span><span id="__span-20-29"><a id="__codelineno-20-29" name="__codelineno-20-29" href="#__codelineno-20-29"></a><span class="s1">  [ 2] .rela.text        RELA            0000000000000000 0004b0 000030 18   I 11   1  8</span>
+</span><span id="__span-20-30"><a id="__codelineno-20-30" name="__codelineno-20-30" href="#__codelineno-20-30"></a><span class="s1">  [ 3] .data             PROGBITS        0000000000000000 00006c 00000c 00  WA  0   0  4</span>
+</span><span id="__span-20-31"><a id="__codelineno-20-31" name="__codelineno-20-31" href="#__codelineno-20-31"></a><span class="s1">  [ 4] .bss              NOBITS          0000000000000000 000078 000008 00  WA  0   0  4</span>
+</span><span id="__span-20-32"><a id="__codelineno-20-32" name="__codelineno-20-32" href="#__codelineno-20-32"></a><span class="s1">  [ 5] .rodata           PROGBITS        0000000000000000 000078 000024 00   A  0   0  4</span>
+</span><span id="__span-20-33"><a id="__codelineno-20-33" name="__codelineno-20-33" href="#__codelineno-20-33"></a><span class="s1">  [ 6] .comment          PROGBITS        0000000000000000 00009c 00002c 01  MS  0   0  1</span>
+</span><span id="__span-20-34"><a id="__codelineno-20-34" name="__codelineno-20-34" href="#__codelineno-20-34"></a><span class="s1">  [ 7] .note.GNU-stack   PROGBITS        0000000000000000 0000c8 000000 00      0   0  1</span>
+</span><span id="__span-20-35"><a id="__codelineno-20-35" name="__codelineno-20-35" href="#__codelineno-20-35"></a><span class="s1">  [ 8] .note.gnu.property NOTE            0000000000000000 0000c8 000020 00   A  0   0  8</span>
+</span><span id="__span-20-36"><a id="__codelineno-20-36" name="__codelineno-20-36" href="#__codelineno-20-36"></a><span class="s1">  [ 9] .eh_frame         PROGBITS        0000000000000000 0000e8 000038 00   A  0   0  8</span>
+</span><span id="__span-20-37"><a id="__codelineno-20-37" name="__codelineno-20-37" href="#__codelineno-20-37"></a><span class="s1">  [10] .rela.eh_frame    RELA            0000000000000000 0004e0 000018 18   I 11   9  8</span>
+</span><span id="__span-20-38"><a id="__codelineno-20-38" name="__codelineno-20-38" href="#__codelineno-20-38"></a><span class="s1">  [11] .symtab           SYMTAB          0000000000000000 000120 000258 18     12  18  8</span>
+</span><span id="__span-20-39"><a id="__codelineno-20-39" name="__codelineno-20-39" href="#__codelineno-20-39"></a><span class="s1">  [12] .strtab           STRTAB          0000000000000000 000378 000133 00      0   0  1</span>
+</span><span id="__span-20-40"><a id="__codelineno-20-40" name="__codelineno-20-40" href="#__codelineno-20-40"></a><span class="s1">  [13] .shstrtab         STRTAB          0000000000000000 0004f8 000074 00      0   0  1</span>
+</span><span id="__span-20-41"><a id="__codelineno-20-41" name="__codelineno-20-41" href="#__codelineno-20-41"></a><span class="s1">Key to Flags:</span>
+</span><span id="__span-20-42"><a id="__codelineno-20-42" name="__codelineno-20-42" href="#__codelineno-20-42"></a><span class="s1">  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),</span>
+</span><span id="__span-20-43"><a id="__codelineno-20-43" name="__codelineno-20-43" href="#__codelineno-20-43"></a><span class="s1">  L (link order), O (extra OS processing required), G (group), T (TLS),</span>
+</span><span id="__span-20-44"><a id="__codelineno-20-44" name="__codelineno-20-44" href="#__codelineno-20-44"></a><span class="s1">  C (compressed), x (unknown), o (OS specific), E (exclude),</span>
+</span><span id="__span-20-45"><a id="__codelineno-20-45" name="__codelineno-20-45" href="#__codelineno-20-45"></a><span class="s1">  l (large), p (processor specific)</span>
+</span><span id="__span-20-46"><a id="__codelineno-20-46" name="__codelineno-20-46" href="#__codelineno-20-46"></a>
+</span><span id="__span-20-47"><a id="__codelineno-20-47" name="__codelineno-20-47" href="#__codelineno-20-47"></a><span class="s1">...</span>
+</span><span id="__span-20-48"><a id="__codelineno-20-48" name="__codelineno-20-48" href="#__codelineno-20-48"></a>
+</span><span id="__span-20-49"><a id="__codelineno-20-49" name="__codelineno-20-49" href="#__codelineno-20-49"></a><span class="s1">Symbol table &#39;</span>.symtab<span class="err">&#39;</span><span class="w"> </span>contains<span class="w"> </span><span class="m">25</span><span class="w"> </span>entries:
+</span><span id="__span-20-50"><a id="__codelineno-20-50" name="__codelineno-20-50" href="#__codelineno-20-50"></a><span class="w">   </span>Num:<span class="w">    </span>Value<span class="w">          </span>Size<span class="w"> </span>Type<span class="w">    </span>Bind<span class="w">   </span>Vis<span class="w">      </span>Ndx<span class="w"> </span>Name
+</span><span id="__span-20-51"><a id="__codelineno-20-51" name="__codelineno-20-51" href="#__codelineno-20-51"></a><span class="w">     </span><span class="m">0</span>:<span class="w"> </span><span class="m">0000000000000000</span><span class="w">     </span><span class="m">0</span><span class="w"> </span>NOTYPE<span class="w">  </span>LOCAL<span class="w">  </span>DEFAULT<span class="w">  </span>UND<span class="w"> </span>
+</span><span id="__span-20-52"><a id="__codelineno-20-52" name="__codelineno-20-52" href="#__codelineno-20-52"></a><span class="w">     </span><span class="m">1</span>:<span class="w"> </span><span class="m">0000000000000000</span><span class="w">     </span><span class="m">0</span><span class="w"> </span>FILE<span class="w">    </span>LOCAL<span class="w">  </span>DEFAULT<span class="w">  </span>ABS<span class="w"> </span>example.c
+</span><span id="__span-20-53"><a id="__codelineno-20-53" name="__codelineno-20-53" href="#__codelineno-20-53"></a><span class="w">     </span><span class="m">2</span>:<span class="w"> </span><span class="m">0000000000000000</span><span class="w">     </span><span class="m">0</span><span class="w"> </span>SECTION<span class="w"> </span>LOCAL<span class="w">  </span>DEFAULT<span class="w">    </span><span class="m">1</span><span class="w"> </span>
+</span><span id="__span-20-54"><a id="__codelineno-20-54" name="__codelineno-20-54" href="#__codelineno-20-54"></a><span class="w">     </span><span class="m">3</span>:<span class="w"> </span><span class="m">0000000000000000</span><span class="w">     </span><span class="m">0</span><span class="w"> </span>SECTION<span class="w"> </span>LOCAL<span class="w">  </span>DEFAULT<span class="w">    </span><span class="m">3</span><span class="w"> </span>
+</span><span id="__span-20-55"><a id="__codelineno-20-55" name="__codelineno-20-55" href="#__codelineno-20-55"></a><span class="w">     </span><span class="m">4</span>:<span class="w"> </span><span class="m">0000000000000000</span><span class="w">     </span><span class="m">0</span><span class="w"> </span>SECTION<span class="w"> </span>LOCAL<span class="w">  </span>DEFAULT<span class="w">    </span><span class="m">4</span><span class="w"> </span>
+</span><span id="__span-20-56"><a id="__codelineno-20-56" name="__codelineno-20-56" href="#__codelineno-20-56"></a><span class="w">     </span><span class="m">5</span>:<span class="w"> </span><span class="m">0000000000000000</span><span class="w">     </span><span class="m">4</span><span class="w"> </span>OBJECT<span class="w">  </span>LOCAL<span class="w">  </span>DEFAULT<span class="w">    </span><span class="m">4</span><span class="w"> </span>global_uninit_static
+</span><span id="__span-20-57"><a id="__codelineno-20-57" name="__codelineno-20-57" href="#__codelineno-20-57"></a><span class="w">     </span><span class="m">6</span>:<span class="w"> </span><span class="m">0000000000000000</span><span class="w">     </span><span class="m">0</span><span class="w"> </span>SECTION<span class="w"> </span>LOCAL<span class="w">  </span>DEFAULT<span class="w">    </span><span class="m">5</span><span class="w"> </span>
+</span><span id="__span-20-58"><a id="__codelineno-20-58" name="__codelineno-20-58" href="#__codelineno-20-58"></a><span class="w">     </span><span class="m">7</span>:<span class="w"> </span><span class="m">0000000000000000</span><span class="w">     </span><span class="m">4</span><span class="w"> </span>OBJECT<span class="w">  </span>LOCAL<span class="w">  </span>DEFAULT<span class="w">    </span><span class="m">5</span><span class="w"> </span>global_uninit_static_const
+</span><span id="__span-20-59"><a id="__codelineno-20-59" name="__codelineno-20-59" href="#__codelineno-20-59"></a><span class="w">     </span><span class="m">8</span>:<span class="w"> </span><span class="m">0000000000000004</span><span class="w">     </span><span class="m">4</span><span class="w"> </span>OBJECT<span class="w">  </span>LOCAL<span class="w">  </span>DEFAULT<span class="w">    </span><span class="m">3</span><span class="w"> </span>global_init_static
+</span><span id="__span-20-60"><a id="__codelineno-20-60" name="__codelineno-20-60" href="#__codelineno-20-60"></a><span class="w">     </span><span class="m">9</span>:<span class="w"> </span><span class="m">0000000000000008</span><span class="w">     </span><span class="m">4</span><span class="w"> </span>OBJECT<span class="w">  </span>LOCAL<span class="w">  </span>DEFAULT<span class="w">    </span><span class="m">5</span><span class="w"> </span>global_init_static_const
+</span><span id="__span-20-61"><a id="__codelineno-20-61" name="__codelineno-20-61" href="#__codelineno-20-61"></a><span class="w">    </span><span class="m">10</span>:<span class="w"> </span>000000000000001c<span class="w">     </span><span class="m">4</span><span class="w"> </span>OBJECT<span class="w">  </span>LOCAL<span class="w">  </span>DEFAULT<span class="w">    </span><span class="m">5</span><span class="w"> </span>local_init_static_const.2330
+</span><span id="__span-20-62"><a id="__codelineno-20-62" name="__codelineno-20-62" href="#__codelineno-20-62"></a><span class="w">    </span><span class="m">11</span>:<span class="w"> </span><span class="m">0000000000000008</span><span class="w">     </span><span class="m">4</span><span class="w"> </span>OBJECT<span class="w">  </span>LOCAL<span class="w">  </span>DEFAULT<span class="w">    </span><span class="m">3</span><span class="w"> </span>local_init_static.2329
+</span><span id="__span-20-63"><a id="__codelineno-20-63" name="__codelineno-20-63" href="#__codelineno-20-63"></a><span class="w">    </span><span class="m">12</span>:<span class="w"> </span><span class="m">0000000000000020</span><span class="w">     </span><span class="m">4</span><span class="w"> </span>OBJECT<span class="w">  </span>LOCAL<span class="w">  </span>DEFAULT<span class="w">    </span><span class="m">5</span><span class="w"> </span>local_uninit_static_const.2326
+</span><span id="__span-20-64"><a id="__codelineno-20-64" name="__codelineno-20-64" href="#__codelineno-20-64"></a><span class="w">    </span><span class="m">13</span>:<span class="w"> </span><span class="m">0000000000000004</span><span class="w">     </span><span class="m">4</span><span class="w"> </span>OBJECT<span class="w">  </span>LOCAL<span class="w">  </span>DEFAULT<span class="w">    </span><span class="m">4</span><span class="w"> </span>local_uninit_static.2325
+</span><span id="__span-20-65"><a id="__codelineno-20-65" name="__codelineno-20-65" href="#__codelineno-20-65"></a><span class="w">    </span><span class="m">14</span>:<span class="w"> </span><span class="m">0000000000000000</span><span class="w">     </span><span class="m">0</span><span class="w"> </span>SECTION<span class="w"> </span>LOCAL<span class="w">  </span>DEFAULT<span class="w">    </span><span class="m">7</span><span class="w"> </span>
+</span><span id="__span-20-66"><a id="__codelineno-20-66" name="__codelineno-20-66" href="#__codelineno-20-66"></a><span class="w">    </span><span class="m">15</span>:<span class="w"> </span><span class="m">0000000000000000</span><span class="w">     </span><span class="m">0</span><span class="w"> </span>SECTION<span class="w"> </span>LOCAL<span class="w">  </span>DEFAULT<span class="w">    </span><span class="m">8</span><span class="w"> </span>
+</span><span id="__span-20-67"><a id="__codelineno-20-67" name="__codelineno-20-67" href="#__codelineno-20-67"></a><span class="w">    </span><span class="m">16</span>:<span class="w"> </span><span class="m">0000000000000000</span><span class="w">     </span><span class="m">0</span><span class="w"> </span>SECTION<span class="w"> </span>LOCAL<span class="w">  </span>DEFAULT<span class="w">    </span><span class="m">9</span><span class="w"> </span>
+</span><span id="__span-20-68"><a id="__codelineno-20-68" name="__codelineno-20-68" href="#__codelineno-20-68"></a><span class="w">    </span><span class="m">17</span>:<span class="w"> </span><span class="m">0000000000000000</span><span class="w">     </span><span class="m">0</span><span class="w"> </span>SECTION<span class="w"> </span>LOCAL<span class="w">  </span>DEFAULT<span class="w">    </span><span class="m">6</span><span class="w"> </span>
+</span><span id="__span-20-69"><a id="__codelineno-20-69" name="__codelineno-20-69" href="#__codelineno-20-69"></a><span class="w">    </span><span class="m">18</span>:<span class="w"> </span><span class="m">0000000000000004</span><span class="w">     </span><span class="m">4</span><span class="w"> </span>OBJECT<span class="w">  </span>GLOBAL<span class="w"> </span>DEFAULT<span class="w">  </span>COM<span class="w"> </span>global_uninit
+</span><span id="__span-20-70"><a id="__codelineno-20-70" name="__codelineno-20-70" href="#__codelineno-20-70"></a><span class="w">    </span><span class="m">19</span>:<span class="w"> </span><span class="m">0000000000000004</span><span class="w">     </span><span class="m">4</span><span class="w"> </span>OBJECT<span class="w">  </span>GLOBAL<span class="w"> </span>DEFAULT<span class="w">  </span>COM<span class="w"> </span>global_uninit_const
+</span><span id="__span-20-71"><a id="__codelineno-20-71" name="__codelineno-20-71" href="#__codelineno-20-71"></a><span class="w">    </span><span class="m">20</span>:<span class="w"> </span><span class="m">0000000000000000</span><span class="w">     </span><span class="m">4</span><span class="w"> </span>OBJECT<span class="w">  </span>GLOBAL<span class="w"> </span>DEFAULT<span class="w">    </span><span class="m">3</span><span class="w"> </span>global_init
+</span><span id="__span-20-72"><a id="__codelineno-20-72" name="__codelineno-20-72" href="#__codelineno-20-72"></a><span class="w">    </span><span class="m">21</span>:<span class="w"> </span><span class="m">0000000000000004</span><span class="w">     </span><span class="m">4</span><span class="w"> </span>OBJECT<span class="w">  </span>GLOBAL<span class="w"> </span>DEFAULT<span class="w">    </span><span class="m">5</span><span class="w"> </span>global_init_const
+</span><span id="__span-20-73"><a id="__codelineno-20-73" name="__codelineno-20-73" href="#__codelineno-20-73"></a><span class="w">    </span><span class="m">22</span>:<span class="w"> </span><span class="m">0000000000000000</span><span class="w">    </span><span class="m">41</span><span class="w"> </span>FUNC<span class="w">    </span>GLOBAL<span class="w"> </span>DEFAULT<span class="w">    </span><span class="m">1</span><span class="w"> </span>main
+</span><span id="__span-20-74"><a id="__codelineno-20-74" name="__codelineno-20-74" href="#__codelineno-20-74"></a><span class="w">    </span><span class="m">23</span>:<span class="w"> </span><span class="m">0000000000000000</span><span class="w">     </span><span class="m">0</span><span class="w"> </span>NOTYPE<span class="w">  </span>GLOBAL<span class="w"> </span>DEFAULT<span class="w">  </span>UND<span class="w"> </span>_GLOBAL_OFFSET_TABLE_
+</span><span id="__span-20-75"><a id="__codelineno-20-75" name="__codelineno-20-75" href="#__codelineno-20-75"></a><span class="w">    </span><span class="m">24</span>:<span class="w"> </span><span class="m">0000000000000000</span><span class="w">     </span><span class="m">0</span><span class="w"> </span>NOTYPE<span class="w">  </span>GLOBAL<span class="w"> </span>DEFAULT<span class="w">  </span>UND<span class="w"> </span>puts
+</span><span id="__span-20-76"><a id="__codelineno-20-76" name="__codelineno-20-76" href="#__codelineno-20-76"></a>...
+</span></code></pre></div>
+<p><strong>解答：</strong> 编译为 .o 文件后，这些变量和字符串会被放置在不同的 section 中，从返回的ELF信息可以看到，</p>
+<ul>
+<li>[3]号节即.data section：global_init, global_init_static, local_init_static</li>
+<li>栈: Auto 自动变量：local_init</li>
+<li>[4]号节即.bss section：global_uninit_static, local_uninit_static</li>
+<li>[5]号节即.rodata section：包含const声明的对象(除了global_uninit_const)</li>
+<li>COM 公共变量：global_uninit, global_uninit_const</li>
+</ul>
+<p>【C语言复习】</p>
+<ul>
+<li>存储类型 static 的作用：</li>
+<li>块外：外部链接改为内部链接</li>
+<li>块内：自动存储期限改为静态存储期限</li>
+<li>类型限定符 const 的作用：只读</li>
+</ul>
+<h3 id="3">练习 3</h3>
+<p>熟悉交叉编译概念，使用 riscv gcc 编译代码并使用 binutils 工具对生成的目标文件和可执行文件（ELF 格式）进行分析。具体要求如下：</p>
+<ul>
+<li>编写一个简单的打印 “hello world！” 的程序源文件：hello.c</li>
+<li>对源文件进行编译，生成针对支持 rv32ima 指令集架构处理器的目标文件 hello.o。</li>
+<li>查看 hello.o 的文件的文件头信息。</li>
+<li>查看 hello.o 的 Section header table。</li>
+<li>对 hello.o 反汇编，并查看 hello.c 的 C</li>
+</ul>
+<p><strong>解答</strong></p>
+<p>1.编写一个简单的打印 “hello world！” 的程序源文件：hello.c</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="p">{</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;hellp world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>&gt;<span class="w"> </span>riscv64-unknown-elf-gcc<span class="w"> </span>-march<span class="o">=</span>rv32ima<span class="w"> </span>-mabi<span class="o">=</span>ilp32<span class="w"> </span>hello.c<span class="w"> </span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>hello.c:1:10:<span class="w"> </span>fatal<span class="w"> </span>error:<span class="w"> </span>stdio.h:<span class="w"> </span>No<span class="w"> </span>such<span class="w"> </span>file<span class="w"> </span>or<span class="w"> </span>directory
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="w">    </span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="c1">#include &lt;stdio.h&gt;</span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="w">      </span><span class="p">|</span><span class="w">          </span>^~~~~~~~~
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>compilation<span class="w"> </span>terminated.
+</span></code></pre></div>
+<p>如果报错，可以换成riscv64-linux-gun-gcc</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>gcc-riscv64-linux-gun
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>$<span class="w"> </span>riscv64-linux-gun-gcc<span class="w"> </span>hello.c
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>$<span class="w"> </span>file<span class="w"> </span>a.out
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>a.out:<span class="w"> </span>ELF<span class="w"> </span><span class="m">64</span>-bit<span class="w"> </span>LSB<span class="w"> </span>shared<span class="w"> </span>object,<span class="w"> </span>UCB<span class="w"> </span>RISC-V,<span class="w"> </span>version<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">(</span>SYSV<span class="o">)</span>,<span class="w"> </span>dynamically<span class="w"> </span>linked,<span class="w"> </span>interpreter<span class="w"> </span>/lib/ld-linux-riscv64-lp64d.so.1,<span class="w"> </span>BuildID<span class="o">[</span>sha1<span class="o">]=</span>6b3277a79e18ad6acfa00fb14e8f73a2b33fa3a3,<span class="w"> </span><span class="k">for</span><span class="w"> </span>GNU/Linux<span class="w"> </span><span class="m">4</span>.15.0,<span class="w"> </span>not<span class="w"> </span>stripped
+</span></code></pre></div>
+<p>2.对源文件进行编译，生成针对支持 rv32ima 指令集架构处理器的目标文件 hello.o。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>&gt;<span class="w"> </span>riscv64-linux-gnu-gcc<span class="w"> </span>-c<span class="w"> </span>hello.c<span class="w"> </span>-o<span class="w"> </span>hello.o
+</span></code></pre></div>
+<p>3.查看 hello.o 的文件的文件头信息。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>&gt;<span class="w"> </span>readelf<span class="w"> </span>-h<span class="w"> </span>hello.o
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>ELF<span class="w"> </span>Header:
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">  </span>Magic:<span class="w">   </span>7f<span class="w"> </span><span class="m">45</span><span class="w"> </span>4c<span class="w"> </span><span class="m">46</span><span class="w"> </span><span class="m">02</span><span class="w"> </span><span class="m">01</span><span class="w"> </span><span class="m">01</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">  </span>Class:<span class="w">                             </span>ELF64
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="w">  </span>Data:<span class="w">                              </span><span class="m">2</span><span class="err">&#39;</span>s<span class="w"> </span>complement,<span class="w"> </span>little<span class="w"> </span>endian
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="w">  </span>Version:<span class="w">                           </span><span class="m">1</span><span class="w"> </span><span class="o">(</span>current<span class="o">)</span>
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="w">  </span>OS/ABI:<span class="w">                            </span>UNIX<span class="w"> </span>-<span class="w"> </span>System<span class="w"> </span>V
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="w">  </span>ABI<span class="w"> </span>Version:<span class="w">                       </span><span class="m">0</span>
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="w">  </span>Type:<span class="w">                              </span>REL<span class="w"> </span><span class="o">(</span>Relocatable<span class="w"> </span>file<span class="o">)</span>
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a><span class="w">  </span>Machine:<span class="w">                           </span>RISC-V
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="w">  </span>Version:<span class="w">                           </span>0x1
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="w">  </span>Entry<span class="w"> </span>point<span class="w"> </span>address:<span class="w">               </span>0x0
+</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a><span class="w">  </span>Start<span class="w"> </span>of<span class="w"> </span>program<span class="w"> </span>headers:<span class="w">          </span><span class="m">0</span><span class="w"> </span><span class="o">(</span>bytes<span class="w"> </span>into<span class="w"> </span>file<span class="o">)</span>
+</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a><span class="w">  </span>Start<span class="w"> </span>of<span class="w"> </span>section<span class="w"> </span>headers:<span class="w">          </span><span class="m">712</span><span class="w"> </span><span class="o">(</span>bytes<span class="w"> </span>into<span class="w"> </span>file<span class="o">)</span>
+</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a><span class="w">  </span>Flags:<span class="w">                             </span>0x5,<span class="w"> </span>RVC,<span class="w"> </span>double-float<span class="w"> </span>ABI
+</span><span id="__span-25-16"><a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a><span class="w">  </span>Size<span class="w"> </span>of<span class="w"> </span>this<span class="w"> </span>header:<span class="w">               </span><span class="m">64</span><span class="w"> </span><span class="o">(</span>bytes<span class="o">)</span>
+</span><span id="__span-25-17"><a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a><span class="w">  </span>Size<span class="w"> </span>of<span class="w"> </span>program<span class="w"> </span>headers:<span class="w">           </span><span class="m">0</span><span class="w"> </span><span class="o">(</span>bytes<span class="o">)</span>
+</span><span id="__span-25-18"><a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a><span class="w">  </span>Number<span class="w"> </span>of<span class="w"> </span>program<span class="w"> </span>headers:<span class="w">         </span><span class="m">0</span>
+</span><span id="__span-25-19"><a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a><span class="w">  </span>Size<span class="w"> </span>of<span class="w"> </span>section<span class="w"> </span>headers:<span class="w">           </span><span class="m">64</span><span class="w"> </span><span class="o">(</span>bytes<span class="o">)</span>
+</span><span id="__span-25-20"><a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a><span class="w">  </span>Number<span class="w"> </span>of<span class="w"> </span>section<span class="w"> </span>headers:<span class="w">         </span><span class="m">11</span>
+</span><span id="__span-25-21"><a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a><span class="w">  </span>Section<span class="w"> </span>header<span class="w"> </span>string<span class="w"> </span>table<span class="w"> </span>index:<span class="w"> </span><span class="m">10</span>
+</span></code></pre></div>
+<p>Machine: RISC-V</p>
+<p>4.查看 hello.o 的 Section header table。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>&gt;<span class="w"> </span>readelf<span class="w"> </span>-SW<span class="w"> </span>hello.o
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>There<span class="w"> </span>are<span class="w"> </span><span class="m">11</span><span class="w"> </span>section<span class="w"> </span>headers,<span class="w"> </span>starting<span class="w"> </span>at<span class="w"> </span>offset<span class="w"> </span>0x2c8:
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>Section<span class="w"> </span>Headers:
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="w">  </span><span class="o">[</span>Nr<span class="o">]</span><span class="w"> </span>Name<span class="w">              </span>Type<span class="w">            </span>Address<span class="w">          </span>Off<span class="w">    </span>Size<span class="w">   </span>ES<span class="w"> </span>Flg<span class="w"> </span>Lk<span class="w"> </span>Inf<span class="w"> </span>Al
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">0</span><span class="o">]</span><span class="w">                   </span>NULL<span class="w">            </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000000</span><span class="w"> </span><span class="m">000000</span><span class="w"> </span><span class="m">00</span><span class="w">      </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">0</span>
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">1</span><span class="o">]</span><span class="w"> </span>.text<span class="w">             </span>PROGBITS<span class="w">        </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000040</span><span class="w"> </span><span class="m">000022</span><span class="w"> </span><span class="m">00</span><span class="w">  </span>AX<span class="w">  </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">2</span>
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">2</span><span class="o">]</span><span class="w"> </span>.rela.text<span class="w">        </span>RELA<span class="w">            </span><span class="m">0000000000000000</span><span class="w"> </span>0001e0<span class="w"> </span><span class="m">000090</span><span class="w"> </span><span class="m">18</span><span class="w">   </span>I<span class="w">  </span><span class="m">8</span><span class="w">   </span><span class="m">1</span><span class="w">  </span><span class="m">8</span>
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">3</span><span class="o">]</span><span class="w"> </span>.data<span class="w">             </span>PROGBITS<span class="w">        </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000062</span><span class="w"> </span><span class="m">000000</span><span class="w"> </span><span class="m">00</span><span class="w">  </span>WA<span class="w">  </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">1</span>
+</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">4</span><span class="o">]</span><span class="w"> </span>.bss<span class="w">              </span>NOBITS<span class="w">          </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000062</span><span class="w"> </span><span class="m">000000</span><span class="w"> </span><span class="m">00</span><span class="w">  </span>WA<span class="w">  </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">1</span>
+</span><span id="__span-26-11"><a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">5</span><span class="o">]</span><span class="w"> </span>.rodata<span class="w">           </span>PROGBITS<span class="w">        </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000068</span><span class="w"> </span>00000d<span class="w"> </span><span class="m">00</span><span class="w">   </span>A<span class="w">  </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">8</span>
+</span><span id="__span-26-12"><a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">6</span><span class="o">]</span><span class="w"> </span>.comment<span class="w">          </span>PROGBITS<span class="w">        </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000075</span><span class="w"> </span>00002a<span class="w"> </span><span class="m">01</span><span class="w">  </span>MS<span class="w">  </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">1</span>
+</span><span id="__span-26-13"><a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">7</span><span class="o">]</span><span class="w"> </span>.note.GNU-stack<span class="w">   </span>PROGBITS<span class="w">        </span><span class="m">0000000000000000</span><span class="w"> </span>00009f<span class="w"> </span><span class="m">000000</span><span class="w"> </span><span class="m">00</span><span class="w">      </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">1</span>
+</span><span id="__span-26-14"><a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">8</span><span class="o">]</span><span class="w"> </span>.symtab<span class="w">           </span>SYMTAB<span class="w">          </span><span class="m">0000000000000000</span><span class="w"> </span>0000a0<span class="w"> </span><span class="m">000120</span><span class="w"> </span><span class="m">18</span><span class="w">      </span><span class="m">9</span><span class="w">  </span><span class="m">10</span><span class="w">  </span><span class="m">8</span>
+</span><span id="__span-26-15"><a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="m">9</span><span class="o">]</span><span class="w"> </span>.strtab<span class="w">           </span>STRTAB<span class="w">          </span><span class="m">0000000000000000</span><span class="w"> </span>0001c0<span class="w"> </span>00001d<span class="w"> </span><span class="m">00</span><span class="w">      </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">1</span>
+</span><span id="__span-26-16"><a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a><span class="w">  </span><span class="o">[</span><span class="m">10</span><span class="o">]</span><span class="w"> </span>.shstrtab<span class="w">         </span>STRTAB<span class="w">          </span><span class="m">0000000000000000</span><span class="w"> </span><span class="m">000270</span><span class="w"> </span><span class="m">000052</span><span class="w"> </span><span class="m">00</span><span class="w">      </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">1</span>
+</span><span id="__span-26-17"><a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a>Key<span class="w"> </span>to<span class="w"> </span>Flags:
+</span><span id="__span-26-18"><a id="__codelineno-26-18" name="__codelineno-26-18" href="#__codelineno-26-18"></a><span class="w">  </span>W<span class="w"> </span><span class="o">(</span>write<span class="o">)</span>,<span class="w"> </span>A<span class="w"> </span><span class="o">(</span>alloc<span class="o">)</span>,<span class="w"> </span>X<span class="w"> </span><span class="o">(</span>execute<span class="o">)</span>,<span class="w"> </span>M<span class="w"> </span><span class="o">(</span>merge<span class="o">)</span>,<span class="w"> </span>S<span class="w"> </span><span class="o">(</span>strings<span class="o">)</span>,<span class="w"> </span>I<span class="w"> </span><span class="o">(</span>info<span class="o">)</span>,
+</span><span id="__span-26-19"><a id="__codelineno-26-19" name="__codelineno-26-19" href="#__codelineno-26-19"></a><span class="w">  </span>L<span class="w"> </span><span class="o">(</span>link<span class="w"> </span>order<span class="o">)</span>,<span class="w"> </span>O<span class="w"> </span><span class="o">(</span>extra<span class="w"> </span>OS<span class="w"> </span>processing<span class="w"> </span>required<span class="o">)</span>,<span class="w"> </span>G<span class="w"> </span><span class="o">(</span>group<span class="o">)</span>,<span class="w"> </span>T<span class="w"> </span><span class="o">(</span>TLS<span class="o">)</span>,
+</span><span id="__span-26-20"><a id="__codelineno-26-20" name="__codelineno-26-20" href="#__codelineno-26-20"></a><span class="w">  </span>C<span class="w"> </span><span class="o">(</span>compressed<span class="o">)</span>,<span class="w"> </span>x<span class="w"> </span><span class="o">(</span>unknown<span class="o">)</span>,<span class="w"> </span>o<span class="w"> </span><span class="o">(</span>OS<span class="w"> </span>specific<span class="o">)</span>,<span class="w"> </span>E<span class="w"> </span><span class="o">(</span>exclude<span class="o">)</span>,
+</span><span id="__span-26-21"><a id="__codelineno-26-21" name="__codelineno-26-21" href="#__codelineno-26-21"></a><span class="w">  </span>p<span class="w"> </span><span class="o">(</span>processor<span class="w"> </span>specific<span class="o">)</span>
+</span></code></pre></div>
+<p>对比linux-gcc编译的hello.o 少了3个section</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="o">[</span><span class="w"> </span><span class="m">8</span><span class="o">]</span><span class="w"> </span>.note.gnu.property<span class="w"> </span>NOTE
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="o">[</span><span class="w"> </span><span class="m">9</span><span class="o">]</span><span class="w"> </span>.eh_frame<span class="w">         </span>PROGBITS<span class="w"> </span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="o">[</span><span class="m">10</span><span class="o">]</span><span class="w"> </span>.rela.eh_frame<span class="w">    </span>RELA<span class="w"> </span>
+</span></code></pre></div>
+<p>5.对 hello.o 反汇编，并查看 hello.c 的 C</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>$<span class="w"> </span>riscv64-linux-gnu-gcc<span class="w"> </span>-g<span class="w"> </span>-c<span class="w"> </span>hello.c
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>$<span class="w"> </span>riscv64-linux-gnu-objdump<span class="w"> </span>-d<span class="w"> </span>hello.o
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>hello.o:<span class="w">     </span>file<span class="w"> </span>format<span class="w"> </span>elf64-littleriscv
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>Disassembly<span class="w"> </span>of<span class="w"> </span>section<span class="w"> </span>.text:
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>
+</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a><span class="m">0000000000000000</span><span class="w"> </span>&lt;main&gt;:
+</span><span id="__span-28-10"><a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a><span class="c1">#include &lt;stdio.h&gt;</span>
+</span><span id="__span-28-11"><a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a>
+</span><span id="__span-28-12"><a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a>void<span class="w"> </span>main<span class="o">()</span>
+</span><span id="__span-28-13"><a id="__codelineno-28-13" name="__codelineno-28-13" href="#__codelineno-28-13"></a><span class="o">{</span>
+</span><span id="__span-28-14"><a id="__codelineno-28-14" name="__codelineno-28-14" href="#__codelineno-28-14"></a><span class="w">   </span><span class="m">0</span>:<span class="w">   </span><span class="m">1141</span><span class="w">                    </span>addi<span class="w">    </span>sp,sp,-16
+</span><span id="__span-28-15"><a id="__codelineno-28-15" name="__codelineno-28-15" href="#__codelineno-28-15"></a><span class="w">   </span><span class="m">2</span>:<span class="w">   </span>e406<span class="w">                    </span>sd<span class="w">      </span>ra,8<span class="o">(</span>sp<span class="o">)</span>
+</span><span id="__span-28-16"><a id="__codelineno-28-16" name="__codelineno-28-16" href="#__codelineno-28-16"></a><span class="w">   </span><span class="m">4</span>:<span class="w">   </span>e022<span class="w">                    </span>sd<span class="w">      </span>s0,0<span class="o">(</span>sp<span class="o">)</span>
+</span><span id="__span-28-17"><a id="__codelineno-28-17" name="__codelineno-28-17" href="#__codelineno-28-17"></a><span class="w">   </span><span class="m">6</span>:<span class="w">   </span><span class="m">0800</span><span class="w">                    </span>addi<span class="w">    </span>s0,sp,16
+</span><span id="__span-28-18"><a id="__codelineno-28-18" name="__codelineno-28-18" href="#__codelineno-28-18"></a><span class="w">        </span>printf<span class="o">(</span><span class="s2">&quot;hellp world!\n&quot;</span><span class="o">)</span><span class="p">;</span>
+</span><span id="__span-28-19"><a id="__codelineno-28-19" name="__codelineno-28-19" href="#__codelineno-28-19"></a><span class="w">   </span><span class="m">8</span>:<span class="w">   </span><span class="m">00000517</span><span class="w">                </span>auipc<span class="w">   </span>a0,0x0
+</span><span id="__span-28-20"><a id="__codelineno-28-20" name="__codelineno-28-20" href="#__codelineno-28-20"></a><span class="w">   </span>c:<span class="w">   </span><span class="m">00050513</span><span class="w">                </span>mv<span class="w">      </span>a0,a0
+</span><span id="__span-28-21"><a id="__codelineno-28-21" name="__codelineno-28-21" href="#__codelineno-28-21"></a><span class="w">  </span><span class="m">10</span>:<span class="w">   </span><span class="m">00000097</span><span class="w">                </span>auipc<span class="w">   </span>ra,0x0
+</span><span id="__span-28-22"><a id="__codelineno-28-22" name="__codelineno-28-22" href="#__codelineno-28-22"></a><span class="w">  </span><span class="m">14</span>:<span class="w">   </span>000080e7<span class="w">                </span>jalr<span class="w">    </span>ra<span class="w"> </span><span class="c1"># 10 &lt;main+0x10&gt;</span>
+</span><span id="__span-28-23"><a id="__codelineno-28-23" name="__codelineno-28-23" href="#__codelineno-28-23"></a><span class="o">}</span>
+</span><span id="__span-28-24"><a id="__codelineno-28-24" name="__codelineno-28-24" href="#__codelineno-28-24"></a><span class="w">  </span><span class="m">18</span>:<span class="w">   </span><span class="m">0001</span><span class="w">                    </span>nop
+</span><span id="__span-28-25"><a id="__codelineno-28-25" name="__codelineno-28-25" href="#__codelineno-28-25"></a><span class="w">  </span>1a:<span class="w">   </span>60a2<span class="w">                    </span>ld<span class="w">      </span>ra,8<span class="o">(</span>sp<span class="o">)</span>
+</span><span id="__span-28-26"><a id="__codelineno-28-26" name="__codelineno-28-26" href="#__codelineno-28-26"></a><span class="w">  </span>1c:<span class="w">   </span><span class="m">6402</span><span class="w">                    </span>ld<span class="w">      </span>s0,0<span class="o">(</span>sp<span class="o">)</span>
+</span><span id="__span-28-27"><a id="__codelineno-28-27" name="__codelineno-28-27" href="#__codelineno-28-27"></a><span class="w">  </span>1e:<span class="w">   </span><span class="m">0141</span><span class="w">                    </span>addi<span class="w">    </span>sp,sp,16
+</span><span id="__span-28-28"><a id="__codelineno-28-28" name="__codelineno-28-28" href="#__codelineno-28-28"></a><span class="w">  </span><span class="m">20</span>:<span class="w">   </span><span class="m">8082</span><span class="w">                    </span>ret
+</span></code></pre></div>
+<h3 id="4">练习 4</h3>
+<p>基于 练习 3 继续熟悉 qemu/gdb 等工具的使用，具体要求如下：</p>
+<ul>
+<li>将 hello.c 编译成可调式版本的可执行程序 a.out</li>
+<li>先执行 qemu-riscv32 运行 a.out。</li>
+<li>使用 qemu-riscv32 和 gdb 调试 a.out。</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>&gt;<span class="w"> </span>riscv64-linux-gnu-gcc<span class="w"> </span>-march<span class="o">=</span>rv32im<span class="w"> </span>-mabi<span class="o">=</span>ilp32<span class="w"> </span>-g<span class="w"> </span>hello.c<span class="w"> </span>-o<span class="w"> </span>a.out
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>&gt;<span class="w"> </span>qemu-riscv32<span class="w"> </span>./a.out
+</span></code></pre></div>
+<h3 id="5">练习 5</h3>
+<p>自学 Makefile 的语法，理解在 riscv 仓库的根目录下执行 make 会发生什么。</p>
+<div class="language-makefile highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="cp">include ../../common.mk</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="nv">SRCS_ASM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="w">    </span>start.S<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="nv">SRCS_C</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="w">    </span>kernel.c<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>
+</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a><span class="nv">OBJS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>SRCS_ASM:.S<span class="o">=</span>.o<span class="k">)</span>
+</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a><span class="nv">OBJS</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="k">$(</span>SRCS_C:.c<span class="o">=</span>.o<span class="k">)</span>
+</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>
+</span><span id="__span-30-12"><a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a><span class="nv">.DEFAULT_GOAL</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>all
+</span><span id="__span-30-13"><a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a><span class="nf">all</span><span class="o">:</span><span class="w"> </span><span class="n">os</span>.<span class="n">elf</span>
+</span><span id="__span-30-14"><a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a>
+</span><span id="__span-30-15"><a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a><span class="c"># start.o must be the first in dependency!</span>
+</span><span id="__span-30-16"><a id="__codelineno-30-16" name="__codelineno-30-16" href="#__codelineno-30-16"></a><span class="nf">os.elf</span><span class="o">:</span><span class="w"> </span>${<span class="n">OBJS</span>}
+</span><span id="__span-30-17"><a id="__codelineno-30-17" name="__codelineno-30-17" href="#__codelineno-30-17"></a><span class="w">    </span><span class="si">${</span><span class="nv">CC</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">CFLAGS</span><span class="si">}</span><span class="w"> </span>-Ttext<span class="o">=</span>0x80000000<span class="w"> </span>-o<span class="w"> </span>os.elf<span class="w"> </span>$^
+</span><span id="__span-30-18"><a id="__codelineno-30-18" name="__codelineno-30-18" href="#__codelineno-30-18"></a><span class="w">    </span><span class="si">${</span><span class="nv">OBJCOPY</span><span class="si">}</span><span class="w"> </span>-O<span class="w"> </span>binary<span class="w"> </span>os.elf<span class="w"> </span>os.bin
+</span><span id="__span-30-19"><a id="__codelineno-30-19" name="__codelineno-30-19" href="#__codelineno-30-19"></a>
+</span><span id="__span-30-20"><a id="__codelineno-30-20" name="__codelineno-30-20" href="#__codelineno-30-20"></a><span class="nf">%.o </span><span class="o">:</span><span class="w"> </span>%.<span class="n">c</span>
+</span><span id="__span-30-21"><a id="__codelineno-30-21" name="__codelineno-30-21" href="#__codelineno-30-21"></a><span class="w">    </span><span class="si">${</span><span class="nv">CC</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">CFLAGS</span><span class="si">}</span><span class="w"> </span>-c<span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span><span class="w"> </span>$&lt;
+</span><span id="__span-30-22"><a id="__codelineno-30-22" name="__codelineno-30-22" href="#__codelineno-30-22"></a>
+</span><span id="__span-30-23"><a id="__codelineno-30-23" name="__codelineno-30-23" href="#__codelineno-30-23"></a><span class="nf">%.o </span><span class="o">:</span><span class="w"> </span>%.<span class="n">S</span>
+</span><span id="__span-30-24"><a id="__codelineno-30-24" name="__codelineno-30-24" href="#__codelineno-30-24"></a><span class="w">    </span><span class="si">${</span><span class="nv">CC</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">CFLAGS</span><span class="si">}</span><span class="w"> </span>-c<span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span><span class="w"> </span>$&lt;
+</span><span id="__span-30-25"><a id="__codelineno-30-25" name="__codelineno-30-25" href="#__codelineno-30-25"></a>
+</span><span id="__span-30-26"><a id="__codelineno-30-26" name="__codelineno-30-26" href="#__codelineno-30-26"></a><span class="nf">run</span><span class="o">:</span><span class="w"> </span><span class="n">all</span>
+</span><span id="__span-30-27"><a id="__codelineno-30-27" name="__codelineno-30-27" href="#__codelineno-30-27"></a><span class="w">    </span>@<span class="si">${</span><span class="nv">QEMU</span><span class="si">}</span><span class="w"> </span>-M<span class="w"> </span>?<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>virt<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">exit</span>
+</span><span id="__span-30-28"><a id="__codelineno-30-28" name="__codelineno-30-28" href="#__codelineno-30-28"></a><span class="w">    </span>@echo<span class="w"> </span><span class="s2">&quot;Press Ctrl-A and then X to exit QEMU&quot;</span>
+</span><span id="__span-30-29"><a id="__codelineno-30-29" name="__codelineno-30-29" href="#__codelineno-30-29"></a><span class="w">    </span>@echo<span class="w"> </span><span class="s2">&quot;------------------------------------&quot;</span>
+</span><span id="__span-30-30"><a id="__codelineno-30-30" name="__codelineno-30-30" href="#__codelineno-30-30"></a><span class="w">    </span>@<span class="si">${</span><span class="nv">QEMU</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">QFLAGS</span><span class="si">}</span><span class="w"> </span>-kernel<span class="w"> </span>os.elf
+</span><span id="__span-30-31"><a id="__codelineno-30-31" name="__codelineno-30-31" href="#__codelineno-30-31"></a>
+</span><span id="__span-30-32"><a id="__codelineno-30-32" name="__codelineno-30-32" href="#__codelineno-30-32"></a><span class="nf">.PHONY </span><span class="o">:</span><span class="w"> </span><span class="n">debug</span>
+</span><span id="__span-30-33"><a id="__codelineno-30-33" name="__codelineno-30-33" href="#__codelineno-30-33"></a><span class="nf">debug</span><span class="o">:</span><span class="w"> </span><span class="n">all</span>
+</span><span id="__span-30-34"><a id="__codelineno-30-34" name="__codelineno-30-34" href="#__codelineno-30-34"></a><span class="w">    </span>@echo<span class="w"> </span><span class="s2">&quot;Press Ctrl-C and then input &#39;quit&#39; to exit GDB and QEMU&quot;</span>
+</span><span id="__span-30-35"><a id="__codelineno-30-35" name="__codelineno-30-35" href="#__codelineno-30-35"></a><span class="w">    </span>@echo<span class="w"> </span><span class="s2">&quot;-------------------------------------------------------&quot;</span>
+</span><span id="__span-30-36"><a id="__codelineno-30-36" name="__codelineno-30-36" href="#__codelineno-30-36"></a><span class="w">    </span>@<span class="si">${</span><span class="nv">QEMU</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">QFLAGS</span><span class="si">}</span><span class="w"> </span>-kernel<span class="w"> </span>os.elf<span class="w"> </span>-s<span class="w"> </span>-S<span class="w"> </span><span class="p">&amp;</span>
+</span><span id="__span-30-37"><a id="__codelineno-30-37" name="__codelineno-30-37" href="#__codelineno-30-37"></a><span class="w">    </span>@<span class="si">${</span><span class="nv">GDB</span><span class="si">}</span><span class="w"> </span>os.elf<span class="w"> </span>-q<span class="w"> </span>-x<span class="w"> </span>../gdbinit
+</span><span id="__span-30-38"><a id="__codelineno-30-38" name="__codelineno-30-38" href="#__codelineno-30-38"></a>
+</span><span id="__span-30-39"><a id="__codelineno-30-39" name="__codelineno-30-39" href="#__codelineno-30-39"></a><span class="nf">.PHONY </span><span class="o">:</span><span class="w"> </span><span class="n">code</span>
+</span><span id="__span-30-40"><a id="__codelineno-30-40" name="__codelineno-30-40" href="#__codelineno-30-40"></a><span class="nf">code</span><span class="o">:</span><span class="w"> </span><span class="n">all</span>
+</span><span id="__span-30-41"><a id="__codelineno-30-41" name="__codelineno-30-41" href="#__codelineno-30-41"></a><span class="w">    </span>@<span class="si">${</span><span class="nv">OBJDUMP</span><span class="si">}</span><span class="w"> </span>-S<span class="w"> </span>os.elf<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
+</span><span id="__span-30-42"><a id="__codelineno-30-42" name="__codelineno-30-42" href="#__codelineno-30-42"></a>
+</span><span id="__span-30-43"><a id="__codelineno-30-43" name="__codelineno-30-43" href="#__codelineno-30-43"></a><span class="nf">.PHONY </span><span class="o">:</span><span class="w"> </span><span class="n">clean</span>
+</span><span id="__span-30-44"><a id="__codelineno-30-44" name="__codelineno-30-44" href="#__codelineno-30-44"></a><span class="nf">clean</span><span class="o">:</span>
+</span><span id="__span-30-45"><a id="__codelineno-30-45" name="__codelineno-30-45" href="#__codelineno-30-45"></a><span class="w">    </span>rm<span class="w"> </span>-rf<span class="w"> </span>*.o<span class="w"> </span>*.bin<span class="w"> </span>*.elf
+</span></code></pre></div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 <a href="https://sheldoncoder1337.github.io">jialecai</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/sheldoncoder1337" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["header.autohide", "content.code.copy", "content.code.select", "content.code.annotate", "content.footnote.tooltips", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

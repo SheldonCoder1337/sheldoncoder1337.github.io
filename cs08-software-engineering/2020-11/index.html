@@ -1,0 +1,2963 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Personal Blog by Sheldon">
+      
+      
+        <meta name="author" content="Jiale Cai (Sheldon)">
+      
+      
+        <link rel="canonical" href="https://sheldoncoder1337.github.io/cs08-software-engineering/2020-11/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>2020年系统架构设计师真题解析 - Harmony</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M22%2012a10%2010%200%200%201-10%2010A10%2010%200%200%201%202%2012%2010%2010%200%200%201%2012%202a10%2010%200%200%201%2010%2010M6%2013h8l-3.5%203.5%201.42%201.42L17.84%2012l-5.92-5.92L10.5%207.5%2014%2011H6z%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Harmony" class="md-header__button md-logo" aria-label="Harmony" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Harmony
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2020年系统架构设计师真题解析
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sheldoncoder1337.github.io/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Harmony" class="md-nav__button md-logo" aria-label="Harmony" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Harmony
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sheldoncoder1337.github.io/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ComputerArchitecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ComputerArchitecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs01-computer-architecture/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DataStructure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DataStructure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs02-data-structure/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs02-data-structure/20-top100/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    top100
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OperatingSystem
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    OperatingSystem
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs03-operating-system/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ComputerNetwork
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ComputerNetwork
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs04-computer-network/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Database
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs05-database-system/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MachineLearning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MachineLearning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs06-machine-learning/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deeplearning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deeplearning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs07-deep-learning/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs07-deep-learning/15-nano-vllm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15-nanovllm.md
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs07-deep-learning/16-asr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16-asr.md
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SoftwareEngineering
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SoftwareEngineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-cookc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01-CookC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Math
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../math/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handbook
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Handbook
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/markdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Markdown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/powershell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Powershell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/git/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/wsl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WSL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/uv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UV
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        综合知识
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="综合知识">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#202001" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.01 操作系统&gt;前趋图
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202002" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.02 操作系统&gt;进程与线程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202003" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.03 操作系统&gt;位示图
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#20204" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.4 操作系统&gt;嵌入式操作系统
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#20205" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.5 数据库系统&gt;逻辑结构设计基本概念
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#20206" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.6 数据库系统&gt;规范化理论
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#20207" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.7 数据库系统&gt;分布式数据库
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#20208" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.8 操作系统&gt;微内核操作系统
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#20209" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.9 操作系统&gt;段页式存储
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202010" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.10 操作系统&gt;段页式存储
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202011" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.11 软件架构设计&gt;软件架构风格&gt;调用返回风格
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202012" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.12 高新技术&gt;区块链
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202013-tcpipdns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.13 计算机网络&gt;TCP/IP协议族&gt;DNS配置文件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202014" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.14 计算机网络&gt;其它
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202015" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.15 信息安全&gt;其它
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202016" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.16 企业信息化战略与实施&gt;政府信息化与电子政务
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202017" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.17 软件工程&gt;可维护性因素
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202018" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.18 软件工程&gt;需求工程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202019" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.19 软件工程&gt;软件生命周期
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202020" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.20 软件工程&gt;软件开发环境
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202021" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.21 软件工程&gt;软件设计
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202022" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.22 软件架构设计&gt;软件质量属性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202023" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.23 软件架构设计&gt;构件与中间件技术&gt;构件基本概念
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202024" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.24 软件架构设计&gt;构件与中间件技术&gt;中间件基本概念
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202025" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.25 软件工程&gt;开发模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.26 软件工程&gt;信息系统开发方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202027" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.27 软件工程&gt;软件测试
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202028-41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.28 软件架构设计&gt;架构”4+1“视图
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202029" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.29 软件架构设计&gt;软件架构评估&gt;敏感点、权衡点、风险点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202030" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.30 软件架构设计&gt;软件架构风格
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202031" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.31 软件工程&gt;设计模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202032" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.32 软件工程&gt;设计模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202033" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.33 软件架构设计&gt;软件质量属性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202034" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.34 信息安全&gt;网络攻击
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202035-kerberos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.35 信息安全&gt;数字证书&gt;Kerberos认证
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202036" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.36 法律法规与标准化&gt;知识产权人确定
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202037" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.37 法律法规与标准化&gt;保护期限
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202038" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.38 数学与经济管理&gt;应用数学中随机模拟
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202039" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.39 数学与经济管理&gt;盈亏平衡点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202040" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2020.40 专业英语
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        案例分析
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="案例分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        案例一：架构风格选型 + 质量属性效用树
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        案例二：数据库设计与建模
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        案例三：嵌入式系统架构设计
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#redis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        案例四：数据管理&gt;Redis缓存
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#web" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        案例五：Web系统架构设计
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构论文
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="架构论文">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        论文一：数据分片技术
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        论文二：云原生架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        论文三：软件测试中缺陷管理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        论文四：论企业集成架构设计及应用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>2020年系统架构设计师真题解析</h1>
+
+<h2 id="_1">综合知识</h2>
+<h3 id="202001">2020.01 操作系统&gt;前趋图</h3>
+<p>前趋图(Precedence Graph)是一个有向无环图，记为：→= {(P, P)IP must complete before Pj may strt}。假设系统中进程P={P1，P2， P3， P4, P5, P6， P7}， 且进程的前趋图如下：</p>
+<pre class="mermaid"><code>flowchart LR
+    P1([P1]) --&gt; P2([P2]);P1 --&gt; P3([P3]);P1 --&gt; P4([P4]);P2 --&gt; P3;P2 --&gt; P5([P5]);P3 --&gt; P4;P3 --&gt; P5;P4 --&gt; P5;P5 --&gt; P6([P6]);P5 --&gt; P7([P7]);P6 --&gt; P7</code></pre>
+<p>那么，该前驱图可记为（）。</p>
+<ul>
+<li>(A) →={(P1, P2), (P3， P1), (P4, P1), (P5, P2), (P5, P3), (P6， P4), (P7, P5), (P7，P6), (P5, P6), (P4, P5), (P6，P7)}</li>
+<li>(B) →={(P1, P2), (P1， P3), (P1, P4), (P2, P5), (P2, P3), (P3， P4), (P3，P5), (P4，P5), (P5, P6), (P5， P7)，(P6，P7)}</li>
+<li>(C) →={(P1, P2), (P1，P3), (P1，P4), (P2， P5), (P2， P3), (P3, P4), (P5, P3), (P4，P5), (P5, P6), (P7， P5)，(P6，P7)}</li>
+<li>(D) →={(P1，P2), (P1，P3), (P2， P3), (P2， P5), (P3， P6)，(P3， P4), (P4, P7), (P5，P6), (P6， P7), (P6，P5), (P7， P5)}</li>
+</ul>
+<p>试题解析：本题是典型的前趋图考查题型。前趋图中，箭线代表前趋关系，结点代表进程，本图中P1是起点， P7是终点，一共有11个前趋关系。每个前趋关系可用（结点1，结点2）的形式表示，如： P1 到P2之间的前趋关系可用：（P1,P2）表示。
+这里可以用排除法得到结果，选项中存在错误的前驱关系就可以直接排除。A选项(P3， P1)错误，不存在P3-&gt;P1的前驱关系。C选项(P5, P3)错误，不存在P5-&gt;P3的前驱关系。D选项(P3， P6)错误，不存在P3-&gt;P6的前驱关系。B选项正确。</p>
+<h3 id="202002">2020.02 操作系统&gt;进程与线程</h3>
+<p>在支持多线程的操作系统中，假设进程P创建了线程T2、T2和T3，那么下列说法正确的是（）。</p>
+<ul>
+<li>(A) 该进程中已打开的文件是不能被T1、T2 和T3共享的</li>
+<li>(B) 该进程中T1的栈指针是不能被T2共享的，但可被T3共享</li>
+<li>(C) 该进程中T1的栈指针是不能被T2和T3共享的</li>
+<li>(D) 该进程中某线程的栈指针是可以被T1、T2和T3共享的</li>
+</ul>
+<p>试题解析：本题是对线程相关概念的考查。在同一进程中的各个线程都可以共享该进程所拥有的资源，但是不能共享进程中某线程的栈指针。其中已打开的文件是可以被T1、T2 和T3共享的，A选项错误。线程的栈指针属于线程独享资源，不可被其他线程共享，D选项错误。T1的栈指针是T1线程独享的，不可以被T2和T3共享，所以B错误，C正确。</p>
+<h3 id="202003">2020.03 操作系统&gt;位示图</h3>
+<p>假设某计算机的字长为32位，该计算机文件管理系统磁盘空间管理采用位示图( bitmap)记录磁盘的使用情况。若磁盘的容量为300GB, 物理块的大小为4MB,那么位示图的大小为（）个字。</p>
+<ul>
+<li>(A) 2400</li>
+<li>(B) 3200</li>
+<li>(C) 6400</li>
+<li>(D) 9600</li>
+</ul>
+<p>试题解析：本题考查的是典型的位示图计算题型。位示图是利用二进制的一位来表示磁盘中的一个盘块的使用情况。一般把“1”作为盘块已分配的标记，把“0”作为空闲标志。因为根据题意系统中字长为32位，所以一个字可记录32个物理块的使用情况为磁盘的容量为300GB，物理块的大小为4MB，那么该磁盘有300*1024/4=76800个物理块，所需的位示图的大小为76800/32=2400个字。所以答案为A选项。</p>
+<h3 id="20204">2020.4 操作系统&gt;嵌入式操作系统</h3>
+<p>实时操作系统主要用于有实时要求的过程控制等领域。因此，在实时操作系统中，对于来自外部的事件必须在（）。</p>
+<ul>
+<li>(A) 一个时间片内进行处理</li>
+<li>(B) 一个周转时间内进行处理</li>
+<li>(C) 一个机器周期内进行处理</li>
+<li>(D) 被控对象允许的时间范围内进行处理</li>
+</ul>
+<p>试题解析：本题考查的实时操作系统相关概念。实时是指计算机对于外来信息能够以足够快的速度进行处理，并在被控对象允许的时间范围内做出快速响应。实时操作系统是保证在一定时间限制内完成特定功能的操作系统。答案选D选项。实时操作系统有硬实时和软实时之分，硬实时要求在规定的时间内必须完成操作，这是在操作系统设计时保证的；软实时则只要按照任务的优先级，尽可能快地完成操作即可。</p>
+<h3 id="20205">2020.5 数据库系统&gt;逻辑结构设计基本概念</h3>
+<p>通常在设计关系模式时，派生属性不会作为关系中的属性来存储。按照这个原则，假设原设计的学生关系模式为Students（学号，姓名，性别，出生日期，年龄，家庭地址），那么该关系模式正确的设计应为（）。</p>
+<ul>
+<li>(A) Students (学号，性别，出生日期，年龄，家庭地址)</li>
+<li>(B) Students (学号，姓名，性别，出生日期，年龄)</li>
+<li>(C) Students (学号，姓名，性别，出生日期，家庭地址)</li>
+<li>(D) Students (学号，姓名，出生日期，年龄，家庭地址)</li>
+</ul>
+<p>试题解析：本题考查的是数据库的基本概念。派生属性是数据库中的衍生数据,是一种特殊属性。派生属性是指可以由其他属性进行计算来获得的属性，如年龄可以由出生日期和系统当前时间计算获得，是派生属性。选项ABD中都有年龄属性，所以只有C选项正确。注意这里出生日期并不是派生属性，因为年龄和系统当前时间只能计算出生年份，不能准确地计算出日期。</p>
+<h3 id="20206">2020.6 数据库系统&gt;规范化理论</h3>
+<p>给出关系R(U,F), U={A,B,C,D,E}， F={A→B,D→C,BC→E,AC→B}，求属性闭包的等式成立的是（） 。R的候选关键字为（）。</p>
+<ul>
+<li>(A) (A)+F = U</li>
+<li>(B) (B)+F = U</li>
+<li>(C) (AC)+F = U</li>
+<li>
+<p>(D) (AD)+F = U</p>
+</li>
+<li>
+<p>(A) AD</p>
+</li>
+<li>(B) AB</li>
+<li>(C) AC</li>
+<li>(D) BC</li>
+</ul>
+<p>试题解析：(X) + F =Y闭包求法：第一步：设最终将成为闭包的属性集是Y，把Y初始化为X；第二步：检查F中的每一个函数依赖A→B，如果属性集A中所有属性均在Y中，而B中有的属性不在Y中，则将其加入到Y中；第三步：重复第二步，直到没有属性可以添加到属性集Y中为止。最后得到的Y就是X＋A选项（A）+ F根据A→B可得（A）+ F ={A,B} , B选项（B）+ F因为不存在B为左侧决定因素的函数依赖，所以（B）+ F ={B} ，C选项（AC）+ F根据A→B, BC→E,AC→B可得（A）+ F ={A，B，C，E} , D选项（BC）+ F根据A→B, BC→E,AC→B可得（A）+ F ={A，B，C，D,E} =U。所以选D选项。如果有属性或属性组能唯一标识元组，则它就是候选码，也就是说，通过函数依赖所求出的候选码的闭包中，能够包含所有的属性。从第一问可以得出属性集AD包含候选码，且（A）+ F ={A,B}，（B）+ F ={B}，所以属性集AD中不存在一个真子集能决定全属性，故AD为R的候选码。答案选A。这里直接画图也可得出候选码。故选DA</p>
+<h3 id="20207">2020.7 数据库系统&gt;分布式数据库</h3>
+<p>在分布式数据库中有分片透明、复制透明、位置透明和逻辑透明等基本概念。其中，（）是指用户无需知道数据存放的物理位置。</p>
+<ul>
+<li>(A) 分片透明</li>
+<li>(B) 逻辑透明</li>
+<li>(C) 位置透明</li>
+<li>(D) 复制透明</li>
+</ul>
+<p>试题解析：本题考查的是分布式数据库的相关概念。分片透明性：是指用户不必关系数据是如何分片的，它们对数据的操作在全局关系上进行，即关系如何分片对用户是透明的，因此，当分片改变时应用程序可以不变。分片透明性是最高层次的透明性，如果用户能在全局关系一级操作，则数据如何分布，如何存储等细节自不必关系，其应用程序的编写与集中式数据库相同。复制透明：用户不用关心数据库在网络中各个节点的复制情况，被复制的数据的更新都由系统自动完成。在分布式数据库系统中，可以把一个场地的数据复制到其他场地存放，应用程序可以使用复制到本地的数据在本地完成分布式操作，避免通过网络传输数据，提高了系统的运行和查询效率。但是对于复制数据的更新操作，就要涉及到对所有复制数据的更新。位置透明性是指用户不必知道所操作的数据放在何处，即数据分配到哪个或哪些站点存储对用户是透明的。因此，数据分片模式的改变，如把数据从一个站点转移到另一个站点将不会影响应用程序，因而应用程序不必改写。局部映像透明性（逻辑透明）：是最低层次的透明性，该透明性提供数据到局部数据库的映像，即用户不必关系局部DBMS支持哪种数据模型、使用哪种数据操纵语言，数据模型和操纵语言的转换是由系统完成的。因此，局部映像透明性对异构型和同构异质的分布式数据库系统是非常重要的。综上，答案应该选C。</p>
+<h3 id="20208">2020.8 操作系统&gt;微内核操作系统</h3>
+<p>以下关于操作系统微内核架构特征的说法，不正确的是（）。</p>
+<ul>
+<li>(A) 微内核的系统结构清晰，利于协作开发</li>
+<li>(B) 微内核代码量少，系统具有良好的可移植性</li>
+<li>(C) 微内核有良好的伸缩性、扩展性</li>
+<li>(D) 微内核的功能代码可以互相调用，性能很高</li>
+</ul>
+<p>试题解析：本题考查微内核操作系统的相关知识。微内核相比于传统内核，效率较差。D选项的叙述是错误的。采用微内核结构的操作系统与传统的操作系统相比，其优点是提高了系统的灵活性、可扩充性，增强了系统的可靠性，提供了对分布式系统的支持。其原因如下：① 灵活性和可扩展性：由于微内核OS的许多功能是由相对独立的服务器软件来实现的，当开发了新的硬件和软件时，微内核OS只须在相应的服务器中增加新的功能，或再增加一个专门的服务器。与此同时，也必然改善系统的灵活性，不仅可在操作系统中增加新的功能，还可修改原有功能，以及删除已过时的功能，以形成一个更为精干有效的操作系统。② 增强了系统的可靠性和可移植性：由于微内核是出于精心设计和严格测试的，容易保证其正确性；另一方面是它提供了规范而精简的应用程序接口（API），为微内核外部的程序编制高质量的代码创造了条件。此外，由于所有服务器都是运行在用户态，服务器与服务器之间采用的是消息传递通信机制，因此，当某个服务器出现错误时，不会影响内核，也不会影响其他服务器。另外，由于在微内核结构的操作系统中，所有与特定CPU和I/O设备硬件有关的代码，均放在内核和内核下面的硬件隐藏层中，而操作系统其他绝大部分（即各种服务器）均与硬件平台无关，因而，把操作系统移植到另一个计算机硬件平台上所需作的修改是比较小的。③ 提供了对分布式系统的支持：由于在微内核OS中，客户和服务器之间以及服务器和服务器之间的通信，是采用消息传递通信机制进行的，致使微内核OS能很好地支持分布式系统和网络系统。事实上，只要在分布式系统中赋予所有进程和服务器唯一的标识符，在微内核中再配置一张系统映射表（即进程和服务器的标识符与它们所驻留的机器之间的对应表），在进行客户与服务器通信时，只需在所发送的消息中标上发送进程和接收进程的标识符，微内核便可利用系统映射表，将消息发往目标，而无论目标是驻留在哪台机器上。</p>
+<h3 id="20209">2020.9 操作系统&gt;段页式存储</h3>
+<p>分页内存管理的核心是将虚拟内存空间和物理内存空间皆划分为大小相同的页面，并以页面作为内存空间的最小分配单位，下图给出了内存管理单元的虚拟的物理页面翻译过程，假设页面大小为4KB，那么CPU发出虚拟地址0010000000000100后，其访问的物理地址是（ ）。</p>
+<ul>
+<li>(A) 110 0000 0000 0100</li>
+<li>(B) 0100000000000100</li>
+<li>(C) 1100000000000000</li>
+<li>(D) 1100000000000010</li>
+</ul>
+<p>试题解析：本题考查的是页式存储地址转换相关计算。逻辑地址=逻辑段号+页内地址，物理地址=物理块号+页内地址。他们的页内地址是相同的，变化的时候只需要将逻辑段号变换为物理块号就可以了。已知页面大小为4K，也就是212，所以页内地址有12位。已知逻辑地址为：0010 0000 0000 0100 所以高4位为页号，低12位为页内偏移量，所以逻辑地址对应的逻辑页号为2（10），由图可知对应的物理块号为110。最后把物理块号和页内偏移地址拼合得：0110 0000 0000 0100，答案选A。</p>
+<h3 id="202010">2020.10 操作系统&gt;段页式存储</h3>
+<p>以下关于计算机内存管理的描述中，（）属于段页式内存管理的描述。</p>
+<ul>
+<li>(A) 一个程序就是一段，使用基址极限对来进行管理</li>
+<li>(B) 一个程序分为许多固定大小的页面，使用页表进行管理</li>
+<li>(C) 程序按逻辑分为多段，每一段内又进行分页，使用段页表来进行管理</li>
+<li>(D) 程序按逻辑分成多段，用一组基址极限对来进行管理。 基址极限对存放在段表里</li>
+</ul>
+<p>试题解析：本题考查的是段页式存储的基本概念。段页式存储管理方式即先将用户程序分成若干个段，再把每个段分成若干个页，并为每一个段赋予一个段名，使用段页表来进行管理。所以正确答案为C选项。选项A的管理方法属于分区式管理；选项B的管理方法属于页式管理；选项D的管理方法属于段式管理。</p>
+<h3 id="202011">2020.11 软件架构设计&gt;软件架构风格&gt;调用返回风格</h3>
+<p>软件脆弱性是软件中存在的弱点(或缺陷)，利用它可以危害系统安全策略，导致信息丢失、系统价值和可用性降低。嵌入式系统软件架构通常采用分层架构，它可以将问题分解为一系列相对独立的子问题，局部化在每一-层中， 从而有效地降低单个问题的规模和复杂性，实现复杂系统的分解。但是，分层架构仍然存在脆弱性。常见的分层架构的脆弱性包括（）等两个方面。</p>
+<ul>
+<li>(A) 底层发生错误会导致整个系统无法正常运行、层与层之间功能引用可能导致功能失效</li>
+<li>(B) 底层发生错误会导致整个系统无法正常运行、层与层之间引入通信机制势必造成性能下降</li>
+<li>(C) 上层发生错误会导致整个系统无法正常运行、层与层之间引入通信机制势必造成性能下降</li>
+<li>(D) 上层发生错误会导致整个系统无法正常运行、层与层之间功能引用可能导致功能失效</li>
+</ul>
+<p>试题解析：本题考查的是分层结构的特点。首先根据分层的特点来看，分层架构是低耦合的，依赖关系非常简单，上层只能依赖于下层，没有循环依赖。所以底层错误将导致整个系统无法运行，而上层错误一般影响的是错误的这一部分，对整个系统的影响并不是完全的。所以C选项和D选项的描述是错误的。其次，系统的风险可以看做是威胁利用了脆弱性而引起的。其中，威胁可以看成从系统外部对系统产生的作用而导致系统功能及目标受阻的现象。脆弱性可以看成是系统内部的薄弱点。脆弱性是客观存在的，但它本身没有实际伤害。B选项“层与层之间引入通信机制势必造成性能下降”是客观存在的系统薄弱点，而A选项的描述是一种可能性并不是客观存在的，所以B选项是系统脆弱性的体现。</p>
+<h3 id="202012">2020.12 高新技术&gt;区块链</h3>
+<p>以下关于区块链应用系统中“挖矿”行为的描述中，错误的是（）。</p>
+<ul>
+<li>(A) 矿工“挖矿”取得区块链的记账权，同时获得代币奖励</li>
+<li>(B) “挖矿”本质上是在尝试计算一个Hash碰撞</li>
+<li>(C) “挖矿”是一种工作量证明机制</li>
+<li>(D) 可以防止比特币的双花攻击</li>
+</ul>
+<p>试题解析：本题考查了区块链技术的相关应用。比特币网络通过“挖矿”来生成新的比特币。所谓“挖矿”实质上是用计算机解决一项复杂的数学问题，来保证比特币网络分布式记账系统的一致性。比特币网络会自动调整数学问题的难度，让整个网络约每10分钟得到一个合格答案。随后比特币网络会新生成一定量的比特币作为区块奖励，奖励获得答案的人。A选项正确。本质上，挖矿的过程就是计算哈希函数，并以此来确认交易的过程。哈希函数值具有不可篡改、不可逆性。但哈希函数输入的原始数据长度是不定长的，可以随意长度，而得出的摘要值是固定长度的。因此，存在一个可能，同样一个哈希值对应的不止一个数据串。这个现象就是哈希碰撞。B选项正确。工作量证明机制（PoW）是我们最熟知的一种共识机制。工作量证明机制PoW就是工作越多，收益越大。这里的工作就是计算出一个满足规则的随机数，谁能最快地计算出唯一的数字，谁就能做信息公示人。C选项正确。“双花”问题是指一笔数字现金在交易中被反复使用的现象。传统的加密数字货币和其他数字资产，都具有无限可复制性，人们在交易过程中，难以确认这笔数字现金是否已经产生过一次交易。在区块链技术中，中本聪通过对产生的每一个区块盖上时间戳（时间戳相当于区块链公证人）的方式保证了交易记录的真实性，保证每笔货币被支付后，不能再用于其他支付。在这个过程中，当且仅当包含在区块中的所有交易都是有效的且之前从未存在过的，其他节点才认同该区块的有效性。所以双花攻击解决的方法就是通过时间戳。用户发起的每一笔交易都有时间记录，“挖矿”行为不能防止双花攻击，D选项错误。</p>
+<h3 id="202013-tcpipdns">2020.13 计算机网络&gt;TCP/IP协议族&gt;DNS配置文件</h3>
+<p>在Linux系统中，DNS的配置文件是（），它包含了主机的域名搜索顺序和DNS服务器的地址。</p>
+<ul>
+<li>(A) /etc/hostname</li>
+<li>(B) /dev/host.conf</li>
+<li>(C) /etc/resolv.conf</li>
+<li>(D) /dev/name .conf</li>
+</ul>
+<p>试题解析：本题考查的是DNS的相关应用。当进行DNS解析的时候，需要系统指定一台DNS服务器，以便当系统要解析域名的时候，可以向所设定的域名服务器进行查询。在包括Linux系统在内的大部分UNIX系统中，DNS服务器的IP地址都存放在/etc/resolv.conf文件中。也就是说在图形方式配置网络参数的时候，所设置的DNS服务器就是存放在这个文件中的。用户也完全可以用手工的方式修改这个文件的内容来进行DNS设置。配置文件不会放在dev目录下。故选C项。补充：/etc/resolv.conf文件的每一行是由一个关键字和随后的参数组成的，常见的关键字有：Nameserver：指定DNS服务器的IP地址，可以有多行，查询的时候按照次序进行，只有当一个DNS服务器不能使用的时候，才查询后面的DNS服务器。Domain：用来定义默认域名（主机的本地域名）。Search它的多个参数指明域名查询顺序。当要查询没有域名的主机，主机将在由Search声明的域中分别查找。domain和Search不能共存；如果同时存在，后面出现的将会被使用。</p>
+<h3 id="202014">2020.14 计算机网络&gt;其它</h3>
+<p>下面关于网络延迟的说法中，正确的是（） 。</p>
+<ul>
+<li>(A) 在对等网络中，网络的延迟大小与网络中的终端数量无关</li>
+<li>(B) 使用路由器进行数据转发所带来的延迟小于交换机</li>
+<li>(C) 使用Intemnet服务能够最大限度地减小网络延迟</li>
+<li>(D) 服务器延迟的主要影响因素是队列延迟和磁盘IO延迟</li>
+</ul>
+<p>试题解析：本题考查的是网络相关知识。对等网络，即对等计算机网络，是一种在对等者(Peer)之间分配任务和工作负载的分布式应用架构，是对等计算模型在应用层形成的一种组网或网络形式。在对等网络中，由于采用总线式的连接，因此网络中的终端数量越多，终端所能够分配到的转发时隙就越小，所带来的延迟也就越大。A选项错误。路由器一般采取存储转发方式，而交换机采取的是直接转发方式，相比存储转发方式，直接转发方式转发时延更小。因为存储转发方式需要对待转发的数据包进行重新拆包，分析其源地址和目的地址，再根据路由表对其进行路由和转发，而直接转发方式不对数据包的三层地址进行分析，因此路由器转发所带来的延迟要小于交换机。B选项错误。数据在Intemet中传输时，由于互联网中的转发数据量大且所需经过的节点多，势必会带来更大的延迟。C选项错误。网络延迟=处理延迟+排队延迟+发送延迟+传播延迟。如果不考虑网络环境，服务器的延迟的主要因素是队列延迟和磁盘IO延迟。D选项正确。</p>
+<h3 id="202015">2020.15 信息安全&gt;其它</h3>
+<p>进行系统监视通常有三种方式：一是通过（），如UNIX/Linux系统中的ps、last等；二是通过系统记录文件查阅系统在特定时间内的运行状态；三是集成命令、文件记录和可视化技术的监控工具，如（） 。</p>
+<ul>
+<li>(A) 系统命令</li>
+<li>(B) 系统调用</li>
+<li>(C) 系统接口</li>
+<li>
+<p>(D) 系统功能</p>
+</li>
+<li>
+<p>(A) Windows 的netstat</p>
+</li>
+<li>(B) Linux 的iptables</li>
+<li>(C) Windows的Perfmon</li>
+<li>(D) Linux 的top</li>
+</ul>
+<p>试题解析：本题考查的是系统安全相关知识。系统监视的目标是为了评估系统性能。要监视系统性能，需要收集某个时间段内的3种不同类型的性能数据：
+（1）常规性能数据。该信息可帮助识别短期趋势（如内存泄漏）。经过一两个月的数据收集后，可以求出结果的平均值并用更紧凑的格式保存这些结果。这种存档数据可帮助人们在业务增长时作出容量规划，并有助于在日后评估上述规划的效果。
+（2）比较基准的性能数据。该信息可帮助人们发现缓慢、历经长时间才发生的变化。通过将系统的当前状态与历史记录数据相比较，可以排除系统问题并调整系统。由于该信息只是定期收集的，所以不必对其进行压缩存储。
+（3）服务水平报告数据。该信息可帮助人们确保系统能满足一定的服务或性能水平，也可能会将该信息提供给并不是性能分析人员的决策者。收集和维护该数据的频率取决于特定的业务需要。</p>
+<p>进行系统监视通常有 3 种方式。一是通过系统本身提供的命令，如 UNIX/Liunx 中的 w、ps、last，Windows 中的 netstat 等，第一空选择A选项。二是通过系统记录文件查阅系统在特定时间内的运行状态；三是集成命令、文件记录和可视化技术，提供直观的界面，操作人员只需要进行一些可视化的设置，而不需要记忆繁杂的命令行参数，即可完成监视操作，如Windows的Perfmon 应用程序。第二空选择C选项。Linux 的top是基于命令行的，Linux 的iptables是基于包过滤的防火墙工具。目前，已经有些厂商提供专业化的监视平台，将上面3 种方式集成到一个统一的监控平台，进行统一监控，并提供各类分析数据和分析报表，帮助用户进行性能的评估和诊断。</p>
+<h3 id="202016">2020.16 企业信息化战略与实施&gt;政府信息化与电子政务</h3>
+<p>与电子政务相关的行为主体主要有三类，即政府、企(事)业单位及居民。因此，政府的业务活动也主要围绕着这三类行为主体展开。政府与政府、政府与企(事)业单位以及政府与居民之间的互动构成了5种不同的、却又相互关联的领域。其中人口信息采集、处理和利用业务属于（）领域; 营业执照的颁发业务属于（）领域; 户籍管理业务属于（）领域; 参加政府工程投标活动属于（）领域。</p>
+<ul>
+<li>(A) 政府对企(事)业单位(G2B) (B) 政府与政府(G2G) (C) 企业对政府(B2G) (D) 政府对居民(G2C)</li>
+<li>(A) 政府对企(事)业单位(G2B) (B) 政府与政府(G2G) (C) 企业对政府(B2G) (D) 政府对居民(G2C)</li>
+<li>(A) 政府对企(事)业单位(G2B) (B) 政府与政府(G2G) (C) 企业对政府(B2G) (D) 政府对居民(G2C)</li>
+<li>(A) 政府对企(事)业单位(G2B) (B) 政府与政府(G2G) (C) 企业对政府(B2G) (D) 政府对居民(G2C)</li>
+</ul>
+<p>试题解析：本题考查的是电子商务相关概念。BADC。
+电子政务主要3类角色：政府、企（事）业单位 及 居民。如果有第4类就是公务员。
+政府对政府（G2G，Government To Government）：政府之间的互动及政府与公务员之间互动。包括基础信息的采集、处理和利用，如人口/地理/资源信息等；各级政府决策支持；政府间通信。第一空选择B选项。
+政府对企业（G2B，Government To Business）：政府为企业提供的政策环境。包括产业政策、进出口、注册、纳税、工资、劳保、社保等各种规定；政府向企事业单位颁发的各种营业执照、许可证、合格证、质量认证等。第二空选择A选项。
+政府对公民（G2C，Government To Citizen）：政府对公民提供的服务。包括关于社区公安和水、火、天灾等与公共安全有关的信息等，还包括户口、各种证件的管理等政府提供的各种服务。第三空选择D选项。
+政府对公务员（G2E，Government To Employee）：政府与政府公务员即政府雇员。包括政府机构通过网络技术实现内部电子化管理（例如，OA系统等）的重要形式。
+政府对企业（G2B，Government To Business）：政府为企业提供的政策环境。 包括给企业单位颁发的各种营业执照、许可证、合格证、质量认证。
+企业对政府（B2G，Business To Government）：企业纳税及企业为政府提供服务。包括企业参加政府各项工程的竞/投标，向政府供应各种商品和服务，企业向政府提建议，申诉。第四空选择C选项。
+政府对公民（G2C，Government To Citizen）：政府对公民提供的服务。包括社区公安和水、火、天灾等与公共安全有关的信息。户口、各种证件和牌照的管理。
+公民对政府（C2G，Citizen To Government）：个人应向政府缴纳税费和罚款及公民反馈渠道。包括个人应向政府缴纳的各种税款和费用了解民意，征求群众意见。报警服务（盗贼、医疗、急救、火警等）。</p>
+<h3 id="202017">2020.17 软件工程&gt;可维护性因素</h3>
+<p>软件文档是影响软件可维护性的决定因素。软件的文档可以分为用户文档和（）两类。其中，用户文档主要描述（）和使用方法，并不关心这些功能是怎样实现的。</p>
+<ul>
+<li>(A) 系统文档 (B) 需求文档 (C) 标准文档 (D) 实现文档</li>
+<li>(A) 系统实现 (B) 系统设计 (C) 系统功能 (D) 系统测试</li>
+</ul>
+<p>试题解析：本题考查的是软件文档相关知识。AC。
+软件系统的文档可以分为用户文档和系统文档两类，它是影响软件可维护性的重要因素。
+用户文档主要描述所交付系统的功能和使用方法，并不关心这些功能是怎样实现的。用户文档是了解系统的第一步，它可以让用户获得对系统准确的初步印象。
+用户文档至少应该包括下述5方面的内容。
+①功能描述：说明系统能做什么。
+②安装文档：说明怎样安装这个系统以及怎样使系统适应特定的硬件配置。
+③使用手册：简要说明如何着手使用这个系统（通过丰富的例子说明怎样使用常用的系统功能，并说明用户操作错误是怎样恢复和重新启动的）。
+④参考手册：详尽描述用户可以使用的所有系统设施以及它们的使用方法，并解释系统可能产生的各种出错信息的含义（对参考手
+册最主要的要求是完整，因此通常使用形式化的描述技术）。
+⑤操作员指南（如果需要有系统操作员的话）：说明操作员应如何处理使用中出现的各种情况。
+系统文档是从问题定义、需求说明到验收测试计划这样一系列和系统实现有关的文档。描述系统设计、实现和测试的文档对于理解程序和维护程序来说是非常重要的。</p>
+<h3 id="202018">2020.18 软件工程&gt;需求工程</h3>
+<p>软件需求开发的最终文档经过评审批准后，就定义了开发工作的（），它在客户和开发者之间构筑了产品功能需求和非功能需求的一个（）， 是需求开发和需求管理之间的桥梁。</p>
+<ul>
+<li>(A) 需求基线 (B) 需求标准 (C) 需求用例 (D) 需求分析</li>
+<li>(A) 需求用例 (B) 需求管理标准 (C) 需求约定 (D) 需求变更</li>
+</ul>
+<p>试题解析：本题是对需求工程相关概念的考查。需求开发的结果应该有项目视图和范围文档、用例文档和SRS，以及相关的分析模型。经评审批准，这些文档就定义了开发工作的需求基线。本题第一空描述的是需求基线，选择A选项。这个基线在用户和开发人员之间就构成了软件需求的一个约定，它是需求开发和需求管理之间的桥梁。第二空选择C选项。</p>
+<h3 id="202019">2020.19 软件工程&gt;软件生命周期</h3>
+<p>软件过程是制作软件产品的-组活动及其结果。这些活动主要由软件人员来完成，软件活动主要包括软件描述、（） 、软件有效性验证和（）。 其中，（）定义了软件功能以及使用的限制。</p>
+<ul>
+<li>(A) 软件模型 (B) 软件需求 (C) 软件分析 (D) 软件开发</li>
+<li>(A) 软件分析 (B) 软件测试 (C) 软件演化 (D) 软件开发</li>
+<li>(A) 软件分析 (B) 软件测试 (C) 软件描述 (D) 软件开发</li>
+</ul>
+<p>试题解析：本题考查的是软件过程的相关知识。
+软件生命周期模型又称软件开发模型（software develop model）或软件过程模型（software process model），它是从某一个特定角度提出的软件过程的简化描述。软件过程模型是软件开发实际过程的抽象与概括，它应该包括构成软件过程的各种活动，也就是对软件开发过程各阶段之间关系的一个描述和表示。
+软件过程模型的基本概念：软件过程是制作软件产品的一组活动以及结果，这些活动主要由软件人员来完成，软件活动主要有如下一些：
+1、软件描述。必须定义软件功能以及使用的限制。第三空选择C选项。
+2、软件开发。也就是软件的设计和实现，软件工程人员制作出能满足描述的软件。
+3、软件有效性验证。软件必须经过严格的验证，以保证能够满足客户的需求。
+4、软件演化。改进软件以适应不断变化的需求。
+第一空和第二空选择D选项和C选项。</p>
+<h3 id="202020">2020.20 软件工程&gt;软件开发环境</h3>
+<p>对应软件开发过程的各种活动，软件开发工具有需求分析工具、（）。 编码与排错工具、测试工具等。按描述需求定义的方法可将需求分析工具分为基于自然语言或图形描述的工具和基于（）的工具。</p>
+<ul>
+<li>(A) 设计工具 (B) 分析工具 (C) 耦合工具 (D) 监控工具</li>
+<li>(A) 用例 (B) 形式化需求定义语言 (C) UML (D) 需求描述</li>
+</ul>
+<p>试题解析：本题考查的软件开发工具的相关知识。AB。
+软件开发工具用来辅助开发人员进行软件开发活动，对应软件开发过程的各种活动，软件开发工具包括需求分析工具、设计工具、编码与排错工具、测试工具等。
+1、需求分析工具用以辅助软件需求分析活动，辅助系统分析员从需求定义出发，生成完成的、清晰的、一致的功能规范。按描述需求定义的方法可以将需求分析工具分为基于自然语言或图像描述的工具和基于形式化需求定义语言的工具。
+（1）基于自然语言或图形描述的工具：这类工具采用分解与抽象等基本手段，对用户问题逐步求精，并在检测机制的辅助下，发现其中可能存在的问题（如一致性），通过对问题描述的修改，逐步形成能正确反映用户需求的功能规范。比如结构化分析方法采用的数据流图。
+（2）基于形式化需求定义语言的工具：基于形式化需求定义语言的工具大多以基于知识的需求智能助手的形式出现，并把人工智
+能技术运用于软件工程。这类工具通常具有一个知识库和一个推理机制。
+（3）其他需求分析工具：可执行规范语言以及原型技术为需求分析工具提供了另一条实现途径，这些工具通过运行可执行规范或
+原型，将有关的结果显示给用户和系统分析员，以便进行需求确认。
+2、设计工具：设计工具用以辅助软件设计活动，辅助设计人员从软件功能规范出发，得到相应的设计规范。
+3、编码与排错工具：编码工具和排错工具用以辅助程序员进行编码活动。编码工具辅助程序员用某种程序语言编制源程序，并对源程序进行翻译，最终转换成可执行的代码，主要有编辑程序、汇编程序、编译程序和生成程序等。排错工具用来辅助程序员寻找源程序中错误的性质和原因，并确定其出错的位置，主要有源代码排错程序和排错程序生成程序两类。
+4、软件维护工具：软件维护工具辅助软件维护过程中的活动，辅助维护人员对软件代码及其文档进行各种维护活动。软件维护工具主要有版本控制工具、文档分析工具、开发信息库工具、逆向工程工具和再工程工具等。
+5、软件管理和软件支持工具：软件管理过程和软件支持过程往往要涉及到软件生存周期中的多个活动，软件管理和软件支持工具用来辅助管理人员和软件支持人员的管理活动和支持活动，以确保软件高质高效地完成。其中常用的工具有项目管理工具、配置管理工具、软件评价工具等。</p>
+<h3 id="202021">2020.21 软件工程&gt;软件设计</h3>
+<p>软件设计包括四个既独立又相互联系的活动：（） .软件结构设计、人机界面设计和（）。</p>
+<ul>
+<li>(A) 用例设计 (B) 数据设计 (C) 程序设计 (D) 模块设计</li>
+<li>(A) 接口设计 (B) 操作设计 (C) 输入输出设计 (D) 过程设计</li>
+</ul>
+<p>试题解析：本题考查的是软件设计阶段的任务。BD。
+软件设计包括体系结构设计、接口设计、数据设计和过程设计。
+结构设计：定义软件系统各主要部件之间的关系。
+数据设计：将模型转换成数据结构的定义。好的数据设计将改善程序结构和模块划分，降低过程复杂性。
+接口设计（人机界面设计）：软件内部，软件和操作系统之间以及软件和人之间如何通信。
+过程设计：系统结构部件转换成软件的过程描述。确定软件各个组成部分内的算法及内部数据结构，并选定某种过程的表达形式来描述各种算法。</p>
+<h3 id="202022">2020.22 软件架构设计&gt;软件质量属性</h3>
+<p>信息隐蔽是开发整体程序结构时使用的法则，通过信息隐蔽可以提高软件的（）、可测试性和（）。</p>
+<ul>
+<li>(A) 可修改性 (B) 可扩充性 (C) 可靠性 (D) 耦合性</li>
+<li>(A) 封装性 (B) 安全性 (C) 可移植性 (D) 可交互性</li>
+</ul>
+<p>试题解析：本题考查的质量属性相关知识。AC。</p>
+<p>信息隐藏是提高可修改性的典型设计策略，又因为信息隐藏可以有一定保密作用，所以也可以提高安全性。
+常考质量属性及相应设计策略如下：
+1、性能。性能（performance）是指系统的响应能力，即要经过多长时间才能对某个事件做出响应，或者在某段时间内系统所能处理的事件的个数。
+代表参数：响应时间、吞吐量 设计策略：优先级队列、资源调度
+2、可用性。可用性（availability）是系统能够正常运行的时间比例。经常用两次故障之间的时间长度或在出现故障时系统能够恢复正常的速度来表示。
+代表参数：故障间隔时间 设计策略：冗余、心跳线
+3、安全性。安全性（security）是指系统在向合法用户提供服务的同时能够阻止非授权用户使用的企图或拒绝服务的能力。安全性又可划分为机密性、完整性、不可否认性及可控性等特性。设计策略：追踪审计
+4、可修改性。可修改性（modifiability）是指能够快速地以较高的性能价格比对系统进行变更的能力。通常以某些具体的变更为基准，通过考察这些变更的代价衡量可修改性。主要策略：信息隐藏
+5、可靠性。可靠性（reliability）是软件系统在应用或系统错误面前，在意外或错误使用的情况下维持软件系统的功能特性的基本能力。主要考虑两个方面：容错、健壮性。代表参数： MTTF、MTBF 设计策略：冗余、心跳线</p>
+<h3 id="202023">2020.23 软件架构设计&gt;构件与中间件技术&gt;构件基本概念</h3>
+<p>按照外部形态，构成一个软件系统的构件可以分为五类，其中，（）是指可以进行版本替换并增加构件新功能。</p>
+<ul>
+<li>(A) 装配的构件</li>
+<li>(B) 可修改的构件</li>
+<li>(C) 有限制的构件</li>
+<li>(D) 适应性构件</li>
+</ul>
+<p>试题解析：本题考查构件的基本概念。B。
+如果把软件系统看成是构件的集合，那么从构件的外部形态来看，构成一个系统的构件可分为5类：
+（1）独立而成熟的构件。独立而成熟的构件得到了实际运行环境的多次检验，该类构件隐藏了所有接口，用户只需用规定好的命令进行使用。例如，数据库管理系统和操作系统等。
+（2）有限制的构件。有限制的构件提供了接口，指出了使用的条件和前提，这种构件在装配时，会产生资源冲突、覆盖等影响，
+在使用时需要加以测试。例如，各种面向对象程序设计语言中的基础类库等。
+（3）适应性构件。适应性构件进行了包装或使用了接口技术，把不兼容性、资源冲突等进行了处理，可以直接使用。这种构件可
+以不加修改地使用在各种环境中。例如ActiveX等。
+（4）装配的构件。装配（assemble）的构件在安装时，已经装配在操作系统、数据库管理系统或信息系统不同层次上，使用胶水代码（glue code）就可以进行连接使用。目前一些软件商提供的大多数软件产品都属这一类。
+（5）可修改的构件。可修改的构件可以进行版本替换。如果对原构件修改错误、增加新功能，可以利用重新“包装”或写接口来实现构件的替换。这种构件在应用系统开发中使用得比较多。</p>
+<h3 id="202024">2020.24 软件架构设计&gt;构件与中间件技术&gt;中间件基本概念</h3>
+<p>中间件是提供平台和应用之间的通用服务，这些服务具有标准的程序接口和协议。中间件的基本功能包括:为客户端和服务器之间提供（）；提供（）保证交易的一致性：提供应用的（） 。</p>
+<ul>
+<li>(A) 连接和通信 (B) 应用程序接口 (C) 通信协议支持 (D) 数据交换标准</li>
+<li>(A) 安全控制机制 (B) 交易管理机制 (C) 标准消息格式 (D) 数据映射机制</li>
+<li>(A) 基础硬件平台 (B) 操作系统服务 (C) 网络和数据库 (D) 负载均衡和高可用性</li>
+</ul>
+<p>试题解析：本题考查的是构件与中间件相关知识。ABD
+中间件是一种独立的系统软件或服务程序，可以帮助分布式应用软件在不同的技术之间共享资源。中间件可以：
+1、负责客户机与服务器之间的连接和通信，以及客户机与应用层之间的高效率通信机制。
+2、提供应用的负载均衡和高可用性、安全机制与管理功能，以及交易管理机制，保证交易的一致性。
+3、提供应用层不同服务之间的互操作机制，以及应用层与数据库之间的连接和控制机制。
+4、提供多层架构的应用开发和运行的平台，以及应用开发框架，支持模块化的应用开发。
+5、屏蔽硬件、操作系统、网络和数据库的差异。
+6、提供一组通用的服务去执行不同的功能，避免重复的工作和使应用之间可以协作。</p>
+<h3 id="202025">2020.25 软件工程&gt;开发模型</h3>
+<p>应用系统开发中可以采用不同的开发模型，其中，（）将整个开发流程分为 目标设定、风险分析、开发和有效性验证、评审四个部分：（）则通过重用来提高软件的可靠性和易维护性，程序在进行修改时产生较少的副作用。</p>
+<ul>
+<li>(A) 瀑布模型 (B) 螺旋模型 (C) 构件模型 (D) 对象模型</li>
+<li>(A) 瀑布模型 (B) 螺旋模型 (C) 构件模型 (D) 对象模型</li>
+</ul>
+<p>试题解析：本题考查的是软件开发模型相关知识。BC</p>
+<p>瀑布模型可以说是最早使用的软件生存周期模型之一。由于这个模型描述了软件生存的一些基本过程活动，所以它被称为软件生存周期模型。这些活动从一个阶段到另一个阶段逐次下降，形式上很像瀑布。瀑布模型的特点是因果关系紧密相连，前一个阶段工作的结果是后一个阶段工作的输入。本题与瀑布模型无关。</p>
+<p>螺旋模型是在快速原型的基础上扩展而成的。这个模型把整个软件开发流程分成多个阶段，每个阶段都由4部分组成，它们是：①目标设定。为该项目进行需求分析，定义和确定这一个阶段的专门目标，指定对过程和产品的约束，并且制定详细的管理计划。②风险分析。对可选方案进行风险识别和详细分析，制定解决办法，采取有效的措施避免这些风险。③开发和有效性验证。风险评估后，可以为系统选择开发模型，并且进行原型开发，即开发软件产品。④评审。对项目进行评审，以确定是否需要进入螺旋线的下一次回路，如果决定继续，就要制定下一阶段计划。第一题答案为A选项。
+构件组装模型通过重用来提高软件的可靠性和易维护性，程序在进行修改时产生较少的副作用。一般开发过程为：设计构件组装-&gt;建立构件库-&gt;构建应用软件-&gt;测试与发布。构件组装模型的优点如下：（1）构件的自包容性让系统的扩展变得更加容易。（2）设计良好的构件更容易被重用，降低软件开发成本。（3）构件的粒度较整个系统更小，因此安排开发任务更加灵活，可以将开发团队分成若干组，并行地独立开发构件。</p>
+<h3 id="202026">2020.26 软件工程&gt;信息系统开发方法</h3>
+<p>关于敏捷开发方法的特点，不正确的是（）。</p>
+<ul>
+<li>(A) 敏捷开发方法是适应性而非预设性</li>
+<li>(B) 敏捷开发方法是面向过程的而非面向人的</li>
+<li>(C) 采用迭代增量式的开发过程，发行版本小型化</li>
+<li>(D) 敏捷开发中强调开发过程中相关人员之间的信息交流</li>
+</ul>
+<p>试题解析：本题考查的是敏捷开发方法的相关知识。B选项描述错误，本题选择B选项。</p>
+<p>敏捷开发是一种以人为核心、迭代、循序渐进的开发方法。在敏捷开发中，软件项目的构建被切分成多个子项目，各个子项目的成果都经过测试，具备集成和可运行的特征。换言之，就是把一个大项目分为多个相互联系，但也可独立运行的小项目，并分别完成，在此过程中软件一直处于可使用状态。敏捷方法特别强调相关人员之间的信息交流。因为项目失败的原因最终都可以追溯到信息没有及时准确地传递到应该接受它的人。特别提倡直接的面对面交流，交流成本远远低于文档的交流。按照高内聚、松散耦合的原则 将项目划分为若干个小组，以增加沟通。</p>
+<p>（1）敏捷开发方法是“适应性”（Adaptive）而非“预设性”（Predictive）。
+（2）敏捷开发方法是“面向人”（people oriented）而非“面向过程”（process oriented）。</p>
+<h3 id="202027">2020.27 软件工程&gt;软件测试</h3>
+<p>自动化测试工具主要使用脚本技术来生成测试用例，其中，（）是录制手 工测试的测试用例时得到的脚本；（）是将测试输入存储在独立的数据文件中，而不是在脚本中。</p>
+<ul>
+<li>(A) 线性脚本 (B) 结构化脚本 (C) 数据驱动脚本 (D) 共享脚本.</li>
+<li>(A) 线性脚本 (B) 结构化脚本 (C) 数据驱动脚本 (D) 共享脚本</li>
+</ul>
+<p>试题解析：本题考查的是自动化测试相关知识。AC</p>
+<p>自动化测试工具主要使用脚本技术来生成测试用例，测试脚本不仅可以在功能测试上模拟用户的操作，比较分析，而且可以用在性能测试、负载测试上，虚拟用户可以同时进行相同的、不同的操作，给被测软件施加足够的数据和操作，检查系统的响应速度和数据吞吐能力。
+线性脚本，是录制手工执行的测试用例得到的脚本，这种脚本包含所有的击键、移动、输入数据等，所有录制的测试用例都可以得到完整的回放。
+结构化脚本，类似于结构化程序设计，具有各种逻辑结构、函数调用功能。
+共享脚本，共享脚本是指可以被多个测试用例使用的脚本，也允许其他脚本调用。共享脚本可以在不同主机、不同系统之间共享，也可以在同一主机、同一系统之间共享。
+数据驱动脚本，将测试输入存储在独立的（数据）文件中，而不是存储在脚本中。可以针对不同数据输入实现多个测试用例.
+关键字驱动脚本，关键字驱动脚本是数据驱动脚本的逻辑扩展。它将数据文
+件变成测试用例的描述，采用一些关键字指定要执行的任务。</p>
+<h3 id="202028-41">2020.28 软件架构设计&gt;架构”4+1“视图</h3>
+<p>考虑软件架构时，重要的是从不同的视角(perspective) 来检查，这促使软件设计师考虑架构的不同属性。例如，展示功能组织的（）能判断质量特性， 展示并发行为的（）能判断系统行为特性。选择的特定视角或视图也就是逻辑视图、进程视图、实现视图和（）。 使用（）来记录设计元素的功能和概念接口，设计元素的功能定义了它本身在系统中的角色，这些角色包括功能、性能等。</p>
+<ul>
+<li>(A) 静态视角 (B) 动态视角 (C) 多维视角 (D) 功能视角</li>
+<li>(A) 开发视角 (B) 动态视角 (C) 部署视角 (D) 功能视角</li>
+<li>(A) 开发视图 (B) 配置视图 (C) 部署视图 (D) 物理视图</li>
+<li>(A) 逻辑视图 (B) 物理视图 (C) 部署视图 (D) 用例视图</li>
+</ul>
+<p>试题解析：本题是对软件架构相关知识的考查。ABBA。</p>
+<p>当考虑架构时，重要的是从不同的视角(perspective)来检查，这促使设计师考虑具体架构的不同属性。例如：展示功能组织的静态视角能判断质量特性，展示并发行为的动态视角能判断系统行为特性。在ABSD（基于架构的软件设计）方法中，使用不同的视角来观察设计元素，一个子系统并不总是一个静态的架构元素，而是可以从动态和静态视角观察的架构元素。将选择的特定视角或视图与Kruchten提出的类似，也就是逻辑视图、进程视图、实现视图和配置视图。使用逻辑视图来记录设计元素的功能和概念接口，设计元素的功能定义了它本身在系统中的角色，这些角色包括功能性能等。进程视图也称为并发视图，使用并发视图来检查系统多用户的并发行为。使用“并发”来代替“进程”，是为了强调没有对进程或线程进行任何操作，一旦这些执行操作，则并发视图就演化为进程视图。使用的最后一个视图是配置视图，配置视图代表了计算机网络中的节点，也就是系统的物理结构。</p>
+<h3 id="202029">2020.29 软件架构设计&gt;软件架构评估&gt;敏感点、权衡点、风险点</h3>
+<p>在软件架构评估中，（）是影响多个质量属性的特性，是多个质量属性的（）。例如，提高加密级别可以提高安全性，但可能要耗费更多的处理时间，影响系统性能。如果某个机密消息的处理有严格的时间延迟要求，则加密级别可能就会成为一个（）。</p>
+<ul>
+<li>(A) 敏感点 (B) 权衡点 (C) 风险决策 (D) 无风险决策</li>
+<li>(A) 敏感点 (B) 权衡点 (C) 风险决策 (D) 无风险决策</li>
+<li>(A) 敏感点 (B) 权衡点 (C) 风险决策 (D) 无风险决策</li>
+</ul>
+<p>试题解析：本题考查的是架构评估相关知识。BAB。</p>
+<p>敏感点是一个或多个构件（和/或构件之间的关系）的特性。
+权衡点是影响多个质量属性的特性，是多个质量属性的敏感点。
+风险点是指架构设计中潜在的、存在问题的架构决策所带来的隐患。
+非风险点是指不会带来隐患，一般以“XXX要求是可以实现（或接受）的”方式表达。
+第一二空答案为BA。
+从题干中“提高加密级别可以提高安全性，但可能要耗费更多的处理时间，影响系统性能。”可以看出改变加密级别可能会对安全性和性能这两个质量属性产生非常重要的影响。所以第三空应该选择B选项权衡点。</p>
+<h3 id="202030">2020.30 软件架构设计&gt;软件架构风格</h3>
+<p>针对二层C/S软件架构的缺点，三层CIS架构应运而生。在三层CIS架构中，增加了一个（）。三层CS架构是将应用功能分成表示层、功能层和（）三个部分。 其中（）是应用的用户接口部分，担负与应用逻辑间的对话功能。</p>
+<ul>
+<li>(A) 应用服务器 (B) 分布式数据库 (C) 内容分发 (D) 镜像</li>
+<li>(A) 硬件层 (B) 数据层 (C) 设备层 (D) 通信层</li>
+<li>(A) 表示层 (B) 数据层 (C) 应用层 (D) 功能层</li>
+</ul>
+<p>试题解析：本题考查的是C/S架构风格的相关知识。ABA。</p>
+<p>C/S架构是基于资源不对等，且为实现共享而提出来的，是20世纪90年代成熟起来的技术，C/S结构将应用一分为二，服务器（后台）负责数据管理，客户机（前台）完成与用户的交互任务。
+C/S软件架构具有强大的数据操作和事务处理能力，模型思想简单，易于人们理解和接受。但随着企业规模的日益扩大，软件的复杂程度不断提高，传统的二层C/S结构存在以下几个局限：
+1.二层C/S结构为单一服务器且以局域网为中心，所以难以扩展至大型企业广域网或Internet；
+2.软、硬件的组合及集成能力有限；
+3.服务器的负荷太重，难以管理大量的客户机，系统的性能容易变坏；
+4.数据安全性不好。因为客户端程序可以直接访问数据库服务器，那么，在客户端计算机上的其他程序也可想办法访问数据库服务器，从而使数据库的安全性受到威胁。
+正是因为二层C/S有这么多缺点，因此，三层C/S结构应运而生。三层C/S结构是将应用功能分成表示层、功能层和数据层三个部分。
+表示层是应用的用户接口部分，它担负着用户与应用间的对话功能。它用于检查用户从键盘等输入的数据，并显示应用输出的数据。在变更用户接口时，只需改写显示控制和数据检查程序，而不影响其他两层。检查的内容也只限于数据的形式和取值的范围，不包括有关业务本身的处理逻辑。
+功能层相当于应用的本体，它是将具体的业务处理逻辑编入程序中。而处理所需的数据则要从表示层或数据层取得。表示层和功能层之间的数据交往要尽可能简洁。
+数据层就是数据库管理系统，负责管理对数据库数据的读写。数据库管理系统必须能迅速执行大量数据的更新和检索。因此，一般从功能层传送到数据层的要求大都使用SQL语言。</p>
+<h3 id="202031">2020.31 软件工程&gt;设计模式</h3>
+<p>经典的设计模式共有23个，这些模式可以按两个准则来分类: -是按设计模式的目的划分，可分为（）型.结构型和行为型三种模式:二是按设计模式的范围划分，可以把设计模式分为类设计模式和（）设计模式。</p>
+<ul>
+<li>(A) 创建 (B) 实例 (C) 代理 (D) 协同.</li>
+<li>(A) 包 (B) 模板 (C) 对象 (D) 架构</li>
+</ul>
+<p>试题解析：本题考查的是设计模式的基本概念。AC。</p>
+<p>设计模式是一套可以被反复使用的、多数人知晓的、经过分类编目的、代码设计经验的总结，使用设计模式是为了可重用代码、让代码更容易被他人理解并且提高代码的可靠性。
+设计模式的分类：
+（1）根据目的分类：
+创建型主要用于创建对象。有工厂方法模式(Factory Method)、抽象工厂模式(Abstract Factory)、建造者模式（Builder)、原型模式(Prototype)、单例模式(Singleton)共5种。
+结构型主要用于处理类和对象的组合。有适配器模（Adapter)、桥接模式（Bridge）、组合模式（Composite）、装饰模式(Decorator)、外观模式(Facade)、享元模式(Flyweight)、代理模式(Proxy)共7种。
+行为型主要用于描述类或对象怎么样交互和怎样分配职责。有指责链模式（Chain of Responsibility）、命令模式（Command)、解释器模式(Interpreter)、迭代器模式(Iterator)、中介者模式(Mediator)、备忘录模式(Memento)、观察者模式(Observer)、状态模式(State)、策略模式(Stratege)、模板方法模式(Template Method)、访问者模式（Visitor)共11种。第一题选择A选项。
+（2）根据作用范围分类：
+可分为类模式和对象模式。
+类模式用于处理类和子类的关系，这种关系通过继承建立，在编译时就确定了，是一种静态关系。
+对象模式处理对象间的关系，具有动态关系。</p>
+<h3 id="202032">2020.32 软件工程&gt;设计模式</h3>
+<p>创建型模式支持对象的创建，该模式允许在系统中创建对象，而不需要在代码中标识特定类的类型，这样用户就不需要编写大量、复杂的代码来初始化对象。在不指定具体类的情况下，（）模式为创建一 系列相关或相互依赖的对象提供了一个接口。（）模式将复杂对象的构建与其表示相分离，这样相同的构造过程可以创建不同的对象。（）模式允许对象在不了解要创建对象的确切类以及如何创建等细节的情况下创建自定义对象。</p>
+<ul>
+<li>(A) Prototype (B) Abstract Factory (C) Builder (D) Singleton</li>
+<li>(A) Prototype (B) Abstract Factory (C) Builder (D) Singleton</li>
+<li>(A) Prototype (B) Abstract Factory (C) Builder (D) Singleton</li>
+</ul>
+<p>试题解析：本题考查的是设计模式的知识内容。Prototype（原型模式）：用原型实例指定创建对象的类型，并且通过拷贝这个原型来创建新的对象。允许对象在不了解创建对象的确切类以及如何创建细节的情况下创建自定义对象。
+Abstract Factory（抽象工厂模式）：提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类。
+Builder（构建器模式）：将一个复杂类的表示与其构造相分离，使得相同的构建过程能够得出不同的表示。
+Singleton（单例模式）：保证一个类只有一个实例，并提供一个访问它的全局访问点。
+所以第一题答案选B抽象工厂模式，第二题答案选C构建器模式，第三题答案选A原型模式。</p>
+<h3 id="202033">2020.33 软件架构设计&gt;软件质量属性</h3>
+<p>某公司欲开发-一个在线教育平台。在架构设计阶段，公司的架构师识别出3个核心质量属性场景。其中“网站在并发用户数量10万的负载情况下，用户请求的平均响应时间应小于3秒”这一场景主要与（）质量属性相关，通常可采用（）架构策略实现该属性:“主站宕机后，系统能够在10秒内自动切换至备用站点并恢复正常运行”主要与（）质量属性相关，通常可采用（）架构策略实现该属性; “系统完成上线后，少量的外围业务功能和界面的调整与修改不超过10人●月”主要与（）质量属性相关。</p>
+<ul>
+<li>(A) 性能 (B) 可用性 (C) 易用性 (D) 可修改性</li>
+<li>(A) 抽象接口 (B) 信息隐藏 (C) 主动冗余 (D) 资源调度</li>
+<li>(A) 性能 (B) 可用性 (C) 易用性 (D) 可修改性</li>
+<li>(A) 记录/回放 (B) 操作串行化 (C) 心跳 (D) 增加计算资源</li>
+<li>(A) 性能 (B) 可用性 (C) 易用性 (D) 可修改性</li>
+</ul>
+<p>试题解析：ADBCD。本题主要考查考生对质量属性的理解和质量属性实现策略的掌握。对于题干描述：“网站在并发用户数量10万的负载情况下，用户请求的平均响应时间应小于3秒”，主要与性能这一质量属性相关，实现该属性的常见架构策略包括：增加计算资源、减少计算开销、引入并发机制、采用资源调度等。“主站宕机后，系统能够在10秒内自动切换至备用站点并恢复正常运行”主要与可用性质量属性相关，通常可采用心跳、Ping/Echo、主动冗余、被动冗余、选举等架构策略实现该属性。 “系统完成上线后，少量的外围业务功能和界面的调整与修改不超过10人/月”主要与可修改性质量属性相关，通常可采用接口-实现分离、抽象、信息隐藏等架构策略实现该属性。</p>
+<h3 id="202034">2020.34 信息安全&gt;网络攻击</h3>
+<p>SYN Flooding攻击的原理是（）。</p>
+<ul>
+<li>(A) 利用TCP三次握手，恶意造成大量TCP半连接，耗尽服务器资源，导致系统拒绝服务</li>
+<li>(B) 操作系统在实现TCP/IP协议栈时，不能很好地处理TCP报文的序列号紊乱问题，导致系统崩溃</li>
+<li>(C) 操作系统在实现TCP/IP协议栈时，不能很好地处理IP分片包的重叠情况，导致系统崩溃</li>
+<li>(D) 操作系统协议栈在处理IP分片时，对于重组后超大的IP数据包不能很好地处理，导致缓存溢出而系统崩溃</li>
+</ul>
+<p>试题解析：本题考查的是SYN Flooding攻击原理相关内容。SYN Flood攻击利用TCP三次握手的一个漏洞向目标计算机发动攻击。攻击者向目标计算机发送TCP连接请求（SYN报文），然后对于目标返回的SYN-ACK报文不作回应。目标计算机如果没有收到攻击者的ACK回应，就会一直等待，形成半连接，直到连接超时才释放。攻击者利用这种方式发送大量TCP SYN报文，让目标计算机上生成大量的半连接，迫使其大量资源浪费在这些半连接上。目标计算机一旦资源耗尽，就会出现速度极慢、正常的用户不能接入等情况。攻击者还可以伪造SYN报文，其源地址是伪造的或者不存在的地址，向目标计算机发起攻击。SYN Flooding攻击与TCP报文的处理过程没有很大的关系。BCD选项错误，A选项正确。</p>
+<h3 id="202035-kerberos">2020.35 信息安全&gt;数字证书&gt;Kerberos认证</h3>
+<p>下面关于Kerberos认证的说法中，错误的是（）。</p>
+<ul>
+<li>(A) Kerberos 是在开放的网络中为用户提供身份认证的一种方式</li>
+<li>(B) 系统中的用户要相互访问必须首先向CA申请票据</li>
+<li>(C) KDC中保存着所有用户的账号和密码</li>
+<li>(D) Kerberos 使用时间戳来防止重放攻击</li>
+</ul>
+<p>试题解析：本题考查的是数字证书相关应用。Kerberos 是一种网络认证协议，其设计目标是通过密钥系统为客户机、服务器应用程序提供强大的认证服务。 Kerberos 作为一种可信任的第三方认证服务，是通过传统的密码技术（如：共享密钥）执行认证服务的。 Kerberos也能达到单点登录的效果，即当Client通过了Kerberos server的认证后，便可以访问多个Real Server。A选项正确。目前常用的密钥分配方式是设立密钥分配中心KDC，KDC是大家都信任的机构，其任务就是给需要进行秘密通信的用户临时分配一个会话密钥。目前用得最多的密钥分配协议是Kerberos。Kerberos使用两个服务器：认证服务器AS、票据授权服务器TGS。在Kerberos认证系统中，用户首先向认证服务器AS申请初始票据，然后票据授权服务器（TGS）获得会话密码。B选项错误，向认证服务器AS申请初始票据而不是认证中心CA。C选项正确。Kerberos可以防止偷听和重放攻击，保护数据的完整性。当客户向票据授予服务器（TGS）请求会话票据时会发送用于会话密钥加密的时间戳，以防止重放攻击；当客户使用从票据授予服务器获取的会话票据请求登录时，要附上用该会话票据加密的时间戳，以防止重放攻击。D选项正确。</p>
+<h3 id="202036">2020.36 法律法规与标准化&gt;知识产权人确定</h3>
+<p>某软件公司根据客户需求，组织研发出-套应用软件，并与本公司的职工签订了保密协议，但是本公司某研发人员将该软件中的算法和部分程序代码公开发表。该软件研发人员（），该软件公司丧失了这套应用软件的（）。</p>
+<ul>
+<li>(A) 与公司共同享有该软件的著作权，是正常行使发表权</li>
+<li>(B) 与公司共同享有该软件的著作权，是正常行使信息网络传播权</li>
+<li>(C) 不享有该软件的著作权，其行为涉嫌侵犯公司的专利权</li>
+<li>
+<p>(D) 不享有该软件的著作权，其行为涉嫌侵犯公司的软件著作权</p>
+</li>
+<li>
+<p>(A) 计算机软件著作权</p>
+</li>
+<li>(B) 发表权</li>
+<li>(C) 专利权</li>
+<li>(D) 商业秘密</li>
+</ul>
+<p>试题解析：根据题目描述，该软件公司的研发人员参与开发的该软件是职务作品，因此该软件著作权属于公司，且该研发人员将该软件中的算法和部分程序代码公开发表的行为涉嫌侵犯公司的软件著作权。根据《合同法》的诚实信用原则和劳动者对单位的忠实义务，保守商业秘密的义务属于法定的义务，权利人与义务人即使没有约定保密期限，只要该项商业秘密未被公开，仍然具有经济价值，且权利人对其采取了合理的保密措施，属于法律意义上的商业秘密，则知悉该商业秘密的单位和个人就应当继续履行保密义务，直到该项商业秘密公开为止，即当事人保密义务的期限与商业秘密的存续期限相同。但当事人另有约定的，依约定。无论什么原因导致商业秘密被公之于众，其“秘密性”不复存在，也就不能作为商业秘密继续保护。因为该研发人员将该软件中的算法和部分程序代码公开发表了，其“秘密性”不复存在，也就丧失了这套应用软件的商业秘密权。故选D、D。</p>
+<h3 id="202037">2020.37 法律法规与标准化&gt;保护期限</h3>
+<p>按照《中华人民共和国著作权法》的权利保护期，（）受到永久保护。</p>
+<ul>
+<li>(A) 发表权</li>
+<li>(B) 修改权</li>
+<li>(C) 复制权</li>
+<li>(D) 发行权</li>
+</ul>
+<p>试题解析：《中华人民共和国著作权法》规定：作者的署名权、修改权、保护作品完整权的保护期不受限制。发表权的保护期限为作者终生及死后50年（第50年12月31日），发行权和复制权的保护期限为作者终生及死后50年（第50年12月31日），合作开发，以最后死亡作者为准。所以答案应该选B。</p>
+<h3 id="202038">2020.38 数学与经济管理&gt;应用数学中随机模拟</h3>
+<p>为近似计算XYZ三维空间内由三个圆柱x2+y2≤1，y2+z2≤1,x2+z2≤1相交部分V的体积，以下四种方案中，（）最容易理解，最容易编程实现。</p>
+<ul>
+<li>(A) 在z=0平面中的圆x2+y2≤1上，近似计算二重积分</li>
+<li>(B) 画出V的形状，将其分解成多个简单形状，分别计算体积后，再求和</li>
+<li>(C) 将V看作多个区域的交集，利用有关并集、差集的体积计算交集体积</li>
+<li>(D) V位于某正立方体M内，利用M内均匀分布的随机点落在V中的比例进行计算</li>
+</ul>
+<p>试题解析：本题考查的是应用数学中随机模拟相关应用。由于3个圆柱相交部分很难画图，并且构造出其图形也很难想象，因此A、B、C三个选项计算难度都比较大。D选项利用随机函数进行计算，比较好实现。对比抽象的3个圆柱相交的图形，在它的外围圈出一个比之较大一些的三维立方体【x∈[-1,1]，y∈[-1,1]，z∈[-1,1]】更容易。构造出立方体后，在计算机上利用伪随机函数，很容易统计出该立方体的随机点位于V【取随机数判断是否满足3个圆柱的公式】的比例。此时立方体体积为（1-（-1））3=8，假设概率值即比例值记作P，由几何概型公式可知：P=V的体积/立方体的体积，也就是说V的体积近似等于该比例值的8倍。故选D。</p>
+<h3 id="202039">2020.39 数学与经济管理&gt;盈亏平衡点</h3>
+<p>某厂生产的某种电视机，销售价为每台2500元，去年的总销售量为25000台，固定成本总额为250万元，可变成本总额为4000万元，税率为16%，则该产品年销售量的盈亏平衡点为（）台(只有在年销售量超过它时才能盈利)。</p>
+<ul>
+<li>(A) 5000</li>
+<li>(B) 10000</li>
+<li>(C) 15000</li>
+<li>(D) 20000</li>
+</ul>
+<p>试题解析：本题考查的是盈亏平衡点计算问题。盈亏平衡点也称为零利润点或保本点，是全部销售收入等于全部成本时的产量。当销售收入高于盈亏平衡点时，表示企业是盈利的状态；当销售收入低于盈亏平衡点时，表示企业是亏损的状态。去年卖了25000台电脑，每台售价2500元，固定成本250万，可变成本4000万，税率16%。总营收：25000<em>2500=6250万。固定成本：250万。可变成本：4000万，占营收比例：64%。税不属于成本，但与可变成本性质相似，会随销量变化。设盈亏平衡时的销售量为X台。则有：2500000+X</em>2500<em>64%+X</em>2500<em>16%=X</em>2500 =&gt; 500X=2500000 =&gt; 解得：X=5000</p>
+<h3 id="202040">2020.40 专业英语</h3>
+<p>The purpose of systems design is to specifya(n)（）, which defines the technologies tobe used to build the proposed information systems. This task is accomplished by analyzing the datamodels and process models that were itally created during（）. The（）is used to .establish physical processes and data stores across a network. To complete this activity, the analystmay involve a number of system designers and（）。 which may be involved in this activity tohelp address business data, process, and location issues. The key inputs to this task are the facts,recommendations, and opinions that are solicited fom various sources and the approved（）from the decision analysis phase.</p>
+<ul>
+<li>(A) physical model (B) prototype system (C) database schema (D) application architecture</li>
+<li>(A) requirements analysis (B) problem analysis (C) cause-ffect analysis (D) decision analysis</li>
+<li>(A) entity-elationship diagram (B) physical data flow diagram (C) data flow diagram (D) physical database model</li>
+<li>(A) system users (B) system analyst (C) system owner (D) project manager</li>
+<li>(A) system architecture (B) system proposal (C) technical model (D) business procedure</li>
+</ul>
+<p>试题解析：DABAB。翻译：系统设计的目的是指定一种（），它定义了用于构建拟议信息系统的技术。此任务通过分析最初在（）期间创建的数据模型和流程模型来完成。（）用于跨网络建立物理过程和数据存储。为了完成这项活动，分析师可能会让许多系统设计师和（）参与这项活动，以帮助解决业务数据、流程和位置问题。这项任务的关键输入是从各种来源征求的事实、建议和意见，以及决策分析阶段获得的批准（）。</p>
+<ul>
+<li>第1题:A.物理模型 B.原型系统 C.数据库模式 D.应用体系架构</li>
+<li>第2题:A.需求分析 B.问题分析 C.因果分析 D.决策分析</li>
+<li>第3题:A.实体联系图 B、物理数据流图 C、数据流图 D、物理数据库模型</li>
+<li>第4题:A.系统用户 B.系统分析师 C.系统所有者 D.项目经理</li>
+<li>第5题:A.系统架构 B.系统建议书 C.技术模型 D.业务流程</li>
+</ul>
+<h2 id="_2">案例分析</h2>
+<h3 id="_3">案例一：架构风格选型 + 质量属性效用树</h3>
+<p>某公司拟开发一套在线软件开发系统，支持用户通过浏览器在线进行软件开发活动。该系统的主要功能包括代码编辑、语法高亮显示、代码编译、系统调试、代码仓库管理等。在需求分析与架构设计阶段，公司提出的需求和质量属性描述如下：</p>
+<p>(a)根据用户的付费情况对用户进行分类，并根据类别提供相应的开发功能；</p>
+<p>(b)在正常负载情况下，系统应在0.2秒内对用户的界面操作请求进行响应；</p>
+<p>(c)系统应该具备完善的安全防护措施，能够对黑客的攻击行为进行检测与防御；</p>
+<p>(d)系统主站点断电后，应在3秒内将请求重定向到备用站点；</p>
+<p>(e)系统支持中文昵称，但用户名必须以字母开头，长度不少于8个字符；</p>
+<p>(f)系统宕机后，需要在15秒内发现错误并启用备用系统；</p>
+<p>(g)在正常负载情况下，用户的代码提交请求应该在0.5秒内完成；</p>
+<p>(h)系统支持硬件设备灵活扩容，应保证在2人·天内完成所有的部署与测试工作；</p>
+<p>(i)系统需要为针对代码仓库的所有操作情况进行详细记录，便于后期查阅与审计；</p>
+<p>(j)更改系统的Web界面风格需要在4人·天内完成；</p>
+<p>(k)系统本身需要提供远程调试接口，支持开发团队进行远程排错。</p>
+<p>在对系统需求、质量属性和架构特性进行分析的基础上，该公司的系统架构的给出了两种候选的架构设计方案，公司目前正在组织相关专家对候选系统架构进行评估。</p>
+<p>【问题1】（13分）</p>
+<p>针对该系统的功能，李工建议采用管道-过滤器(pipe and filter)的架构风格，而王工则建议采用仓库(reposilory)架构风格。请指出该系统更适合采用哪种架构风格，并针对系统的主要功能，从数据处理方式、系统的可扩展性和处理性能三个方面对这两种架构风格进行比较与分析，填写表1-1中的(1)~(4)空白处。</p>
+<p><img alt="表1-1" src="../statics/SA-test/2020/anli-1-1.png" /></p>
+<p>【问题2】（12分）</p>
+<p>在架构评估过程中，质量属性效用树(utility tree)是对系统质量属性进行识别和优先级排序的重要工具。请将合适的质量属性名称填入图1-1中(1)、(2)空白处，并选择题干描述的(a)<sub>(k)填入(3)</sub>(6)空白处，完成该系统的效用树。</p>
+<p><img alt="图1-2 效用树" src="../statics/SA-test/2020/anli-1-2.png" /></p>
+<p>【问题1】
+1.应该采用仓库风格。(5分)
+2.表(1)-(4)空的空白分别为：(8分)
+(1)文件或模型驱动机制，处理流程事先不确定，交互性强
+(2)数据与处理紧耦合，以接口适配方式实现扩展
+(3)中央系统构件体现系统状态，系统执行没有确定的顺序，效能调低？
+(4)共享中心数据，加载共享数据，性能调高？</p>
+<p>【问题2】(12分) (1)安全性 (2)可修改性 (3)g (4)i (5)f (6)j</p>
+<p>试题解析：
+本题考查的是架构设计过程中涉及到的一些质量属性，以及架构风格的对比。
+【问题1】
+在管道/过滤器风格的软件体系结构中，每个构件都有一组输入和输出，数据输入构件，经过内部处理，然后产生数据输出。因此，这里的构件被称为过滤器，这种风格的连接件就像是数据流传输的管道，将一个过滤器的输出传到另一过滤器的输入。
+在仓库(repository)风格中，有两种不同的构件：中央数据结构说明当前状态，独立构件在中央数据存储上执行。一方面，若构件控制共享数据，则仓库是一传统型数据库；另一方面，若中央数据结构的当前状态触发进程执行的选择，则仓库是一黑板系统。
+通过交互方式、数据结构、控制结构和扩展方法分别对仓库风格和管道过滤器风格进行对比，如下所示：
+交互方式：管理过滤器很明显是顺序结构或循环结构，数据在管理中进行传递。而仓库结构是数据在中心位置，所有的处理均是中心结点与周边结点之间的交互，从形态来看，是星型的。
+数据结构：从数据结构来看，仓库风格会使用一个文件将数据保存起来，所有的操作围绕这个文件进行。而管道过滤器则是在过滤器之间传递数据流。
+控制结构：从控制结构来说仓库风格是业务功能驱动，而管道过滤器是由数据流驱动的。
+扩展方法：从扩展方法来讲，管道过滤器是通过过滤器提供标准接口与其它过滤器对接，而数据仓库风格，要共享数据，扩展功能，只要功能的操作与数据模型本身是匹配的就行了，就像我们要共享一个数据库做系统集成，此时共享同一数据库的多个应用系统所用的数据模型一定会是一致的，否则无法去共享。
+【问题2】本题主要考查考生对于软件质量属性的理解、掌握和应用。
+本题考查的是架构设计过程中涉及到的一些质量属性，以及架构风格的对比。常用的质量属性包括：
+1、性能
+性能(performance)是指系统的响应能力，即要经过多长时间才能对某个事件做出响应，或者在某段时间内系统所能处理的事件的个数。
+2、可靠性
+可靠性(reliability)是软件系统在应用或系统错误面前，在意外或错误使用的情况下维持软件系统的功能特性的基本能力。
+3、可用性
+可用性(availability)是系统能够正常运行的时间比例。经常用两次故障之间的时间长度或在出现故障时系统能够恢复正常的速度来表示。
+4、安全性
+安全性(security)是指系统在向合法用户提供服务的同时能够阻止非授权用户使用的企图或拒绝服务的能力。安全性又可划分为机密性、完整性、不可否认性及可控性等特性。
+5、可修改性
+可修改性(modifiability)是指能够快速地以较高的性能价格比对系统进行变更的能力。通常以某些具体的变更为基准，通过考察这些变更的代价衡量可修改性。
+6、易用性
+软件开发工具应有十分友好的用户界面，用户乐于使用；工具应能剪裁和定制，以适应特定用户的需要；工具应能提示用户的交互操作，提供简单有效的执行方式；工具还应能检查用户的操作错误，尽可能自动改正错误。
+识别软件架构质量属性是进行架构设计的重要步骤。根据对相关质量属性的定义和含义，其中：“(c)系统应该具备完善的安全防护措措施，能够对黑客的攻击行为进行检测和防御”、“(i)系统需要针对代码仓库的所有操作进行详细记录；便于后期查阅与审计”属于安全性；“(h)系统支持硬件设备灵活扩容，应保证在2人天内完成”、“(j)更改系统web界面风格需要在4人天内完成”这描述的是系统的可修改性；“(g)在正常负载情况下，户的代码提交请求应在0.5s内完成”描述的是性能属性。</p>
+<h3 id="_4">案例二：数据库设计与建模</h3>
+<p>某企业委托软件公司开发一套包裹信息管理系统，以便于对该企业通过快递收发的包裹信息进行统一管理。在系统设计阶段，需要对不同快递公司的包裹单信息进行建模，其中，邮政包裹单如图2-1所示。</p>
+<p><img alt="图2-1 包裹详情单" src="../statics/SA-test/2020/anli-2-1.png" /></p>
+<p>【问题1】（14分）</p>
+<p>请说明关系型数据库开发中，逻辑数据模型设计过程包含哪些任务？该包裹单的逻辑数据模型中应该包含哪些实体？并给出每个实体的主键属性。</p>
+<p>【问题2】（6分）</p>
+<p>请说明什么是超类实体？结合图中包裹单信息，试设计一种超类实体，给出完整的属性列表。</p>
+<p>【问题3】（5分）</p>
+<p>请说明什么是派生属性，并结合图2-1的包裹单信息说明哪个属性是派生属性。</p>
+<p>【问题1】逻辑结构设计包含的任务主要有：
+（1）把概念结构设计阶段设计好的基本E-R图转换为关系数据库的关系模式；（2）对关系模式进行优化；（3）设计用户视图。
+设计的关系模式主要有：
+收件人信息。主键：证件号
+寄件人信息。主键：用户代码
+包裹单信息。主键：包裹单编号
+快递员信息。主键：员工编号
+邮局站点信息。主键：邮局编号</p>
+<p>【问题2】将一些子实体所共有的属性抽象为一个单独的新实体，这个新的实体就是超类实体。
+比如根据这个包裹单信息可以设计一个 “人员信息”的超类：人员信息（姓名，电话，单位名称，详细地址，邮政编码）。</p>
+<p>【问题3】可以从其它属性得来的属性就叫派生属性。包裹图中的“总计”属性是派生属性。</p>
+<p>【问题1】数据库设计分为概念结构设计、逻辑结构设计物理结构设计：
+概念设计也称为概念结构设计，其任务是在需求分析阶段产生的需求说明书的基础上，按照特定的方法将它们抽象为一个不依赖于任何DBMS的数据模型，即概念模型。概念模型的表现形式即ER模型。
+逻辑设计也称为逻辑结构设计，其主要任务是将概念设计阶段设计好的E-R图转换为与选用的具体机器上的DBMS所支持的数据模型相符合的逻辑结构（如：关系模式）。
+物理设计也称为物理结构设计，其任务是对给定的逻辑模型选取一个最适合应用环境的物理结构，所谓数据库的物理结构，主要是指数据库在物理设备上的存储结构和存取方法。</p>
+<p>【问题2】当较低层次上实体类型表达了与之联系的较高层次上的实体类型的特殊情况时，就称较高层次上实体类型为超类型，反之为子类型。子类到超类的过程为概化，超类到子类的过程为特化。
+①子类与超类之间具有继承特点，即子类包含了超类的所有属性，并且可以比超类拥有更多的属性。
+②这种继承性是通过子类实体和超类实体有相同的实体标识符实现的。</p>
+<p>【问题3】可以从其它属性得来的属性就叫派生属性。包裹图中的“总计”属性是派生属性。可以从资费、挂号费、保价费、回执费累加计算出来。</p>
+<h3 id="_5">案例三：嵌入式系统架构设计</h3>
+<p>某公司一直从事宇航系统研制任务，随着宇航产品综合化、网络化技术发展的需要，公司的业务量急剧增加，研制新的软件架构已迫在眉睫。公司架构师王工广泛调研了多种现代架构的基础，建议采用基于FACE (Future Airborne Capability Environment)的字航系统开放式软件架构，以实现字航系统的跨平台复用，实现字航软件高质量、低成本的开发。公司领导肯定了王工的提案，并指出公司要全面实施基于FACE的开放式软件架构，应注意每个具体项目在实施中如何有效实现从需求到架构设计的关系，掌握基于软件需求的软件架构设计方法，并做好开放式软件架构中各段间的接口标准化设计工作。</p>
+<p>【问题1】(9分) 王工指出，软件开发中需求分析是根本，架构设计是核心，不考虑软件需求便进行软件架构设计很可能导致架构设计的失败，因此，如何把软件需求映射到软件架构至关重要。请从描述语言、非功能性需求描述、需求和架构的一致性等三个方面， 用300字以内的文字说明软件需求到架构的映射存在哪些难点。</p>
+<p>【问题2】(10分) 图3-1是王工给出的FACE架构布局，包括操作系统、I/O 服务、平台服务、传输服务和可移植组件等5个段;操作系统、I0和传输等3个标准接口。请分析图3-1给出的FACE架构的相关信息，用300字以内的文字简要说明FACE 5个段的含义。</p>
+<p><img alt="图3-1 FACE架构" src="../statics/SA-test/2020/anli-3-1.png" /></p>
+<p>【问题3】(6分) FACE架构的核心能力是可支持应用程序的跨平台执行和可移植性，要达到可移植能力，必须解决应用程序的紧耦合和封装的障碍。请用200字以内的文字简要说明在可移植性上，应用程序的紧耦合和封装问题的主要表现分别是什么，并给出解决方案。</p>
+<p>【问题1】（1）需求和架构描述语言存在差异:软件需求是频繁获取的非正规的自然语言，而软件架构常用的是一种正式语言。
+（2）非功能属性难于在架构中描述:系统属性中描述的非功能性需求通常很难在架构模型中形成规约。
+（3）需求和架构的一致性难以保障:从软件需求映射到软件架构的过程中，保持一致性和可追溯性很难，且复杂程度很高，因为单- -的软件需求可能定位到多个软件架构的关注点。反之，架构元素也可能有多个软件需求。</p>
+<p>【问题2】操作系统服务段:为FACE架构其他段提供操作系统、运行时和操作系统级健康监控等服务。通过开放式OSGi框架为上层功能提供OS标准接口，并可实现上层组件的即插即用能力。
+I/O服务段:主要针对专用IO设备进行抽象，屏蔽平台服务段软件与硬件设备的关系。由于图形服务软件和GPU处理器紧密相关，因此I/0服务段不对GPU驱动进行抽象。
+平台服务段:主要是指用户需要的共性软件，如:系统级健康监控(HM).配置、日志和流媒体等服务。本段可包括平台公共服务、平台设备服务和平台图像服务等三类。
+传输服务段:主要为上层可移植组件段提供平台性的数据交换服务。可移植组件将通过传输服务段提供的服务实现交换，禁止组件间直接调用。
+可移植组件段: 提供了多组件使用能力和功能服务。主要包括公共服务和可移植组件两类。</p>
+<p>【问题3】紧耦合问题主要表现在:I/O问题、业务逻辑问题和表现问题。
+解决方案:可采用分离原则，通过隔离实现硬件特定信息和少数模块的代码，减少耦合性。
+封装问题主要表现在: ICD硬编码问题、组件的紧耦合问题、直接调用问题。
+解决方案:可以通过提供数据源或槽的软件服务的方法，将紧耦合组件分解出应用程序，并将平台相关部分加入计算环境中，在计算平台内提供数据源或槽的软件服务，并实现接口标准化。</p>
+<p>【问题1】软件需求是指为用户解决某一问题或达到某一目标所需的软件功能；系统或系统构件为了满足合同、规约、标准或其他正式实行的文档而必须满足或具备的软件功能。
+软件需求包括三个不同的层次：业务需求、用户需求和功能需求；软件需求规格说明还应包括非功能需求，它描述了系统展现给用户的行为和执行的操作等。它包括产品必须遵从的标准、规范和合约；外部界面的具体细节；性能要求；设计或实现的约束条件及质量属性。
+架构，又名软件架构，是有关软件整体结构与组件的抽象描述，用于指导大型软件系统各个方面的设计。
+通常在软件开发过程中，需求会随着开发深入而有所变化，而架构又不能完全地将需求全部反映出来，因此，如何把软件需求映射到软件架构是至关重要一个问题。
+（1）从描述语言方面来讲:软件需求是频繁获取的非正规的自然语言，而软件架构常用的是一种正式语言。
+（2）从非功能性需求描述方面来讲:系统属性中描述的非功能性需求通常很难在架构模型中形成规约。
+（3）从需求和架构的一致性方面来讲:从软件需求映射到软件架构的过程中，保持一致性和可追溯性很难，且复杂程度很高，因为单一的软件需求可能定位到多个软件架构的关注点。反之，架构元素也可能有多个软件需求。</p>
+<p>【问题2】FACE软件架构是建立在操作系统上的一个三维架构，该架构由操作系统、I/O服务、平台服务（PSS）、传输服务（TSS）、可移植组件五部分组成。该软件架构能够更好的将关注点分离，软件功能能够重用，旨在实现FACE的目标——降低研发和集成的成本。
+（1）操作系统服务段：为FACE架构其他段提供操作系统、运行时和操作系统级健康监控等服务。通过开放式OSGi框架为上层功能提供OS标准接口，并可实现上层组件的即插即用能力。本段是FACE架构的基本服务段。
+（2）I/O服务段：主要针对专用I/O设备进行抽象，屏蔽平台服务段软件与硬件设备的关系，形成一种虚拟设备，这里隐含着对系统中的所有硬件I/O的虚拟化。由于图形服务软件和GPU处理器紧密相关，因此I/O服务段不对GPU驱动进行抽象。
+（3）平台服务段：主要是指平台/用户需要的共性服务软件，主要涵盖跨平台的系统管理、共享设备服务，以及健康管理等。如：系统级健康监控（HM）、配置、日志和流媒体等服务。本段主要包括平台公共服务、平台设备服务和平台图像服务等三类。
+（4）传输服务段：通过使用传统跨平台中间件软件（如CORBA、DDA等），为平台上层可移植组件段提供平台性的数据交换服务，可移植组件将通过传输服务段提供的服务实现交换，禁止组件间直接调用。本段应具备QoS质量特征服务、配置能力服务以及分布式传输服务等。
+（5）可移植组件段：为用户软件段，提供了多组件使用能力和功能服务。主要包括公共服务和可移植组件两类。</p>
+<p>【问题3】可移植性是软件质量之一，良好的可移植性可以提高软件的生命周期。可移植性是指软件从一个计算机系统或环境搬到另一个计算机系统或环境的难易程度。
+紧耦合就是模块或者系统之间关系太紧密，存在相互调用。紧耦合系统的缺点在于更新一个模块的结果导致其它模块的结果变化，难以重用特定的关联模块。
+封装，即隐藏对象的属性和实现细节，仅对外公开接口，控制在程序中属性的读和修改的访问级别。
+紧耦合问题主要表现在:I/O问题、业务逻辑问题和表现问题。
+解决方案:可采用分离原则，通过隔离实现硬件特定信息和少数模块的代码，减少耦合性。
+封装问题主要表现在: ICD硬编码问题、组件的紧耦合问题、直接调用问题。
+解决方案:可以通过提供数据源或槽的软件服务的方法，将紧耦合组件分解出应用程序，并将平台相关部分加入计算环境中，在计算平台内提供数据源或槽的软件服务，并实现接口标准化。</p>
+<h3 id="redis">案例四：数据管理&gt;Redis缓存</h3>
+<p>阅读以下关于数据管理的方案设计，在答题纸上回答问题1至问题3。
+【说明】
+互联网公司因业务发展要建立网上平台为用户提供一个对网络文化产品进行评论 (小说，电影等)交流的平台，该平台的部分功能如下
+(a)用户帖子的评论计数器
+(b)支持粉丝列表功能
+(c)支持标签管理
+(d )支持共同好友功能
+(e)提供排名功能
+(f)用户的信息结构化存储
+(g)提供好友信息的发布/订阅功能。
+该系统在性能上需要考虑高性能，并发，以支持大量的用户同时访问，经过考虑，在数据管理上，决定采用Redis+数据库的解决方案。</p>
+<p>【问题1】
+Recdis支持丰富的类型，请选择题干描述的（a）-（g）功能选项。填入表4-1中（1）-（5）空白处</p>
+<p><img alt="表4-1" src="../statics/SA-test/2020/anli-4-1.png" /></p>
+<p>【问题2】
+缓存中存储当前的热点数据Redis为每个key值都设置了过期时间，以提高缓存命中率，为了消除非热点数据Redis选择了定期删除加惰性删除策略。如果该策略失效Redis内存使用率会越来越高，一般采用内存淘汰机制来解决。 请用100字以内的文字，简要描述该策略的失效场景，并给出三种内存淘汰机制。</p>
+<p>【问题1】（1）a（2）b（3）d（4）f（5）e</p>
+<p>【问题2】由于redis定期删除是随机抽取检查，不可能扫描清除掉所有过期的key并删除，然后一些key由于未被请求，惰性删除也未触发。这样redis的内存占用会越来越高。此时就需要内存淘汰机制。常用的内存淘汰机制是六种（volatile-lru、volatile-ttl、volatile-random、allkeys-lru、allkeys-random、no-enviction）。注：任选其中三种都可得分。</p>
+<p>【问题1】</p>
+<p><img alt="解析" src="../statics/SA-test/2020/anli-4-2.png" /></p>
+<p>【问题2】过期策略：即redis针对过期的key使用的清除策略，策略为：定期删除+惰性删除。
+1、定期删除：
+redis 会将每个设置了过期时间的 key 放入到一个独立的字典中，以后会定期遍历这个字典来删除到期的 key。redis默认是每隔 100ms就随机抽取一些设置了过期时间的key，检查其是否过期，如果过期就删除。注意这里是随机抽取的。为什么要随机呢？你想一想假如 redis 存了几十万个 key ，每隔100ms就遍历所有的设置过期时间的 key 的话，就会给 CPU 带来很大的负载。
+2、惰性删除：
+所谓惰性策略就是在客户端访问这个key的时候，redis对key的过期时间进行检查，如果过期了就立即删除，不会给你返回任何东西。
+定期删除可能会导致很多过期key到了时间并没有被删除掉。所以就有了惰性删除。假如你的过期 key，靠定期删除没有被删除掉，还停留在内存里，除非你的系统去查一下那个 key，才会被redis给删除掉。这就是所谓的惰性删除，即当你主动去查过期的key时,如果发现key过期了,就立即进行删除,不返回任何东西.
+由于redis定期删除是随机抽取检查，不可能扫描清除掉所有过期的key并删除，然后一些key由于未被请求，惰性删除也未触发。这样redis的内存占用会越来越高。此时就需要内存淘汰机制。
+主要有如下一些策略：
+1、volatile-lru：从设置过期时间的数据集中挑选出最近最少使用的数据淘汰。没有设置过期时间的key不会被淘汰，这样就可以在增加内存空间的同时保证需要持久化的数据不会丢失。
+2、volatile-ttl：除了淘汰机制采用LRU，策略基本上与volatile-lru相似，从设置过期时间的数据集中挑选将要过期的数据淘汰，ttl值越大越优先被淘汰。
+3、volatile-random：从已设置过期时间的数据集中任意选择数据淘汰。当内存达到限制无法写入非过期时间的数据集时，可以通过该淘汰策略在主键空间中随机移除某个key。
+4、allkeys-lru：从数据集中挑选最近最少使用的数据淘汰，该策略要淘汰的key面向的是全体key集合，而非过期的key集合。
+5、allkeys-random：从数据集中选择任意数据淘汰。
+6、no-enviction：禁止驱逐数据，也就是当内存不足以容纳新入数据时，新写入操作就会报错，请求可以继续进行，线上任务也不能持续进行，采用no-enviction策略可以保证数据不被丢失，这也是系统默认的一种淘汰策略。</p>
+<h3 id="web">案例五：Web系统架构设计</h3>
+<p>阅读以下关于Web系统架构设计的叙述， 在答题纸上回答问题1至问题3。
+【说明】
+开发基于Web的基业设备检测系统，以实现对多种工业数据的分类采集，运行状态检测以及相关信息的管理该系统应具备以下功能：
+现场设备状态采集功能，根据数据类型对设备检测指标状态信号进行分类采集，设备采集数据传输功能；9-11月可靠的传输技术，实现将设备数据从制造现场传输到系统后台设备检测显示功能；对设备的运行状态工作以及报警状态进行检测并提供相应的图形化界面设备信息管理功能；支持设备运行历史状态，报警记录参数信息的查询。
+同时，该系统还需满足以下非功能性需求.
+（a）系统应支持大于100个工业设备的运行检测
+（b）设备数据以制造现场传输到系统后台传输时间小于1s
+（c）系统应在7*24小时工作
+（d）可抵御XSS攻击
+（e）系统在故障情况下，应在0.5小时内恢复
+（f）支持数据审计
+面对系统需求，公司召开项目讨论会议，制定系统设计方案，最终决定使用三层拓补结构，即现场设备数据采集层、Web检测服务层和前端Web显示层。</p>
+<p>【问题1】（6分）请按照性能、安全性和可用性三种非功能需求分类将题干的（a）～（f）填入 （1）～（3）  空白处。非功能性需求归类表：</p>
+<table>
+<thead>
+<tr>
+<th>非功能需求类别</th>
+<th>非功能需求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>性能</td>
+<td>(1)</td>
+</tr>
+<tr>
+<td>安全性</td>
+<td>(2)</td>
+</tr>
+<tr>
+<td>可用性</td>
+<td>(3)</td>
+</tr>
+</tbody>
+</table>
+<p>【问题2】（14分）</p>
+<p>该系统Web检测服务层拟采用SSM框架进行系统研发，SSM工作流程图如下图5-1所示，请从下面给出的(a) ～ (k)中进行选择，补充完善图5-1中(1) ～(7)处空白的内容：
+（a） Connection pool
+（b） Struts2
+（c） Persistent Layer
+（d） Mybatis
+（e） HTTP
+（f） MVC
+（g） Kafka
+（h） ViewLayer
+（i）  Jsp
+（j）  Conrtoller Layer
+（k） Spring</p>
+<p><img alt="SSM框架工作流程图" src="../statics/SA-test/2020/anli-5-1.png" /></p>
+<p>【问题3】（5分）
+该工业设备检测系统拟采用工业控制领域中统一的数据访问机制，实现与各种不同设备的数据交互，请用100以内的文字说明采用标准的数据访问机制的原因。</p>
+<p>【问题1】（1）b、a（2）d、f（3）c、e</p>
+<p>【问题2】（1）a（2）c（3）d（4）k（5）j（6）h（7）i</p>
+<p>【问题3】通过采用标准的数据访问机制，可以屏蔽不同设备之间数据交互的差异，解决了系统使用数据不一致性，又在一定程度上减低了数据结构与应用系统的耦合度，减少了应用系统的维护的工作量。</p>
+<p>试题解析：</p>
+<p>【问题1】本题考查的是架构设计过程中涉及到的一些质量属性。常用的质量属性包括：
+1、性能
+性能（performance）是指系统的响应能力，即要经过多长时间才能对某个事件做出响应，或者在某段时间内系统所能处理的事件的个数。
+2、可靠性
+可靠性（reliability）是软件系统在应用或系统错误面前，在意外或错误使用的情况下维持软件系统的功能特性的基本能力。
+3、可用性
+可用性（availability）是系统能够正常运行的时间比例。经常用两次故障之间的时间长度或在出现故障时系统能够恢复正常的速度来表示。
+4、安全性
+安全性（security）是指系统在向合法用户提供服务的同时能够阻止非授权用户使用的企图或拒绝服务的能力。安全性又可划分为机密性、完整性、不可否认性及可控性等特性。
+5、可修改性
+可修改性（modifiability）是指能够快速地以较高的性能价格比对系统进行变更的能力。通常以某些具体的变更为基准，通过考察这些变更的代价衡量可修改性。
+6、易用性
+软件开发工具应有十分友好的用户界面，用户乐于使用；工具应能剪裁和定制，以适应特定用户的需要；工具应能提示用户的交互操作，提供简单有效的执行方式；工具还应能检查用户的操作错误，尽可能自动改正错误。</p>
+<p>【问题2】Spring 是一个轻量级的企业级应用开发框架，于2004年由 Rod Johnson 发布了1.0 版本，经过多年的更新迭代，已经逐渐成为 Java 开源世界的第一框架，Spring 框架号称 Java EE 应用的一站式解决方案，与各个优秀的 MVC 框架如 SpringMVC、Struts2、JSF 等可以无缝整合，与各个 ORM 框架如 Hibernate、MyBatis、JPA 等也可以无缝衔接，其他各种技术也因为 Spring 的存在而被很容易地整合进项目开发之中，如 Redis 整合、Log4J 整合等等
+SpringMVC 是 Spring 框架体系中的全功能 MVC 模块。SpringMVC 是基于 Java 语言实现 MVC 设计模式的请求驱动类型的轻量级 Web 框架，目的是将 Web 开发模块化及代码简化。其提供了 DispatcherServlet 前端控制器分派请求，同时提供灵活的配置处理程序映射、视图解析，并支持文件上传，目前已经是众多 MVC 框架中的佼佼者。
+MyBatis 的前身是 Apache 社区的一个开源项目 iBatis，于2010年更名为 MyBatis。MyBatis 是支持定制化 SQL、存储过程以及高级映射的优秀的持久层框架，避免了几乎所有的 JDBC 代码和手动设置参数以及获取结果集，使得开发人员更加关注 SQL 本身和业务逻辑，不用再去花费时间关注整个复杂的 JDBC 操作过程。
+Spring+spring mvc+mybatis整合的框架组件图如下所示：</p>
+<p><img alt="SSM框架组件图" src="../statics/SA-test/2020/anli-5-2.png" /></p>
+<p>【问题3】</p>
+<p>该工业设备检测系统需与不同设备进行数据交互，采用标准的数据访问机制可以在硬件供应商和软件开发商之间建立一套完整的规则。只要遵循这套规则，数据交互对两者来说都是透明的，硬件供应商只需考虑应用程序的多种需求和传输协议，软件开发商也不必了解硬件的实质和操作过程，实现对设备数据采集的统一管理。</p>
+<p>标准的数据访问机制可以在硬件供应商和软件开发商之间建立一套完整的规则。只要遵循这套规则，数据交互对两者来说都是透明的，硬件供应商只需考虑应用程序的多种需求和传输协议，软件开发商也不必了解硬件的实质和操作过程，实现对设备数据采集的统一管理。</p>
+<p>例如，OPC (OLE for Process Control)即用于过程控制的OLE,是一个工业标准。OPC是为了不同供应厂商的设备和应用程序之间的软件接口标准化，使其间的数据交换更加简单化的目的而提出的。作为结果，可以向用户提供不依赖于特定开发语言和开发环境且可以自由组合使用的过程控制软件组件产品。利用OPC的系统，是由按照应用程序（客户程序）的要求提供数据采集服务的OPC服务器，使用OPC服务器所必需的OPC接口，以及接受服务的OPC应用程序所构成。OPC服务器是按照各个供应厂商的硬件所开发的，使之可以吸收各个供应厂商硬件和系统的差异，从而实现不依存于硬件的系统构成。同时利用一种叫作Variant的数据类型，可以不依存于硬件中固有数据类型。</p>
+<h2 id="_6">架构论文</h2>
+<h3 id="_7">论文一：数据分片技术</h3>
+<p>论数据分片技术及其应用
+数据分片就是按照一定的规则，将数据集划分成相互独立正交的数据子集。然后将数据子集分布到不同的节点上，通过设计合理的数据分片规则，可将系统中的数据分布在不同的物理数据库中，达到提升应用系统数据处理速度的目的。</p>
+<p>请围绕“论数据分片技术及其应用”论题，依次从以下三个方面进行论述：
+1.概要叙述你参与管理和开发软件的项目以及承担的工作。
+2.Hash分片，一致性Hash分片和按照数据范围分片是三种常用的数据分片方式。请简要阐述三种分片方式的原理。
+3.具体阐述你参与管理和开发的项目采用了哪些分片方式，并且具体说明其实现过程和应用效果。</p>
+<p>【试题解析】</p>
+<p>一、应结合自己参与的信息系统项目，说明在其中所承担的工作。
+二、Redis数据分片方案
+1、范围分片：按数据范围值来做分片。如：按用户编号分片，0-999999映射到实例A；1000000-1999999映射到实例B。
+2、hash分片：通过对key进行hash操作，可以把数据分配到不同实例，这类似于取余操作，余数相同的，放在一个实例上。
+3、一致性hash分片：hash分片的改进，可以有效解决重新分配节点带来的无法命中问题。
+Redis的持久化解决方案
+Redis的持久化主要有两种方式：RDB和AOF。
+RDB：传统数据库中快照的思想。指定时间间隔将数据进行快照存储。
+AOF：传统数据库中日志的思想，把每条改变数据集的命令追加到AOF文件末尾，这样出问题了，可以重新执行AOF文件中的命令来重建数据集。
+三、第三个问题要根据项目的实际情况来写自己是怎么做的，遇到什么样的问题，如何解决的。同时文章收尾要对效果进行评价。</p>
+<p>【写作要点】</p>
+<p>一、简要叙述所参与管理和开发的软件项目，需要明确指出在其中承担的主要任务和开展的主要工作。
+二、三种分片方式的具体描述如下：
+1.Hash方式。
+数据分片的Hash方式是基于哈希表的思想，即按照数据的某一特征(key)来计算哈希值，并将哈希值与系统中的节点建立映射关系，从而将哈希值不同的数据分布到不同的节点上。
+按照Hash方式做数据分片，优点是映射关系非常简单，需要管理的元数据也非常之少，只需要记录节点的数目以及Hash方式即可。但是，Hash方式的缺点也非常明显。首先，当加入或者删除一个节点的时候，大量的数据需要移动。其次，Hash方式很难解决数据不均衡的问题，如原始数据的特征值分布不均匀，导致大量的数据集中到一个物理节点上；或者对于可修改的记录数据，单条记录的数据变大。
+2.一致性Hash方式。
+一致性hash是将数据按照特征值映射到一个首尾相接的Hash环上，同时也将节点（按照IP地址或者机器名Hash)映射到这个环上。对于数据，从数据在环上的位置开始，顺时针找到的第一个节点即为数据的存储节点。可以看到相比于Hash方式，一致性Hash方式需要维护的元数据额外包含了节点在环上的位置，但这个数据量是较小的。同时，一致性Hash在增加或者删除节点的时候，受到影响的数据是比较有限的，只会影响到Hash环上相应的节点，不会发生大规模的数据迁移。
+3.按照数据范围方式。
+按照数据范围(Range Based)方式是按照关键值划分成不同的区间，每个物理节点负责一个或者多个区间。按照数据范围方式跟一致性Hash有相似之处，可以理解为物理节点在Hash环上的位置是动态变化的。在按照数据范围方式中，区间的大小不是固定的，每个数据区间的数据量与区间的大小也是没有关系的。比如说，一部分数据非常集中，那么区间大小应该是比较小的，即以数据量的大小为片段标准。在实际工程中，一个节点往往负责多个区间,每个区间成为一个块，每个块有一个阈值，当达到这个阈值之后就会分裂成两个块。这样做的目的在于当有节点加入的时侯快速达到均衡，
+三、论文中需要结合项目实际工作，详细论述项目采用了哪些分片方式，并具体说明其实现过程和应用效果。</p>
+<h3 id="_8">论文二：云原生架构</h3>
+<p>论云原生架构及其应用
+近年来，随着数字化转型不断深入，科技创新与业务发展不断融合，各行各业正在从大工业时代的固化范式进化成面向创新型组织与灵活型业务的崭新模式。在这一背景下，以容器和微服务架构为代表的云原生技术作为云计算服务的新模式，已经逐渐成为企业持续发展的主流选择。云原生架构是基于云原生技术的一组架构原则和设计模式的集合，旨在将云应用中的非业务代码部分进行最大化剥离，从而让云设施接管应用中原有的大量非功能特性（如弹性、韧性、安全、可观测性、灰度等），使业务不再有非功能性业务中断困扰的同时，具备轻量、敏捷、高度自动化的特点。云原生架构有利于各组织在公有云、私有云和混合云等新型动态环境中，构建和运行可弹性扩展的应用，其代表技术包括容器、服务网格、微服务、不可变基础设施和声明式API等。
+请围绕“论云原生架构及其应用”论题，依次从以下三个方面进行论述。
+1.概要叙述你参与管理和开发的软件项目以及承担的主要工作。
+2.服务化、弹性、可观测性和自动化是云原生架构的四类设计原则，请简要对这四类设计原则的内涵进行阐述。
+3.具体阐述你参与管理和开发的项目是如何采用云原生架构的，并且围绕上述四类设计原则，详细论述在项目设计与实现过程中遇到了哪些实际问题，是如何解决的。</p>
+<p>【试题解析】</p>
+<p>一、应结合自己参与的信息系统项目，说明在其中所承担的工作。
+二、从技术的角度，云原生架构是基于云原生技术的一组架构原则和设计模式的集合，旨在将云应用中的非业务代码部分进行最大化的剥离，从而让云设施接管应用中原有的大量非功能特性，使业务不再有非功能性业务中断困扰的同时，具备轻量、敏捷、高度自动化的特点。</p>
+<p><img alt="SSM框架组件图" src="../statics/SA-test/2020/essay-1.png" /></p>
+<p>上图展示了在代码中通常包括三部分：业务代码、三方软件、处理非功能特性的代码。其中“业务代码”指实现业务逻辑的代码；“三方软件”是业务代码中依赖的所有三方库，包括业务库和基础库；“处理非功能性的代码”指实现高可用、安全、可观测性等非功能性能力的代码。三部分中只有业务代码是核心，是对业务真正带来价值的，另外两个部分都只算附属物，但随着软件规模的增大、业务模块规模变大、部署环境增多、分布式复杂性增强，使得今天的软件构建变得越来越复杂，对开发人员的技能要求也越来越高。云原生架构相比较传统架构进了一大步，从业务代码中剥离了大量非功能性特性（不会是所有，比如易用性还不能剥离）到 IaaS 和 PaaS 中，从而减少业务代码开发人
+员的技术关注范围，通过云厂商的专业性提升应用的非功能性能力。
+云原生架构原则：
+云原生架构本身作为一种架构，也有若干架构原则作为应用架构的核心架构控制面，通过遵从这些架构原则可以让技术主管和架构师在做技术选择时不会出现大的偏差。
+1、 服务化原则：
+当代码规模超出小团队的合作范围时，就有必要进行服务化拆分了，包括拆分为微服务架构、小服务（Mini Service）架构，通过服务化架构把不同生命周期的模块分离出来，分别进行业务迭代，避免迭代频繁模块被慢速模块拖慢，从而加快整体的进度和稳定性。同时服务化架构以面向接口编程，服务内部的功能高度内聚，模块间通过公共功能模块的提取增加软件的复用程度。
+分布式环境下的限流降级、熔断隔仓、灰度、反压、零信任安全等，本质上都是基于服务流量（而非网络流量）的控制策略，所以云原生架构强调使用服务化的目的还在于从架构层面抽象化业务模块之间的关系，标准化服务流量的传输，从而帮助业务模块进行基于服务流量的策略控制和治理，不管这些服务是基于什么语言开发的。
+2、弹性原则：
+大部分系统部署上线需要根据业务量的估算，准备一定规模的机器，从提出采购申请，到供应商洽谈、机器部署上电、软件部署、性能压测，往往需要好几个月甚至一年的周期；而这期间如果业务发生变化了，重新调整也非常困难。弹性则是指系统的部署规模可以随着业务量的变化自动伸缩，无须根据事先的容量规划准备固定的硬件和软件资源。好的弹性能力不仅缩短了从采购到上线的时间，让企业不用操心额外软硬件资源的成本支出（闲置成本），降低了企业的 IT 成本，更关键的是当业务规模面临海量突发性扩张的时候，不再因为平时软硬件资源储备不足而“说不”，保障了企业收益。
+3、可观测原则：
+今天大部分企业的软件规模都在不断增长，原来单机可以对应用做完所有调试，但在分布式环境下需要对多个主机上的信息做关联，才可能回答清楚服务为什么宕机、哪些服务违反了其定义的 SLO、目前的故障影响哪些用户、最近这次变更对哪些服务指标带来了影响等等，这些都要求系统具备更强的可观测能力。可观测性与监控、业务探活、APM 等系统提供的能力不同，前者是在云这样的分布式系统中，主动通过日志、链路跟踪和度量等手段，让一次 APP 点击背后的多次服务调用的耗时、返回值和参数都清晰可见，甚至可以下钻到每次三方软件调用、SQL 请求、节点拓扑、网络响应等，这样的能力可以使运维、开发和业务人员实时掌握软件运行情况，并结合多个维度的数据指标，获得前所未有的关联分析能力，不断对业务健康度和用户体验进行数字化衡量和持续优化。
+4、自动化原则：
+技术往往是把“双刃剑”，容器、微服务、DevOps、大量第三方组件的使用，在降低分布式复杂性和提升迭代速度的同时，因为整体增大了软件技术栈的复杂度和组件规模，所以不可避免地带来了软件交付的复杂性，如果这里控制不当，应用就无法体会到云原生技术的优势。通过 IaC（Infrastructure asCode）、GitOps、OAM（Open Application Model）、Kubernetes operator 和大量自动化交付工具在 CI/CD 流水线中的实践，一方面标准化企业内部的软件交付过程，另一方面在标准化的基础上进行自动化，通过配置数据自描述和面向终态的交付过程，让自动化工具理解交付目标和环境差异，实现整个软件交付和运维的自动化。
+三、第三个问题要根据项目的实际情况来写自己是怎么做的，遇到什么样的问题，如何解决的。</p>
+<h3 id="_9">论文三：软件测试中缺陷管理</h3>
+<p>论软件测试中缺陷管理及其应用
+软件缺陷指的是计算机软件程序中存在的某种破坏正常运行能力的问题、错误，或者隐藏的功能缺陷。缺陷的存在会导致软件产品在某种程度上不能满足用户的需要。在目前的软件开发过程中，缺陷是不可避免的，软件测试是发现缺陷的主要手段，其核心目标就是尽可能多地找出软件代码中存在的缺陷，进而保证软件质量。软件缺陷管理是软件质量管理的一个重要组成部分。</p>
+<p>请围绕“论软件测试中缺陷管理及其应用”论题，依次从以下三个方而进行论述：
+1.概要叙述你参与管理和开发的软件项目以及承担的主要工作。
+2.详细论述常见的缺陷种类和级别，论述缺陷管理的基本流程。
+3.结合你具体参与管理和开发的实际项目，说明是如何进行缺陷管理的，请说明具体实施过程以及应用效果。</p>
+<p>【试题解析】</p>
+<p>一、应结合自己参与的信息系统项目，说明在其中所承担的工作。
+二、软件缺陷定义：
+（1）软件未达到需求规格说明书的功能；
+（2）软件出现了需求规格说明书指明不会出现的错误；
+（3）软件功能超出需求规格说明书的范围；
+（4）软件未达到需求规格说明书未指出但应达到的目标；
+（5）测试工程师认为软件难以理解、不易使用、运行速度慢，或者最终用户认为不好。
+缺陷类型：
+（1）设计缺陷：由于软件设计或代码实现所产生的功能或流程的问题。
+（2）界面问题：系统页面的展示的问题。
+（3）数据问题：系统数据的来源，处理及处理结果的问题。
+（4）需求问题：软件需求测试发现的问题，也包括之后需求变更的问题。
+（5）安装部署：软件安装部署过程的错误。
+（6）性能问题：软件性能相关的缺陷。
+（7）文档问题：用户使用手册，软件帮助文档等出现的问题
+（8）常识问题：系统用户的正常使用习惯相关问题。
+（9）安全问题：系统漏洞安全问题。
+（10）优化建议：针对操作过程逻辑或界面显示的优化性建议。
+（11）其他：除前面分类的其他问题</p>
+<p><img alt="严重程度定义" src="../statics/SA-test/2020/essay-2.png" /></p>
+<p>注：严重等级由创建者在创建缺陷时根据此定义来选择，之后都不能随意更改。</p>
+<p><img alt="优先级的定义" src="../statics/SA-test/2020/essay-3.png" /></p>
+<p>注：立刻、紧急、尽快的问题都要求在系统上线前解决。</p>
+<p>缺陷处理过程：
+正常处理过程
+（1）创建问题
+在测试管理系统中，所有用户都可以创建新问题，包括需求问题和软件缺陷等。创建问题时，需要描述清楚，并选择正确的选项，详细请参考5.4和5.5。
+（2）指派问题
+创建问题时，创建者通常要指派给该项目开发负责人，再由其指派任务，或直接指派给相应模块的开发工程师。
+如果指派人是错误的，或者需要他人确认或帮助，则可以重新指派给合适的工程师，写上相关备注。
+（3）确认问题
+通常开发工程师收到新问题后，需要分析和确认此问题是否为Bug。如果是Bug，则选择“确认状态”；如果认为非Bug，则注明原因并指派回创建者。
+当创建者收到确认指派时，需要进行及时确认。如果同意为非bug，则及时关闭它；如果不同意，则需要注明理由并指派回相关工程师。
+如果问题确认指派次数大于6次时，需要进入“争议处理”流程，详细请参考5.2。
+（4）解决问题
+此为开发工程师的主要职责，包括Bug的复现、修改和修改验证。
+开发工程师需要及时对确认状态Bug进行分析和解决，并自己验证通过，则操作为解决状态，解决方案规则请参考5.4中解决方案定义部分，在缺陷管理系统中解决方案选择相应的选项，解决后系统将自动指派回给创建者。
+如果Bug无法解决或修改影响比较大，可申请进入“延期解决”流程，请参考5.2中延期处理部分。
+（5）验证问题
+创建者需要及时对解决状态的Bug在对应版本上面进行验证。如果验证通过，则可关闭Bug；如果验证不通过，则激活此Bug，系统将自动指派回给解决者。
+验证通过准则：相同的操作步骤，进行一定次数的验证测试都没有发生。
+验证不通过准则：相同的操作步骤，全部或部分实际结果还会发生，验证不通过则激活Bug。
+（6）关闭问题
+通过验证的Bug，验证者需要注明验证结果并进行关闭操作，系统将指派给Closed。
+如果关闭状态的Bug在之后版本又会发生，则激活此Bug，系统将自动指派回给解决者。
+特别处理过程
+（1）客户问题
+客户反馈的问题可以由客户直接反馈或项目经理、市场部等了解到的客户问题，经确认后的Bug提交到测试管理系统，按照以上处理流程进行处理，由创建者或测试组进行跟踪验证关闭。
+创建客户问题时，创建者需要在Bug标题开头标记为[客户问题]，测试组负责检查和更正。
+（2）争议处理
+当开发和测试工程师对某问题有争议并且多次沟通无果时（暂定为6次），可以注明双方的理由，并指派给项目经理进行处理。
+项目经理可以召开评审会议，或者直接与双方沟通了解，并根据项目情况给出专业意见和最终决定。开发和测试工程师根据项目经理的最终决定执行。
+（3）延期解决
+当开发工程师对确认Bug进行解决时，发现或评估其解决时间紧或风险比较大等，可以说明原因或理由并指派给项目经理来确认。
+项目经理可以召开评审会议，或者直接沟通了解，并根据项目情况给出最终决定。如果不同意，项目经理将此Bug指派回开发工程师，开发工程师继续分析和解决。如果同意，项目经理需要在Bug标题开头标记为[延期解决]和在处理状态选择“延期解决”，然后注明解决时间计划并指派回开发工程师，开发工程师根据解决时间计划来规划和解决此Bug。
+三、第三个问题要根据项目的实际情况来写自己是怎么做的，遇到什么样的问题，如何解决的。同时文章收尾要对效果进行评价。</p>
+<h3 id="_10">论文四：论企业集成架构设计及应用</h3>
+<p>企业集成架构(Enterprise Integration Architecture，ElA)是企业集成平台的核心，也是解决企业信息孤岛问题的关键。企业集成架构设计包括了企业信息、业务过程、应用系统集成架构的设计。实现企业集成的技术多种多样，早期的集成方式是通过在不同的应用之间开发一对一的专用接口来实现应用之间的数据集成，即采用点到点的集成方式；后来提出了利用集成平台的方式来实现企业集成，可以将分散的信息系统通过一个统一的接口，以可管理、可重复的方式实现单点集成。企业集成架构设计技术方案按照要解决的问题类型可以分为数据集成、应用集成和企业集成。</p>
+<p>请围绕“论企业集成架构设计及应用”论题，依次从以下三个方面进行论述：
+1.概要叙述你参与的软件开发项目以及承担的主要工作。
+2.详细说明三类企业集成架构设计技术分别要解决的问题及其含义，并阐述每种技术具体包含了哪些集成模式。
+3.根据你所参与的项目，说明采用了哪些企业集成架构设计技术，其实施效果如何。</p>
+<p>【要点解析】</p>
+<p>一、应结合自己参与的信息系统项目，说明在其中所承担的工作。
+二、企业信息集成是解决“孤岛”问题的需要，技术发展的同时也推动了集成架构等相关的研究。构建企业集成平台的首要目的是实现数据集成，即为平台上运行的各种应用、系统或服务，提供具有完整性、一致性和安全性的数据访问、信息查询及决策支持服务。
+1、数据集成包括以下3种模式：数据联邦、数据复制和基于接口的数据集成。
+数据联邦
+数据联邦是指不同的应用共同访问一个全局虚拟数据库,通过全局虚拟数据库管理系统为不同的应用提供全局信息服务,实现不同的应用和数据源之间的信息共享和数据交换,其具体实现由客户端应用、全局信息服务和若干个局部数据源三部分组成。
+数据复制模式
+在数据复制模式中,通过底层应用数据源之间的一致性复制来实现(访问不同数据库的)不同应用之间的信息共享和互操作,其实现的关键是必须能够提供在两个或多个数据库系统之间实现数据转换和传输的基础结构(以屏蔽不同数据库间数据模型的差异)
+基于接口的数据集成模式
+在基于接口的数据集成模式中,不同的应用系统之间利用适配器(或接口代理)提供的应用编程接口来实现相互调用。应用适配器或接口代理通过其开放或私有接口将业务信息从其所封装的具体应用系统中提取出来,进而实现不同的应用系统之间业务数的共享与互交换,接口调用的方式可以采用同步调用方法,也可以采用基于消息中间件的异步方法来实现。
+2、应用集成
+应用集成是指两个或多个应用系统根据业务逻辑的需要而进行的功能之间的相调用和互操作，应用集成模式包括集成适配器,集成信使、集成面板和集成代理4种。
+适配器集成模式
+采用在需要交互的系统之间加入适配器的解决方案来实现企业原有应用系统与新实施系统之间的互操作。在应用系统提供的API的基础上（在应用系统没有提供API的情况下，可以在其数据库表结构一致的条件下，直接完成对数据库的写入和读出），通过适配器完成不同系统间数据格式及访问方式的转换与映射，进而实现不同的系统之间业务功能及业务数据的集成。
+信使集成模式
+随着企业中业务应用系统个数的增多,应用系统间的接口问题变得越来越复杂。基于信使的集成结构中,系统之间的通信和数据交换通过信使(消息代理)来实现,每个应用只需要建立与集成信使之间的接口连接,就可实现与所有通过集成信使相联的应用系统间的交互,这种结构大大减少了接口连接数量,同时由于采用了信使(消息代理)作为信息交流的中介,可以将应用之间的交互对通信服务能力的依赖程度降到最低；另外,当某一系统发生改变时、只需要改变信使中相应的部分,从而降低系统维护工作量和系统升级的难度。
+面板集成模式
+面板集成模式和面向对象的软件设计方法中的面板模式很相似,它是从应用交互实现的层面来描述客户端应用和服务器端应用集成的一种方法。集成面板可以为一对多、多对一、多对多等多种应用提供集或接口,在种模式中包含有一个成多个客户端应用、一个集成面数,一个成多个眼务器应用,集成面板通过对服务器端应用功能的抽象和简化,为客户端应用访间与调用服务器端应用来种简化的公共接口,集成面板在得到客户应用服务请求后,将客户的眼务转换成服务器端应用能理解的形式,并将该请求提交给服务器端应用。
+代理集成模式
+面板集成模式实现了服务器应用交互逻辑的分离，在代理执政模式中，由于不存在很明显的客户端应用和服务器端应用的划分，它仅需要将待集成的应用间的交互逻辑从应用中分离出来，并对应文件的交互逻辑进行封装，进而是由集成代理来引导多个应用之间的交互。
+3、企业集成
+企业应用软件系统从功能逻辑上可以分为表示、业务逻辑和数据三个层次，其中表示层负责完成系统与用户交互的接口定义，业务逻辑层主要是根据具体业务规则完成相应业务的数据处理，数据层负责存储由业务逻辑层处理或产生的业务数据，它是系统相对稳定的部分。
+从企业集成运行的实现策略上看，EAI主要有如下三种实现模式：
+前端集成模式
+所谓前端集成模式，是指EAI侧重于业务应用系统表示层的集成，它主要通过单一的用户入口，实现跨多个应用事物的运作，这种方式适用于用户启动的业务过程中，会产生多种多个跨应用的事物，而且这些事物都需要实时响应的情况（主要指B2C的环境）。另外，采用前端集成模式，还可以实现对已经运行的核心业务系统增加功能或特性的目的。
+后端模式
+后端集成模式主要侧重于应用系统数据层面的集成，它通过专门的数据维护及转换工具。实现不同业务义勇或数据源之间的信息交换，维护企业整体业务数据完整性和一致性，后端模式就像是一个方便多个应用系统之间数据自动交互的数据管道。
+混合集成模式
+混合集成模式是前端集成模式和后端集成模式的组合，客户通过基于Web浏览器的客户端（瘦客户）实现对业务应用或EAI服务器的访问，服务请求可以由前端应用系统执行，也可以通过EAI服务器将服务请求路由到后端，由后端的业务应用来执行。这种模式几乎具有前端集成模式和后端级模式的所有特征，主要应用于需要响应大量服务请求，又需要维护多个数据源的完整性和一致性的情况。
+三、第三个问题要根据项目的实际情况来写自己是怎么做的，遇到什么样的问题，如何解决的。同时文章收尾要对效果进行评价。</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 <a href="https://sheldoncoder1337.github.io">jialecai</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/sheldoncoder1337" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["header.autohide", "content.code.copy", "content.code.select", "content.code.annotate", "content.footnote.tooltips", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

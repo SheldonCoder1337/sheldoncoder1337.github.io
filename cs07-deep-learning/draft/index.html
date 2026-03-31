@@ -1,0 +1,1849 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Personal Blog by Sheldon">
+      
+      
+        <meta name="author" content="jialecai">
+      
+      
+        <link rel="canonical" href="https://sheldoncoder1337.github.io/cs07-deep-learning/draft/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>How I got into deep learning - Harmony</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M22%2012a10%2010%200%200%201-10%2010A10%2010%200%200%201%202%2012%2010%2010%200%200%201%2012%202a10%2010%200%200%201%2010%2010M6%2013h8l-3.5%203.5%201.42%201.42L17.84%2012l-5.92-5.92L10.5%207.5%2014%2011H6z%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#how-i-got-into-deep-learning" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Harmony" class="md-header__button md-logo" aria-label="Harmony" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Harmony
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              How I got into deep learning
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sheldoncoder1337.github.io/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Harmony" class="md-nav__button md-logo" aria-label="Harmony" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Harmony
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sheldoncoder1337.github.io/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ComputerArchitecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ComputerArchitecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs01-computer-architecture/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DataStructure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DataStructure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs02-data-structure/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs02-data-structure/20-top100/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    top100
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OperatingSystem
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    OperatingSystem
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs03-operating-system/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ComputerNetwork
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ComputerNetwork
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs04-computer-network/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Database
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs05-database-system/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MachineLearning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MachineLearning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs06-machine-learning/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deeplearning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deeplearning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-nano-vllm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15-nanovllm.md
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-asr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16-asr.md
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SoftwareEngineering
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SoftwareEngineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs08-software-engineering/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs08-software-engineering/01-cookc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01-CookC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Math
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../math/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handbook
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Handbook
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/markdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Markdown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/powershell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Powershell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/git/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/wsl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WSL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/uv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UV
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#my-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        My background
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#useful-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Useful skills
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#book-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Book learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#papers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Papers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fine-tuning-and-discord" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fine-tuning and Discord
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problem-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem Discovery
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open source
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-a-research-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting a research job
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="About Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ocrdonut" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OCR模型数据集（基于Donut架构改进）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文本检测模型数据集
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        布局模型数据集
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        公式
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="how-i-got-into-deep-learning">How I got into deep learning</h1>
+<p>I ran an education company, <a href="https://www.dataquest.io/">Dataquest</a>, for 8 years. Last year, I got the itch to start building again. Deep learning was always interesting to me, but I knew very little about it. I set out to fix that problem.</p>
+<p>Since then, I’ve trained dozens of <a href="https://huggingface.co/vikp">models</a> (several state of the art for open source), built <a href="https://github.com/VikParuchuri/">2 libraries</a> that have 5k+ Github stars, and recently accepted an offer from answer.ai, a research lab started by Jeremy Howard.</p>
+<p>I say this to establish the very rough outline of my learning journey. In this post, I’m going to cover more detail about how I learned deep learning. Hopefully it helps on your journey.</p>
+<h2 id="my-background">My background</h2>
+<p>I didn’t learn this stuff in school. I majored in American History for undergrad, and <a href="https://www.vikas.sh/post/i-barely-graduated-college">failed quite a few classes</a>.</p>
+<p>I did machine learning and Python work in 2012, but convinced myself that deep learning was too complicated for me. One reason for this was because I learned by doing Kaggle competitions. Kaggle competitions are amazing for learning quickly, but can leave you with gaps in the fundamentals - like how algorithms work mathematically.</p>
+<p>When deep learning started to become popular, it was very math-heavy, and I felt like I’d never be able to understand it. Of course, this was false, as I proved to myself 10 years later, but the angle at which you approach something makes all the difference. I approached deep learning top-down the first time, by gluing models together without understanding how they worked. I eventually hit a wall, and couldn’t get past it.</p>
+<h2 id="useful-skills">Useful skills</h2>
+<p>When I studied deep learning last year, I already had useful skills. The first was strong Python programming ability. Despite efforts to the contrary, Python is still the universal language of AI. If you want to get into AI, start by getting really good at programming.</p>
+<p>No matter what era of AI I’ve been in, data cleaning has been &gt;70% of my work. It’s possible if you’re doing pure research or working on toy problems you can avoid working with data, but otherwise data skills are essential.</p>
+<p>There’s a slightly more nebulous skill I’ll call pragmatism. Deep learning has a lot of rabbit holes - ranging from “what’s the perfect base model?”, to “what if I get rid of the sigmoid here?” Some of these rabbit holes are useful, but most of them will eat a lot of time. Being able to recognize when to go deep, and when to just do the fast/easy solution is important.</p>
+<h2 id="book-learning">Book learning</h2>
+<p>This time, I decided to learn bottom-up, fundamentals first. I read <a href="https://www.deeplearningbook.org/">The Deep Learning Book</a>. It’s a few years old, but still a fantastic resource. Read it slowly. A lot of the terminology and math will be unfamiliar - look them up. You may need to sketch some things out or code them to get them - give yourself the space to do that. If the math is unfamiliar, a good complementary resource is <a href="extension://bfdogplmndidlpjfhoijckpakkdjkkil/pdf/viewer.html?file=https%3A%2F%2Fmml-book.github.io%2Fbook%2Fmml-book.pdf">Math for Machine Learning</a>. Although I haven’t taken them, <a href="https://www.fast.ai/">fast.ai</a> and the <a href="https://www.youtube.com/@AndrejKarpathy">Karpathy</a> videos are high quality.</p>
+<p>Even though architectures like CNN or RNN might seem out of date in a world that is moving towards transformers for everything, CNNs are still widely used, and everything old is new again with RNNs.</p>
+<p>When you’re done with the first 2 parts of the book (you can skip part 3), you should be at a point where you can code up any of the main neural networks architectures in plain numpy (forward and backward passes).</p>
+<p>One thing that will really help you get to that point is teaching the skills while you learn them. I started putting together a course, <a href="https://github.com/VikParuchuri/zero_to_gpt">Zero to GPT</a>, as I read the deep learning book. Teaching is the ultimate way to solidify concepts in your head, and I found myself falling into a nice cycle of learning, looking up/sketching what I didn’t understand, then teaching it.</p>
+<h2 id="papers">Papers</h2>
+<p>The book will take you up to 2015-era deep learning. After reading the book, I read some of the foundational deep learning papers from the 2015-2022 era and implemented them in PyTorch. You can use Google Colab for free/cheap GPUs, and Weights and Biases to track your training runs.</p>
+<p>A noncomprehensive list is:</p>
+<ul>
+<li>RNN attention</li>
+<li>Transformers</li>
+<li>Switch transformer</li>
+<li>LoRA</li>
+<li>Vision Transformer</li>
+<li>AdamW</li>
+<li>GPT-2</li>
+</ul>
+<p>After this, you should be able to understand most conversations people have about deep learning model architectures.</p>
+<h2 id="fine-tuning-and-discord">Fine-tuning and Discord</h2>
+<p>The easiest entrypoint for training models these days is finetuning a base model. <a href="">Huggingface transformers</a> is great for finetuning because it implements a lot of models already, and uses PyTorch.</p>
+<p>There are Discord communities, like Nous Research and EleutherAI where people discuss the latest models and papers. I’d recommend joining them, seeing what’s state of the art at the moment, and trying some finetuning.</p>
+<p>The easiest way to finetune is to pick a small model (7B or fewer params), and try finetuning with LoRA. You can use Google Colab, or something like Lambda Labs if you need more VRAM or multiple GPUs.</p>
+<p>I wanted to train models to code better, so I put together datasets and finetuned a few different base models on data from StackOverflow and other places. It really helped me understand the linkage between model architecture, data, compute, and output. However, finetuning is a very crowded space, and it’s hard to make an impact when the state of the art changes every day.</p>
+<h2 id="problem-discovery">Problem Discovery</h2>
+<p>As I was working on finetuning, I realized that some of the highest quality data was in textbook form, and locked away in pdfs. One way I tried to solve this was to generate [synthetic data].</p>
+<p>Another way was to extract the data from pdfs and turn it into good training data (markdown). There was an approach called [nougat] that worked well in many cases, but was slow and expensive to run. I decided to see if I could build something better by leveraging the data already in the pdf (avoiding OCR), and only using models when needed. I chained together several different models, along with heuristics in between. This approach, <a href="https://github.com/datalab-to/marker">marker</a>, is 10x faster than nougat, works with any language, and is usually more accurate.</p>
+<p>Working on marker led me to want to solve several more problems, and I’ve also trained an equation to <a href="https://github.com/VikParuchuri/texify">LaTeX model (texify)</a>, a <a href="">text detection model</a>, an <a href="https://github.com/datalab-to/surya">OCR model (surya)</a> that’s competitive with Google Cloud, and a layout model.</p>
+<p>For all of these models, I took existing architectures, changed the layers, loss, and other elements, then generated/found the right datasets. For example, for the OCR model, I started with the Donut architecture, added GQA, an MoE layer, UTF-16 decoding (1-2 tokens for any character), and changed some of the model shapes.</p>
+<p>Since OCR models are typically small (less than 300M params), I was able to train all of these models on 4x A6000s. I probably could have gotten away with 2x A6000s if I was a bit more efficient.</p>
+<p>Hopefully this illustrates 3 things for you:</p>
+<ul>
+<li>Understanding the fundamentals is important to training good models</li>
+<li>Finding interesting problems to solve is the best way to make an impact with what you build</li>
+<li>You don’t need a lot of GPUs</li>
+</ul>
+<p>There are many niches in AI where you can make a big impact, even as a relative outsider.</p>
+<h2 id="open-source">Open source</h2>
+<p>As you may have noticed, I open source all of my AI projects. The data stack is a very underinvested area of AI relative to impact. I feel strongly that the more widely you can distribute high quality training data, the lower the risk of 1-2 organizations having a monopoly on good models.</p>
+<p>Open source also has a side effect of being a good way to get exposure. Which leads me to the last part of my story.</p>
+<h2 id="getting-a-research-job">Getting a research job</h2>
+<p>I was thinking about building a business around my open source tools. Working somewhere wasn’t on my radar at all. But when Jeremy reached out about answer.ai, I felt like it was an opportunity I had to take. The chance to work with talented people, make a positive impact, and learn a lot is hard to pass up.</p>
+<p>My open source work directly led to the job opportunity, both in the obvious way (it gave me exposure), and in a subtler way (it significantly improved my skills). Hopefully, you’ll open source something as you learn, too.</p>
+<h2 id="next-steps">Next steps</h2>
+<p>I suspect my work at answer.ai will look very similar to my open source work. I’ll keep training models, improving the data stack, and releasing publicly.</p>
+<p>If you’re trying to break into deep learning, I hope this post was useful. If not, I hope it was somewhat entertaining (you made it to the end, so it probably was, right?).</p>
+<p>As for me, I’m going back to training some models (watching 2 of them converge right now).</p>
+<h2 id="about-data">About Data</h2>
+<p>总共有5个模型</p>
+<ol>
+<li>文本布局检测 layout</li>
+<li>OCR错误检测</li>
+<li>表格识别 table_recognition</li>
+<li>文本检测 text_detection</li>
+<li>文本识别 text_recognition</li>
+</ol>
+<h3 id="ocrdonut">OCR模型数据集（基于Donut架构改进）</h3>
+<p>作者在OCR模型中引入GQA（门控注意力）、MoE（专家混合层）、UTF-16解码等创新，需支持多语言、复杂排版的数据。</p>
+<p>公开数据集</p>
+<ol>
+<li>SynthText：合成自然场景文本图像（85万张），含单词/字符级边界框标注，支持多字体、扭曲文本和复杂背景生成4。</li>
+<li>ICDAR系列：如ICDAR2015，包含自然场景文本检测与识别数据，适用于端到端OCR训练8。</li>
+</ol>
+<p>自定义生成方法</p>
+<ul>
+<li>字体渲染+背景合成：</li>
+<li>从语料库随机抽取文本（如5–10个字符），结合多种字体渲染；</li>
+<li>对背景图聚类分析，选择与背景对比度最高的文字颜色（如从500种颜色中筛选对比度最高的200种）9；</li>
+<li>添加透视变换、高斯模糊等增强，模拟真实场景退化9。</li>
+<li>工具链支持：</li>
+<li>使用SynthText生成代码批量合成文本图像4；</li>
+<li>中文场景可参考生成3755个汉字的印刷体数据集（支持笔画粘连、旋转等12种增强）5。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">可能使用的数据集：</p>
+<div class="language-text highlight"><pre><span></span><code>所用架构：基于 Donut（OCR-free Transformer 架构），加入了 GQA、MoE、UTF-16 解码等模块。
+可能使用的数据集：
+- CORD-v2（用于训练 Donut 原始模型）
+- Post-OCR Correction Dataset（PleIAs, 2023）：包含 Chronicling America 的报纸图像和对应的 OCR 错误/修正文本，适合训练 OCR 纠错模型
+- Noisy OCR Dataset（Kaggle 等来源）：用于训练去噪或提升 OCR 鲁棒性
+如何生成：
+- 使用合成数据工具（如 SynthText、TrOCR 的 SynthDoG）生成带文本的图像；
+- 或使用真实扫描文档+OCR引擎（Tesseract、EasyOCR）生成伪标签，再人工清洗。
+</code></pre></div>
+</div>
+<h3 id="_1">文本检测模型数据集</h3>
+<p>需高精度文本框标注，支持复杂布局（如倾斜文本、密集排列）。</p>
+<ol>
+<li>公开数据集</li>
+<li>ICDAR2015：提供自然场景文本的定位标注8；</li>
+<li>MSRA-TD500：多语言、多方向文本检测基准。</li>
+<li>自定义生成与标注</li>
+<li>半自动标注工具：<ul>
+<li>使用PPOCRLabel标注工具，手动框选文本区域生成标签文件（支持PaddleOCR格式）8；</li>
+</ul>
+</li>
+<li>合成数据混合：<ul>
+<li>将SynthText合成数据与真实数据混合训练，提升模型泛化性4。</li>
+</ul>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">可能使用的数据集：</p>
+<div class="language-text highlight"><pre><span></span><code>- COCO-Text：包含自然场景图像中的文本框标注；
+- ICDAR 系列（ICDAR 2013/2015/2019）；
+- SynthText（合成文本检测数据）；
+- WildReceipt：收据场景文本检测数据
+</code></pre></div>
+</div>
+<h3 id="_2">布局模型数据集</h3>
+<p>作者需生成文档/图像元素的边界框与语义标签（如标题、图表位置）。</p>
+<ol>
+<li>公开数据集</li>
+<li>LayoutSAM：复旦与字节推出的270万图像-文本对数据集，含1070万个实体标注（颜色、形状、纹理等属性）3；</li>
+<li>
+<p>PubLayNet：科研文献的布局标注数据集。</p>
+</li>
+<li>
+<p>自定义生成方法</p>
+</li>
+<li>布局合成技术：<ul>
+<li>CreatiLayout：基于文本描述或草图生成布局（如海报、家具摆放），通过LayoutDesigner模块优化元素位置3；</li>
+<li>Layout-Generator工具：生成热源组件布局-温度场数据集，支持矩形组件离散/连续采样（如Gibbs采样）7。</li>
+</ul>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">可能使用的数据集：</p>
+<div class="language-text highlight"><pre><span></span><code>- PubLayNet：来自PubMed论文的布局标注（标题、段落、图表等）；
+- DocBank：文档图像+布局框标注；
+- Fintabnet（IBM）：用于表格识别，包含行列结构；
+- 自建数据集：使用像 Marker 这样的工具生成带布局标签的PDF图像，或从 arXiv 论文中提取页面并人工标注阅读顺序。
+</code></pre></div>
+</div>
+<pre class="mermaid"><code>graph LR
+A[输入草图/文本描述] --&gt; B(CreatiLayout生成布局)
+B --&gt; C[输出元素坐标+语义标签]
+C --&gt; D[存储为HDF5或PNG掩码]</code></pre>
+<h3 id="_3">公式</h3>
+<p>需数学公式图像与LaTeX序列的配对数据。</p>
+<ol>
+<li>公开数据集</li>
+<li>Im2Latex-100K：10万公式图像-LaTeX对照数据集；</li>
+<li>MathPix：API可生成公式截图与LaTeX标注。</li>
+<li>自定义生成方法</li>
+<li>合成流程：<ol>
+<li>从LaTeX公式库随机采样序列；</li>
+<li>渲染为PNG图像（添加字体变形、噪声、分辨率变化）；</li>
+<li>生成对抗样本：旋转公式、叠加文档背景纹理59。</li>
+</ol>
+</li>
+<li>工具推荐：<ul>
+<li>Python库PIL渲染公式 + augmentor添加畸变。</li>
+</ul>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">可能使用的数据集：</p>
+<div class="language-text highlight"><pre><span></span><code>- im2latex-100k：包含约100k张公式图像与对应LaTeX代码；
+- arxiv-Latex：从 arXiv 论文中提取的公式图像与LaTeX；
+- 自建数据集：通过 Mathpix、LaTeX-OCR 等工具辅助标注，或从公开论文中爬取并清洗。
+</code></pre></div>
+</div>
+<p>五、作者技术适配与数据集选择建议</p>
+<p>作者对Donut架构的改进（如MoE、UTF-16解码）要求数据集满足：</p>
+<ul>
+<li>多语言支持：生成时需涵盖UTF-16字符集（如中日韩文字），可用5方法扩展字符集；</li>
+<li>高复杂度：通过合成数据模拟模糊、倾斜文本，匹配MoE层对困难样本的处理需求9；</li>
+<li>布局多样性：使用CreatiLayout生成多模态布局数据，适配GQA的跨模态注意力机制3。</li>
+</ul>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># OCR数据生成示例（结合背景与字体增强）</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">font_renderer</span><span class="w"> </span><span class="kn">import</span> <span class="n">render_text</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">augmentor</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_noise</span><span class="p">,</span> <span class="n">perspective_transform</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">text</span> <span class="o">=</span> <span class="n">sample_corpus</span><span class="p">()</span>  <span class="c1"># 从语料库采样</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">image</span> <span class="o">=</span> <span class="n">render_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s2">&quot;random&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;high_contrast&quot;</span><span class="p">)</span>  
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">image</span> <span class="o">=</span> <span class="n">add_noise</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;gaussian&quot;</span><span class="p">)</span>  
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">image</span> <span class="o">=</span> <span class="n">perspective_transform</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">max_angle</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>  
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">save_data</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">text</span><span class="p">)</span> 
+</span></code></pre></div>
+<p>作者的数据集策略分为三类：</p>
+<ol>
+<li>公开数据集：ICDAR（文本检测）、LayoutSAM（布局）、SynthText（OCR合）；</li>
+<li>半自动标注：PPOCRLabel（真实数据标注）；</li>
+<li>全合成生成：字体渲染+背景融合（OCR）、LaTeX渲染（公式）、CreatiLayout（布局）。</li>
+</ol>
+<p>其创新点（如MoE、UTF-16）依赖合成数据的可控性与多样性，开源工具SynthText、CreatiLayout和自定义渲染脚本是核心解决方案。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 <a href="https://sheldoncoder1337.github.io">jialecai</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/sheldoncoder1337" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["header.autohide", "content.code.copy", "content.code.select", "content.code.annotate", "content.footnote.tooltips", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

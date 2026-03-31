@@ -1,0 +1,648 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="471.124969pt" height="53.67788pt" viewBox="0 0 471.124969 53.67788" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2023-01-25T10:24:26.420291</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.6.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 53.67788  L 471.124969 53.67788  L 471.124969 0  L 0 0  z " style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 54.30735 45.890162  L 77.15745 45.890162  L 77.15745 23.187482  L 54.30735 23.187482  z " clip-path="url(#p8e0c3652e4)" style="fill: #a8e1b0; fill-opacity: 0.75; stroke: #808080; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 201.20085 45.890162  L 224.05095 45.890162  L 224.05095 23.187482  L 201.20085 23.187482  z " clip-path="url(#p8e0c3652e4)" style="fill: #a8e1b0; fill-opacity: 0.75; stroke: #808080; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 403.58745 45.890162  L 426.43755 45.890162  L 426.43755 23.187482  L 403.58745 23.187482  z " clip-path="url(#p8e0c3652e4)" style="fill: #a8e1b0; fill-opacity: 0.75; stroke: #808080; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 6.32214 13.266983  L 125.14266 13.266983  " clip-path="url(#p8e0c3652e4)" style="fill: none; stroke: #c2c2c2; stroke-width: 0.5; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 143.42274 13.266983  L 281.82906 13.266983  " clip-path="url(#p8e0c3652e4)" style="fill: none; stroke: #c2c2c2; stroke-width: 0.5; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 384.98094 13.266983  L 445.04406 13.266983  " clip-path="url(#p8e0c3652e4)" style="fill: none; stroke: #c2c2c2; stroke-width: 0.5; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <!-- l -->
+    <g style="fill: #444443" transform="translate(6.975 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-6c" d="M 1569 3969  L 641 3969  L 641 4416  L 2119 4416  L 2119 453  L 3053 453  L 3053 0  L 538 0  L 538 453  L 1569 453  L 1569 3969  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-6c"/>
+    </g>
+   </g>
+   <g id="text_2">
+    <!-- 1 -->
+    <g style="fill: #444443" transform="translate(13.5036 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-31" d="M 3116 0  L 550 0  L 550 506  L 1600 506  L 1600 3488  L 622 2956  L 422 3419  L 1722 4103  L 2203 4103  L 2203 506  L 3116 506  L 3116 0  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-31"/>
+    </g>
+   </g>
+   <g id="text_3">
+    <!-- _ -->
+    <g style="fill: #444443" transform="translate(20.0322 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-5f" d="M 3519 -1281  L 0 -1281  L 0 -831  L 3519 -831  L 3519 -1281  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-5f"/>
+    </g>
+   </g>
+   <g id="text_4">
+    <!-- o -->
+    <g style="fill: #444443" transform="translate(26.5608 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-6f" d="M 3231 1594  Q 3231 1228 3128 923  Q 3025 619 2831 401  Q 2638 184 2359 64  Q 2081 -56 1728 -56  Q 1391 -56 1123 48  Q 856 153 670 356  Q 484 559 386 859  Q 288 1159 288 1550  Q 288 1916 391 2217  Q 494 2519 687 2736  Q 881 2953 1159 3073  Q 1438 3194 1791 3194  Q 2128 3194 2395 3089  Q 2663 2984 2848 2782  Q 3034 2581 3132 2281  Q 3231 1981 3231 1594  z M 2675 1569  Q 2675 1859 2611 2076  Q 2547 2294 2428 2439  Q 2309 2584 2139 2657  Q 1969 2731 1759 2731  Q 1516 2731 1342 2636  Q 1169 2541 1058 2381  Q 947 2222 895 2011  Q 844 1800 844 1569  Q 844 1278 908 1059  Q 972 841 1090 695  Q 1209 550 1378 476  Q 1547 403 1759 403  Q 2003 403 2176 498  Q 2350 594 2461 753  Q 2572 913 2623 1123  Q 2675 1334 2675 1569  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-6f"/>
+    </g>
+   </g>
+   <g id="text_5">
+    <!-- u -->
+    <g style="fill: #444443" transform="translate(33.0894 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-75" d="M 3022 0  L 2534 0  L 2516 506  Q 2375 344 2248 236  Q 2122 128 1997 62  Q 1872 -3 1745 -29  Q 1619 -56 1478 -56  Q 994 -56 747 228  Q 500 513 500 1088  L 500 3138  L 1044 3138  L 1044 1131  Q 1044 409 1588 409  Q 1688 409 1783 439  Q 1878 469 1983 542  Q 2088 616 2208 741  Q 2328 866 2478 1056  L 2478 3138  L 3022 3138  L 3022 0  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-75"/>
+    </g>
+   </g>
+   <g id="text_6">
+    <!-- t -->
+    <g style="fill: #444443" transform="translate(39.618 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-74" d="M 3028 44  Q 2844 -3 2647 -23  Q 2450 -44 2247 -44  Q 1656 -44 1365 223  Q 1075 491 1075 1044  L 1075 2681  L 197 2681  L 197 3138  L 1075 3138  L 1075 4000  L 1619 4141  L 1619 3138  L 3028 3138  L 3028 2681  L 1619 2681  L 1619 1088  Q 1619 750 1798 583  Q 1978 416 2328 416  Q 2478 416 2656 439  Q 2834 463 3028 513  L 3028 44  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-74"/>
+    </g>
+   </g>
+   <g id="text_7">
+    <!-- p -->
+    <g style="fill: #444443" transform="translate(46.1466 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-70" d="M 3181 1625  Q 3181 1206 3064 893  Q 2947 581 2740 375  Q 2534 169 2253 65  Q 1972 -38 1644 -38  Q 1494 -38 1345 -22  Q 1197 -6 1044 31  L 1044 -1281  L 500 -1281  L 500 3138  L 984 3138  L 1019 2613  Q 1253 2934 1518 3064  Q 1784 3194 2094 3194  Q 2363 3194 2566 3081  Q 2769 2969 2906 2764  Q 3044 2559 3112 2270  Q 3181 1981 3181 1625  z M 2625 1600  Q 2625 1847 2589 2053  Q 2553 2259 2475 2406  Q 2397 2553 2275 2636  Q 2153 2719 1984 2719  Q 1881 2719 1775 2686  Q 1669 2653 1555 2576  Q 1441 2500 1314 2373  Q 1188 2247 1044 2059  L 1044 538  Q 1194 475 1359 439  Q 1525 403 1684 403  Q 2125 403 2375 701  Q 2625 1000 2625 1600  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-70"/>
+    </g>
+   </g>
+   <g id="text_8">
+    <!-- u -->
+    <g style="fill: #444443" transform="translate(52.6752 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-75"/>
+    </g>
+   </g>
+   <g id="text_9">
+    <!-- t -->
+    <g style="fill: #444443" transform="translate(59.2038 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-74"/>
+    </g>
+   </g>
+   <g id="text_10">
+    <!-- _ -->
+    <g style="fill: #444443" transform="translate(65.7324 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-5f"/>
+    </g>
+   </g>
+   <g id="text_11">
+    <!-- g -->
+    <g style="fill: #444443" transform="translate(72.261 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-67" d="M 2759 2694  Q 2847 2584 2895 2439  Q 2944 2294 2944 2125  Q 2944 1881 2855 1679  Q 2766 1478 2603 1334  Q 2441 1191 2214 1111  Q 1988 1031 1716 1031  Q 1519 1031 1347 1073  Q 1175 1116 1075 1178  Q 1016 1091 975 1012  Q 934 934 934 838  Q 934 719 1048 641  Q 1163 563 1350 556  L 2175 525  Q 2409 519 2607 466  Q 2806 413 2948 313  Q 3091 213 3170 66  Q 3250 -81 3250 -275  Q 3250 -484 3159 -671  Q 3069 -859 2880 -1001  Q 2691 -1144 2400 -1228  Q 2109 -1313 1709 -1313  Q 1328 -1313 1061 -1252  Q 794 -1191 622 -1083  Q 450 -975 372 -826  Q 294 -678 294 -500  Q 294 -272 400 -100  Q 506 72 728 231  Q 647 269 587 325  Q 528 381 490 448  Q 453 516 434 591  Q 416 666 416 738  Q 416 941 511 1109  Q 606 1278 738 1428  Q 678 1500 633 1569  Q 588 1638 555 1717  Q 522 1797 505 1889  Q 488 1981 488 2100  Q 488 2344 577 2545  Q 666 2747 827 2890  Q 988 3034 1214 3114  Q 1441 3194 1716 3194  Q 1831 3194 1937 3178  Q 2044 3163 2125 3138  L 3263 3138  L 3263 2694  L 2759 2694  z M 872 -453  Q 872 -675 1103 -776  Q 1334 -878 1747 -878  Q 2006 -878 2182 -831  Q 2359 -784 2467 -707  Q 2575 -631 2622 -532  Q 2669 -434 2669 -331  Q 2669 -141 2512 -50  Q 2356 41 2034 56  L 1216 84  Q 1113 16 1045 -50  Q 978 -116 940 -183  Q 903 -250 887 -317  Q 872 -384 872 -453  z M 1038 2113  Q 1038 1963 1088 1838  Q 1138 1713 1228 1625  Q 1319 1538 1442 1489  Q 1566 1441 1716 1441  Q 1878 1441 2004 1495  Q 2131 1550 2217 1644  Q 2303 1738 2348 1859  Q 2394 1981 2394 2113  Q 2394 2263 2344 2388  Q 2294 2513 2203 2600  Q 2113 2688 1989 2736  Q 1866 2784 1716 2784  Q 1553 2784 1426 2728  Q 1300 2672 1214 2580  Q 1128 2488 1083 2366  Q 1038 2244 1038 2113  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-67"/>
+    </g>
+   </g>
+   <g id="text_12">
+    <!-- r -->
+    <g style="fill: #444443" transform="translate(78.7896 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-72" d="M 628 3138  L 1125 3138  L 1141 2559  Q 1419 2894 1689 3044  Q 1959 3194 2234 3194  Q 2722 3194 2973 2878  Q 3225 2563 3206 1941  L 2656 1941  Q 2666 2353 2536 2539  Q 2406 2725 2156 2725  Q 2047 2725 1936 2686  Q 1825 2647 1708 2561  Q 1591 2475 1459 2340  Q 1328 2206 1178 2016  L 1178 0  L 628 0  L 628 3138  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-72"/>
+    </g>
+   </g>
+   <g id="text_13">
+    <!-- a -->
+    <g style="fill: #444443" transform="translate(85.3182 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-61" d="M 2516 0  L 2503 422  Q 2247 169 1983 56  Q 1719 -56 1428 -56  Q 1159 -56 968 12  Q 778 81 654 201  Q 531 322 473 484  Q 416 647 416 838  Q 416 1309 767 1576  Q 1119 1844 1806 1844  L 2456 1844  L 2456 2119  Q 2456 2397 2278 2564  Q 2100 2731 1734 2731  Q 1469 2731 1211 2672  Q 953 2613 678 2503  L 678 2994  Q 781 3031 907 3067  Q 1034 3103 1175 3131  Q 1316 3159 1469 3176  Q 1622 3194 1778 3194  Q 2063 3194 2291 3131  Q 2519 3069 2676 2941  Q 2834 2813 2918 2619  Q 3003 2425 3003 2163  L 3003 0  L 2516 0  z M 2456 1428  L 1766 1428  Q 1563 1428 1416 1387  Q 1269 1347 1175 1272  Q 1081 1197 1036 1092  Q 991 988 991 856  Q 991 766 1019 683  Q 1047 600 1109 536  Q 1172 472 1272 434  Q 1372 397 1516 397  Q 1703 397 1945 511  Q 2188 625 2456 872  L 2456 1428  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-61"/>
+    </g>
+   </g>
+   <g id="text_14">
+    <!-- d -->
+    <g style="fill: #444443" transform="translate(91.8468 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-64" d="M 341 1503  Q 341 1903 450 2214  Q 559 2525 761 2739  Q 963 2953 1245 3064  Q 1528 3175 1875 3175  Q 2025 3175 2170 3156  Q 2316 3138 2456 3097  L 2456 4416  L 3003 4416  L 3003 0  L 2516 0  L 2497 594  Q 2269 263 2003 103  Q 1738 -56 1428 -56  Q 1159 -56 954 56  Q 750 169 614 373  Q 478 578 409 865  Q 341 1153 341 1503  z M 897 1538  Q 897 969 1064 689  Q 1231 409 1538 409  Q 1744 409 1973 593  Q 2203 778 2456 1141  L 2456 2597  Q 2322 2659 2159 2692  Q 1997 2725 1838 2725  Q 1394 2725 1145 2437  Q 897 2150 897 1538  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-64"/>
+    </g>
+   </g>
+   <g id="text_15">
+    <!-- i -->
+    <g style="fill: #444443" transform="translate(98.3754 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-69" d="M 1569 2688  L 641 2688  L 641 3138  L 2119 3138  L 2119 453  L 3053 453  L 3053 0  L 538 0  L 538 453  L 1569 453  L 1569 2688  z M 1759 4453  Q 1850 4453 1928 4420  Q 2006 4388 2064 4328  Q 2122 4269 2155 4192  Q 2188 4116 2188 4025  Q 2188 3938 2155 3859  Q 2122 3781 2064 3722  Q 2006 3663 1928 3630  Q 1850 3597 1759 3597  Q 1669 3597 1591 3630  Q 1513 3663 1455 3722  Q 1397 3781 1364 3859  Q 1331 3938 1331 4025  Q 1331 4116 1364 4192  Q 1397 4269 1455 4328  Q 1513 4388 1591 4420  Q 1669 4453 1759 4453  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-69"/>
+    </g>
+   </g>
+   <g id="text_16">
+    <!-- e -->
+    <g style="fill: #444443" transform="translate(104.904 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-65" d="M 3150 1734  Q 3150 1619 3147 1541  Q 3144 1463 3138 1394  L 934 1394  Q 934 913 1203 655  Q 1472 397 1978 397  Q 2116 397 2253 408  Q 2391 419 2519 437  Q 2647 456 2764 479  Q 2881 503 2981 531  L 2981 84  Q 2759 22 2479 -17  Q 2200 -56 1900 -56  Q 1497 -56 1206 53  Q 916 163 730 370  Q 544 578 455 879  Q 366 1181 366 1563  Q 366 1894 461 2189  Q 556 2484 739 2707  Q 922 2931 1187 3062  Q 1453 3194 1791 3194  Q 2119 3194 2372 3091  Q 2625 2988 2798 2798  Q 2972 2609 3061 2339  Q 3150 2069 3150 1734  z M 2584 1813  Q 2594 2022 2544 2195  Q 2494 2369 2389 2494  Q 2284 2619 2128 2689  Q 1972 2759 1766 2759  Q 1588 2759 1441 2690  Q 1294 2622 1187 2497  Q 1081 2372 1015 2197  Q 950 2022 934 1813  L 2584 1813  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-65"/>
+    </g>
+   </g>
+   <g id="text_17">
+    <!-- n -->
+    <g style="fill: #444443" transform="translate(111.4326 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-6e" d="M 500 3138  L 984 3138  L 1006 2631  Q 1144 2794 1272 2901  Q 1400 3009 1523 3075  Q 1647 3141 1775 3167  Q 1903 3194 2041 3194  Q 2525 3194 2773 2908  Q 3022 2622 3022 2047  L 3022 0  L 2478 0  L 2478 2003  Q 2478 2372 2340 2548  Q 2203 2725 1931 2725  Q 1831 2725 1736 2695  Q 1641 2666 1537 2592  Q 1434 2519 1314 2394  Q 1194 2269 1044 2081  L 1044 0  L 500 0  L 500 3138  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-6e"/>
+    </g>
+   </g>
+   <g id="text_18">
+    <!-- t -->
+    <g style="fill: #444443" transform="translate(117.9612 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-74"/>
+    </g>
+   </g>
+   <g id="text_19">
+    <!--   -->
+    <g style="fill: #444443" transform="translate(124.4898 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-20" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-20"/>
+    </g>
+   </g>
+   <g id="text_20">
+    <!-- = -->
+    <g style="fill: #444443" transform="translate(131.0184 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-3d" d="M 3103 2019  L 416 2019  L 416 2478  L 3103 2478  L 3103 2019  z M 3103 931  L 416 931  L 416 1391  L 3103 1391  L 3103 931  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-3d"/>
+    </g>
+   </g>
+   <g id="text_21">
+    <!--   -->
+    <g style="fill: #444443" transform="translate(137.547 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-20"/>
+    </g>
+   </g>
+   <g id="text_22">
+    <!-- l -->
+    <g style="fill: #444443" transform="translate(144.0756 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-6c"/>
+    </g>
+   </g>
+   <g id="text_23">
+    <!-- 1 -->
+    <g style="fill: #444443" transform="translate(150.6042 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-31"/>
+    </g>
+   </g>
+   <g id="text_24">
+    <!-- _ -->
+    <g style="fill: #444443" transform="translate(157.1328 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-5f"/>
+    </g>
+   </g>
+   <g id="text_25">
+    <!-- a -->
+    <g style="fill: #444443" transform="translate(163.6614 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-61"/>
+    </g>
+   </g>
+   <g id="text_26">
+    <!-- c -->
+    <g style="fill: #444443" transform="translate(170.19 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-63" d="M 2938 116  Q 2725 34 2501 -5  Q 2278 -44 2041 -44  Q 1297 -44 895 359  Q 494 763 494 1538  Q 494 1909 609 2212  Q 725 2516 934 2731  Q 1144 2947 1434 3064  Q 1725 3181 2075 3181  Q 2319 3181 2531 3147  Q 2744 3113 2938 3034  L 2938 2516  Q 2734 2622 2523 2670  Q 2313 2719 2088 2719  Q 1878 2719 1692 2639  Q 1506 2559 1365 2409  Q 1225 2259 1144 2043  Q 1063 1828 1063 1556  Q 1063 988 1339 705  Q 1616 422 2106 422  Q 2328 422 2536 472  Q 2744 522 2938 622  L 2938 116  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-63"/>
+    </g>
+   </g>
+   <g id="text_27">
+    <!-- t -->
+    <g style="fill: #444443" transform="translate(176.7186 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-74"/>
+    </g>
+   </g>
+   <g id="text_28">
+    <!-- i -->
+    <g style="fill: #444443" transform="translate(183.2472 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-69"/>
+    </g>
+   </g>
+   <g id="text_29">
+    <!-- v -->
+    <g style="fill: #444443" transform="translate(189.7758 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-76" d="M 206 3138  L 825 3138  L 1594 1063  L 1759 556  L 1931 1075  L 2694 3138  L 3291 3138  L 2059 0  L 1434 0  L 206 3138  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-76"/>
+    </g>
+   </g>
+   <g id="text_30">
+    <!-- a -->
+    <g style="fill: #444443" transform="translate(196.3044 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-61"/>
+    </g>
+   </g>
+   <g id="text_31">
+    <!-- t -->
+    <g style="fill: #444443" transform="translate(202.833 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-74"/>
+    </g>
+   </g>
+   <g id="text_32">
+    <!-- e -->
+    <g style="fill: #444443" transform="translate(209.3616 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-65"/>
+    </g>
+   </g>
+   <g id="text_33">
+    <!-- d -->
+    <g style="fill: #444443" transform="translate(215.8902 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-64"/>
+    </g>
+   </g>
+   <g id="text_34">
+    <!-- _ -->
+    <g style="fill: #444443" transform="translate(222.4188 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-5f"/>
+    </g>
+   </g>
+   <g id="text_35">
+    <!-- g -->
+    <g style="fill: #444443" transform="translate(228.9474 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-67"/>
+    </g>
+   </g>
+   <g id="text_36">
+    <!-- r -->
+    <g style="fill: #444443" transform="translate(235.476 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-72"/>
+    </g>
+   </g>
+   <g id="text_37">
+    <!-- a -->
+    <g style="fill: #444443" transform="translate(242.0046 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-61"/>
+    </g>
+   </g>
+   <g id="text_38">
+    <!-- d -->
+    <g style="fill: #444443" transform="translate(248.5332 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-64"/>
+    </g>
+   </g>
+   <g id="text_39">
+    <!-- i -->
+    <g style="fill: #444443" transform="translate(255.0618 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-69"/>
+    </g>
+   </g>
+   <g id="text_40">
+    <!-- e -->
+    <g style="fill: #444443" transform="translate(261.5904 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-65"/>
+    </g>
+   </g>
+   <g id="text_41">
+    <!-- n -->
+    <g style="fill: #444443" transform="translate(268.119 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-6e"/>
+    </g>
+   </g>
+   <g id="text_42">
+    <!-- t -->
+    <g style="fill: #444443" transform="translate(274.6476 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-74"/>
+    </g>
+   </g>
+   <g id="text_43">
+    <!--   -->
+    <g style="fill: #444443" transform="translate(281.1762 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-20"/>
+    </g>
+   </g>
+   <g id="text_44">
+    <!-- * -->
+    <g style="fill: #444443" transform="translate(287.7048 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-2a" d="M 3003 2625  L 2791 2253  L 1913 2834  L 1984 1766  L 1538 1766  L 1606 2834  L 709 2253  L 513 2619  L 1472 3091  L 513 3572  L 728 3938  L 1613 3347  L 1538 4416  L 1984 4416  L 1906 3347  L 2791 3944  L 3009 3559  L 2047 3084  L 3003 2625  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-2a"/>
+    </g>
+   </g>
+   <g id="text_45">
+    <!--   -->
+    <g style="fill: #444443" transform="translate(294.2334 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-20"/>
+    </g>
+   </g>
+   <g id="text_46">
+    <!-- n -->
+    <g style="fill: #444443" transform="translate(300.762 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-6e"/>
+    </g>
+   </g>
+   <g id="text_47">
+    <!-- p -->
+    <g style="fill: #444443" transform="translate(307.2906 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-70"/>
+    </g>
+   </g>
+   <g id="text_48">
+    <!-- . -->
+    <g style="fill: #444443" transform="translate(313.8192 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-2e" d="M 1734 984  Q 1841 984 1936 943  Q 2031 903 2101 831  Q 2172 759 2212 664  Q 2253 569 2253 459  Q 2253 353 2212 259  Q 2172 166 2101 95  Q 2031 25 1936 -15  Q 1841 -56 1734 -56  Q 1625 -56 1531 -15  Q 1438 25 1367 95  Q 1297 166 1256 259  Q 1216 353 1216 459  Q 1216 569 1256 664  Q 1297 759 1367 831  Q 1438 903 1531 943  Q 1625 984 1734 984  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-2e"/>
+    </g>
+   </g>
+   <g id="text_49">
+    <!-- h -->
+    <g style="fill: #444443" transform="translate(320.3478 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-68" d="M 3022 0  L 2478 0  L 2478 2003  Q 2478 2366 2342 2545  Q 2206 2725 1953 2725  Q 1844 2725 1748 2695  Q 1653 2666 1550 2592  Q 1447 2519 1325 2394  Q 1203 2269 1044 2081  L 1044 0  L 500 0  L 500 4416  L 1044 4416  L 1044 3138  L 1025 2644  Q 1153 2797 1276 2901  Q 1400 3006 1523 3072  Q 1647 3138 1775 3166  Q 1903 3194 2041 3194  Q 2509 3194 2765 2908  Q 3022 2622 3022 2047  L 3022 0  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-68"/>
+    </g>
+   </g>
+   <g id="text_50">
+    <!-- e -->
+    <g style="fill: #444443" transform="translate(326.8764 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-65"/>
+    </g>
+   </g>
+   <g id="text_51">
+    <!-- a -->
+    <g style="fill: #444443" transform="translate(333.405 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-61"/>
+    </g>
+   </g>
+   <g id="text_52">
+    <!-- v -->
+    <g style="fill: #444443" transform="translate(339.9336 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-76"/>
+    </g>
+   </g>
+   <g id="text_53">
+    <!-- i -->
+    <g style="fill: #444443" transform="translate(346.4622 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-69"/>
+    </g>
+   </g>
+   <g id="text_54">
+    <!-- s -->
+    <g style="fill: #444443" transform="translate(352.9908 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-73" d="M 2984 856  Q 2984 691 2928 559  Q 2872 428 2775 326  Q 2678 225 2550 153  Q 2422 81 2276 34  Q 2131 -13 1978 -34  Q 1825 -56 1678 -56  Q 1359 -56 1092 -28  Q 825 0 569 63  L 569 563  Q 844 484 1116 443  Q 1388 403 1656 403  Q 2047 403 2234 509  Q 2422 616 2422 813  Q 2422 897 2392 964  Q 2363 1031 2284 1092  Q 2206 1153 2042 1218  Q 1878 1284 1594 1369  Q 1381 1431 1201 1511  Q 1022 1591 890 1700  Q 759 1809 684 1956  Q 609 2103 609 2303  Q 609 2434 670 2590  Q 731 2747 878 2881  Q 1025 3016 1275 3105  Q 1525 3194 1900 3194  Q 2084 3194 2309 3173  Q 2534 3153 2778 3103  L 2778 2619  Q 2522 2681 2292 2711  Q 2063 2741 1894 2741  Q 1691 2741 1552 2709  Q 1413 2678 1327 2623  Q 1241 2569 1203 2495  Q 1166 2422 1166 2338  Q 1166 2253 1198 2184  Q 1231 2116 1320 2052  Q 1409 1988 1568 1923  Q 1728 1859 1984 1784  Q 2263 1703 2453 1614  Q 2644 1525 2762 1415  Q 2881 1306 2932 1168  Q 2984 1031 2984 856  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-73"/>
+    </g>
+   </g>
+   <g id="text_55">
+    <!-- i -->
+    <g style="fill: #444443" transform="translate(359.5194 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-69"/>
+    </g>
+   </g>
+   <g id="text_56">
+    <!-- d -->
+    <g style="fill: #444443" transform="translate(366.048 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-64"/>
+    </g>
+   </g>
+   <g id="text_57">
+    <!-- e -->
+    <g style="fill: #444443" transform="translate(372.5766 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-65"/>
+    </g>
+   </g>
+   <g id="text_58">
+    <!-- ( -->
+    <g style="fill: #444443" transform="translate(379.1052 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-28" d="M 2378 -1313  Q 938 22 938 1638  Q 938 2016 1014 2392  Q 1091 2769 1261 3147  Q 1431 3525 1711 3903  Q 1991 4281 2391 4653  L 2706 4331  Q 1494 3134 1494 1678  Q 1494 953 1800 284  Q 2106 -384 2706 -978  L 2378 -1313  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-28"/>
+    </g>
+   </g>
+   <g id="text_59">
+    <!-- l -->
+    <g style="fill: #444443" transform="translate(385.6338 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-6c"/>
+    </g>
+   </g>
+   <g id="text_60">
+    <!-- 1 -->
+    <g style="fill: #444443" transform="translate(392.1624 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-31"/>
+    </g>
+   </g>
+   <g id="text_61">
+    <!-- _ -->
+    <g style="fill: #444443" transform="translate(398.691 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-5f"/>
+    </g>
+   </g>
+   <g id="text_62">
+    <!-- o -->
+    <g style="fill: #444443" transform="translate(405.2196 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-6f"/>
+    </g>
+   </g>
+   <g id="text_63">
+    <!-- u -->
+    <g style="fill: #444443" transform="translate(411.7482 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-75"/>
+    </g>
+   </g>
+   <g id="text_64">
+    <!-- t -->
+    <g style="fill: #444443" transform="translate(418.2768 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-74"/>
+    </g>
+   </g>
+   <g id="text_65">
+    <!-- p -->
+    <g style="fill: #444443" transform="translate(424.8054 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-70"/>
+    </g>
+   </g>
+   <g id="text_66">
+    <!-- u -->
+    <g style="fill: #444443" transform="translate(431.334 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-75"/>
+    </g>
+   </g>
+   <g id="text_67">
+    <!-- t -->
+    <g style="fill: #444443" transform="translate(437.8626 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-74"/>
+    </g>
+   </g>
+   <g id="text_68">
+    <!-- , -->
+    <g style="fill: #444443" transform="translate(444.3912 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-2c" d="M 744 -641  Q 903 -647 1053 -612  Q 1203 -578 1317 -511  Q 1431 -444 1500 -344  Q 1569 -244 1569 -116  Q 1569 16 1523 97  Q 1478 178 1422 247  Q 1366 316 1320 394  Q 1275 472 1275 603  Q 1275 669 1300 741  Q 1325 813 1376 872  Q 1428 931 1508 968  Q 1588 1006 1697 1006  Q 1806 1006 1907 961  Q 2009 916 2086 822  Q 2163 728 2208 587  Q 2253 447 2253 256  Q 2253 -3 2158 -242  Q 2063 -481 1873 -665  Q 1684 -850 1401 -959  Q 1119 -1069 744 -1069  L 744 -641  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-2c"/>
+    </g>
+   </g>
+   <g id="text_69">
+    <!--   -->
+    <g style="fill: #444443" transform="translate(450.9198 9.451406) scale(0.13 -0.13)">
+     <use xlink:href="#Consolas-20"/>
+    </g>
+   </g>
+   <g id="text_70">
+    <!-- 0 -->
+    <g style="fill: #444443" transform="translate(457.4484 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-30" d="M 3244 2041  Q 3244 1572 3150 1186  Q 3056 800 2865 523  Q 2675 247 2392 95  Q 2109 -56 1728 -56  Q 1400 -56 1131 67  Q 863 191 672 447  Q 481 703 378 1100  Q 275 1497 275 2041  Q 275 2509 370 2896  Q 466 3284 655 3561  Q 844 3838 1128 3989  Q 1413 4141 1791 4141  Q 2119 4141 2387 4017  Q 2656 3894 2847 3636  Q 3038 3378 3141 2981  Q 3244 2584 3244 2041  z M 2694 2022  Q 2694 2128 2686 2233  Q 2678 2338 2669 2438  L 941 1153  Q 988 991 1059 853  Q 1131 716 1232 617  Q 1334 519 1464 464  Q 1594 409 1759 409  Q 1972 409 2145 512  Q 2319 616 2441 819  Q 2563 1022 2628 1323  Q 2694 1625 2694 2022  z M 825 2059  Q 825 1963 826 1866  Q 828 1769 838 1678  L 2566 2956  Q 2519 3116 2447 3247  Q 2375 3378 2275 3473  Q 2175 3569 2047 3622  Q 1919 3675 1759 3675  Q 1547 3675 1373 3572  Q 1200 3469 1078 3264  Q 956 3059 890 2757  Q 825 2456 825 2059  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-30"/>
+    </g>
+   </g>
+   <g id="text_71">
+    <!-- ) -->
+    <g style="fill: #444443" transform="translate(463.977 9.451406) scale(0.13 -0.13)">
+     <defs>
+      <path id="Consolas-29" d="M 1141 4653  Q 2581 3319 2581 1684  Q 2581 1347 2512 984  Q 2444 622 2278 242  Q 2113 -138 1833 -528  Q 1553 -919 1128 -1313  L 813 -991  Q 1422 -388 1722 268  Q 2022 925 2022 1644  Q 2022 3131 813 4319  L 1141 4653  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#Consolas-29"/>
+    </g>
+   </g>
+   <g id="text_72">
+    <!-- 5 -->
+    <g transform="translate(52.5186 37.041243) rotate(-90) scale(0.09 -0.09)">
+     <defs>
+      <path id="ArialMT-35" d="M 266 1200  L 856 1250  Q 922 819 1161 601  Q 1400 384 1738 384  Q 2144 384 2425 690  Q 2706 997 2706 1503  Q 2706 1984 2436 2262  Q 2166 2541 1728 2541  Q 1456 2541 1237 2417  Q 1019 2294 894 2097  L 366 2166  L 809 4519  L 3088 4519  L 3088 3981  L 1259 3981  L 1013 2750  Q 1425 3038 1878 3038  Q 2478 3038 2890 2622  Q 3303 2206 3303 1553  Q 3303 931 2941 478  Q 2500 -78 1738 -78  Q 1113 -78 717 272  Q 322 622 266 1200  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#ArialMT-35"/>
+    </g>
+   </g>
+   <g id="text_73">
+    <!-- 2 -->
+    <g transform="translate(63.229978 21.801482) scale(0.09 -0.09)">
+     <defs>
+      <path id="ArialMT-32" d="M 3222 541  L 3222 0  L 194 0  Q 188 203 259 391  Q 375 700 629 1000  Q 884 1300 1366 1694  Q 2113 2306 2375 2664  Q 2638 3022 2638 3341  Q 2638 3675 2398 3904  Q 2159 4134 1775 4134  Q 1369 4134 1125 3890  Q 881 3647 878 3216  L 300 3275  Q 359 3922 746 4261  Q 1134 4600 1788 4600  Q 2447 4600 2831 4234  Q 3216 3869 3216 3328  Q 3216 3053 3103 2787  Q 2991 2522 2730 2228  Q 2469 1934 1863 1422  Q 1356 997 1212 845  Q 1069 694 975 541  L 3222 541  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#ArialMT-32"/>
+    </g>
+   </g>
+   <g id="text_74">
+    <!-- &lt;${\mathit{float64}}$&gt; -->
+    <g transform="translate(49.3174 52.28663) scale(0.07 -0.07)">
+     <defs>
+      <path id="ArialMT-3c" d="M 350 2003  L 350 2528  L 3384 3809  L 3384 3250  L 978 2263  L 3384 1266  L 3384 706  L 350 2003  z " transform="scale(0.015625)"/>
+      <path id="DejaVuSans-Oblique-66" d="M 3059 4863  L 2969 4384  L 2419 4384  Q 2106 4384 1964 4261  Q 1822 4138 1753 3809  L 1691 3500  L 2638 3500  L 2553 3053  L 1606 3053  L 1013 0  L 434 0  L 1031 3053  L 481 3053  L 563 3500  L 1113 3500  L 1159 3744  Q 1278 4363 1576 4613  Q 1875 4863 2516 4863  L 3059 4863  z " transform="scale(0.015625)"/>
+      <path id="DejaVuSans-Oblique-6c" d="M 1172 4863  L 1747 4863  L 800 0  L 225 0  L 1172 4863  z " transform="scale(0.015625)"/>
+      <path id="DejaVuSans-Oblique-6f" d="M 1625 -91  Q 1009 -91 651 289  Q 294 669 294 1325  Q 294 1706 417 2101  Q 541 2497 738 2766  Q 1047 3184 1428 3384  Q 1809 3584 2291 3584  Q 2888 3584 3255 3212  Q 3622 2841 3622 2241  Q 3622 1825 3500 1412  Q 3378 1000 3181 728  Q 2875 309 2494 109  Q 2113 -91 1625 -91  z M 891 1344  Q 891 869 1089 633  Q 1288 397 1691 397  Q 2269 397 2648 901  Q 3028 1406 3028 2181  Q 3028 2634 2825 2865  Q 2622 3097 2228 3097  Q 1903 3097 1650 2945  Q 1397 2794 1197 2484  Q 1050 2253 970 1956  Q 891 1659 891 1344  z " transform="scale(0.015625)"/>
+      <path id="DejaVuSans-Oblique-61" d="M 3438 1997  L 3047 0  L 2472 0  L 2578 531  Q 2325 219 2001 64  Q 1678 -91 1281 -91  Q 834 -91 548 182  Q 263 456 263 884  Q 263 1497 752 1853  Q 1241 2209 2100 2209  L 2900 2209  L 2931 2363  Q 2938 2388 2941 2417  Q 2944 2447 2944 2509  Q 2944 2788 2717 2942  Q 2491 3097 2081 3097  Q 1800 3097 1504 3025  Q 1209 2953 897 2809  L 997 3341  Q 1322 3463 1633 3523  Q 1944 3584 2234 3584  Q 2853 3584 3176 3315  Q 3500 3047 3500 2534  Q 3500 2431 3484 2292  Q 3469 2153 3438 1997  z M 2816 1759  L 2241 1759  Q 1534 1759 1195 1570  Q 856 1381 856 984  Q 856 709 1029 553  Q 1203 397 1509 397  Q 1978 397 2328 733  Q 2678 1069 2791 1631  L 2816 1759  z " transform="scale(0.015625)"/>
+      <path id="DejaVuSans-Oblique-74" d="M 2706 3500  L 2619 3053  L 1472 3053  L 1100 1153  Q 1081 1047 1072 975  Q 1063 903 1063 863  Q 1063 663 1183 572  Q 1303 481 1569 481  L 2150 481  L 2053 0  L 1503 0  Q 991 0 739 200  Q 488 400 488 806  Q 488 878 497 964  Q 506 1050 525 1153  L 897 3053  L 409 3053  L 500 3500  L 978 3500  L 1172 4494  L 1747 4494  L 1556 3500  L 2706 3500  z " transform="scale(0.015625)"/>
+      <path id="DejaVuSans-36" d="M 2113 2584  Q 1688 2584 1439 2293  Q 1191 2003 1191 1497  Q 1191 994 1439 701  Q 1688 409 2113 409  Q 2538 409 2786 701  Q 3034 994 3034 1497  Q 3034 2003 2786 2293  Q 2538 2584 2113 2584  z M 3366 4563  L 3366 3988  Q 3128 4100 2886 4159  Q 2644 4219 2406 4219  Q 1781 4219 1451 3797  Q 1122 3375 1075 2522  Q 1259 2794 1537 2939  Q 1816 3084 2150 3084  Q 2853 3084 3261 2657  Q 3669 2231 3669 1497  Q 3669 778 3244 343  Q 2819 -91 2113 -91  Q 1303 -91 875 529  Q 447 1150 447 2328  Q 447 3434 972 4092  Q 1497 4750 2381 4750  Q 2619 4750 2861 4703  Q 3103 4656 3366 4563  z " transform="scale(0.015625)"/>
+      <path id="DejaVuSans-34" d="M 2419 4116  L 825 1625  L 2419 1625  L 2419 4116  z M 2253 4666  L 3047 4666  L 3047 1625  L 3713 1625  L 3713 1100  L 3047 1100  L 3047 0  L 2419 0  L 2419 1100  L 313 1100  L 313 1709  L 2253 4666  z " transform="scale(0.015625)"/>
+      <path id="ArialMT-3e" d="M 3384 2003  L 350 706  L 350 1266  L 2753 2263  L 350 3250  L 350 3809  L 3384 2528  L 3384 2003  z " transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#ArialMT-3c" transform="translate(0 0.015625)"/>
+     <use xlink:href="#DejaVuSans-Oblique-66" transform="translate(58.398438 0.015625)"/>
+     <use xlink:href="#DejaVuSans-Oblique-6c" transform="translate(93.603516 0.015625)"/>
+     <use xlink:href="#DejaVuSans-Oblique-6f" transform="translate(121.386719 0.015625)"/>
+     <use xlink:href="#DejaVuSans-Oblique-61" transform="translate(182.568359 0.015625)"/>
+     <use xlink:href="#DejaVuSans-Oblique-74" transform="translate(243.847656 0.015625)"/>
+     <use xlink:href="#DejaVuSans-36" transform="translate(283.056641 0.015625)"/>
+     <use xlink:href="#DejaVuSans-34" transform="translate(346.679688 0.015625)"/>
+     <use xlink:href="#ArialMT-3e" transform="translate(410.302734 0.015625)"/>
+    </g>
+   </g>
+   <g id="text_75">
+    <!-- 5 -->
+    <g transform="translate(199.4121 37.041243) rotate(-90) scale(0.09 -0.09)">
+     <use xlink:href="#ArialMT-35"/>
+    </g>
+   </g>
+   <g id="text_76">
+    <!-- 2 -->
+    <g transform="translate(210.123478 21.801482) scale(0.09 -0.09)">
+     <use xlink:href="#ArialMT-32"/>
+    </g>
+   </g>
+   <g id="text_77">
+    <!-- &lt;${\mathit{float64}}$&gt; -->
+    <g transform="translate(196.2109 52.28663) scale(0.07 -0.07)">
+     <use xlink:href="#ArialMT-3c" transform="translate(0 0.015625)"/>
+     <use xlink:href="#DejaVuSans-Oblique-66" transform="translate(58.398438 0.015625)"/>
+     <use xlink:href="#DejaVuSans-Oblique-6c" transform="translate(93.603516 0.015625)"/>
+     <use xlink:href="#DejaVuSans-Oblique-6f" transform="translate(121.386719 0.015625)"/>
+     <use xlink:href="#DejaVuSans-Oblique-61" transform="translate(182.568359 0.015625)"/>
+     <use xlink:href="#DejaVuSans-Oblique-74" transform="translate(243.847656 0.015625)"/>
+     <use xlink:href="#DejaVuSans-36" transform="translate(283.056641 0.015625)"/>
+     <use xlink:href="#DejaVuSans-34" transform="translate(346.679688 0.015625)"/>
+     <use xlink:href="#ArialMT-3e" transform="translate(410.302734 0.015625)"/>
+    </g>
+   </g>
+   <g id="text_78">
+    <!-- 5 -->
+    <g transform="translate(401.7987 37.041243) rotate(-90) scale(0.09 -0.09)">
+     <use xlink:href="#ArialMT-35"/>
+    </g>
+   </g>
+   <g id="text_79">
+    <!-- 2 -->
+    <g transform="translate(412.510078 21.801482) scale(0.09 -0.09)">
+     <use xlink:href="#ArialMT-32"/>
+    </g>
+   </g>
+   <g id="text_80">
+    <!-- &lt;${\mathit{float64}}$&gt; -->
+    <g transform="translate(398.5975 52.28663) scale(0.07 -0.07)">
+     <use xlink:href="#ArialMT-3c" transform="translate(0 0.015625)"/>
+     <use xlink:href="#DejaVuSans-Oblique-66" transform="translate(58.398438 0.015625)"/>
+     <use xlink:href="#DejaVuSans-Oblique-6c" transform="translate(93.603516 0.015625)"/>
+     <use xlink:href="#DejaVuSans-Oblique-6f" transform="translate(121.386719 0.015625)"/>
+     <use xlink:href="#DejaVuSans-Oblique-61" transform="translate(182.568359 0.015625)"/>
+     <use xlink:href="#DejaVuSans-Oblique-74" transform="translate(243.847656 0.015625)"/>
+     <use xlink:href="#DejaVuSans-36" transform="translate(283.056641 0.015625)"/>
+     <use xlink:href="#DejaVuSans-34" transform="translate(346.679688 0.015625)"/>
+     <use xlink:href="#ArialMT-3e" transform="translate(410.302734 0.015625)"/>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p8e0c3652e4">
+   <rect x="0" y="4.406366" width="470.5056" height="42.315395"/>
+  </clipPath>
+ </defs>
+</svg>

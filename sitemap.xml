@@ -2,94 +2,282 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://sheldoncoder1337.github.io/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs01-computer-architecture/00-environment-setup/</loc>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/cs01-computer-architecture/00-introduction/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs01-computer-architecture/01-compile-and-link/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs01-computer-architecture/02-riscv/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs02-data-structure/00-crash-course/</loc>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/cs02-data-structure/00-introduction/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs02-data-structure/01-array/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs02-data-structure/02-linked-list/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs02-data-structure/03-binary-tree/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs02-data-structure/20-top100/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs02-data-structure/shortest-path/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs03-operating-system/0-operating-system/</loc>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/cs03-operating-system/00-introduction/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs03-operating-system/1-environment-setup/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs03-operating-system/ch1/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs03-operating-system/draft/</loc>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/cs04-computer-network/00-introduction/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/cs05-database-system/00-introduction/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs06-machine-learning/0-outline/</loc>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/cs06-machine-learning/00-introduction/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs06-machine-learning/ML-Autoencoder/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs06-machine-learning/ML-Classification-Introduction/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs06-machine-learning/ML-Clustering-Introduction/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs06-machine-learning/ML-Clustering-Kmeans/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs06-machine-learning/ML-Clustering-Practice/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs06-machine-learning/NNPipeline/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs06-machine-learning/draft/</loc>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/cs07-deep-learning/00-introduction/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs07-deep-learning/00-outline/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs07-deep-learning/01-linalg/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs07-deep-learning/02-linreg/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs07-deep-learning/03-dense/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs07-deep-learning/04-classification/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs07-deep-learning/05-rnn/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs07-deep-learning/06-comp_graph/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs07-deep-learning/07-optimizers/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs07-deep-learning/08-regularization/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs07-deep-learning/09-pytorch/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs07-deep-learning/10-text/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs07-deep-learning/11-transformer/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs07-deep-learning/15-nano-vllm/</loc>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/cs07-deep-learning/16-asr/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs07-deep-learning/draft/</loc>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/cs08-software-engineering/00-introduction/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/cs08-software-engineering/01-cookc/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs08-software-engineering/2019-11/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs08-software-engineering/2020-11/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs08-software-engineering/2025-05/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/cs08-software-engineering/2025-11/</loc>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/handbook/docker/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/handbook/git/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/handbook/markdown/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/handbook/powershell/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/handbook/uv/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/handbook/wsl/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/math/00-introduction/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/math/harris-corner-detection/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/math/pr-ch02-Bayes/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/math/pr-ch03-lc/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/math/pr-ch04-nlc/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
     </url>
     <url>
          <loc>https://sheldoncoder1337.github.io/math/pr-ch05-svd/</loc>
-         <lastmod>2026-03-13</lastmod>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/reading/JAVA/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/reading/Object-oriented%20Design/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/reading/READ-Telemetry/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/reading/Trend-of-AI/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/reading/civil_servant/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/reading/computer-hardware/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/reading/draft/</loc>
+         <lastmod>2026-03-31</lastmod>
+    </url>
+    <url>
+         <loc>https://sheldoncoder1337.github.io/reading/map/</loc>
+         <lastmod>2026-03-31</lastmod>
     </url>
 </urlset>
