@@ -13,8 +13,8 @@ $ git remote add page git@github.com:sheldoncoder1337/sheldoncoder1337.github.io
 $ git remote add code git@github.com:SheldonCoder1337/blog.git
 
 # Daily pull push
-$ git pull code master
-$ git add mkdocs.yml docs/ README.md
+$ git pull code master 
+$ git add mkdocs.yml docs/ README.md codelab/
 $ git commit -m "Modified form Zhuzhu desktop"
 $ git commit -m "Modified form Lele labtop"
 $ git pull code master
