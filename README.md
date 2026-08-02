@@ -38,6 +38,10 @@ $ ssh -i ssh_key -T git@github.com
 $ git clone git@github.com:SheldonCoder1337/blog.git
 ```
 
+```bash
+uv run mkdocs serve --live-reload
+```
+
 **Conventional Commits**
 
 ```bash
