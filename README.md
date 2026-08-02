@@ -37,3 +37,16 @@ $ ssh -i ssh_key -T git@github.com
 # clone
 $ git clone git@github.com:SheldonCoder1337/blog.git
 ```
+
+**Conventional Commits**
+
+```bash
+    feat: 添加用户登录功能(Feature) 
+     fix: 修复登录验证失败问题
+    docs: 更新 API 文档说明
+   style: 统一代码缩进格式
+refactor: 重构用户模块逻辑
+    perf: 优化数据库查询性能(Performance) 
+    test: 添加用户模块单元测试
+   chore: 更新依赖包版本
+```
