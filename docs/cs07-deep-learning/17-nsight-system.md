@@ -242,6 +242,7 @@ nsys stats eager.nsys-rep --report cuda_gpu_kern_sum
 ```
 
 **每一列的含义：**
+
 | 列 | 含义 | 阅读技巧 |
 |---|---|---|
 | Time (%) | 该 kernel 总时间占全部 kernel 总时间的比例 | 找大头：谁占 90% 谁就是瓶颈候选 |
@@ -313,6 +314,7 @@ GPU:  [GEMM][gelu][mul][add][GEMM][gelu][mul][add][GEMM]                ← ~418
 ### 5.2 compile：融合的直接证据
 
 **GPU 侧**——4 行，共 150 实例 = **5 个 kernel/步**：
+
 | kernel（简写） | 实例 | 每步 | Avg (µs) | 对应内容 |
 |---|---|---|---|---|
 | `cutlass_80_tensorop_s1688gemm_256x64_16x4` | 30 | 1 | 193.8 | 某个 GEMM（Inductor 选了与 eager 不同的分块） |
@@ -367,6 +369,7 @@ GPU:  [GEMM][gelu][mul][add][GEMM][gelu][mul][add][GEMM]        ← 整图一次
 ### 5.4 compile+cudagraph：reduce-overhead 的“自动版”
 
 **GPU 侧**——5 行，共 180 实例 = **6 个 kernel/步**：
+
 | kernel（简写） | 实例 | 每步 | Avg (µs) | 对应内容 |
 |---|---|---|---|---|
 | `cutlass_80_tensorop_s1688gemm_256x64_16x4` | 30 | 1 | 215.8 | GEMM |
