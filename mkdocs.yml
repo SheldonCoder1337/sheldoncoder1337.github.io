@@ -23,6 +23,7 @@ nav:
   - Deeplearning:
     - 00-Introduction: "cs07-deep-learning/00-introduction.md"
     - 16-asr.md: "cs07-deep-learning/16-asr.md"
+    - 17-nsight-system.md: "cs07-deep-learning/17-nsight-system.md"
     - 18-store-kvcache.md: "cs07-deep-learning/18-store-kvcache.md"
     - 20-interview: "cs07-deep-learning/20-interview.md"
   - SoftwareEngineering:
