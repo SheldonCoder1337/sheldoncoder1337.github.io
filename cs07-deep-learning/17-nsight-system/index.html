@@ -1,0 +1,3806 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Personal Blog by Sheldon">
+      
+      
+        <meta name="author" content="jialecai">
+      
+      
+        <link rel="canonical" href="https://sheldoncoder1337.github.io/cs07-deep-learning/17-nsight-system/">
+      
+      
+        <link rel="prev" href="../16-asr/">
+      
+      
+        <link rel="next" href="../18-store-kvcache/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>17-nsight-system.md - Harmony</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M22%2012a10%2010%200%200%201-10%2010A10%2010%200%200%201%202%2012%2010%2010%200%200%201%2012%202a10%2010%200%200%201%2010%2010M6%2013h8l-3.5%203.5%201.42%201.42L17.84%2012l-5.92-5.92L10.5%207.5%2014%2011H6z%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#nsight-systems-eager-torchcompile-and-cuda-graph" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Harmony" class="md-header__button md-logo" aria-label="Harmony" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Harmony
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              17-nsight-system.md
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sheldoncoder1337.github.io/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Harmony" class="md-nav__button md-logo" aria-label="Harmony" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Harmony
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sheldoncoder1337.github.io/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ComputerArchitecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ComputerArchitecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs01-computer-architecture/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DataStructure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DataStructure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs02-data-structure/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs02-data-structure/20-top100/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    top100
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OperatingSystem
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    OperatingSystem
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs03-operating-system/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ComputerNetwork
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ComputerNetwork
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs04-computer-network/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Database
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs05-database-system/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MachineLearning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MachineLearning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs06-machine-learning/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deeplearning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deeplearning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-asr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16-asr.md
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17-nsight-system.md
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17-nsight-system.md
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        目录
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-4-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、实验设计：1 个模型 × 4 种模式 × 2 个视角
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benchpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、被测代码 bench.py 精讲
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、采集命令逐参数精讲
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、采集命令逐参数精讲">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        采集日志逐行读
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compile 模式多出来的几行输出，都不是错误
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nsys-stats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、nsys stats 表格怎么读
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、四种模式逐个复盘（真实数据）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、四种模式逐个复盘（真实数据）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-eager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 eager：教科书式的“未融合”基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-compile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 compile：融合的直接证据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-cudagraph-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 cudagraph：图不改变 GPU 干的活，只改变“怎么发”
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-compilecudagraphreduce-overhead" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 compile+cudagraph：reduce-overhead 的“自动版”
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        六、横向对比与六个结论
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、横向对比与六个结论">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        每步指标总表（全部由上面的原始数据换算而来）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        六个结论
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实践建议：什么时候用哪个
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#guinsys-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        七、GUI（nsys-ui）时间线怎么看
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="七、GUI（nsys-ui）时间线怎么看">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        界面结构（自上而下）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心操作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四份报告各自的“标准景象”
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        八、Kernel 名解码速查表
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        九、视野扩展：推理优化的全景图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十、新手学习路径与资料
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十一、动手练习
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        附录：复现命令清单
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        结语
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        附录：完整代码
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18-store-kvcache/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18-store-kvcache.md
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20-interview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20-interview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SoftwareEngineering
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SoftwareEngineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs08-software-engineering/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs08-software-engineering/01-cookc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01-CookC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs08-software-engineering/02-rag-arc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02-RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Math
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../math/00-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    00-Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handbook
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Handbook
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/markdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Markdown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/powershell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Powershell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/git/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/wsl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WSL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../handbook/uv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UV
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        目录
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-4-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、实验设计：1 个模型 × 4 种模式 × 2 个视角
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benchpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、被测代码 bench.py 精讲
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、采集命令逐参数精讲
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、采集命令逐参数精讲">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        采集日志逐行读
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compile 模式多出来的几行输出，都不是错误
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nsys-stats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、nsys stats 表格怎么读
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、四种模式逐个复盘（真实数据）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、四种模式逐个复盘（真实数据）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-eager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 eager：教科书式的“未融合”基线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-compile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 compile：融合的直接证据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-cudagraph-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 cudagraph：图不改变 GPU 干的活，只改变“怎么发”
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-compilecudagraphreduce-overhead" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 compile+cudagraph：reduce-overhead 的“自动版”
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        六、横向对比与六个结论
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、横向对比与六个结论">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        每步指标总表（全部由上面的原始数据换算而来）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        六个结论
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实践建议：什么时候用哪个
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#guinsys-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        七、GUI（nsys-ui）时间线怎么看
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="七、GUI（nsys-ui）时间线怎么看">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        界面结构（自上而下）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心操作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四份报告各自的“标准景象”
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        八、Kernel 名解码速查表
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        九、视野扩展：推理优化的全景图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十、新手学习路径与资料
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十一、动手练习
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        附录：复现命令清单
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        结语
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        附录：完整代码
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="nsight-systems-eager-torchcompile-and-cuda-graph">Nsight Systems: eager, torch.compile and CUDA Graph</h1>
+<blockquote>
+<p><strong>这篇文章适合谁</strong>：会用 PyTorch 训练/推理，听说过“算子融合”“CUDA Graph”但没亲眼见过它们的证据；想学会用 Nsight Systems（nsys）分析 GPU 程序，却面对一堆表格不知从何看起的同学。</p>
+<p><strong>你将学到</strong>：① 一份精心设计的基准脚本如何把四种推理模式变成可观测的对照实验；② nsys 每个命令行参数、每张统计表的每一列怎么读；③ 如何从真实测量数据中“读出”算子融合与 CUDA Graph 的效果，以及如何不被噪声骗到。</p>
+</blockquote>
+<hr />
+<h2 id="_1">目录</h2>
+<ol>
+<li><a href="#一">实验设计：1 个模型 × 4 种模式 × 2 个视角</a></li>
+<li><a href="#二">被测代码 bench.py 精讲</a></li>
+<li><a href="#三">采集命令逐参数精讲</a></li>
+<li><a href="#四">nsys stats 表格怎么读</a></li>
+<li><a href="#五">四种模式逐个复盘（真实数据）</a></li>
+<li><a href="#六">横向对比与六个结论</a></li>
+<li><a href="#七">GUI（nsys-ui）时间线怎么看</a></li>
+<li><a href="#八">Kernel 名解码速查表</a></li>
+<li><a href="#九">视野扩展：推理优化的全景图</a></li>
+<li><a href="#十">新手学习路径与资料</a></li>
+<li><a href="#十一">动手练习</a></li>
+<li><a href="#附录">附录：复现命令清单</a></li>
+</ol>
+<hr />
+<p><a id="一"></a></p>
+<h2 id="1-4-2">一、实验设计：1 个模型 × 4 种模式 × 2 个视角</h2>
+<p>同一个三层 MLP，用四种方式做推理，各采集一份 nsys 报告：</p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>优化手段</th>
+<th>预期变化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>eager</code></td>
+<td>无（基线）</td>
+<td>每步 9 个独立 kernel、9 次 launch</td>
+</tr>
+<tr>
+<td><code>compile</code></td>
+<td>torch.compile 算子融合</td>
+<td>pointwise 链被 Inductor 融合成 Triton kernel，kernel 数减少</td>
+</tr>
+<tr>
+<td><code>cudagraph</code></td>
+<td>手动 CUDA Graph</td>
+<td>kernel 不变，但每步只用 <strong>1 次</strong> <code>cudaGraphLaunch</code></td>
+</tr>
+<tr>
+<td><code>compile+cudagraph</code></td>
+<td><code>mode="reduce-overhead"</code></td>
+<td>融合 + 图回放 + 自动输入拷贝</td>
+</tr>
+</tbody>
+</table>
+<p>分析时永远盯住<strong>两条线</strong>，这是全文的纲：</p>
+<blockquote>
+<ul>
+<li><strong><code>cuda_gpu_kern_sum</code></strong>（GPU kernel 汇总）= <strong>GPU 侧真正执行了什么</strong>，每个活干了多久；</li>
+<li><strong><code>cuda_api_sum</code></strong>（CUDA API 汇总）= <strong>CPU 侧花了多少功夫去“安排”这些活</strong>。</li>
+</ul>
+</blockquote>
+<p>优化无非两件事：<strong>让 GPU 干的活更少（算子融合）</strong> + <strong>让 CPU 安排得更省（CUDA Graph）</strong>。</p>
+<p><strong>名词小词典</strong>（后文反复出现）：</p>
+<table>
+<thead>
+<tr>
+<th>名词</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kernel</td>
+<td>GPU 上执行的一个函数实例。eager 模式下每个 PyTorch 算子通常对应一个 kernel</td>
+</tr>
+<tr>
+<td>launch</td>
+<td>CPU 调用 CUDA API 把 kernel 提交给 GPU 的动作，每次有几微秒到几十微秒的 CPU 开销</td>
+</tr>
+<tr>
+<td>算子融合</td>
+<td>把多个小 kernel（如 gelu→mul→add）合并成一个大 kernel，省掉中间结果的显存读写和多次 launch</td>
+</tr>
+<tr>
+<td>CUDA Graph</td>
+<td>把一整段 kernel 序列录制（capture）成一张“图”，之后一次 API 调用整图回放，消除逐个 launch 的开销</td>
+</tr>
+<tr>
+<td>NVTX</td>
+<td>NVIDIA 的用户自定义标注 API，在时间线上打“书签”，方便定位代码区间</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="二"></a></p>
+<h2 id="benchpy">二、被测代码 bench.py 精讲</h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn.functional</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">F</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.cuda.profiler</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">profiler</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.cuda.nvtx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nvtx</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">torch</span><span class="o">.</span><span class="n">set_float32_matmul_precision</span><span class="p">(</span><span class="s1">&#39;high&#39;</span><span class="p">)</span>  <span class="c1"># 允许 GEMM 使用 TF32 Tensor Core</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">class</span><span class="w"> </span><span class="nc">TinyMLP</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_in</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">d_hidden</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">d_out</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">d_in</span><span class="p">,</span> <span class="n">d_hidden</span><span class="p">)</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">d_hidden</span><span class="p">,</span> <span class="n">d_hidden</span><span class="p">)</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fc3</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">d_hidden</span><span class="p">,</span> <span class="n">d_out</span><span class="p">)</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        <span class="c1"># 故意串联 pointwise 算子：eager 下 gelu/mul/add 各是一个独立 kernel，</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        <span class="c1"># torch.compile 后会被 Inductor 融合为单个 triton kernel</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        <span class="n">h</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">gelu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">*</span> <span class="mf">1.1</span> <span class="o">+</span> <span class="mf">0.2</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        <span class="n">h</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">gelu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">h</span><span class="p">))</span> <span class="o">*</span> <span class="mf">0.9</span> <span class="o">+</span> <span class="mf">0.1</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc3</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">static_x</span><span class="p">):</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;eager&quot;</span><span class="p">:</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>        <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">():</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>                <span class="k">return</span> <span class="n">model</span><span class="p">(</span><span class="n">static_x</span><span class="p">)</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;compile&quot;</span><span class="p">:</span>                       <span class="c1"># 仅算子融合（无 CUDA Graph）</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>        <span class="n">compiled</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>        <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">():</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>                <span class="k">return</span> <span class="n">compiled</span><span class="p">(</span><span class="n">static_x</span><span class="p">)</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;cudagraph&quot;</span><span class="p">:</span>                     <span class="c1"># 手动 CUDA Graph</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>        <span class="c1"># 1) 旁路 stream warmup：预热 cuBLAS handle / allocator</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>        <span class="n">s</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">Stream</span><span class="p">()</span>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>        <span class="n">s</span><span class="o">.</span><span class="n">wait_stream</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">current_stream</span><span class="p">())</span>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>                <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>                    <span class="n">model</span><span class="p">(</span><span class="n">static_x</span><span class="p">)</span>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>        <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">current_stream</span><span class="p">()</span><span class="o">.</span><span class="n">wait_stream</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>        <span class="c1"># 2) 捕获：推理版只需包一次 forward</span>
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>        <span class="n">g</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">CUDAGraph</span><span class="p">()</span>
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">graph</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>                <span class="n">static_out</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">static_x</span><span class="p">)</span>
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>        <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">():</span>
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>            <span class="c1"># 真实推理要换数据时，只能 copy_，不能重新赋值 static_x</span>
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>            <span class="n">g</span><span class="o">.</span><span class="n">replay</span><span class="p">()</span>
+</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>            <span class="k">return</span> <span class="n">static_out</span>
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;compile+cudagraph&quot;</span><span class="p">:</span>             <span class="c1"># torch.compile 内置 cudagraphs</span>
+</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>        <span class="n">compiled</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;reduce-overhead&quot;</span><span class="p">)</span>
+</span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>        <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">():</span>
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>                <span class="k">return</span> <span class="n">compiled</span><span class="p">(</span><span class="n">static_x</span><span class="p">)</span>
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>    <span class="k">return</span> <span class="n">step</span>
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>
+</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a>    <span class="n">p</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>    <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--mode&quot;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;eager&quot;</span><span class="p">,</span> <span class="s2">&quot;compile&quot;</span><span class="p">,</span> <span class="s2">&quot;cudagraph&quot;</span><span class="p">,</span> <span class="s2">&quot;compile+cudagraph&quot;</span><span class="p">],</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a>    <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--steps&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a>    <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--batch&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a>    <span class="n">args</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a>    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a>    <span class="n">dev</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+</span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">TinyMLP</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>   <span class="c1"># 推理：eval() 关 dropout；无 optimizer / backward</span>
+</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a>    <span class="n">static_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">batch</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">dev</span><span class="p">)</span>  <span class="c1"># 地址固定的静态输入</span>
+</span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a>    <span class="n">step</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">static_x</span><span class="p">)</span>
+</span><span id="__span-0-68"><a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a>    <span class="c1"># warmup：让 compile 完成 JIT、cudagraph 完成捕获，不污染 profile</span>
+</span><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+</span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a>        <span class="n">step</span><span class="p">()</span>
+</span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a>    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+</span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a>    <span class="c1"># ===== nsys 采集范围（对应 --capture-range=cudaProfilerApi）=====</span>
+</span><span id="__span-0-73"><a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a>    <span class="n">profiler</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74" href="#__codelineno-0-74"></a>    <span class="n">nvtx</span><span class="o">.</span><span class="n">range_push</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MODE:</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">mode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-0-75"><a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">steps</span><span class="p">):</span>
+</span><span id="__span-0-76"><a id="__codelineno-0-76" name="__codelineno-0-76" href="#__codelineno-0-76"></a>        <span class="n">nvtx</span><span class="o">.</span><span class="n">range_push</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;step_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-0-77"><a id="__codelineno-0-77" name="__codelineno-0-77" href="#__codelineno-0-77"></a>        <span class="n">out</span> <span class="o">=</span> <span class="n">step</span><span class="p">()</span>
+</span><span id="__span-0-78"><a id="__codelineno-0-78" name="__codelineno-0-78" href="#__codelineno-0-78"></a>        <span class="n">nvtx</span><span class="o">.</span><span class="n">range_pop</span><span class="p">()</span>
+</span><span id="__span-0-79"><a id="__codelineno-0-79" name="__codelineno-0-79" href="#__codelineno-0-79"></a>    <span class="n">nvtx</span><span class="o">.</span><span class="n">range_pop</span><span class="p">()</span>
+</span><span id="__span-0-80"><a id="__codelineno-0-80" name="__codelineno-0-80" href="#__codelineno-0-80"></a>    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+</span><span id="__span-0-81"><a id="__codelineno-0-81" name="__codelineno-0-81" href="#__codelineno-0-81"></a>    <span class="n">profiler</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</span><span id="__span-0-82"><a id="__codelineno-0-82" name="__codelineno-0-82" href="#__codelineno-0-82"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span id="__span-0-83"><a id="__codelineno-0-83" name="__codelineno-0-83" href="#__codelineno-0-83"></a>    <span class="n">main</span><span class="p">()</span>
+</span></code></pre></div>
+<p><strong>七个关键设计，每一个都是为了“让证据清晰”：</strong></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>设计</th>
+<th>为什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>gelu → *常数 → +常数</code> 串联两次</td>
+<td>pointwise 算子是融合的最佳素材：eager 下是 6 个小 kernel/步，compile 后应变成 2 个 Triton kernel/步，对比一目了然</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>static_x</code> 一次性构造、地址固定</td>
+<td>CUDA Graph 回放时读取的是<strong>捕获时的内存地址</strong>，输入地址必须固定（换数据只能 <code>copy_</code> 进去）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>手动图模式先在<strong>旁路 stream</strong> 上 warmup 3 次</td>
+<td>cuBLAS handle、显存分配器的惰性初始化不能发生在捕获期间（捕获期禁止 CPU 同步等操作），必须提前“热身”</td>
+</tr>
+<tr>
+<td>4</td>
+<td>10 步 warmup + <code>synchronize()</code> 在 <code>profiler.start()</code> <strong>之前</strong></td>
+<td>torch.compile 的 JIT 编译、图的捕获都很耗时，放在采集范围外，报告才干净</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>profiler.start()/stop()</code> 包住测量循环</td>
+<td>与 nsys 的 <code>--capture-range=cudaProfilerApi</code> 呼应，精确控制“录什么”</td>
+</tr>
+<tr>
+<td>6</td>
+<td>NVTX 嵌套区间 <code>MODE:xxx &gt; step_i</code></td>
+<td>在 GUI 时间线上变成可双击定位的书签</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>torch.set_float32_matmul_precision('high')</code></td>
+<td>开启 TF32 矩阵乘。它的效果会直接写在 kernel 名里（见第五章），不开则是另一番景象（见第六章结论 6）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>推理版图捕获为什么比训练版简单？</strong> 只需包一次 <code>forward</code>：没有 loss、没有 backward、没有 optimizer 的多阶段流程。这也是 CUDA Graph 在推理场景远比训练场景普及的原因之一。</p>
+</blockquote>
+<hr />
+<p><a id="三"></a></p>
+<h2 id="_2">三、采集命令逐参数精讲</h2>
+<p>四条命令<strong>完全相同</strong>，只有 <code>-o</code>（输出名）和 <code>--mode</code> 不同。以 eager 为例：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>nsys<span class="w"> </span>profile<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>-t<span class="w"> </span>cuda,nvtx,osrt,cudnn,cublas<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>-s<span class="w"> </span>none<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>--cpuctxsw<span class="o">=</span>none<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>--cuda-graph-trace<span class="o">=</span>node<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span>--capture-range<span class="o">=</span>cudaProfilerApi<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span>--capture-range-end<span class="o">=</span>stop-shutdown<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span>-o<span class="w"> </span>eager<span class="w"> </span>-f<span class="w"> </span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span>python<span class="w"> </span>bench.py<span class="w"> </span>--mode<span class="w"> </span>eager
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+<th>为什么这么用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-t cuda,nvtx,osrt,cudnn,cublas</code></td>
+<td>跟踪 CUDA API/kernel、NVTX 标注、OS 运行时、cuDNN/cuBLAS 库级调用</td>
+<td>覆盖我们关心的所有事件层</td>
+</tr>
+<tr>
+<td><code>-s none</code></td>
+<td><strong>关闭 CPU 采样</strong></td>
+<td>我们要做事件级完整追踪而非 CPU 热点分析；关采样可减小开销和报告体积</td>
+</tr>
+<tr>
+<td><code>--cpuctxsw=none</code></td>
+<td>不跟踪 CPU 上下文切换</td>
+<td>同上，分析 CPU 调度行为时才需要</td>
+</tr>
+<tr>
+<td><code>--cuda-graph-trace=node</code></td>
+<td><strong>把 CUDA Graph 内的每个 kernel 单独记录</strong></td>
+<td>图模式下不加此项，整张图在时间线上是一整块“黑盒”，看不到内部 kernel</td>
+</tr>
+<tr>
+<td><code>--capture-range=cudaProfilerApi</code></td>
+<td>只采集 <code>cudaProfilerStart/Stop</code> 之间</td>
+<td>对应代码中的 <code>profiler.start()/stop()</code>，配合 warmup 排除编译/捕获噪声</td>
+</tr>
+<tr>
+<td><code>--capture-range-end=stop-shutdown</code></td>
+<td>profiler 停止或进程结束时结束采集并生成报告</td>
+<td>标准搭配</td>
+</tr>
+<tr>
+<td><code>-o eager</code></td>
+<td>输出文件名前缀（生成 <code>eager.nsys-rep</code>）</td>
+<td>四个模式分别命名，便于对比</td>
+</tr>
+<tr>
+<td><code>-f true</code></td>
+<td>已存在则强制覆盖</td>
+<td>重跑实验时省心</td>
+</tr>
+</tbody>
+</table>
+<p>四个变体：</p>
+<table>
+<thead>
+<tr>
+<th>输出</th>
+<th>命令尾部</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>eager.nsys-rep</code></td>
+<td><code>... -o eager -f true python bench.py --mode eager</code></td>
+</tr>
+<tr>
+<td><code>compile.nsys-rep</code></td>
+<td><code>... -o compile -f true python bench.py --mode compile</code></td>
+</tr>
+<tr>
+<td><code>cudagraph.nsys-rep</code></td>
+<td><code>... -o cudagraph -f true python bench.py --mode cudagraph</code></td>
+</tr>
+<tr>
+<td><code>compile_cudagraph.nsys-rep</code></td>
+<td><code>... -o compile_cudagraph -f true python bench.py --mode compile+cudagraph</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="_3">采集日志逐行读</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Capture range started in the application.   ← 程序调用了 cudaProfilerStart()（即 profiler.start()），开始记录
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Capture range ended in the application.     ← 调用了 cudaProfilerStop()，停止记录
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Generating &#39;/tmp/nsys-report-xxxx.qdstrm&#39;   ← 先落地原始事件流（中间文件）
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>[1/1] [====100%] eager.nsys-rep             ← 把事件流加工成最终报告
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Generated: /home/beaver/eager.nsys-rep      ← 最终产物；GUI 和 stats 都吃这个文件
+</span></code></pre></div>
+<p><strong>只有 <code>started</code> + <code>ended</code> 两行都出现，才说明 <code>--capture-range=cudaProfilerApi</code> 生效了</strong>——少任何一行，报告很可能是空的（最常见原因：被测程序根本没执行到 <code>profiler.start()</code>）。</p>
+<h3 id="compile">compile 模式多出来的几行输出，都不是错误</h3>
+<table>
+<thead>
+<tr>
+<th>输出</th>
+<th>含义</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Not enough SMs to use max_autotune_gemm mode</code></td>
+<td>GPU 的 SM 数较少，Inductor 放弃 GEMM 自动调优，退回默认路径</td>
+<td>无害，知道即可</td>
+</tr>
+<tr>
+<td><code>resource_tracker: leaked semaphore objects</code></td>
+<td>Inductor 编译子进程退出时的已知告警</td>
+<td>忽略</td>
+</tr>
+<tr>
+<td>（若<strong>没有</strong> <code>set_float32_matmul_precision('high')</code>，会出现 <code>TensorFloat32 ... available but not enabled</code> 警告）</td>
+<td>GEMM 会用纯 FP32 CUDA Core（kernel 名含 <code>simt</code>），而不是 TF32 Tensor Core</td>
+<td>想要更快就加上那一行</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="四"></a></p>
+<h2 id="nsys-stats">四、nsys stats 表格怎么读</h2>
+<p>以这条命令为例：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>nsys<span class="w"> </span>stats<span class="w"> </span>eager.nsys-rep<span class="w"> </span>--report<span class="w"> </span>cuda_gpu_kern_sum
+</span></code></pre></div>
+<p>原始输出（先看一眼长什么样）：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a> ** CUDA GPU Kernel Summary (cuda_gpu_kern_sum):
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a> Time (%)  Total Time (ns)  Instances  Avg (ns)   Med (ns)   Min (ns)  Max (ns)  StdDev (ns)  Name
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a> --------  ---------------  ---------  ---------  ---------  --------  --------  -----------  ----
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>     75.8        9,501,639         60  158,360.6  185,468.0   101,862   360,951     59,402.9  void cutlass::Kernel2&lt;cutlass_80_tensorop_s1688gemm_128x128_16x5_tn_align4&gt;(T1::Params)
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>     ...
+</span></code></pre></div>
+<p><strong>每一列的含义：</strong></p>
+<table>
+<thead>
+<tr>
+<th>列</th>
+<th>含义</th>
+<th>阅读技巧</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Time (%)</td>
+<td>该 kernel 总时间占全部 kernel 总时间的比例</td>
+<td>找大头：谁占 90% 谁就是瓶颈候选</td>
+</tr>
+<tr>
+<td>Total Time</td>
+<td>所有实例耗时之和</td>
+<td><strong>单位是 ns！</strong> 心算时除以 1000 变 µs、再除以 1000 变 ms</td>
+</tr>
+<tr>
+<td>Instances</td>
+<td>实例个数</td>
+<td><strong>除以步数（30）= “每步几个”</strong>，是验证猜想的关键</td>
+</tr>
+<tr>
+<td>Avg / Med</td>
+<td>平均 / 中位数耗时</td>
+<td>Med 抗离群值干扰；Avg 与 Med 差得多 → 分布有长尾或混了不同的活</td>
+</tr>
+<tr>
+<td>Min / Max</td>
+<td>极值</td>
+<td>Max 远大于 Med → 有偶发卡顿（干扰/降频）</td>
+</tr>
+<tr>
+<td>StdDev</td>
+<td>标准差</td>
+<td><strong>StdDev 很大 = 这行数据不可信，慎下结论</strong></td>
+</tr>
+<tr>
+<td>Name</td>
+<td>kernel 名</td>
+<td>终端太窄会截断成 <code>…</code>；GUI 里可看全名，或导出 sqlite/CSV</td>
+</tr>
+</tbody>
+</table>
+<p>两个实用提示：</p>
+<ul>
+<li><code>nsys stats</code> 会先把 <code>.nsys-rep</code> 导出成同名 <code>.sqlite</code> 缓存。<strong>如果重新 profile 了同名报告，要加 <code>--force-export=true</code></strong>，否则读的是旧缓存。</li>
+<li><code>nsys stats --help-reports</code> 可列出全部报告类型。除本文两个外，推荐 <code>cuda_gpu_trace</code>（逐条 kernel 明细，看顺序与空隙）和 <code>nvtx_kern_sum</code>（按 NVTX 区间聚合，直接回答“每个 step 里 GPU 忙了多久”）。</li>
+</ul>
+<hr />
+<p><a id="五"></a></p>
+<h2 id="_4">五、四种模式逐个复盘（真实数据）</h2>
+<p>以下表格均整理自真实输出：单位换算成 µs，<code>每步</code> = 实例数 ÷ 30。本实验所有 kernel 都在默认流上<strong>串行</strong>执行，所以各 kernel 时间之和 ≈ GPU 忙碌总时长。</p>
+<h3 id="51-eager">5.1 eager：教科书式的“未融合”基线</h3>
+<p><strong>GPU 侧（cuda_gpu_kern_sum）</strong>——5 行，共 270 实例 = <strong>9 个 kernel/步</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>kernel（简写）</th>
+<th>实例</th>
+<th>每步</th>
+<th>Avg (µs)</th>
+<th>Med (µs)</th>
+<th>StdDev (µs)</th>
+<th>对应算子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cutlass_80_tensorop_s1688gemm_128x128_16x5</code></td>
+<td>60</td>
+<td>2</td>
+<td>158.4</td>
+<td>185.5</td>
+<td>59.4</td>
+<td>fc1、fc3 的 GEMM</td>
+</tr>
+<tr>
+<td><code>cutlass_80_tensorop_s1688gemm_128x64_16x6</code></td>
+<td>30</td>
+<td>1</td>
+<td>77.9</td>
+<td>54.1</td>
+<td><strong>91.6</strong></td>
+<td>fc2 的 GEMM</td>
+</tr>
+<tr>
+<td><code>vectorized_elementwise&lt;GeluCUDAKernelImpl&gt;</code></td>
+<td>60</td>
+<td>2</td>
+<td>4.26</td>
+<td>4.24</td>
+<td>0.09</td>
+<td>2 × gelu</td>
+</tr>
+<tr>
+<td><code>vectorized_elementwise&lt;AUnaryFunctor&gt;</code></td>
+<td>60</td>
+<td>2</td>
+<td>3.63</td>
+<td>3.60</td>
+<td>0.18</td>
+<td>2 × 标量乘</td>
+</tr>
+<tr>
+<td><code>vectorized_elementwise&lt;CUDAFunctorOnSelf_add&gt;</code></td>
+<td>60</td>
+<td>2</td>
+<td>3.58</td>
+<td>3.57</td>
+<td>0.12</td>
+<td>2 × 标量加</td>
+</tr>
+</tbody>
+</table>
+<p><strong>读出来的事实：</strong></p>
+<ol>
+<li><strong>9/步与代码严丝合缝</strong>：3 个 GEMM（fc1/fc2/fc3）+ 2×(gelu+mul+add)。<code>forward</code> 里写什么，kernel 表里就是什么——这就是 eager 的“直译”特性。</li>
+<li><strong>GEMM 两种配置</strong>：fc1 与 fc3 维度不同但恰好映射到同一种 cutlass 分块配置（128×128，共 60 实例）；fc2（2048→2048）用另一种（128×64，30 实例）。同一行里混着两个不同形状的 GEMM，这也是 Avg 与 Med 差距较大的原因之一。</li>
+<li><strong>时间占比</strong>：GEMM 每步 394.7 µs，pointwise 每步 22.9 µs——<strong>GEMM 占了 GPU 时间的 94.5%</strong>。记住这个数字，第六章要用。</li>
+<li><strong>噪声预警</strong>：第二行 StdDev（91.6 µs）比 Med（54.1 µs）还大，Max 冲到 462 µs——这次测量受了明显干扰。对比第 5.3 节同一 kernel 的数据，你会看到“噪声长什么样”。</li>
+</ol>
+<p><strong>CPU 侧（cuda_api_sum）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>调用次数</th>
+<th>每步</th>
+<th>总时间</th>
+<th>解读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cudaDeviceSynchronize</code></td>
+<td>1</td>
+<td>—</td>
+<td>6.22 ms</td>
+<td>循环结束后的 <code>torch.cuda.synchronize()</code>，<strong>是“尾部等待”，不是浪费</strong>（见下）</td>
+</tr>
+<tr>
+<td><code>cudaLaunchKernel</code></td>
+<td>180</td>
+<td>6</td>
+<td>1.28 ms</td>
+<td>PyTorch 原生算子（gelu/mul/add）走的 <strong>Runtime API</strong> 通道</td>
+</tr>
+<tr>
+<td><code>cuLaunchKernel</code></td>
+<td>90</td>
+<td>3</td>
+<td>0.65 ms</td>
+<td>cuBLAS/cutlass GEMM 内部走的 <strong>Driver API</strong> 通道</td>
+</tr>
+<tr>
+<td><code>cudaMemsetAsync</code></td>
+<td>90</td>
+<td>3</td>
+<td>0.66 ms</td>
+<td>每个 GEMM 调用伴随的缓冲/工作区清零操作</td>
+</tr>
+<tr>
+<td><code>cuKernelGetFunction</code> / <code>cuKernelGetName</code></td>
+<td>90 / 180</td>
+<td>—</td>
+<td>~0.07 ms</td>
+<td>kernel 元数据查询，首次使用/跟踪时发生，忽略</td>
+</tr>
+</tbody>
+</table>
+<p><strong>180 + 90 = 270 = 9 × 30，与 kernel 数完全一致</strong>——每个 kernel 恰好一次 launch，一个不多一个不少。这就是“eager 无优化”的量化画像。</p>
+<p><strong>一个重要推算（后面反复用）：</strong></p>
+<blockquote>
+<p>循环墙钟 ≈ CPU 发射总耗时 + 末尾 sync 等待。
+当 GPU 无空隙时：<strong>CPU 发射总耗时 ≈ GPU kernel 总时间 − cudaDeviceSynchronize 时间</strong>。
+（<code>cudaDeviceSynchronize</code> 的时长 = CPU 交完所有工作后，还要等多久让 GPU 收尾。）</p>
+</blockquote>
+<p>eager：12.53 ms − 6.22 ms ≈ <strong>6.3 ms 的 CPU 发射时间 ≈ 210 µs/步</strong>。也就是说，CPU 每步要花约 210 µs 才能把 9 个 kernel 喂出去（其中 CUDA API 只占约 86 µs，其余是 Python 解释器和 PyTorch dispatcher——这部分<strong>不会</strong>出现在 <code>cuda_api_sum</code> 里，只在 GUI 的 CPU 时间线上可见），而 GPU 每步只需 418 µs 消化。GPU 是瓶颈，但 CPU 的余量只有 2 倍——把 batch 调小，天平立刻倾斜（见练习 2）。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>eager 每步示意（9 个 kernel）：
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>CPU: [launch GEMM][launch gelu][launch mul][launch add][launch GEMM]…   ← ~210 µs
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>GPU:  [GEMM][gelu][mul][add][GEMM][gelu][mul][add][GEMM]                ← ~418 µs
+</span></code></pre></div>
+<h3 id="52-compile">5.2 compile：融合的直接证据</h3>
+<p><strong>GPU 侧</strong>——4 行，共 150 实例 = <strong>5 个 kernel/步</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>kernel（简写）</th>
+<th>实例</th>
+<th>每步</th>
+<th>Avg (µs)</th>
+<th>对应内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cutlass_80_tensorop_s1688gemm_256x64_16x4</code></td>
+<td>30</td>
+<td>1</td>
+<td>193.8</td>
+<td>某个 GEMM（Inductor 选了与 eager 不同的分块）</td>
+</tr>
+<tr>
+<td><code>cutlass_80_tensorop_s1688gemm_128x64_16x6</code></td>
+<td>60</td>
+<td>2</td>
+<td>79.2</td>
+<td>另两个 GEMM</td>
+</tr>
+<tr>
+<td><code>triton_poi_fused_add_addmm_gelu_mul_0</code></td>
+<td>30</td>
+<td>1</td>
+<td>5.86</td>
+<td><strong>融合 kernel ①</strong></td>
+</tr>
+<tr>
+<td><code>triton_poi_fused_add_addmm_gelu_mul_1</code></td>
+<td>30</td>
+<td>1</td>
+<td>4.09</td>
+<td><strong>融合 kernel ②</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>读出来的事实：</strong></p>
+<ol>
+<li><strong>kernel 名自述了融合内容</strong>：<code>triton_poi_fused_add_addmm_gelu_mul</code>——<code>addmm</code>（带 bias 的线性层输出）、<code>gelu</code>、<code>mul</code>、<code>add</code> 被编进<strong>一个</strong> Triton kernel；<code>poi</code> = pointwise，<code>_0/_1</code> = 两处融合点（fc1 后与 fc2 后的链）。</li>
+<li><strong>融合前后对比</strong>：pointwise 从 6 个 kernel、22.9 µs/步 → 2 个 kernel、<strong>9.9 µs/步</strong>；kernel 总数 9 → 5。</li>
+<li><strong>GEMM 依旧是 GEMM</strong>：该是 GEMM 的还是 GEMM，只是 Inductor 换了分块配置（每步 GEMM 合计 352.1 µs，低于 eager 的 394.7 µs；注意其中一部分是配置差异，一部分是运行噪声，两者数量级相当，别把功劳全记在配置上）。</li>
+<li><strong>GPU 总时间 12.53 → 10.86 ms（−13%）</strong>——本实验 GEMM 占比太高，融合的 GPU 收益被摊薄了；在 pointwise 密集的模型（LayerNorm/Dropout/激活多的网络）里，这个数字会大得多。</li>
+</ol>
+<p><strong>CPU 侧：</strong></p>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>次数</th>
+<th>每步</th>
+<th>解读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cudaDeviceSynchronize</code></td>
+<td>1</td>
+<td>—</td>
+<td>8.05 ms</td>
+</tr>
+<tr>
+<td><code>cuLaunchKernel</code></td>
+<td>150</td>
+<td>5</td>
+<td><strong>只剩 Driver API</strong>：Triton 和 cutlass 都走这条路；<code>cudaLaunchKernel</code> 彻底消失</td>
+</tr>
+<tr>
+<td><code>cudaMemsetAsync</code></td>
+<td>60</td>
+<td>2</td>
+<td>从 90 降到 60（Inductor 的内存规划消掉了一部分）</td>
+</tr>
+<tr>
+<td>CPU 发射时间 ≈ 10.86 − 8.05 ≈ 2.8 ms ≈ <strong>94 µs/步</strong>，比 eager 的 210 µs 省一半以上——<strong>融合不仅省 GPU 时间，也省 CPU 的 dispatch 次数</strong>，这是很多人忽略的附带收益。</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="53-cudagraph-gpu">5.3 cudagraph：图不改变 GPU 干的活，只改变“怎么发”</h3>
+<p><strong>GPU 侧</strong>——与 eager <strong>完全相同</strong>的 5 行、270 实例（9/步）：同样的 GEMM、同样的 gelu/mul/add。这是理解 CUDA Graph 的关键一课：</p>
+<blockquote>
+<p><strong>CUDA Graph 是“发射方式的优化”，不是“计算方式的优化”。</strong> GPU 上执行的 kernel 一个没少、一个没变。</p>
+</blockquote>
+<p>顺带看一个绝佳的噪声教学案例：<code>128x64_16x6</code> 这个 GEMM 在 eager 里是 77.9 µs ± 91.6，在这次 cudagraph 运行里是 <strong>54.2 µs ± 0.55</strong>——同一个 kernel、同一个形状，Avg 差了 44%！区别只在于后者 StdDev 只有 546 ns，数据极其稳定；前者的均值被干扰拖高了。<strong>教训：比较耗时先看 StdDev，再看 Avg/Med；跨运行的百分比级差异，先怀疑噪声。</strong></p>
+<p><strong>CPU 侧：</strong></p>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>次数</th>
+<th>每步</th>
+<th>解读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cudaDeviceSynchronize</code></td>
+<td>1</td>
+<td>—</td>
+<td>12.30 ms（占 93.7%）</td>
+</tr>
+<tr>
+<td><code>cudaGraphLaunch_v10000</code></td>
+<td>30</td>
+<td><strong>1</strong></td>
+<td><strong>每步一次整图回放，替代 9 次 launch</strong></td>
+</tr>
+<tr>
+<td><code>cudaStreamIsCapturing_v10000</code></td>
+<td>30</td>
+<td>1</td>
+<td>PyTorch 每步回放前的例行检查（防止捕获态下的非法操作），亚微秒级，忽略</td>
+</tr>
+<tr>
+<td><code>cudaLaunchKernel</code> / <code>cuLaunchKernel</code> / memset</td>
+<td><strong>0</strong></td>
+<td>0</td>
+<td><strong>全部消失——都被录进图里了</strong></td>
+</tr>
+</tbody>
+</table>
+<p>两个细节值得咀嚼：</p>
+<ul>
+<li><strong><code>cudaLaunchKernel</code> 从表里消失</strong>，就是“launch 开销被消除”的直接证据；30 次图启动的 API 总耗时仅 0.79 ms（26.4 µs/次）。</li>
+<li><code>cudaDeviceSynchronize</code> 占 93.7%——CPU 几乎瞬间交完所有活，然后全程干等 GPU。<strong>CPU 瓶颈被彻底移除</strong>。（有趣的是这次 sync 12.30 ms 甚至略大于 kernel 总和 11.89 ms——因为 kern_sum 不统计图内的 memset 节点、kernel 间还有微小间隙。<strong>每张表只覆盖一类事件，跨表推算要留余量</strong>，这也是一课。）</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>cudagraph 每步示意（同样的 9 个 kernel）：
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>CPU: [cudaGraphLaunch]                                          ← ~26 µs
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>GPU:  [GEMM][gelu][mul][add][GEMM][gelu][mul][add][GEMM]        ← 整图一次性提交
+</span></code></pre></div>
+<h3 id="54-compilecudagraphreduce-overhead">5.4 compile+cudagraph：reduce-overhead 的“自动版”</h3>
+<p><strong>GPU 侧</strong>——5 行，共 180 实例 = <strong>6 个 kernel/步</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>kernel（简写）</th>
+<th>实例</th>
+<th>每步</th>
+<th>Avg (µs)</th>
+<th>对应内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cutlass_80_tensorop_s1688gemm_256x64_16x4</code></td>
+<td>30</td>
+<td>1</td>
+<td>215.8</td>
+<td>GEMM</td>
+</tr>
+<tr>
+<td><code>cutlass_80_tensorop_s1688gemm_128x64_16x6</code></td>
+<td>60</td>
+<td>2</td>
+<td>84.1</td>
+<td>GEMM ×2</td>
+</tr>
+<tr>
+<td><code>multi_tensor_apply_kernel</code></td>
+<td>30</td>
+<td>1</td>
+<td>14.6</td>
+<td><strong>新面孔：输入拷贝</strong></td>
+</tr>
+<tr>
+<td><code>triton_poi_fused_add_addmm_gelu_mul_0</code></td>
+<td>30</td>
+<td>1</td>
+<td>5.95</td>
+<td>融合 kernel ①</td>
+</tr>
+<tr>
+<td><code>triton_poi_fused_add_addmm_gelu_mul_1</code></td>
+<td>30</td>
+<td>1</td>
+<td>4.25</td>
+<td>融合 kernel ②</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>multi_tensor_apply_kernel</code> 是谁？</strong> 它就是手动模式注释里那句“换数据只能 <code>copy_</code>”的<strong>自动化版本</strong>：<code>reduce-overhead</code> 模式下，torch.compile 的 cudagraphs 后端每步先把你的新输入<strong>拷贝进静态缓冲区</strong>（foreach 批量拷贝），再回放整图。代价是每步多一个 14.6 µs 的小 kernel——用一个小拷贝换来“你可以随便传新 tensor、不用自己管静态地址”的便利。</p>
+<p><strong>CPU 侧：</strong></p>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>次数</th>
+<th>每步</th>
+<th>解读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cudaDeviceSynchronize</code></td>
+<td>1</td>
+<td>—</td>
+<td>10.52 ms（88.9%）</td>
+</tr>
+<tr>
+<td><code>cudaGraphLaunch_v10000</code></td>
+<td>30</td>
+<td>1</td>
+<td>图回放</td>
+</tr>
+<tr>
+<td><code>cudaLaunchKernel</code></td>
+<td>30</td>
+<td>1</td>
+<td><strong>那个输入拷贝 kernel 在图外</strong>，每步正常 launch 一次</td>
+</tr>
+<tr>
+<td><code>cudaStreamIsCapturing</code> / <code>cuKernelGetName</code></td>
+<td>30 / 30</td>
+<td>—</td>
+<td>例行检查与图节点名称查询，忽略</td>
+</tr>
+</tbody>
+</table>
+<p>每步 = 1 次图 + 1 次 kernel launch = 60 次总计。CPU 发射时间 ≈ 12.27 − 10.52 ≈ 1.75 ms ≈ <strong>58 µs/步</strong>。</p>
+<hr />
+<p><a id="六"></a></p>
+<h2 id="_5">六、横向对比与六个结论</h2>
+<h3 id="_6">每步指标总表（全部由上面的原始数据换算而来）</h3>
+<table>
+<thead>
+<tr>
+<th>指标（每步）</th>
+<th>eager</th>
+<th>compile</th>
+<th>cudagraph</th>
+<th>compile+cudagraph</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPU kernel 个数</td>
+<td><strong>9</strong></td>
+<td><strong>5</strong></td>
+<td>9</td>
+<td><strong>6</strong>（含 1 个拷贝）</td>
+</tr>
+<tr>
+<td>其中 pointwise</td>
+<td>6 个 / 22.9 µs</td>
+<td>2 个 triton / 9.9 µs</td>
+<td>6 个 / 23.8 µs</td>
+<td>2 triton + 1 拷贝 / 24.8 µs</td>
+</tr>
+<tr>
+<td>GEMM 耗时</td>
+<td>394.7 µs</td>
+<td>352.1 µs</td>
+<td>372.4 µs</td>
+<td>384.0 µs</td>
+</tr>
+<tr>
+<td>GPU 忙时合计</td>
+<td>417.6 µs</td>
+<td>362.1 µs</td>
+<td>396.3 µs</td>
+<td>408.9 µs</td>
+</tr>
+<tr>
+<td>GEMM 占 GPU 时间</td>
+<td>94.5%</td>
+<td>97.2%</td>
+<td>94.0%</td>
+<td>93.9%</td>
+</tr>
+<tr>
+<td>launch API 次数/步</td>
+<td><strong>9</strong>（180 runtime + 90 driver）</td>
+<td>5</td>
+<td><strong>1</strong></td>
+<td>2（1 图 + 1 kernel）</td>
+</tr>
+<tr>
+<td>30 步 launch 总数</td>
+<td>270</td>
+<td>150</td>
+<td>30</td>
+<td>60</td>
+</tr>
+<tr>
+<td>CPU 发射耗时/步（估算）</td>
+<td>~210 µs</td>
+<td>~94 µs</td>
+<td><strong>~26 µs</strong>（纯 API）</td>
+<td>~58 µs</td>
+</tr>
+<tr>
+<td>末尾 sync 等待</td>
+<td>6.22 ms</td>
+<td>8.05 ms</td>
+<td>12.30 ms</td>
+<td>10.52 ms</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_7">六个结论</h3>
+<p><strong>结论 1：融合的证据是确凿的。</strong> pointwise 从 6 个 kernel、22.9 µs/步 → 2 个 <code>triton_poi_fused</code> kernel、9.9 µs/步（时间 −57%，数量 −67%）。kernel 名里直接写着它融合了什么。</p>
+<p><strong>结论 2：CUDA Graph 的证据也是确凿的。</strong> kernel 数不变（270），但 launch 从 270 次降到 30 次 <code>cudaGraphLaunch</code>，<code>cudaLaunchKernel</code>/<code>cuLaunchKernel</code>/memset API 全部从表里消失。CPU 每步成本从 ~210 µs 降到 ~26 µs，<strong>约 8 倍</strong>。</p>
+<p><strong>结论 3：reduce-overhead = 融合 + 图 + 一个“买路钱”。</strong> 每步多一个 14.6 µs 的 <code>multi_tensor_apply</code>（自动输入拷贝），换来无需手动管理静态缓冲的开发体验。天下没有免费的午餐，但这份账单很便宜。</p>
+<p><strong>结论 4：这个实验是 GPU-bound 工况，四种模式墙钟差距不大。</strong> GEMM 占了 94–97% 的 GPU 时间，CPU（最慢的 eager 也只要 210 µs/步）始终喂得上 GPU（≥362 µs/步）。所以本实验里 launch 优化的墙钟收益有限——<strong>launch 开销优化的价值要在 CPU-bound 场景（小 batch、小模型、kernel 又小又多）才能兑现</strong>。把 <code>--batch</code> 改成 16 重跑一遍，你会看到完全不同的故事（练习 2）。</p>
+<p><strong>结论 5：不要被单次测量的噪声骗。</strong> 同一个 GEMM kernel 两次运行 Avg 相差 44%（StdDev 91.6 µs vs 0.55 µs）；compile 与 eager 的 GEMM 差异也在噪声量级。<strong>稳健的指标是“次数”和“名称”（270→150→30，triton 出现、multi_tensor_apply 出现），时间类指标要看 Med/StdDev 并多次运行。</strong></p>
+<p><strong>结论 6：一行精度设置可能胜过所有 launch 优化。</strong> 作为参照，在同一台机器上不设 <code>set_float32_matmul_precision('high')</code> 时，GEMM 走的是 <code>simt_sgemm</code>（纯 FP32 CUDA Core），每步 GEMM 约 650 µs；开启后走 <code>tensorop_s1688gemm</code>（TF32 Tensor Core），降到约 395 µs——<strong>一行代码的收益（约 1.6 倍）超过了本文所有 launch 层优化的总和</strong>。教训：先找最大头（本例是 GEMM 及其精度），再抠发射开销。</p>
+<h3 id="_8">实践建议：什么时候用哪个</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐</th>
+<th>注意事项</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>调试、科研原型</td>
+<td>eager</td>
+<td>行为最直译，报错最友好</td>
+</tr>
+<tr>
+<td>通用提速</td>
+<td><code>torch.compile</code></td>
+<td>首次运行有编译开销；动态 shape 会触发重编译</td>
+</tr>
+<tr>
+<td>极致低延迟、输入/输出地址可控</td>
+<td>手动 <code>CUDAGraph</code></td>
+<td>换数据只能 <code>copy_</code>；捕获期间不能有 CPU 同步、动态控制流；务必先旁路 warmup</td>
+</tr>
+<tr>
+<td>想兼得融合与低开销</td>
+<td><code>mode="reduce-overhead"</code></td>
+<td><strong>输出张量会被下一次回放覆盖</strong>，跨步持有结果要先 <code>clone()</code>；个别不支持的算子会退化为图外 launch（正如我们看到的那个拷贝 kernel）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="七"></a></p>
+<h2 id="guinsys-ui">七、GUI（nsys-ui）时间线怎么看</h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>nsys-ui<span class="w"> </span>eager.nsys-rep<span class="w">        </span><span class="c1"># 或 GUI 菜单 File → Open 加载其他报告</span>
+</span></code></pre></div>
+<p>启动时可能看到：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>OpenGL version is too low (0). Falling back to Mesa software rendering.
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Skipping OpenGL version check on WSL.
+</span></code></pre></div>
+<p>这只是说 WSL 里没有 GPU 硬件加速的 OpenGL，回退到软件渲染——<strong>GUI 完全能用，只是缩放平移略卡</strong>。想要流畅体验：<code>.nsys-rep</code> 是跨平台格式，把它拷到 Windows（如 <code>cp eager.nsys-rep /mnt/c/Users/你/Desktop/</code>），用 Windows 版 Nsight Systems 打开即可。</p>
+<h3 id="_9">界面结构（自上而下）</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>时间标尺（顶部）
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>└─ python 进程
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>   ├─ NVTX            ← MODE:eager 大区间，内嵌 step_0 … step_29（你 push 的书签）
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>   ├─ CPU 线程         ← Python 解释、PyTorch dispatch 都发生在这里（api_sum 里看不到的部分）
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>   ├─ CUDA API        ← cudaLaunchKernel / cudaGraphLaunch / cudaDeviceSynchronize 小色块
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>   ├─ OS runtime      ← 驱动与系统调用
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>   └─ CUDA → GPU 0
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>      ├─ Kernel/Stream 行 ← 真正执行的 kernel 色块（重点看这行）
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>      └─ Memory        ← memset 等显存操作
+</span></code></pre></div>
+<h3 id="_10">核心操作</h3>
+<ul>
+<li><strong>滚轮缩放、拖拽平移</strong>；在标尺上横向拖选可测量区间时长；</li>
+<li><strong>双击某个 NVTX 区间（如 <code>step_5</code>）→ 自动放大聚焦到这一步</strong>（最高频动作）；</li>
+<li><strong>单击 kernel 色块</strong> → 详情面板显示完整名称（解决终端截断问题）、grid/block、时长、stream、correlation id——顺着它还能找到发射它的 CPU API 调用；</li>
+<li>对比两个模式：File → Open 打开第二份报告，各自双击同一个 <code>step_i</code>，肉眼对比 GPU 行的形状。</li>
+</ul>
+<h3 id="_11">四份报告各自的“标准景象”</h3>
+<table>
+<thead>
+<tr>
+<th>报告</th>
+<th>CUDA API 行</th>
+<th>GPU Kernel 行</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>eager</td>
+<td>每步 9 个小刻度 + 3 个 memset</td>
+<td>每步 9 块，节奏 <code>[GEMM, gelu, mul, add] ×2 + GEMM</code>；<strong>观察块间空隙</strong>——空隙大说明发射跟不上</td>
+</tr>
+<tr>
+<td>compile</td>
+<td>每步 5 个刻度</td>
+<td>每步 5 块，三小块合并成一块 triton（悬停看名）</td>
+</tr>
+<tr>
+<td>cudagraph</td>
+<td>每步只剩 1 个 <code>cudaGraphLaunch</code> 刻度</td>
+<td>kernel <strong>背靠背挤成一整排</strong>（整图已提交，无发射间隙）——与 eager 的“有缝”对比最震撼</td>
+</tr>
+<tr>
+<td>compile+cudagraph</td>
+<td>每步 1 图 + 1 kernel 刻度</td>
+<td>每步开头一个小拷贝块 + 一整包图 kernel</td>
+</tr>
+<tr>
+<td>&gt; 提醒：图模式能看到包内每个 kernel，靠的就是采集时的 <code>--cuda-graph-trace=node</code>。没有它，整张图是单个黑盒。</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="八"></a></p>
+<h2 id="kernel">八、Kernel 名解码速查表</h2>
+<p>初学者最大的障碍是“这串名字是什么鬼”。收藏这张表：</p>
+<table>
+<thead>
+<tr>
+<th>名称片段</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>at::native::vectorized_elementwise_kernel</code></td>
+<td>PyTorch 原生逐元素 kernel（<strong>未融合</strong>的标志）</td>
+</tr>
+<tr>
+<td><code>GeluCUDAKernelImpl</code> / <code>AUnaryFunctor</code> / <code>CUDAFunctorOnSelf_add</code></td>
+<td>具体算子：gelu / 一元运算（标量乘）/ 自身加</td>
+</tr>
+<tr>
+<td><code>cutlass::Kernel2&lt;...&gt;</code></td>
+<td>NVIDIA CUTLASS 模板库生成的 GEMM</td>
+</tr>
+<tr>
+<td><code>cutlass_80_</code></td>
+<td>面向 SM80（Ampere）架构</td>
+</tr>
+<tr>
+<td><code>tensorop_s1688gemm</code></td>
+<td><strong>TF32 Tensor Core</strong> GEMM（对应 <code>set_float32_matmul_precision('high')</code>）</td>
+</tr>
+<tr>
+<td><code>simt_sgemm</code></td>
+<td>纯 FP32 CUDA Core GEMM（未开 TF32 时出现）</td>
+</tr>
+<tr>
+<td><code>128x128_16x5_tn_align4</code></td>
+<td>GEMM 分块（tile）配置：128×128 分块、TN 布局、对齐 4——同一个 GEMM 换个分块，性能可能差很多</td>
+</tr>
+<tr>
+<td><code>triton_poi_fused_xxx_yyy_zzz</code></td>
+<td><strong>Inductor 生成的 Triton 融合 kernel</strong>；<code>poi</code>=pointwise，后面列出被融合进来的算子链</td>
+</tr>
+<tr>
+<td><code>multi_tensor_apply_kernel</code></td>
+<td>foreach 批量张量操作（本例中 = 输入拷入静态缓冲）</td>
+</tr>
+<tr>
+<td><code>cudaGraphLaunch</code></td>
+<td>整图一次回放的 API（CUDA Graph 的标志）</td>
+</tr>
+<tr>
+<td><code>cudaStreamIsCapturing</code></td>
+<td>PyTorch 回放前的“是否在捕获中”例行检查，开销可忽略</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="九"></a></p>
+<h2 id="_12">九、视野扩展：推理优化的全景图</h2>
+<p>本文实验覆盖的是推理优化三大基石中的两个，把它们放进地图里看：</p>
+<table>
+<thead>
+<tr>
+<th>基石</th>
+<th>优化层面</th>
+<th>解决的问题</th>
+<th>本文对应</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>算子融合</strong></td>
+<td>计算图 / kernel 执行</td>
+<td>减少 kernel 数量与中间显存读写，提升 GPU 计算效率</td>
+<td>compile 模式 ✅</td>
+</tr>
+<tr>
+<td><strong>CUDA Graph</strong></td>
+<td>CPU–GPU 交互</td>
+<td>消除 CPU launch 瓶颈</td>
+<td>cudagraph 模式 ✅</td>
+</tr>
+<tr>
+<td><strong>量化</strong></td>
+<td>数值精度</td>
+<td>降低计算量与内存带宽，充分利用 Tensor Core</td>
+<td>❌（结论 6 的 TF32 只是入门尝鲜）</td>
+</tr>
+</tbody>
+</table>
+<p>除此之外，推理优化还有一整个工具箱，按层次粗分：</p>
+<table>
+<thead>
+<tr>
+<th>层次</th>
+<th>代表技术</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>内存与显存</td>
+<td>内存池复用激活、FlashAttention 式算子内显存规划、权重压缩</td>
+</tr>
+<tr>
+<td>数值精度</td>
+<td>FP16/BF16/TF32/INT8/FP8 混合精度、QAT/PTQ 量化、低精度指令（DP4A 等）</td>
+</tr>
+<tr>
+<td>计算图</td>
+<td>常量折叠、死代码消除、公共子表达式消除、图替换、Winograd/FFT 卷积</td>
+</tr>
+<tr>
+<td>推理引擎</td>
+<td>TensorRT、ONNX Runtime、OpenVINO——把上述手段打包并针对硬件调优</td>
+</tr>
+<tr>
+<td>模型级</td>
+<td>知识蒸馏、剪枝、NAS、早退机制</td>
+</tr>
+<tr>
+<td>硬件利用</td>
+<td>Tensor Core 与数据布局（NHWC 等）、多 GPU 并行、多流重叠计算与拷贝</td>
+</tr>
+<tr>
+<td>服务与调度</td>
+<td>动态批处理、Continuous Batching、请求级调度</td>
+</tr>
+<tr>
+<td>系统部署</td>
+<td>模型 mmap 加载、编译缓存、kernel 自动调优（cuDNN benchmark / Triton autotune）</td>
+</tr>
+</tbody>
+</table>
+<p>它们通常<strong>叠加使用</strong>：TensorRT = 融合 + INT8 + 内存池 + 多流；<code>torch.compile</code> = 融合 + CUDA Graph +（可选）混合精度；Triton Inference Server = 动态批处理 + 多模型并发。本文练的“看报告”功夫，是验证所有这些手段是否真正生效的通用显微镜。</p>
+<hr />
+<p><a id="十"></a></p>
+<h2 id="_13">十、新手学习路径与资料</h2>
+<p>按入门顺序：</p>
+<ol>
+<li><strong>Nsight Systems 官方文档</strong>（docs.nvidia.com/nsight-systems）：User Guide 里的 <em>Getting Started</em>、<em>Reports</em>（每种 <code>--report</code> 的字段解释——正好对应本文第四章）、<em>Timeline View</em>（GUI 每一行的含义）。</li>
+<li><strong>命令自查</strong>：<code>nsys stats --help-reports</code> 列出全部报告；重点补 <code>cuda_gpu_trace</code>（逐条 kernel 明细）和 <code>nvtx_kern_sum</code>（按 NVTX 区间聚合）。</li>
+<li><strong>PyTorch 官方教程</strong>：</li>
+<li>PyTorch Profiler recipe（<code>torch.profiler</code>，产出 Chrome trace，用 <a href="https://perfetto.dev">Perfetto</a> 打开——比 nsys 更容易上手，适合先建立“时间线”概念）；</li>
+<li>博客 <em>Accelerating PyTorch with CUDA Graphs</em> + 文档 <code>torch.cuda.graphs</code>（本文手动图模式的标准出处）；</li>
+<li><em>torch.compile Tutorial</em>（讲 Inductor、<code>reduce-overhead</code> 与 cudagraphs 的关系）。</li>
+<li><strong>NVIDIA 开发者博客的 CUDA Graphs 系列</strong>：解释图回放为何能消除 launch 开销。</li>
+<li><strong>中文实操笔记</strong>：知乎/公众号搜 “Nsight Systems 教程 / timeline 分析”，图例丰富，可作为辅助（以官方文档为准）。
+<strong>推荐路径</strong>：先用 <code>torch.profiler</code> + Perfetto 熟悉“看时间线” → 再用 nsys 看系统级细节（launch 开销、CUDA Graph、cuBLAS 行为）→ 最后用 <code>nsys stats</code>/sqlite 做定量对比。本文练的正是最后一步。</li>
+</ol>
+<hr />
+<p><a id="十一"></a></p>
+<h2 id="_14">十一、动手练习</h2>
+<ol>
+<li><strong>数 launch</strong>：跑 <code>nsys stats eager.nsys-rep --report cuda_api_sum</code>，验证 launch 总数 = 270；再用 <code>--report cuda_gpu_trace</code> 找出一步内 9 个 kernel 的执行顺序，与 <code>forward</code> 代码逐行对应。</li>
+<li><strong>制造一个 CPU-bound 场景</strong>：<code>--batch 16</code> 重跑四种模式。预期：eager 的 GPU kernel 间出现大空隙（发射跟不上），cudagraph 的墙钟收益从“几乎为零”变成“数倍”。这是理解两种瓶颈最好的实验。</li>
+<li><strong>按区间统计</strong>：用 <code>--report nvtx_kern_sum</code> 回答“每个 <code>step_i</code> 里 GPU 忙了多少 µs”，与本文“GPU 忙时/步”对账。</li>
+<li><strong>TF32 消融</strong>：注释掉 <code>set_float32_matmul_precision('high')</code> 重跑 eager，观察 GEMM kernel 名从 <code>tensorop_s1688</code> 变回 <code>simt</code>，耗时如何变化（结论 6 的亲自验证版）。</li>
+<li><strong>缓存陷阱</strong>：重新 profile 同名报告后，<code>nsys stats</code> 加 <code>--force-export=true</code>，体会 sqlite 缓存机制。</li>
+<li><strong>GUI 测量</strong>：双击 <code>step_10</code>，用标尺量出一步总时长，减去 kernel 忙时，差值就是发射间隙——把这个数和第六章的 CPU 估算表对照。</li>
+</ol>
+<hr />
+<p><a id="附录"></a></p>
+<h2 id="_15">附录：复现命令清单</h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># 四种模式采集（仅 -o 与 --mode 不同）</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>nsys<span class="w"> </span>profile<span class="w"> </span>-t<span class="w"> </span>cuda,nvtx,osrt,cudnn,cublas<span class="w"> </span>-s<span class="w"> </span>none<span class="w"> </span>--cpuctxsw<span class="o">=</span>none<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span>--cuda-graph-trace<span class="o">=</span>node<span class="w"> </span>--capture-range<span class="o">=</span>cudaProfilerApi<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span>--capture-range-end<span class="o">=</span>stop-shutdown<span class="w"> </span>-o<span class="w"> </span>eager<span class="w"> </span>-f<span class="w"> </span><span class="nb">true</span><span class="w"> </span>python<span class="w"> </span>bench.py<span class="w"> </span>--mode<span class="w"> </span>eager
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>nsys<span class="w"> </span>profile<span class="w"> </span>...<span class="w"> </span>-o<span class="w"> </span>compile<span class="w">    </span>-f<span class="w"> </span><span class="nb">true</span><span class="w"> </span>python<span class="w"> </span>bench.py<span class="w"> </span>--mode<span class="w"> </span>compile
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>nsys<span class="w"> </span>profile<span class="w"> </span>...<span class="w"> </span>-o<span class="w"> </span>cudagraph<span class="w">  </span>-f<span class="w"> </span><span class="nb">true</span><span class="w"> </span>python<span class="w"> </span>bench.py<span class="w"> </span>--mode<span class="w"> </span>cudagraph
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>nsys<span class="w"> </span>profile<span class="w"> </span>...<span class="w"> </span>-o<span class="w"> </span>compile_cudagraph<span class="w"> </span>-f<span class="w"> </span><span class="nb">true</span><span class="w"> </span>python<span class="w"> </span>bench.py<span class="w"> </span>--mode<span class="w"> </span>compile+cudagraph
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="c1"># 每份报告看两张表</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>nsys<span class="w"> </span>stats<span class="w"> </span>eager.nsys-rep<span class="w">             </span>--report<span class="w"> </span>cuda_gpu_kern_sum<span class="w">   </span><span class="c1"># GPU 干了什么</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>nsys<span class="w"> </span>stats<span class="w"> </span>eager.nsys-rep<span class="w">             </span>--report<span class="w"> </span>cuda_api_sum<span class="w">        </span><span class="c1"># CPU 花了多大功夫</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>nsys<span class="w"> </span>stats<span class="w"> </span>compile.nsys-rep<span class="w">           </span>--report<span class="w"> </span>cuda_gpu_kern_sum
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>nsys<span class="w"> </span>stats<span class="w"> </span>compile.nsys-rep<span class="w">           </span>--report<span class="w"> </span>cuda_api_sum
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>nsys<span class="w"> </span>stats<span class="w"> </span>cudagraph.nsys-rep<span class="w">         </span>--report<span class="w"> </span>cuda_gpu_kern_sum
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>nsys<span class="w"> </span>stats<span class="w"> </span>cudagraph.nsys-rep<span class="w">         </span>--report<span class="w"> </span>cuda_api_sum
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>nsys<span class="w"> </span>stats<span class="w"> </span>compile_cudagraph.nsys-rep<span class="w"> </span>--report<span class="w"> </span>cuda_gpu_kern_sum
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>nsys<span class="w"> </span>stats<span class="w"> </span>compile_cudagraph.nsys-rep<span class="w"> </span>--report<span class="w"> </span>cuda_api_sum
+</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>
+</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="c1"># 可视化</span>
+</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>nsys-ui<span class="w"> </span>eager.nsys-rep
+</span></code></pre></div>
+<hr />
+<h2 id="_16">结语</h2>
+<p>把整篇实验压缩成三句话：</p>
+<blockquote>
+<p><strong>融合</strong>让 pointwise 从 6 个 kernel 变 2 个（GPU 侧少干活）；<strong>CUDA Graph</strong> 让每步 launch 从 9 次变 1 次（CPU 侧少费劲）；而在这台 GPU 上，<strong>GEMM 占了 94% 以上的时间</strong>——先解决大头的精度与效率，再抠发射开销，才是正确的优化顺序。</p>
+</blockquote>
+<p>而 nsys 教给我们的方法论同样只有三句话：</p>
+<blockquote>
+<p><strong><code>cuda_gpu_kern_sum</code> 看 GPU 干了什么，<code>cuda_api_sum</code> 看 CPU 付了多大代价，GUI 时间线看两者如何在时间上交错。</strong> 次数与名称是最稳健的证据，时间要盯住 Med 和 StdDev，跨表推算记得留余量。</p>
+</blockquote>
+<p>祝 profiling 愉快——当你能从一张表格里“读出故事”时，性能优化就不再是一门玄学。</p>
+<h2 id="_17">附录：完整代码</h2>
+<div class="language-python highlight"><span class="filename">bench.py</span><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="sd"># ============================================================</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="sd"># Eager 基线：普通 PyTorch 执行，无算子融合，无 CUDA Graph</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="sd"># ============================================================</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="sd">nsys profile \                                  # 启动 Nsight Systems 采集</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="sd">  -t cuda,nvtx,osrt,cudnn,cublas \              # 跟踪 CUDA、NVTX、OS runtime、cuDNN、cuBLAS API</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="sd">  -s none \                                     # 禁用采样，记录所有事件（保证完整性）</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="sd">  --cpuctxsw=none \                             # 不跟踪 CPU 上下文切换</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="sd">  --cuda-graph-trace=node \                     # 跟踪 CUDA Graph 节点级信息（虽然本模式未用图）</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="sd">  --capture-range=cudaProfilerApi \             # 仅采集 cudaProfilerStart/Stop 之间的范围</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="sd">  --capture-range-end=stop-shutdown \           # 当 profiler API 停止或进程结束时结束采集</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="sd">  -o eager \                                    # 输出报告文件名前缀（生成 eager.nsys-rep）</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="sd">  -f true \                                     # 若文件已存在则强制覆盖</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="sd">  python bench.py --mode eager                  # 运行目标脚本，模式为 eager</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="sd"># ============================================================</span>
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="sd"># torch.compile 算子融合（无 CUDA Graph）</span>
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="sd"># ============================================================</span>
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="sd">nsys profile \                                  # 启动 Nsight Systems 采集</span>
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="sd">  -t cuda,nvtx,osrt,cudnn,cublas \              # 跟踪 CUDA、NVTX、OS runtime、cuDNN、cuBLAS API</span>
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="sd">  -s none \                                     # 禁用采样，记录所有事件</span>
+</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="sd">  --cpuctxsw=none \                             # 不跟踪 CPU 上下文切换</span>
+</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="sd">  --cuda-graph-trace=node \                     # 跟踪 CUDA Graph 节点级信息</span>
+</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="sd">  --capture-range=cudaProfilerApi \             # 仅采集 cudaProfilerStart/Stop 之间的范围</span>
+</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="sd">  --capture-range-end=stop-shutdown \           # 当 profiler API 停止或进程结束时结束采集</span>
+</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="sd">  -o compile \                                  # 输出报告文件名前缀（生成 compile.nsys-rep）</span>
+</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="sd">  -f true \                                     # 若文件已存在则强制覆盖</span>
+</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="sd">  python bench.py --mode compile                # 运行目标脚本，模式为 compile</span>
+</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a>
+</span><span id="__span-11-30"><a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="sd"># ============================================================</span>
+</span><span id="__span-11-31"><a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a><span class="sd"># 手动 CUDA Graph：捕获整段前向，回放降低 launch 开销</span>
+</span><span id="__span-11-32"><a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a><span class="sd"># ============================================================</span>
+</span><span id="__span-11-33"><a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a><span class="sd">nsys profile \                                  # 启动 Nsight Systems 采集</span>
+</span><span id="__span-11-34"><a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a><span class="sd">  -t cuda,nvtx,osrt,cudnn,cublas \              # 跟踪 CUDA、NVTX、OS runtime、cuDNN、cuBLAS API</span>
+</span><span id="__span-11-35"><a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a><span class="sd">  -s none \                                     # 禁用采样，记录所有事件</span>
+</span><span id="__span-11-36"><a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a><span class="sd">  --cpuctxsw=none \                             # 不跟踪 CPU 上下文切换</span>
+</span><span id="__span-11-37"><a id="__codelineno-11-37" name="__codelineno-11-37" href="#__codelineno-11-37"></a><span class="sd">  --cuda-graph-trace=node \                     # 跟踪 CUDA Graph 节点级信息（本模式使用图，该选项重要）</span>
+</span><span id="__span-11-38"><a id="__codelineno-11-38" name="__codelineno-11-38" href="#__codelineno-11-38"></a><span class="sd">  --capture-range=cudaProfilerApi \             # 仅采集 cudaProfilerStart/Stop 之间的范围</span>
+</span><span id="__span-11-39"><a id="__codelineno-11-39" name="__codelineno-11-39" href="#__codelineno-11-39"></a><span class="sd">  --capture-range-end=stop-shutdown \           # 当 profiler API 停止或进程结束时结束采集</span>
+</span><span id="__span-11-40"><a id="__codelineno-11-40" name="__codelineno-11-40" href="#__codelineno-11-40"></a><span class="sd">  -o cudagraph \                                # 输出报告文件名前缀（生成 cudagraph.nsys-rep）</span>
+</span><span id="__span-11-41"><a id="__codelineno-11-41" name="__codelineno-11-41" href="#__codelineno-11-41"></a><span class="sd">  -f true \                                     # 若文件已存在则强制覆盖</span>
+</span><span id="__span-11-42"><a id="__codelineno-11-42" name="__codelineno-11-42" href="#__codelineno-11-42"></a><span class="sd">  python bench.py --mode cudagraph              # 运行目标脚本，模式为 cudagraph</span>
+</span><span id="__span-11-43"><a id="__codelineno-11-43" name="__codelineno-11-43" href="#__codelineno-11-43"></a>
+</span><span id="__span-11-44"><a id="__codelineno-11-44" name="__codelineno-11-44" href="#__codelineno-11-44"></a><span class="sd"># ============================================================</span>
+</span><span id="__span-11-45"><a id="__codelineno-11-45" name="__codelineno-11-45" href="#__codelineno-11-45"></a><span class="sd"># torch.compile + CUDA Graph（内置 reduce-overhead）</span>
+</span><span id="__span-11-46"><a id="__codelineno-11-46" name="__codelineno-11-46" href="#__codelineno-11-46"></a><span class="sd"># ============================================================</span>
+</span><span id="__span-11-47"><a id="__codelineno-11-47" name="__codelineno-11-47" href="#__codelineno-11-47"></a><span class="sd">nsys profile \                                  # 启动 Nsight Systems 采集</span>
+</span><span id="__span-11-48"><a id="__codelineno-11-48" name="__codelineno-11-48" href="#__codelineno-11-48"></a><span class="sd">  -t cuda,nvtx,osrt,cudnn,cublas \              # 跟踪 CUDA、NVTX、OS runtime、cuDNN、cuBLAS API</span>
+</span><span id="__span-11-49"><a id="__codelineno-11-49" name="__codelineno-11-49" href="#__codelineno-11-49"></a><span class="sd">  -s none \                                     # 禁用采样，记录所有事件</span>
+</span><span id="__span-11-50"><a id="__codelineno-11-50" name="__codelineno-11-50" href="#__codelineno-11-50"></a><span class="sd">  --cpuctxsw=none \                             # 不跟踪 CPU 上下文切换</span>
+</span><span id="__span-11-51"><a id="__codelineno-11-51" name="__codelineno-11-51" href="#__codelineno-11-51"></a><span class="sd">  --cuda-graph-trace=node \                     # 跟踪 CUDA Graph 节点级信息</span>
+</span><span id="__span-11-52"><a id="__codelineno-11-52" name="__codelineno-11-52" href="#__codelineno-11-52"></a><span class="sd">  --capture-range=cudaProfilerApi \             # 仅采集 cudaProfilerStart/Stop 之间的范围</span>
+</span><span id="__span-11-53"><a id="__codelineno-11-53" name="__codelineno-11-53" href="#__codelineno-11-53"></a><span class="sd">  --capture-range-end=stop-shutdown \           # 当 profiler API 停止或进程结束时结束采集</span>
+</span><span id="__span-11-54"><a id="__codelineno-11-54" name="__codelineno-11-54" href="#__codelineno-11-54"></a><span class="sd">  -o compile_cudagraph \                        # 输出报告文件名前缀（生成 compile_cudagraph.nsys-rep）</span>
+</span><span id="__span-11-55"><a id="__codelineno-11-55" name="__codelineno-11-55" href="#__codelineno-11-55"></a><span class="sd">  -f true \                                     # 若文件已存在则强制覆盖</span>
+</span><span id="__span-11-56"><a id="__codelineno-11-56" name="__codelineno-11-56" href="#__codelineno-11-56"></a><span class="sd">  python bench.py --mode compile+cudagraph      # 运行目标脚本，模式为 compile+cudagraph</span>
+</span><span id="__span-11-57"><a id="__codelineno-11-57" name="__codelineno-11-57" href="#__codelineno-11-57"></a>
+</span><span id="__span-11-58"><a id="__codelineno-11-58" name="__codelineno-11-58" href="#__codelineno-11-58"></a><span class="sd"># ============================================================</span>
+</span><span id="__span-11-59"><a id="__codelineno-11-59" name="__codelineno-11-59" href="#__codelineno-11-59"></a><span class="sd"># 可视化报告（GUI）</span>
+</span><span id="__span-11-60"><a id="__codelineno-11-60" name="__codelineno-11-60" href="#__codelineno-11-60"></a><span class="sd"># ============================================================</span>
+</span><span id="__span-11-61"><a id="__codelineno-11-61" name="__codelineno-11-61" href="#__codelineno-11-61"></a><span class="sd">nsys-ui eager.nsys-rep                         # 打开 eager 报告图形界面</span>
+</span><span id="__span-11-62"><a id="__codelineno-11-62" name="__codelineno-11-62" href="#__codelineno-11-62"></a><span class="sd"># 或通过 GUI 菜单 File → Open 依次加载其他 .nsys-rep 文件</span>
+</span><span id="__span-11-63"><a id="__codelineno-11-63" name="__codelineno-11-63" href="#__codelineno-11-63"></a>
+</span><span id="__span-11-64"><a id="__codelineno-11-64" name="__codelineno-11-64" href="#__codelineno-11-64"></a><span class="sd"># ============================================================</span>
+</span><span id="__span-11-65"><a id="__codelineno-11-65" name="__codelineno-11-65" href="#__codelineno-11-65"></a><span class="sd"># 统计报告：GPU kernel 汇总</span>
+</span><span id="__span-11-66"><a id="__codelineno-11-66" name="__codelineno-11-66" href="#__codelineno-11-66"></a><span class="sd"># ============================================================</span>
+</span><span id="__span-11-67"><a id="__codelineno-11-67" name="__codelineno-11-67" href="#__codelineno-11-67"></a>
+</span><span id="__span-11-68"><a id="__codelineno-11-68" name="__codelineno-11-68" href="#__codelineno-11-68"></a><span class="sd">nsys stats eager.nsys-rep --report cuda_gpu_kern_sum</span>
+</span><span id="__span-11-69"><a id="__codelineno-11-69" name="__codelineno-11-69" href="#__codelineno-11-69"></a><span class="sd"># 报告类型 cuda_gpu_kern_sum：统计所有 CUDA kernel 的名称、实例数、平均耗时等</span>
+</span><span id="__span-11-70"><a id="__codelineno-11-70" name="__codelineno-11-70" href="#__codelineno-11-70"></a><span class="sd"># eager 模式下应看到大量独立的 elementwise kernel（如 aten::gelu、aten::mul）</span>
+</span><span id="__span-11-71"><a id="__codelineno-11-71" name="__codelineno-11-71" href="#__codelineno-11-71"></a>
+</span><span id="__span-11-72"><a id="__codelineno-11-72" name="__codelineno-11-72" href="#__codelineno-11-72"></a><span class="sd">nsys stats compile.nsys-rep --report cuda_gpu_kern_sum</span>
+</span><span id="__span-11-73"><a id="__codelineno-11-73" name="__codelineno-11-73" href="#__codelineno-11-73"></a><span class="sd"># 观察 triton_ 前缀 kernel 出现，elementwise 类 kernel 消失（被融合）</span>
+</span><span id="__span-11-74"><a id="__codelineno-11-74" name="__codelineno-11-74" href="#__codelineno-11-74"></a>
+</span><span id="__span-11-75"><a id="__codelineno-11-75" name="__codelineno-11-75" href="#__codelineno-11-75"></a><span class="sd">nsys stats compile_cudagraph.nsys-rep --report cuda_gpu_kern_sum</span>
+</span><span id="__span-11-76"><a id="__codelineno-11-76" name="__codelineno-11-76" href="#__codelineno-11-76"></a><span class="sd"># 同样应出现 triton_ 前缀 kernel，且 kernel 总数进一步减少</span>
+</span><span id="__span-11-77"><a id="__codelineno-11-77" name="__codelineno-11-77" href="#__codelineno-11-77"></a>
+</span><span id="__span-11-78"><a id="__codelineno-11-78" name="__codelineno-11-78" href="#__codelineno-11-78"></a><span class="sd"># ============================================================</span>
+</span><span id="__span-11-79"><a id="__codelineno-11-79" name="__codelineno-11-79" href="#__codelineno-11-79"></a><span class="sd"># 统计报告：CUDA API 调用汇总</span>
+</span><span id="__span-11-80"><a id="__codelineno-11-80" name="__codelineno-11-80" href="#__codelineno-11-80"></a><span class="sd"># ============================================================</span>
+</span><span id="__span-11-81"><a id="__codelineno-11-81" name="__codelineno-11-81" href="#__codelineno-11-81"></a><span class="sd">nsys stats cudagraph.nsys-rep --report cuda_api_sum</span>
+</span><span id="__span-11-82"><a id="__codelineno-11-82" name="__codelineno-11-82" href="#__codelineno-11-82"></a><span class="sd"># 报告类型 cuda_api_sum：统计 CUDA API 调用次数与耗时</span>
+</span><span id="__span-11-83"><a id="__codelineno-11-83" name="__codelineno-11-83" href="#__codelineno-11-83"></a><span class="sd"># 关键观察：cudaGraphLaunch 出现，cudaLaunchKernel 次数骤减</span>
+</span><span id="__span-11-84"><a id="__codelineno-11-84" name="__codelineno-11-84" href="#__codelineno-11-84"></a>
+</span><span id="__span-11-85"><a id="__codelineno-11-85" name="__codelineno-11-85" href="#__codelineno-11-85"></a><span class="sd">nsys stats compile_cudagraph.nsys-rep --report cuda_api_sum</span>
+</span><span id="__span-11-86"><a id="__codelineno-11-86" name="__codelineno-11-86" href="#__codelineno-11-86"></a><span class="sd"># 同样应出现 cudaGraphLaunch，且 launch 总次数显著低于 eager 模式</span>
+</span><span id="__span-11-87"><a id="__codelineno-11-87" name="__codelineno-11-87" href="#__codelineno-11-87"></a>
+</span><span id="__span-11-88"><a id="__codelineno-11-88" name="__codelineno-11-88" href="#__codelineno-11-88"></a><span class="sd"># ============================================================</span>
+</span><span id="__span-11-89"><a id="__codelineno-11-89" name="__codelineno-11-89" href="#__codelineno-11-89"></a><span class="sd"># 总结：eager &gt; compile &gt; cuda_graph &gt; compile + cuda_graph</span>
+</span><span id="__span-11-90"><a id="__codelineno-11-90" name="__codelineno-11-90" href="#__codelineno-11-90"></a><span class="sd"># ============================================================</span>
+</span><span id="__span-11-91"><a id="__codelineno-11-91" name="__codelineno-11-91" href="#__codelineno-11-91"></a>
+</span><span id="__span-11-92"><a id="__codelineno-11-92" name="__codelineno-11-92" href="#__codelineno-11-92"></a><span class="sd">- 1个算子层，</span>
+</span><span id="__span-11-93"><a id="__codelineno-11-93" name="__codelineno-11-93" href="#__codelineno-11-93"></a><span class="sd">- 4种推理方式：</span>
+</span><span id="__span-11-94"><a id="__codelineno-11-94" name="__codelineno-11-94" href="#__codelineno-11-94"></a><span class="sd">    - eager</span>
+</span><span id="__span-11-95"><a id="__codelineno-11-95" name="__codelineno-11-95" href="#__codelineno-11-95"></a><span class="sd">    - torch.compile / fused kernels</span>
+</span><span id="__span-11-96"><a id="__codelineno-11-96" name="__codelineno-11-96" href="#__codelineno-11-96"></a><span class="sd">    - cudagraphs</span>
+</span><span id="__span-11-97"><a id="__codelineno-11-97" name="__codelineno-11-97" href="#__codelineno-11-97"></a><span class="sd">    - torch.compile(reduce-overhead) </span>
+</span><span id="__span-11-98"><a id="__codelineno-11-98" name="__codelineno-11-98" href="#__codelineno-11-98"></a><span class="sd">- 看2个指标：</span>
+</span><span id="__span-11-99"><a id="__codelineno-11-99" name="__codelineno-11-99" href="#__codelineno-11-99"></a><span class="sd">    - cuda_gpu_kern_sum = GPU 侧真正执行了什么</span>
+</span><span id="__span-11-100"><a id="__codelineno-11-100" name="__codelineno-11-100" href="#__codelineno-11-100"></a><span class="sd">    - cuda_api_sum      = CPU 侧花了多长时间去启动</span>
+</span><span id="__span-11-101"><a id="__codelineno-11-101" name="__codelineno-11-101" href="#__codelineno-11-101"></a>
+</span><span id="__span-11-102"><a id="__codelineno-11-102" name="__codelineno-11-102" href="#__codelineno-11-102"></a><span class="sd">&gt; nsys profile -t cuda,nvtx,osrt,cudnn,cublas -s none --cpuctxsw=none --cuda-graph-trace=node --capture-range=cudaProfilerApi --capture-range-end=stop-shutdown -o eager -f true python bench.py --mode eager</span>
+</span><span id="__span-11-103"><a id="__codelineno-11-103" name="__codelineno-11-103" href="#__codelineno-11-103"></a><span class="sd">&gt; nsys stats eager.nsys-rep --report cuda_gpu_kern_sum</span>
+</span><span id="__span-11-104"><a id="__codelineno-11-104" name="__codelineno-11-104" href="#__codelineno-11-104"></a><span class="sd">&gt; nsys stats eager.nsys-rep --report cuda_api_sum</span>
+</span><span id="__span-11-105"><a id="__codelineno-11-105" name="__codelineno-11-105" href="#__codelineno-11-105"></a>
+</span><span id="__span-11-106"><a id="__codelineno-11-106" name="__codelineno-11-106" href="#__codelineno-11-106"></a><span class="sd">&gt; nsys profile -t cuda,nvtx,osrt,cudnn,cublas -s none --cuda-graph-trace=node --capture-range=cudaProfilerApi --capture-range-end=stop-shutdown -o compile -f true python bench.py --mode compile</span>
+</span><span id="__span-11-107"><a id="__codelineno-11-107" name="__codelineno-11-107" href="#__codelineno-11-107"></a><span class="sd">&gt; nsys stats compile.nsys-rep --report cuda_gpu_kern_sum</span>
+</span><span id="__span-11-108"><a id="__codelineno-11-108" name="__codelineno-11-108" href="#__codelineno-11-108"></a><span class="sd">&gt; nsys stats compile.nsys-rep --report cuda_api_sum</span>
+</span><span id="__span-11-109"><a id="__codelineno-11-109" name="__codelineno-11-109" href="#__codelineno-11-109"></a>
+</span><span id="__span-11-110"><a id="__codelineno-11-110" name="__codelineno-11-110" href="#__codelineno-11-110"></a><span class="sd">&gt; nsys profile -t cuda,nvtx,osrt,cudnn,cublas -s none --cuda-graph-trace=node --capture-range=cudaProfilerApi --capture-range-end=stop-shutdown -o cudagraph -f true python bench.py --mode cudagraph</span>
+</span><span id="__span-11-111"><a id="__codelineno-11-111" name="__codelineno-11-111" href="#__codelineno-11-111"></a><span class="sd">&gt; nsys stats cudagraph.nsys-rep --report cuda_gpu_kern_sum</span>
+</span><span id="__span-11-112"><a id="__codelineno-11-112" name="__codelineno-11-112" href="#__codelineno-11-112"></a><span class="sd">&gt; nsys stats cudagraph.nsys-rep --report cuda_api_sum</span>
+</span><span id="__span-11-113"><a id="__codelineno-11-113" name="__codelineno-11-113" href="#__codelineno-11-113"></a>
+</span><span id="__span-11-114"><a id="__codelineno-11-114" name="__codelineno-11-114" href="#__codelineno-11-114"></a><span class="sd">&gt; nsys profile -t cuda,nvtx,osrt,cudnn,cublas -s none --cuda-graph-trace=node --capture-range=cudaProfilerApi --capture-range-end=stop-shutdown -o compile_cudagraph -f true python bench.py --mode compile+cudagraph</span>
+</span><span id="__span-11-115"><a id="__codelineno-11-115" name="__codelineno-11-115" href="#__codelineno-11-115"></a><span class="sd">&gt; nsys stats compile_cudagraph.nsys-rep --report cuda_gpu_kern_sum</span>
+</span><span id="__span-11-116"><a id="__codelineno-11-116" name="__codelineno-11-116" href="#__codelineno-11-116"></a><span class="sd">&gt; nsys stats compile_cudagraph.nsys-rep --report cuda_api_sum</span>
+</span><span id="__span-11-117"><a id="__codelineno-11-117" name="__codelineno-11-117" href="#__codelineno-11-117"></a><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-11-118"><a id="__codelineno-11-118" name="__codelineno-11-118" href="#__codelineno-11-118"></a>
+</span><span id="__span-11-119"><a id="__codelineno-11-119" name="__codelineno-11-119" href="#__codelineno-11-119"></a><span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+</span><span id="__span-11-120"><a id="__codelineno-11-120" name="__codelineno-11-120" href="#__codelineno-11-120"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+</span><span id="__span-11-121"><a id="__codelineno-11-121" name="__codelineno-11-121" href="#__codelineno-11-121"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+</span><span id="__span-11-122"><a id="__codelineno-11-122" name="__codelineno-11-122" href="#__codelineno-11-122"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn.functional</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">F</span>
+</span><span id="__span-11-123"><a id="__codelineno-11-123" name="__codelineno-11-123" href="#__codelineno-11-123"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.cuda.profiler</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">profiler</span>
+</span><span id="__span-11-124"><a id="__codelineno-11-124" name="__codelineno-11-124" href="#__codelineno-11-124"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.cuda.nvtx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nvtx</span>
+</span><span id="__span-11-125"><a id="__codelineno-11-125" name="__codelineno-11-125" href="#__codelineno-11-125"></a>
+</span><span id="__span-11-126"><a id="__codelineno-11-126" name="__codelineno-11-126" href="#__codelineno-11-126"></a><span class="n">torch</span><span class="o">.</span><span class="n">set_float32_matmul_precision</span><span class="p">(</span><span class="s1">&#39;high&#39;</span><span class="p">)</span> <span class="c1"># GPU 支持 TF32 矩阵乘，PyTorch 默认 FP32 精度不开启。</span>
+</span><span id="__span-11-127"><a id="__codelineno-11-127" name="__codelineno-11-127" href="#__codelineno-11-127"></a>
+</span><span id="__span-11-128"><a id="__codelineno-11-128" name="__codelineno-11-128" href="#__codelineno-11-128"></a><span class="k">class</span><span class="w"> </span><span class="nc">TinyMLP</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span><span id="__span-11-129"><a id="__codelineno-11-129" name="__codelineno-11-129" href="#__codelineno-11-129"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_in</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">d_hidden</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">d_out</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
+</span><span id="__span-11-130"><a id="__codelineno-11-130" name="__codelineno-11-130" href="#__codelineno-11-130"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span><span id="__span-11-131"><a id="__codelineno-11-131" name="__codelineno-11-131" href="#__codelineno-11-131"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">d_in</span><span class="p">,</span> <span class="n">d_hidden</span><span class="p">)</span>
+</span><span id="__span-11-132"><a id="__codelineno-11-132" name="__codelineno-11-132" href="#__codelineno-11-132"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">d_hidden</span><span class="p">,</span> <span class="n">d_hidden</span><span class="p">)</span>
+</span><span id="__span-11-133"><a id="__codelineno-11-133" name="__codelineno-11-133" href="#__codelineno-11-133"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fc3</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">d_hidden</span><span class="p">,</span> <span class="n">d_out</span><span class="p">)</span>
+</span><span id="__span-11-134"><a id="__codelineno-11-134" name="__codelineno-11-134" href="#__codelineno-11-134"></a>
+</span><span id="__span-11-135"><a id="__codelineno-11-135" name="__codelineno-11-135" href="#__codelineno-11-135"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span><span id="__span-11-136"><a id="__codelineno-11-136" name="__codelineno-11-136" href="#__codelineno-11-136"></a>        <span class="c1"># 故意串联 pointwise 算子：eager 下 gelu/mul/add 各是一个独立 kernel，</span>
+</span><span id="__span-11-137"><a id="__codelineno-11-137" name="__codelineno-11-137" href="#__codelineno-11-137"></a>        <span class="c1"># torch.compile 后会被 Inductor 融合为单个 triton kernel，方便在 timeline 上直观对比</span>
+</span><span id="__span-11-138"><a id="__codelineno-11-138" name="__codelineno-11-138" href="#__codelineno-11-138"></a>        <span class="n">h</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">gelu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">*</span> <span class="mf">1.1</span> <span class="o">+</span> <span class="mf">0.2</span>
+</span><span id="__span-11-139"><a id="__codelineno-11-139" name="__codelineno-11-139" href="#__codelineno-11-139"></a>        <span class="n">h</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">gelu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">h</span><span class="p">))</span> <span class="o">*</span> <span class="mf">0.9</span> <span class="o">+</span> <span class="mf">0.1</span>
+</span><span id="__span-11-140"><a id="__codelineno-11-140" name="__codelineno-11-140" href="#__codelineno-11-140"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc3</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+</span><span id="__span-11-141"><a id="__codelineno-11-141" name="__codelineno-11-141" href="#__codelineno-11-141"></a>
+</span><span id="__span-11-142"><a id="__codelineno-11-142" name="__codelineno-11-142" href="#__codelineno-11-142"></a>
+</span><span id="__span-11-143"><a id="__codelineno-11-143" name="__codelineno-11-143" href="#__codelineno-11-143"></a><span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">static_x</span><span class="p">):</span>
+</span><span id="__span-11-144"><a id="__codelineno-11-144" name="__codelineno-11-144" href="#__codelineno-11-144"></a>    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;eager&quot;</span><span class="p">:</span>
+</span><span id="__span-11-145"><a id="__codelineno-11-145" name="__codelineno-11-145" href="#__codelineno-11-145"></a>        <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">():</span>
+</span><span id="__span-11-146"><a id="__codelineno-11-146" name="__codelineno-11-146" href="#__codelineno-11-146"></a>            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+</span><span id="__span-11-147"><a id="__codelineno-11-147" name="__codelineno-11-147" href="#__codelineno-11-147"></a>                <span class="k">return</span> <span class="n">model</span><span class="p">(</span><span class="n">static_x</span><span class="p">)</span>
+</span><span id="__span-11-148"><a id="__codelineno-11-148" name="__codelineno-11-148" href="#__codelineno-11-148"></a>
+</span><span id="__span-11-149"><a id="__codelineno-11-149" name="__codelineno-11-149" href="#__codelineno-11-149"></a>    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;compile&quot;</span><span class="p">:</span>                       <span class="c1"># 仅算子融合（无 CUDA Graph）</span>
+</span><span id="__span-11-150"><a id="__codelineno-11-150" name="__codelineno-11-150" href="#__codelineno-11-150"></a>        <span class="n">compiled</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</span><span id="__span-11-151"><a id="__codelineno-11-151" name="__codelineno-11-151" href="#__codelineno-11-151"></a>        <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">():</span>
+</span><span id="__span-11-152"><a id="__codelineno-11-152" name="__codelineno-11-152" href="#__codelineno-11-152"></a>            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+</span><span id="__span-11-153"><a id="__codelineno-11-153" name="__codelineno-11-153" href="#__codelineno-11-153"></a>                <span class="k">return</span> <span class="n">compiled</span><span class="p">(</span><span class="n">static_x</span><span class="p">)</span>
+</span><span id="__span-11-154"><a id="__codelineno-11-154" name="__codelineno-11-154" href="#__codelineno-11-154"></a>
+</span><span id="__span-11-155"><a id="__codelineno-11-155" name="__codelineno-11-155" href="#__codelineno-11-155"></a>    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;cudagraph&quot;</span><span class="p">:</span> <span class="c1"># 手动 CUDA Graph，捕获整段前向</span>
+</span><span id="__span-11-156"><a id="__codelineno-11-156" name="__codelineno-11-156" href="#__codelineno-11-156"></a>        <span class="c1"># 1) 旁路 stream warmup：预热 cuBLAS handle / allocator</span>
+</span><span id="__span-11-157"><a id="__codelineno-11-157" name="__codelineno-11-157" href="#__codelineno-11-157"></a>        <span class="n">s</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">Stream</span><span class="p">()</span>
+</span><span id="__span-11-158"><a id="__codelineno-11-158" name="__codelineno-11-158" href="#__codelineno-11-158"></a>        <span class="n">s</span><span class="o">.</span><span class="n">wait_stream</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">current_stream</span><span class="p">())</span>
+</span><span id="__span-11-159"><a id="__codelineno-11-159" name="__codelineno-11-159" href="#__codelineno-11-159"></a>        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span><span id="__span-11-160"><a id="__codelineno-11-160" name="__codelineno-11-160" href="#__codelineno-11-160"></a>            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+</span><span id="__span-11-161"><a id="__codelineno-11-161" name="__codelineno-11-161" href="#__codelineno-11-161"></a>                <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+</span><span id="__span-11-162"><a id="__codelineno-11-162" name="__codelineno-11-162" href="#__codelineno-11-162"></a>                    <span class="n">model</span><span class="p">(</span><span class="n">static_x</span><span class="p">)</span>
+</span><span id="__span-11-163"><a id="__codelineno-11-163" name="__codelineno-11-163" href="#__codelineno-11-163"></a>        <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">current_stream</span><span class="p">()</span><span class="o">.</span><span class="n">wait_stream</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span><span id="__span-11-164"><a id="__codelineno-11-164" name="__codelineno-11-164" href="#__codelineno-11-164"></a>
+</span><span id="__span-11-165"><a id="__codelineno-11-165" name="__codelineno-11-165" href="#__codelineno-11-165"></a>        <span class="c1"># 2) 捕获（推理版只需包一次 forward，比训练版简单得多）</span>
+</span><span id="__span-11-166"><a id="__codelineno-11-166" name="__codelineno-11-166" href="#__codelineno-11-166"></a>        <span class="n">g</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">CUDAGraph</span><span class="p">()</span>
+</span><span id="__span-11-167"><a id="__codelineno-11-167" name="__codelineno-11-167" href="#__codelineno-11-167"></a>        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">graph</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+</span><span id="__span-11-168"><a id="__codelineno-11-168" name="__codelineno-11-168" href="#__codelineno-11-168"></a>            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+</span><span id="__span-11-169"><a id="__codelineno-11-169" name="__codelineno-11-169" href="#__codelineno-11-169"></a>                <span class="n">static_out</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">static_x</span><span class="p">)</span>
+</span><span id="__span-11-170"><a id="__codelineno-11-170" name="__codelineno-11-170" href="#__codelineno-11-170"></a>
+</span><span id="__span-11-171"><a id="__codelineno-11-171" name="__codelineno-11-171" href="#__codelineno-11-171"></a>        <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">():</span>
+</span><span id="__span-11-172"><a id="__codelineno-11-172" name="__codelineno-11-172" href="#__codelineno-11-172"></a>            <span class="c1"># 真实推理要换数据时，只能 copy_，不能重新赋值 static_x：</span>
+</span><span id="__span-11-173"><a id="__codelineno-11-173" name="__codelineno-11-173" href="#__codelineno-11-173"></a>            <span class="c1">#   static_x.copy_(torch.randn_like(static_x))</span>
+</span><span id="__span-11-174"><a id="__codelineno-11-174" name="__codelineno-11-174" href="#__codelineno-11-174"></a>            <span class="n">g</span><span class="o">.</span><span class="n">replay</span><span class="p">()</span>
+</span><span id="__span-11-175"><a id="__codelineno-11-175" name="__codelineno-11-175" href="#__codelineno-11-175"></a>            <span class="k">return</span> <span class="n">static_out</span>
+</span><span id="__span-11-176"><a id="__codelineno-11-176" name="__codelineno-11-176" href="#__codelineno-11-176"></a>
+</span><span id="__span-11-177"><a id="__codelineno-11-177" name="__codelineno-11-177" href="#__codelineno-11-177"></a>    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;compile+cudagraph&quot;</span><span class="p">:</span>             <span class="c1"># torch.compile 内置 cudagraphs</span>
+</span><span id="__span-11-178"><a id="__codelineno-11-178" name="__codelineno-11-178" href="#__codelineno-11-178"></a>        <span class="n">compiled</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;reduce-overhead&quot;</span><span class="p">)</span>
+</span><span id="__span-11-179"><a id="__codelineno-11-179" name="__codelineno-11-179" href="#__codelineno-11-179"></a>        <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">():</span>
+</span><span id="__span-11-180"><a id="__codelineno-11-180" name="__codelineno-11-180" href="#__codelineno-11-180"></a>            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+</span><span id="__span-11-181"><a id="__codelineno-11-181" name="__codelineno-11-181" href="#__codelineno-11-181"></a>                <span class="k">return</span> <span class="n">compiled</span><span class="p">(</span><span class="n">static_x</span><span class="p">)</span>
+</span><span id="__span-11-182"><a id="__codelineno-11-182" name="__codelineno-11-182" href="#__codelineno-11-182"></a>
+</span><span id="__span-11-183"><a id="__codelineno-11-183" name="__codelineno-11-183" href="#__codelineno-11-183"></a>    <span class="k">return</span> <span class="n">step</span>
+</span><span id="__span-11-184"><a id="__codelineno-11-184" name="__codelineno-11-184" href="#__codelineno-11-184"></a>
+</span><span id="__span-11-185"><a id="__codelineno-11-185" name="__codelineno-11-185" href="#__codelineno-11-185"></a>
+</span><span id="__span-11-186"><a id="__codelineno-11-186" name="__codelineno-11-186" href="#__codelineno-11-186"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+</span><span id="__span-11-187"><a id="__codelineno-11-187" name="__codelineno-11-187" href="#__codelineno-11-187"></a>    <span class="n">p</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+</span><span id="__span-11-188"><a id="__codelineno-11-188" name="__codelineno-11-188" href="#__codelineno-11-188"></a>    <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--mode&quot;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;eager&quot;</span><span class="p">,</span> <span class="s2">&quot;compile&quot;</span><span class="p">,</span> <span class="s2">&quot;cudagraph&quot;</span><span class="p">,</span> <span class="s2">&quot;compile+cudagraph&quot;</span><span class="p">],</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-11-189"><a id="__codelineno-11-189" name="__codelineno-11-189" href="#__codelineno-11-189"></a>    <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--steps&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</span><span id="__span-11-190"><a id="__codelineno-11-190" name="__codelineno-11-190" href="#__codelineno-11-190"></a>    <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--batch&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+</span><span id="__span-11-191"><a id="__codelineno-11-191" name="__codelineno-11-191" href="#__codelineno-11-191"></a>    <span class="n">args</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</span><span id="__span-11-192"><a id="__codelineno-11-192" name="__codelineno-11-192" href="#__codelineno-11-192"></a>
+</span><span id="__span-11-193"><a id="__codelineno-11-193" name="__codelineno-11-193" href="#__codelineno-11-193"></a>    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-11-194"><a id="__codelineno-11-194" name="__codelineno-11-194" href="#__codelineno-11-194"></a>    <span class="n">dev</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+</span><span id="__span-11-195"><a id="__codelineno-11-195" name="__codelineno-11-195" href="#__codelineno-11-195"></a>
+</span><span id="__span-11-196"><a id="__codelineno-11-196" name="__codelineno-11-196" href="#__codelineno-11-196"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">TinyMLP</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span> <span class="c1"># 推理：eval() 关 dropout；没有 optimizer / loss / backward</span>
+</span><span id="__span-11-197"><a id="__codelineno-11-197" name="__codelineno-11-197" href="#__codelineno-11-197"></a>
+</span><span id="__span-11-198"><a id="__codelineno-11-198" name="__codelineno-11-198" href="#__codelineno-11-198"></a>    <span class="c1"># mock 输入：torch.randn 一次性构造，地址固定</span>
+</span><span id="__span-11-199"><a id="__codelineno-11-199" name="__codelineno-11-199" href="#__codelineno-11-199"></a>    <span class="n">static_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">batch</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">dev</span><span class="p">)</span>
+</span><span id="__span-11-200"><a id="__codelineno-11-200" name="__codelineno-11-200" href="#__codelineno-11-200"></a>
+</span><span id="__span-11-201"><a id="__codelineno-11-201" name="__codelineno-11-201" href="#__codelineno-11-201"></a>    <span class="n">step</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">static_x</span><span class="p">)</span>
+</span><span id="__span-11-202"><a id="__codelineno-11-202" name="__codelineno-11-202" href="#__codelineno-11-202"></a>
+</span><span id="__span-11-203"><a id="__codelineno-11-203" name="__codelineno-11-203" href="#__codelineno-11-203"></a>    <span class="c1"># warmup：让 compile 完成 JIT、cudagraph 完成捕获，不污染 profile</span>
+</span><span id="__span-11-204"><a id="__codelineno-11-204" name="__codelineno-11-204" href="#__codelineno-11-204"></a>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+</span><span id="__span-11-205"><a id="__codelineno-11-205" name="__codelineno-11-205" href="#__codelineno-11-205"></a>        <span class="n">step</span><span class="p">()</span>
+</span><span id="__span-11-206"><a id="__codelineno-11-206" name="__codelineno-11-206" href="#__codelineno-11-206"></a>    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+</span><span id="__span-11-207"><a id="__codelineno-11-207" name="__codelineno-11-207" href="#__codelineno-11-207"></a>
+</span><span id="__span-11-208"><a id="__codelineno-11-208" name="__codelineno-11-208" href="#__codelineno-11-208"></a>    <span class="c1"># ===== nsys 采集范围（对应 --capture-range=cudaProfilerApi） =====</span>
+</span><span id="__span-11-209"><a id="__codelineno-11-209" name="__codelineno-11-209" href="#__codelineno-11-209"></a>    <span class="n">profiler</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span><span id="__span-11-210"><a id="__codelineno-11-210" name="__codelineno-11-210" href="#__codelineno-11-210"></a>    <span class="n">nvtx</span><span class="o">.</span><span class="n">range_push</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MODE:</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">mode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-11-211"><a id="__codelineno-11-211" name="__codelineno-11-211" href="#__codelineno-11-211"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">steps</span><span class="p">):</span>
+</span><span id="__span-11-212"><a id="__codelineno-11-212" name="__codelineno-11-212" href="#__codelineno-11-212"></a>        <span class="n">nvtx</span><span class="o">.</span><span class="n">range_push</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;step_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-11-213"><a id="__codelineno-11-213" name="__codelineno-11-213" href="#__codelineno-11-213"></a>        <span class="n">out</span> <span class="o">=</span> <span class="n">step</span><span class="p">()</span>
+</span><span id="__span-11-214"><a id="__codelineno-11-214" name="__codelineno-11-214" href="#__codelineno-11-214"></a>        <span class="n">nvtx</span><span class="o">.</span><span class="n">range_pop</span><span class="p">()</span>
+</span><span id="__span-11-215"><a id="__codelineno-11-215" name="__codelineno-11-215" href="#__codelineno-11-215"></a>    <span class="n">nvtx</span><span class="o">.</span><span class="n">range_pop</span><span class="p">()</span>
+</span><span id="__span-11-216"><a id="__codelineno-11-216" name="__codelineno-11-216" href="#__codelineno-11-216"></a>    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+</span><span id="__span-11-217"><a id="__codelineno-11-217" name="__codelineno-11-217" href="#__codelineno-11-217"></a>    <span class="n">profiler</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</span><span id="__span-11-218"><a id="__codelineno-11-218" name="__codelineno-11-218" href="#__codelineno-11-218"></a>
+</span><span id="__span-11-219"><a id="__codelineno-11-219" name="__codelineno-11-219" href="#__codelineno-11-219"></a>
+</span><span id="__span-11-220"><a id="__codelineno-11-220" name="__codelineno-11-220" href="#__codelineno-11-220"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span id="__span-11-221"><a id="__codelineno-11-221" name="__codelineno-11-221" href="#__codelineno-11-221"></a>    <span class="n">main</span><span class="p">()</span>
+</span><span id="__span-11-222"><a id="__codelineno-11-222" name="__codelineno-11-222" href="#__codelineno-11-222"></a>
+</span><span id="__span-11-223"><a id="__codelineno-11-223" name="__codelineno-11-223" href="#__codelineno-11-223"></a>
+</span><span id="__span-11-224"><a id="__codelineno-11-224" name="__codelineno-11-224" href="#__codelineno-11-224"></a><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-11-225"><a id="__codelineno-11-225" name="__codelineno-11-225" href="#__codelineno-11-225"></a><span class="sd">nsys profile -t cuda,nvtx,osrt,cudnn,cublas -s none --cpuctxsw=none --cuda-graph-trace=node --capture-range=cudaProfilerApi --capture-range-end=stop-shutdown -o eager -f true python bench.py --mode eager</span>
+</span><span id="__span-11-226"><a id="__codelineno-11-226" name="__codelineno-11-226" href="#__codelineno-11-226"></a><span class="sd">Capture range started in the application.</span>
+</span><span id="__span-11-227"><a id="__codelineno-11-227" name="__codelineno-11-227" href="#__codelineno-11-227"></a><span class="sd">Capture range ended in the application.</span>
+</span><span id="__span-11-228"><a id="__codelineno-11-228" name="__codelineno-11-228" href="#__codelineno-11-228"></a><span class="sd">Generating &#39;/tmp/nsys-report-f57e.qdstrm&#39;</span>
+</span><span id="__span-11-229"><a id="__codelineno-11-229" name="__codelineno-11-229" href="#__codelineno-11-229"></a><span class="sd">[1/1] [0%                          ] eager.nsys-repProcessing events...</span>
+</span><span id="__span-11-230"><a id="__codelineno-11-230" name="__codelineno-11-230" href="#__codelineno-11-230"></a><span class="sd">[1/1] [========================100%] eager.nsys-rep</span>
+</span><span id="__span-11-231"><a id="__codelineno-11-231" name="__codelineno-11-231" href="#__codelineno-11-231"></a><span class="sd">Generated:</span>
+</span><span id="__span-11-232"><a id="__codelineno-11-232" name="__codelineno-11-232" href="#__codelineno-11-232"></a><span class="sd">        /home/beaver/eager.nsys-rep</span>
+</span><span id="__span-11-233"><a id="__codelineno-11-233" name="__codelineno-11-233" href="#__codelineno-11-233"></a>
+</span><span id="__span-11-234"><a id="__codelineno-11-234" name="__codelineno-11-234" href="#__codelineno-11-234"></a><span class="sd">Capture range started in the application.   ← 程序调用了 cudaProfilerStart()，开始记录（对应代码里的 profiler.start()）</span>
+</span><span id="__span-11-235"><a id="__codelineno-11-235" name="__codelineno-11-235" href="#__codelineno-11-235"></a><span class="sd">Capture range ended in the application.     ← 调用了 cudaProfilerStop()，停止记录</span>
+</span><span id="__span-11-236"><a id="__codelineno-11-236" name="__codelineno-11-236" href="#__codelineno-11-236"></a><span class="sd">Generating &#39;/tmp/nsys-report-8ae4.qdstrm&#39;   ← 先生成原始事件流（中间文件）</span>
+</span><span id="__span-11-237"><a id="__codelineno-11-237" name="__codelineno-11-237" href="#__codelineno-11-237"></a><span class="sd">[1/1] [====100%] eager.nsys-rep             ← 把事件流加工成最终报告</span>
+</span><span id="__span-11-238"><a id="__codelineno-11-238" name="__codelineno-11-238" href="#__codelineno-11-238"></a><span class="sd">Generated: /home/beaver/eager.nsys-rep      ← 最终产物，GUI 和 stats 都吃这个文件</span>
+</span><span id="__span-11-239"><a id="__codelineno-11-239" name="__codelineno-11-239" href="#__codelineno-11-239"></a>
+</span><span id="__span-11-240"><a id="__codelineno-11-240" name="__codelineno-11-240" href="#__codelineno-11-240"></a><span class="sd">只有看到 **started + ended 两行都才说明 `--capture-range=cudaProfilerApi` 生效了</span>
+</span><span id="__span-11-241"><a id="__codelineno-11-241" name="__codelineno-11-241" href="#__codelineno-11-241"></a><span class="sd">（如果没出现，报告会是空的）。</span>
+</span><span id="__span-11-242"><a id="__codelineno-11-242" name="__codelineno-11-242" href="#__codelineno-11-242"></a><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-11-243"><a id="__codelineno-11-243" name="__codelineno-11-243" href="#__codelineno-11-243"></a>
+</span><span id="__span-11-244"><a id="__codelineno-11-244" name="__codelineno-11-244" href="#__codelineno-11-244"></a><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-11-245"><a id="__codelineno-11-245" name="__codelineno-11-245" href="#__codelineno-11-245"></a><span class="sd">&gt; nsys stats eager.nsys-rep --report cuda_gpu_kern_sum</span>
+</span><span id="__span-11-246"><a id="__codelineno-11-246" name="__codelineno-11-246" href="#__codelineno-11-246"></a><span class="sd">[eager] ** CUDA GPU Kernel Summary (cuda_gpu_kern_sum):</span>
+</span><span id="__span-11-247"><a id="__codelineno-11-247" name="__codelineno-11-247" href="#__codelineno-11-247"></a>
+</span><span id="__span-11-248"><a id="__codelineno-11-248" name="__codelineno-11-248" href="#__codelineno-11-248"></a><span class="sd"> Time (%)  Total Time (ns)  Instances  Avg (ns)   Med (ns)   Min (ns)  Max (ns)  StdDev (ns)                                                  Name                                                </span>
+</span><span id="__span-11-249"><a id="__codelineno-11-249" name="__codelineno-11-249" href="#__codelineno-11-249"></a><span class="sd"> --------  ---------------  ---------  ---------  ---------  --------  --------  -----------  ----------------------------------------------------------------------------------------------------</span>
+</span><span id="__span-11-250"><a id="__codelineno-11-250" name="__codelineno-11-250" href="#__codelineno-11-250"></a><span class="sd">     75.8        9,501,639         60  158,360.6  185,468.0   101,862   360,951     59,402.9  void cutlass::Kernel2&lt;cutlass_80_tensorop_s1688gemm_128x128_16x5_tn_align4&gt;(T1::Params)             </span>
+</span><span id="__span-11-251"><a id="__codelineno-11-251" name="__codelineno-11-251" href="#__codelineno-11-251"></a><span class="sd">     18.7        2,337,879         30   77,929.3   54,052.0    53,219   462,622     91,597.8  void cutlass::Kernel2&lt;cutlass_80_tensorop_s1688gemm_128x64_16x6_tn_align4&gt;(T1::Params)              </span>
+</span><span id="__span-11-252"><a id="__codelineno-11-252" name="__codelineno-11-252" href="#__codelineno-11-252"></a><span class="sd">      2.0          255,632         60    4,260.5    4,240.5     4,096     4,512         87.2  void at::native::vectorized_elementwise_kernel&lt;(int)4, at::native::GeluCUDAKernelImpl(at::TensorIte…</span>
+</span><span id="__span-11-253"><a id="__codelineno-11-253" name="__codelineno-11-253" href="#__codelineno-11-253"></a><span class="sd">      1.7          217,674         60    3,627.9    3,600.5     3,393     4,160        180.3  void at::native::vectorized_elementwise_kernel&lt;(int)4, at::native::AUnaryFunctor&lt;float, float, floa…</span>
+</span><span id="__span-11-254"><a id="__codelineno-11-254" name="__codelineno-11-254" href="#__codelineno-11-254"></a><span class="sd">      1.7          214,866         60    3,581.1    3,568.5     3,392     3,809        119.6  void at::native::vectorized_elementwise_kernel&lt;(int)4, at::native::CUDAFunctorOnSelf_add&lt;float&gt;, st…</span>
+</span><span id="__span-11-255"><a id="__codelineno-11-255" name="__codelineno-11-255" href="#__codelineno-11-255"></a>
+</span><span id="__span-11-256"><a id="__codelineno-11-256" name="__codelineno-11-256" href="#__codelineno-11-256"></a><span class="sd">    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # </span>
+</span><span id="__span-11-257"><a id="__codelineno-11-257" name="__codelineno-11-257" href="#__codelineno-11-257"></a><span class="sd">    # 1. fc1 和 fc3 的 GEMM: `cutlass::Kernel2&lt;...128x128_16x5...&gt;` 2*30 </span>
+</span><span id="__span-11-258"><a id="__codelineno-11-258" name="__codelineno-11-258" href="#__codelineno-11-258"></a><span class="sd">    # 2. fc2 的 GEMM: `cutlass::Kernel2&lt;...128x64_16x6...&gt;` 1*30</span>
+</span><span id="__span-11-259"><a id="__codelineno-11-259" name="__codelineno-11-259" href="#__codelineno-11-259"></a><span class="sd">    # 3. 两个 `gelu`: `vectorized_elementwise_kernel&lt;..., GeluCUDAKernelImpl&gt;` 2*30</span>
+</span><span id="__span-11-260"><a id="__codelineno-11-260" name="__codelineno-11-260" href="#__codelineno-11-260"></a><span class="sd">    # 4. 两个 `mul`（*1.1, *0.9）: `vectorized_elementwise_kernel&lt;..., AUnaryFunctor&gt;` 2*30</span>
+</span><span id="__span-11-261"><a id="__codelineno-11-261" name="__codelineno-11-261" href="#__codelineno-11-261"></a><span class="sd">    # 5. 两个 `add`（+0.2, +0.1）: `vectorized_elementwise_kernel&lt;..., CUDAFunctorOnSelf_add&gt;` 2*30</span>
+</span><span id="__span-11-262"><a id="__codelineno-11-262" name="__codelineno-11-262" href="#__codelineno-11-262"></a><span class="sd">    # - **GEMM 有两种不同的 cutlass 配置**：fc1 和 fc3 因为输入/输出维度不同但可能被映射到同一种优化配置（`128x128_16x5`），而 fc2 的维度是 2048→2048，使用了另一种配置（`128x64_16x6`），因此 GEMM 部分共 2 行。</span>
+</span><span id="__span-11-263"><a id="__codelineno-11-263" name="__codelineno-11-263" href="#__codelineno-11-263"></a><span class="sd">    # - **elementwise 有三种不同的算子实现**：gelu、mul（AUnaryFunctor）、add（CUDAFunctorOnSelf_add），各一行，共 3 行。</span>
+</span><span id="__span-11-264"><a id="__codelineno-11-264" name="__codelineno-11-264" href="#__codelineno-11-264"></a><span class="sd">    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # </span>
+</span><span id="__span-11-265"><a id="__codelineno-11-265" name="__codelineno-11-265" href="#__codelineno-11-265"></a>
+</span><span id="__span-11-266"><a id="__codelineno-11-266" name="__codelineno-11-266" href="#__codelineno-11-266"></a><span class="sd">&gt; nsys stats eager.nsys-rep --report cuda_api_sum</span>
+</span><span id="__span-11-267"><a id="__codelineno-11-267" name="__codelineno-11-267" href="#__codelineno-11-267"></a><span class="sd">[eager]  ** CUDA API Summary (cuda_api_sum):</span>
+</span><span id="__span-11-268"><a id="__codelineno-11-268" name="__codelineno-11-268" href="#__codelineno-11-268"></a>
+</span><span id="__span-11-269"><a id="__codelineno-11-269" name="__codelineno-11-269" href="#__codelineno-11-269"></a><span class="sd"> Time (%)  Total Time (ns)  Num Calls   Avg (ns)     Med (ns)    Min (ns)   Max (ns)   StdDev (ns)          Name         </span>
+</span><span id="__span-11-270"><a id="__codelineno-11-270" name="__codelineno-11-270" href="#__codelineno-11-270"></a><span class="sd"> --------  ---------------  ---------  -----------  -----------  ---------  ---------  -----------  ---------------------</span>
+</span><span id="__span-11-271"><a id="__codelineno-11-271" name="__codelineno-11-271" href="#__codelineno-11-271"></a><span class="sd">     69.7        6,223,094          1  6,223,094.0  6,223,094.0  6,223,094  6,223,094          0.0  cudaDeviceSynchronize</span>
+</span><span id="__span-11-272"><a id="__codelineno-11-272" name="__codelineno-11-272" href="#__codelineno-11-272"></a><span class="sd">     14.4        1,284,270        180      7,134.8      5,410.5      3,226     41,508      5,460.4  cudaLaunchKernel     </span>
+</span><span id="__span-11-273"><a id="__codelineno-11-273" name="__codelineno-11-273" href="#__codelineno-11-273"></a><span class="sd">      7.4          657,145         90      7,301.6      4,598.5      2,274    103,727     11,409.9  cudaMemsetAsync      </span>
+</span><span id="__span-11-274"><a id="__codelineno-11-274" name="__codelineno-11-274" href="#__codelineno-11-274"></a><span class="sd">      7.3          647,829         90      7,198.1      4,528.5      2,805     47,740      8,037.3  cuLaunchKernel       </span>
+</span><span id="__span-11-275"><a id="__codelineno-11-275" name="__codelineno-11-275" href="#__codelineno-11-275"></a><span class="sd">      0.5           42,731          1     42,731.0     42,731.0     42,731     42,731          0.0  cuProfilerStart      </span>
+</span><span id="__span-11-276"><a id="__codelineno-11-276" name="__codelineno-11-276" href="#__codelineno-11-276"></a><span class="sd">      0.5           42,629         90        473.7        320.0        160      5,721        726.4  cuKernelGetFunction</span>
+</span><span id="__span-11-277"><a id="__codelineno-11-277" name="__codelineno-11-277" href="#__codelineno-11-277"></a><span class="sd">      0.3           25,194        180        140.0        110.0         60      1,853        184.7  cuKernelGetName</span>
+</span><span id="__span-11-278"><a id="__codelineno-11-278" name="__codelineno-11-278" href="#__codelineno-11-278"></a>
+</span><span id="__span-11-279"><a id="__codelineno-11-279" name="__codelineno-11-279" href="#__codelineno-11-279"></a><span class="sd">    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # </span>
+</span><span id="__span-11-280"><a id="__codelineno-11-280" name="__codelineno-11-280" href="#__codelineno-11-280"></a><span class="sd">    # cudaLaunchKernel` 180 次 + cuLaunchKernel 90 次 = 270次 = 9*30</span>
+</span><span id="__span-11-281"><a id="__codelineno-11-281" name="__codelineno-11-281" href="#__codelineno-11-281"></a><span class="sd">    # - **cuLaunchKernel**（90 次）：通常由 cuBLAS/cutlass 内部使用，对应 3 个 GEMM * 30 step = 90 次。</span>
+</span><span id="__span-11-282"><a id="__codelineno-11-282" name="__codelineno-11-282" href="#__codelineno-11-282"></a><span class="sd">    # - **cudaLaunchKernel**（180 次）：PyTorch 的 elementwise 算子（gelu、mul、add）通常通过该 API 启动，对应 6 个 elementwise * 30 step = 180 次。</span>
+</span><span id="__span-11-283"><a id="__codelineno-11-283" name="__codelineno-11-283" href="#__codelineno-11-283"></a><span class="sd">    # - 此外还有 `cudaMemsetAsync` 90 次，每个 Linear 的输出张量在分配后需要清零，3 个 Linear * 30 step = 90 次。</span>
+</span><span id="__span-11-284"><a id="__codelineno-11-284" name="__codelineno-11-284" href="#__codelineno-11-284"></a><span class="sd">    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # </span>
+</span><span id="__span-11-285"><a id="__codelineno-11-285" name="__codelineno-11-285" href="#__codelineno-11-285"></a>
+</span><span id="__span-11-286"><a id="__codelineno-11-286" name="__codelineno-11-286" href="#__codelineno-11-286"></a><span class="sd">&gt; nsys stats compile.nsys-rep --report cuda_gpu_kern_sum</span>
+</span><span id="__span-11-287"><a id="__codelineno-11-287" name="__codelineno-11-287" href="#__codelineno-11-287"></a><span class="sd">[compile] ** CUDA GPU Kernel Summary (cuda_gpu_kern_sum):</span>
+</span><span id="__span-11-288"><a id="__codelineno-11-288" name="__codelineno-11-288" href="#__codelineno-11-288"></a>
+</span><span id="__span-11-289"><a id="__codelineno-11-289" name="__codelineno-11-289" href="#__codelineno-11-289"></a><span class="sd"> Time (%)  Total Time (ns)  Instances  Avg (ns)   Med (ns)   Min (ns)  Max (ns)  StdDev (ns)                                           Name                                         </span>
+</span><span id="__span-11-290"><a id="__codelineno-11-290" name="__codelineno-11-290" href="#__codelineno-11-290"></a><span class="sd"> --------  ---------------  ---------  ---------  ---------  --------  --------  -----------  --------------------------------------------------------------------------------------</span>
+</span><span id="__span-11-291"><a id="__codelineno-11-291" name="__codelineno-11-291" href="#__codelineno-11-291"></a><span class="sd">     53.5        5,814,073         30  193,802.4  186,699.0   185,675   378,359     34,931.8  void cutlass::Kernel2&lt;cutlass_80_tensorop_s1688gemm_256x64_16x4_tn_align4&gt;(T1::Params)</span>
+</span><span id="__span-11-292"><a id="__codelineno-11-292" name="__codelineno-11-292" href="#__codelineno-11-292"></a><span class="sd">     43.7        4,750,175         60   79,169.6   78,885.5    53,571   108,006     25,022.3  void cutlass::Kernel2&lt;cutlass_80_tensorop_s1688gemm_128x64_16x6_tn_align4&gt;(T1::Params)</span>
+</span><span id="__span-11-293"><a id="__codelineno-11-293" name="__codelineno-11-293" href="#__codelineno-11-293"></a><span class="sd">      1.6          175,692         30    5,856.4    5,824.0     5,760     6,273        126.7  triton_poi_fused_add_addmm_gelu_mul_0                                                 </span>
+</span><span id="__span-11-294"><a id="__codelineno-11-294" name="__codelineno-11-294" href="#__codelineno-11-294"></a><span class="sd">      1.1          122,728         30    4,090.9    4,064.5     3,936     4,577        171.6  triton_poi_fused_add_addmm_gelu_mul_1  </span>
+</span><span id="__span-11-295"><a id="__codelineno-11-295" name="__codelineno-11-295" href="#__codelineno-11-295"></a>
+</span><span id="__span-11-296"><a id="__codelineno-11-296" name="__codelineno-11-296" href="#__codelineno-11-296"></a><span class="sd">&gt; nsys stats compile.nsys-rep --report cuda_api_sum</span>
+</span><span id="__span-11-297"><a id="__codelineno-11-297" name="__codelineno-11-297" href="#__codelineno-11-297"></a><span class="sd">[compile]  ** CUDA API Summary (cuda_api_sum):</span>
+</span><span id="__span-11-298"><a id="__codelineno-11-298" name="__codelineno-11-298" href="#__codelineno-11-298"></a>
+</span><span id="__span-11-299"><a id="__codelineno-11-299" name="__codelineno-11-299" href="#__codelineno-11-299"></a><span class="sd"> Time (%)  Total Time (ns)  Num Calls   Avg (ns)     Med (ns)    Min (ns)   Max (ns)   StdDev (ns)          Name         </span>
+</span><span id="__span-11-300"><a id="__codelineno-11-300" name="__codelineno-11-300" href="#__codelineno-11-300"></a><span class="sd"> --------  ---------------  ---------  -----------  -----------  ---------  ---------  -----------  ---------------------</span>
+</span><span id="__span-11-301"><a id="__codelineno-11-301" name="__codelineno-11-301" href="#__codelineno-11-301"></a><span class="sd">     78.5        8,054,567          1  8,054,567.0  8,054,567.0  8,054,567  8,054,567          0.0  cudaDeviceSynchronize</span>
+</span><span id="__span-11-302"><a id="__codelineno-11-302" name="__codelineno-11-302" href="#__codelineno-11-302"></a><span class="sd">     14.3        1,466,016        150      9,773.4      4,513.5      2,705    488,235     39,907.7  cuLaunchKernel       </span>
+</span><span id="__span-11-303"><a id="__codelineno-11-303" name="__codelineno-11-303" href="#__codelineno-11-303"></a><span class="sd">      6.6          680,836         60     11,347.3      3,732.0      2,054    382,816     49,076.9  cudaMemsetAsync      </span>
+</span><span id="__span-11-304"><a id="__codelineno-11-304" name="__codelineno-11-304" href="#__codelineno-11-304"></a><span class="sd">      0.3           34,168         90        379.6        211.0        161      4,589        569.1  cuKernelGetFunction  </span>
+</span><span id="__span-11-305"><a id="__codelineno-11-305" name="__codelineno-11-305" href="#__codelineno-11-305"></a><span class="sd">      0.2           22,002          1     22,002.0     22,002.0     22,002     22,002          0.0  cuProfilerStart      </span>
+</span><span id="__span-11-306"><a id="__codelineno-11-306" name="__codelineno-11-306" href="#__codelineno-11-306"></a>
+</span><span id="__span-11-307"><a id="__codelineno-11-307" name="__codelineno-11-307" href="#__codelineno-11-307"></a><span class="sd">      # compile 模式：融合后每个 step 只有 5 个 kernel（3 GEMM + 2 triton fused），30 step 共 150 次启动。</span>
+</span><span id="__span-11-308"><a id="__codelineno-11-308" name="__codelineno-11-308" href="#__codelineno-11-308"></a><span class="sd">      # 报告中列出了 4 行：两行 cutlass GEMM（共 90 实例）+ 两行 triton fused（各 30 实例）。</span>
+</span><span id="__span-11-309"><a id="__codelineno-11-309" name="__codelineno-11-309" href="#__codelineno-11-309"></a><span class="sd">      # 融合后的两个 triton kernel 分别对应 fc1 后和 fc2 后的 pointwise 链。</span>
+</span><span id="__span-11-310"><a id="__codelineno-11-310" name="__codelineno-11-310" href="#__codelineno-11-310"></a>
+</span><span id="__span-11-311"><a id="__codelineno-11-311" name="__codelineno-11-311" href="#__codelineno-11-311"></a><span class="sd">&gt; nsys stats cudagraph.nsys-rep --report cuda_gpu_kern_sum</span>
+</span><span id="__span-11-312"><a id="__codelineno-11-312" name="__codelineno-11-312" href="#__codelineno-11-312"></a><span class="sd">[cudagraph] ** CUDA GPU Kernel Summary (cuda_gpu_kern_sum):</span>
+</span><span id="__span-11-313"><a id="__codelineno-11-313" name="__codelineno-11-313" href="#__codelineno-11-313"></a>
+</span><span id="__span-11-314"><a id="__codelineno-11-314" name="__codelineno-11-314" href="#__codelineno-11-314"></a><span class="sd"> Time (%)  Total Time (ns)  Instances  Avg (ns)   Med (ns)   Min (ns)  Max (ns)  StdDev (ns)                                                  Name                                                </span>
+</span><span id="__span-11-315"><a id="__codelineno-11-315" name="__codelineno-11-315" href="#__codelineno-11-315"></a><span class="sd"> --------  ---------------  ---------  ---------  ---------  --------  --------  -----------  ----------------------------------------------------------------------------------------------------</span>
+</span><span id="__span-11-316"><a id="__codelineno-11-316" name="__codelineno-11-316" href="#__codelineno-11-316"></a><span class="sd">     80.3        9,547,569         60  159,126.1  186,887.5   103,858   625,645     76,581.3  void cutlass::Kernel2&lt;cutlass_80_tensorop_s1688gemm_128x128_16x5_tn_align4&gt;(T1::Params)             </span>
+</span><span id="__span-11-317"><a id="__codelineno-11-317" name="__codelineno-11-317" href="#__codelineno-11-317"></a><span class="sd">     13.7        1,624,523         30   54,150.8   53,977.0    53,433    55,513        546.0  void cutlass::Kernel2&lt;cutlass_80_tensorop_s1688gemm_128x64_16x6_tn_align4&gt;(T1::Params)              </span>
+</span><span id="__span-11-318"><a id="__codelineno-11-318" name="__codelineno-11-318" href="#__codelineno-11-318"></a><span class="sd">      2.3          268,888         60    4,481.5    4,479.0     4,351     4,832         89.2  void at::native::vectorized_elementwise_kernel&lt;(int)4, at::native::GeluCUDAKernelImpl(at::TensorIte…</span>
+</span><span id="__span-11-319"><a id="__codelineno-11-319" name="__codelineno-11-319" href="#__codelineno-11-319"></a><span class="sd">      2.0          236,125         60    3,935.4    3,744.0     3,583    14,174      1,350.1  void at::native::vectorized_elementwise_kernel&lt;(int)4, at::native::CUDAFunctorOnSelf_add&lt;float&gt;, st…</span>
+</span><span id="__span-11-320"><a id="__codelineno-11-320" name="__codelineno-11-320" href="#__codelineno-11-320"></a><span class="sd">      1.8          210,471         60    3,507.8    3,488.0     3,391     3,679         75.6  void at::native::vectorized_elementwise_kernel&lt;(int)4, at::native::AUnaryFunctor&lt;float, float, floa…</span>
+</span><span id="__span-11-321"><a id="__codelineno-11-321" name="__codelineno-11-321" href="#__codelineno-11-321"></a>
+</span><span id="__span-11-322"><a id="__codelineno-11-322" name="__codelineno-11-322" href="#__codelineno-11-322"></a><span class="sd">&gt; nsys stats cudagraph.nsys-rep --report cuda_api_sum</span>
+</span><span id="__span-11-323"><a id="__codelineno-11-323" name="__codelineno-11-323" href="#__codelineno-11-323"></a><span class="sd">[cudagraph] ** CUDA API Summary (cuda_api_sum):</span>
+</span><span id="__span-11-324"><a id="__codelineno-11-324" name="__codelineno-11-324" href="#__codelineno-11-324"></a>
+</span><span id="__span-11-325"><a id="__codelineno-11-325" name="__codelineno-11-325" href="#__codelineno-11-325"></a><span class="sd"> Time (%)  Total Time (ns)  Num Calls    Avg (ns)      Med (ns)     Min (ns)    Max (ns)   StdDev (ns)              Name            </span>
+</span><span id="__span-11-326"><a id="__codelineno-11-326" name="__codelineno-11-326" href="#__codelineno-11-326"></a><span class="sd"> --------  ---------------  ---------  ------------  ------------  ----------  ----------  -----------  ----------------------------</span>
+</span><span id="__span-11-327"><a id="__codelineno-11-327" name="__codelineno-11-327" href="#__codelineno-11-327"></a><span class="sd">     93.7       12,297,053          1  12,297,053.0  12,297,053.0  12,297,053  12,297,053          0.0  cudaDeviceSynchronize       </span>
+</span><span id="__span-11-328"><a id="__codelineno-11-328" name="__codelineno-11-328" href="#__codelineno-11-328"></a><span class="sd">      6.0          793,365         30      26,445.5      19,081.0      15,690     130,357     23,057.8  cudaGraphLaunch_v10000      </span>
+</span><span id="__span-11-329"><a id="__codelineno-11-329" name="__codelineno-11-329" href="#__codelineno-11-329"></a><span class="sd">      0.1           19,020         30         634.0         170.0         151       7,885      1,601.5  cudaStreamIsCapturing_v10000</span>
+</span><span id="__span-11-330"><a id="__codelineno-11-330" name="__codelineno-11-330" href="#__codelineno-11-330"></a><span class="sd">      0.1            7,584          1       7,584.0       7,584.0       7,584       7,584          0.0  cuProfilerStart     </span>
+</span><span id="__span-11-331"><a id="__codelineno-11-331" name="__codelineno-11-331" href="#__codelineno-11-331"></a>
+</span><span id="__span-11-332"><a id="__codelineno-11-332" name="__codelineno-11-332" href="#__codelineno-11-332"></a><span class="sd">    # cudagraph 模式：kernel 与 eager 完全相同，所以 cuda_gpu_kern_sum 报告也是 5 行，总实例 270。</span>
+</span><span id="__span-11-333"><a id="__codelineno-11-333" name="__codelineno-11-333" href="#__codelineno-11-333"></a><span class="sd">    # API 方面所有 kernel 被封装进图，因此只有 cudaGraphLaunch 30 次。</span>
+</span><span id="__span-11-334"><a id="__codelineno-11-334" name="__codelineno-11-334" href="#__codelineno-11-334"></a>
+</span><span id="__span-11-335"><a id="__codelineno-11-335" name="__codelineno-11-335" href="#__codelineno-11-335"></a><span class="sd">&gt; nsys stats compile_cudagraph.nsys-rep --report cuda_gpu_kern_sum</span>
+</span><span id="__span-11-336"><a id="__codelineno-11-336" name="__codelineno-11-336" href="#__codelineno-11-336"></a><span class="sd">[compile_cudagraph] ** CUDA GPU Kernel Summary (cuda_gpu_kern_sum):</span>
+</span><span id="__span-11-337"><a id="__codelineno-11-337" name="__codelineno-11-337" href="#__codelineno-11-337"></a>
+</span><span id="__span-11-338"><a id="__codelineno-11-338" name="__codelineno-11-338" href="#__codelineno-11-338"></a><span class="sd"> Time (%)  Total Time (ns)  Instances  Avg (ns)   Med (ns)   Min (ns)  Max (ns)  StdDev (ns)                                                  Name                                                </span>
+</span><span id="__span-11-339"><a id="__codelineno-11-339" name="__codelineno-11-339" href="#__codelineno-11-339"></a><span class="sd"> --------  ---------------  ---------  ---------  ---------  --------  --------  -----------  ----------------------------------------------------------------------------------------------------</span>
+</span><span id="__span-11-340"><a id="__codelineno-11-340" name="__codelineno-11-340" href="#__codelineno-11-340"></a><span class="sd">     52.8        6,474,246         30  215,808.2  186,865.0   184,289   744,613    113,918.0  void cutlass::Kernel2&lt;cutlass_80_tensorop_s1688gemm_256x64_16x4_tn_align4&gt;(T1::Params)              </span>
+</span><span id="__span-11-341"><a id="__codelineno-11-341" name="__codelineno-11-341" href="#__codelineno-11-341"></a><span class="sd">     41.2        5,047,553         60   84,125.9  102,529.0    53,185   351,106     43,093.2  void cutlass::Kernel2&lt;cutlass_80_tensorop_s1688gemm_128x64_16x6_tn_align4&gt;(T1::Params)              </span>
+</span><span id="__span-11-342"><a id="__codelineno-11-342" name="__codelineno-11-342" href="#__codelineno-11-342"></a><span class="sd">      3.6          438,114         30   14,603.8   14,464.0    14,112    15,424        419.1  void at::native::&lt;unnamed&gt;::multi_tensor_apply_kernel&lt;at::native::&lt;unnamed&gt;::TensorListMetadata&lt;(in…</span>
+</span><span id="__span-11-343"><a id="__codelineno-11-343" name="__codelineno-11-343" href="#__codelineno-11-343"></a><span class="sd">      1.5          178,563         30    5,952.1    5,888.0     5,792     6,624        197.6  triton_poi_fused_add_addmm_gelu_mul_0                                                               </span>
+</span><span id="__span-11-344"><a id="__codelineno-11-344" name="__codelineno-11-344" href="#__codelineno-11-344"></a><span class="sd">      1.0          127,424         30    4,247.5    4,128.0     4,064     5,376        329.3  triton_poi_fused_add_addmm_gelu_mul_1    </span>
+</span><span id="__span-11-345"><a id="__codelineno-11-345" name="__codelineno-11-345" href="#__codelineno-11-345"></a>
+</span><span id="__span-11-346"><a id="__codelineno-11-346" name="__codelineno-11-346" href="#__codelineno-11-346"></a><span class="sd">    # multi_tensor_apply_kernel: reduce-overhead 每步把新输入拷进静态 buffer（foreach copy）</span>
+</span><span id="__span-11-347"><a id="__codelineno-11-347" name="__codelineno-11-347" href="#__codelineno-11-347"></a><span class="sd">    # 代码注释里&quot;换数据只能 copy_&quot;的自动版——torch.compile 的 cudagraphs 帮你自动做了，代价是每步多一个小拷贝 kernel。</span>
+</span><span id="__span-11-348"><a id="__codelineno-11-348" name="__codelineno-11-348" href="#__codelineno-11-348"></a>
+</span><span id="__span-11-349"><a id="__codelineno-11-349" name="__codelineno-11-349" href="#__codelineno-11-349"></a><span class="sd">&gt; nsys stats compile_cudagraph.nsys-rep --report cuda_api_sum</span>
+</span><span id="__span-11-350"><a id="__codelineno-11-350" name="__codelineno-11-350" href="#__codelineno-11-350"></a><span class="sd">[compile_cudagraph] ** CUDA API Summary (cuda_api_sum):</span>
+</span><span id="__span-11-351"><a id="__codelineno-11-351" name="__codelineno-11-351" href="#__codelineno-11-351"></a>
+</span><span id="__span-11-352"><a id="__codelineno-11-352" name="__codelineno-11-352" href="#__codelineno-11-352"></a><span class="sd"> Time (%)  Total Time (ns)  Num Calls    Avg (ns)      Med (ns)     Min (ns)    Max (ns)   StdDev (ns)              Name            </span>
+</span><span id="__span-11-353"><a id="__codelineno-11-353" name="__codelineno-11-353" href="#__codelineno-11-353"></a><span class="sd"> --------  ---------------  ---------  ------------  ------------  ----------  ----------  -----------  ----------------------------</span>
+</span><span id="__span-11-354"><a id="__codelineno-11-354" name="__codelineno-11-354" href="#__codelineno-11-354"></a><span class="sd">     88.9       10,524,367          1  10,524,367.0  10,524,367.0  10,524,367  10,524,367          0.0  cudaDeviceSynchronize       </span>
+</span><span id="__span-11-355"><a id="__codelineno-11-355" name="__codelineno-11-355" href="#__codelineno-11-355"></a><span class="sd">      6.7          789,855         30      26,328.5      25,708.5      12,764      86,944     13,225.7  cudaGraphLaunch_v10000      </span>
+</span><span id="__span-11-356"><a id="__codelineno-11-356" name="__codelineno-11-356" href="#__codelineno-11-356"></a><span class="sd">      4.1          487,191         30      16,239.7       8,736.5       6,142     147,630     26,079.0  cudaLaunchKernel            </span>
+</span><span id="__span-11-357"><a id="__codelineno-11-357" name="__codelineno-11-357" href="#__codelineno-11-357"></a><span class="sd">      0.1           15,970         30         532.3         385.5         230       3,506        589.0  cudaStreamIsCapturing_v10000</span>
+</span><span id="__span-11-358"><a id="__codelineno-11-358" name="__codelineno-11-358" href="#__codelineno-11-358"></a><span class="sd">      0.1           10,159          1      10,159.0      10,159.0      10,159      10,159          0.0  cuProfilerStart             </span>
+</span><span id="__span-11-359"><a id="__codelineno-11-359" name="__codelineno-11-359" href="#__codelineno-11-359"></a><span class="sd">      0.1            8,143         30         271.4         200.0          80       1,964        341.3  cuKernelGetName          </span>
+</span><span id="__span-11-360"><a id="__codelineno-11-360" name="__codelineno-11-360" href="#__codelineno-11-360"></a>
+</span><span id="__span-11-361"><a id="__codelineno-11-361" name="__codelineno-11-361" href="#__codelineno-11-361"></a><span class="sd">    # compile+cudagraph 模式：kernel 数量为 6 个/step（3 GEMM + 2 triton + 1 额外 multi_tensor_apply），30 step 共 180 实例，</span>
+</span><span id="__span-11-362"><a id="__codelineno-11-362" name="__codelineno-11-362" href="#__codelineno-11-362"></a><span class="sd">    # 报告中显示了 5 行（两行 GEMM + 两行 triton + 一行 multi_tensor_apply）。</span>
+</span><span id="__span-11-363"><a id="__codelineno-11-363" name="__codelineno-11-363" href="#__codelineno-11-363"></a><span class="sd">    # API 方面 cudaGraphLaunch 30 次 + cudaLaunchKernel 30 次（那个额外的 kernel 未捕获进图）。   </span>
+</span><span id="__span-11-364"><a id="__codelineno-11-364" name="__codelineno-11-364" href="#__codelineno-11-364"></a><span class="sd">&quot;&quot;&quot;</span>
+</span></code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 <a href="https://sheldoncoder1337.github.io">jialecai</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/sheldoncoder1337" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["header.autohide", "content.code.copy", "content.code.select", "content.code.annotate", "content.footnote.tooltips", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
