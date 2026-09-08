@@ -39,7 +39,7 @@ $ git clone git@github.com:SheldonCoder1337/blog.git
 ```
 
 ```bash
-uv run mkdocs serve --live-reload
+uv run mkdocs serve --livereload
 ```
 
 **Conventional Commits**

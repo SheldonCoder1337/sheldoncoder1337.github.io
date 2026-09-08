@@ -29,6 +29,7 @@ nav:
   - SoftwareEngineering:
     - 00-Introduction: "cs08-software-engineering/00-introduction.md"
     - 01-CookC: "cs08-software-engineering/01-cookc.md"
+    - 02-RAG: "cs08-software-engineering/02-rag-arc.md"
   - Math:
     - 00-Introduction: "math/00-introduction.md"
   - Handbook:
